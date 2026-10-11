@@ -263,3 +263,4 @@ TestCase {id:test;name:"Welcome";width:1200;height:900;visible:true;when:windowS
                 timeout=30,
             )
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertNotIn("QWARN", result.stdout + result.stderr)

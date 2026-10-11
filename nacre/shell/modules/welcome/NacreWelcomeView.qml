@@ -284,7 +284,7 @@ Item {
                             settings: modelData.logo === "settings"
                             colorsApp: modelData.logo === "colors"
                             motionEnabled: NacreTokens.motionEnabled
-                            opacity: ready ? (appRow.optional ? .4 : 1) : 0
+                            opacity: appLogo.ready ? (appRow.optional ? .4 : 1) : 0
                             z: 1
                         }
                         NacreWelcomeRow {

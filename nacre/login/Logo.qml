@@ -5,6 +5,7 @@ Item {
     id: root
     implicitWidth: 30
     implicitHeight: 30
+    readonly property bool ready: image.loadedOnce
     property bool compact: width <= 36
     property bool ai: false
     property bool brain: false
