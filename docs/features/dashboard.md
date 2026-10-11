@@ -5,16 +5,17 @@ keeps it open; Escape dismisses an explicitly opened menu. The frame still uses
 one Wayland surface, so the header and moving handles retain their stacking and
 input behavior. Settings remains a standalone app, opened with the header gear.
 
-The five pages are **Today, Weather, Media, System and Focus**. Click a tab,
+The five pages are **Dashboard, Weather, Media, System and Focus**. Click a tab,
 scroll over the tab row, or use1–5 when a text field doesn't have focus. The
 neutral pearl marks the current page and slides to the next selection. Reduce
 motion disables that transition and decorative animation.
 
-- Today shows the wallpaper, date, local clock, current weather and live Orient
+- Dashboard shows the wallpaper, date, local clock, current weather and live Orient
   swatches. Video/animated previews respect pause, battery and reduced motion.
   Next deliberately changes the wallpaper; Colors opens the existing color picker.
-  The month calendar is always available. Optional local ICS events appear beside
-  it; current media disappears when no MPRIS player exists.
+  The month calendar fills the left column; host details and three performance
+  circles occupy the middle, and the player/spectrum occupy the right. The former
+  Up next section has been replaced by that system summary.
 - Weather includes current conditions,24hour temperature/rain chart,10day range
   bars and wind, UV, humidity, AQI and pressure. Its living sky uses Orient colors
   and actual day/conditions. Sky animation stops outside this page. The existing
@@ -74,3 +75,16 @@ teardown, viewport limits and reduced motion. Provider tests cover validated
 preferences, private writes, focus deadlines/ownership, bounded calendar import,
 forecast normalization/stale cache, lyrics timestamps/cache and stale PID guards.
 Review real Wayland screenshots and hover/Escape/header retention after deploy.
+
+## Dashboard home layout
+
+The first tab is labelled Dashboard. Its private `today` identifier is retained
+for existing tab preferences. Below the wallpaper banner, the calendar fills
+the left column. The middle column restores the Nacre logo, username, OS,
+compositor, uptime and update count, above CPU/memory/storage circles. Clicking
+updates opens the existing update terminal. The player occupies the right column,
+above bottom-aligned upward spectrum bars. Bars run primary at the bottom through
+secondary to tertiary at the top. The same Cava process serves Dashboard and
+Media; lyrics/artwork extraction still runs only for Media. Pausing, hiding or
+reducing motion quiets the bars. The first page grows to736logical pixels when
+space permits; narrow views stack the sections and scroll.

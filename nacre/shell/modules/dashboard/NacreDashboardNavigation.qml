@@ -7,8 +7,8 @@ Item {
     property int currentIndex: 0
     property var order: NacreDashboardState.tabs
     readonly property var names: ["today", "weather", "media", "system", "focus"]
-    readonly property var labels: ["Today", "Weather", "Media", "System", "Focus"]
-    readonly property var icons: ["today", "partly_cloudy_day", "queue_music", "speed", "timer"]
+    readonly property var labels: ["Dashboard", "Weather", "Media", "System", "Focus"]
+    readonly property var icons: ["dashboard", "partly_cloudy_day", "queue_music", "speed", "timer"]
     readonly property int selectedSlot: Math.max(0, order.indexOf(names[currentIndex]))
     signal selected(int index)
     implicitHeight: 44

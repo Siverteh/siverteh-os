@@ -8,6 +8,7 @@ Singleton {
     id: root
     readonly property var player: NacrePlayers.active
     readonly property bool shown: NacrePanelState.hidden !== true && Object.values(NacrePanelState.screens).some(view => view.dashboard && view.dashboardTab === 2)
+    readonly property bool spectrumVisible: NacrePanelState.hidden !== true && Object.values(NacrePanelState.screens).some(view => view.dashboard && [0, 2].includes(view.dashboardTab))
     readonly property string trackKey: JSON.stringify({
         title: player?.trackTitle || "",
         artist: player?.trackArtist || "",
@@ -77,7 +78,7 @@ Singleton {
     Process {
         id: visualizer
         command: ["python3", root.tool, "spectrum"]
-        running: root.shown && root.player?.isPlaying === true && NacreTokens.motionEnabled && !WallpaperPlayback.sleeping && !WallpaperPlayback.locked
+        running: root.spectrumVisible && root.player?.isPlaying === true && NacreTokens.motionEnabled && !WallpaperPlayback.sleeping && !WallpaperPlayback.locked
         stdout: SplitParser {
             onRead: line => {
                 const values = line.trim().split(";").filter(value => value !== "").map(value => Number(value));

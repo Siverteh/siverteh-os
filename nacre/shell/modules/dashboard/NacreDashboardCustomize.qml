@@ -37,7 +37,7 @@ Flickable {
                 spacing: 12
                 ActionButton {
                     width: 140
-                    text: parent.modelData[0].toUpperCase() + parent.modelData.slice(1)
+                    text: parent.modelData === "today" ? "Dashboard" : parent.modelData[0].toUpperCase() + parent.modelData.slice(1)
                     selected: NacreDashboardState.tabs.includes(parent.modelData)
                     onClicked: NacreDashboardState.toggleTab(parent.modelData)
                 }

@@ -13,7 +13,7 @@ NacreSurface {
     readonly property int currentIndex: names[visibilities.dashboardTab] && NacreDashboardState.tabs.includes(names[visibilities.dashboardTab]) ? visibilities.dashboardTab : Math.max(0, names.indexOf(NacreDashboardState.tabs[0]))
     readonly property bool updating: visibilities.dashboard && visible && NacrePanelState.hidden !== true
     readonly property real contentWidth: Math.max(0, Math.min(viewportWidth - 48, 984))
-    readonly property real contentHeight: Math.max(0, Math.min(viewportHeight - 64, 650))
+    readonly property real contentHeight: Math.max(0, Math.min(viewportHeight - 64, currentIndex === 0 ? 736 : 650))
     property bool customizing: false
     property real presentedHeight: visibilities.dashboard ? contentHeight : 0
     property int slideDirection: 1
@@ -23,6 +23,11 @@ NacreSurface {
     color: NacreTokens.body
     clip: true
     radius: 18
+    function syncIndex() {
+        if (visibilities.dashboardTab !== currentIndex)
+            visibilities.dashboardTab = currentIndex;
+    }
+    onCurrentIndexChanged: Qt.callLater(syncIndex)
     function select(index) {
         if (!names[index] || !NacreDashboardState.tabs.includes(names[index]))
             return;

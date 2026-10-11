@@ -3566,19 +3566,21 @@
     },
     "nacre/shell/modules/dashboard/NacreDashboardNavigation.qml": {
       "disposition": "independent",
-      "sha256": "fb7d6f132a1f63089e6b0696d3c0a9c1a5821d858e723a61483d672c3a714ed5",
+      "sha256": "31464ef2a0fee2db564510e12a77279ab4fbb41155ae24a13cb64caaccf8870d",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
         "Full current body individually reviewed. Basis 1cd6ab7: fresh dashboard assembly and immediate navigation. Later current-file changes: 02b2bda. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
         "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
         "docs/specs/pearl-dashboard.md",
-        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
       ]
     },
     "nacre/shell/modules/dashboard/NacreDashboardPanel.qml": {
       "disposition": "independent",
-      "sha256": "ae06910c52056bff6ed06e565cf6d246d845efd506e428393c598a86a3f85169",
+      "sha256": "7469b329d8cd020c0f5b113145cb930f8db2f1234dced241b8e073e79a73001e",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
@@ -3586,7 +3588,9 @@
         "docs/specs/visual-cleanup.md",
         "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
         "docs/specs/pearl-dashboard.md",
-        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
       ],
       "notes": "Own post-rewrite visual cleanup changes re-reviewed against user requirements/current Nacre source: title/grid geometry, continuous measured picker travel and opaque image buffering, compact device/history presentation, finite motion, faster bounded axis-aware scrolling and cancel-before-settings-reset. Updated native fixtures keep real token/viewport contracts and assert new speed/timing, not retired values. No inherited implementation copied; actual synthetic RHI captures and native input/geometry tests inspected, device/provider/private state untouched. Full deployment/CI gates remain separate."
     },
@@ -3699,20 +3703,24 @@
     },
     "nacre/shell/modules/dashboard/overview/NacreHostCard.qml": {
       "disposition": "independent",
-      "sha256": "2f7ad9dbf163bb6a0b81441d559cbd13a4a5e809fb6d4f98b43be14aa3fdb70b",
+      "sha256": "17f8a3248c2c58a05872dea1413b3f10cd49e3900a947b54404d89acad1a5256",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
-        "Full current body individually reviewed. Basis 0a2b8a2: fresh civil calendar, responsive overview and card bodies. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped."
+        "Full current body individually reviewed. Basis 0a2b8a2: fresh civil calendar, responsive overview and card bodies. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
       ]
     },
     "nacre/shell/modules/dashboard/overview/NacreMediaCard.qml": {
       "disposition": "independent",
-      "sha256": "3e1270e646dd3d48c38339f9d00020ab0ef76c9e56bd76af30b89c2d3d7cc6ee",
+      "sha256": "d349e85d61b2516ae04d0193b3c689afb467a89a71acf0bba932df7421d71e02",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
-        "Full current body individually reviewed. Basis 0a2b8a2: fresh civil calendar, responsive overview and card bodies. Later current-file changes: 02b2bda, 13701fc. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped."
+        "Full current body individually reviewed. Basis 0a2b8a2: fresh civil calendar, responsive overview and card bodies. Later current-file changes: 02b2bda, 13701fc. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
       ]
     },
     "nacre/shell/modules/dashboard/overview/NacreOverviewCard.qml": {
@@ -6681,13 +6689,15 @@
     },
     "docs/overview.md": {
       "disposition": "non-implementation",
-      "sha256": "06dad83158fa43076e8e49d0a0972233a72524c0c1f9dac644b8ff70c28e786c",
+      "sha256": "3c42cc7db31c722b338e377648a1c2d981cc9ada893860ce6901acf99d645b71",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
         "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied.",
         "docs/specs/pearl-dashboard.md",
         "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
-        "docs/specs/public-brand-cleanup.md: reviewed canonical naming, compatibility retirement and updated regression coverage; earlier evidence describes the original implementation."
+        "docs/specs/public-brand-cleanup.md: reviewed canonical naming, compatibility retirement and updated regression coverage; earlier evidence describes the original implementation.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
       ]
     },
     "nacre/login/README.md": {
@@ -9592,9 +9602,11 @@
       "disposition": "independent",
       "evidence": [
         "docs/specs/pearl-dashboard.md",
-        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
       ],
-      "sha256": "4d208aeeecf3aadde9df3b5940e73164a7eb388cf79b0c3678b14936ec368dfb"
+      "sha256": "1e93bb6b5705714a1cf6d9f90ce522e5cd40ea1cd67ea4bbab47c7fda328e2fa"
     },
     "docs/specs/pearl-dashboard.md": {
       "disposition": "independent",
@@ -9648,9 +9660,11 @@
       "disposition": "independent",
       "evidence": [
         "docs/specs/pearl-dashboard.md",
-        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
       ],
-      "sha256": "4d76ff92fde13c27e68bd8857edcdaa7ea5aa84ecdbe93bdd954b5a0dc50ed5c"
+      "sha256": "8f329de4d5b3118a57aa67f720924c4c6decbfffcd4089e41d0bf10d0a3c92af"
     },
     "nacre/shell/modules/dashboard/NacreDashboardHero.qml": {
       "disposition": "independent",
@@ -9680,9 +9694,11 @@
       "disposition": "independent",
       "evidence": [
         "docs/specs/pearl-dashboard.md",
-        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
       ],
-      "sha256": "af3e79ec35db5387de72df74b360db3df2645939d16431b7f8dd2023610a7069"
+      "sha256": "29f9c1d18a09f2bba8057c9747706145ae7774a3bcdfa773abd9bf437c8aa81e"
     },
     "nacre/shell/modules/dashboard/NacreWeatherPage.qml": {
       "disposition": "independent",
@@ -9720,9 +9736,11 @@
       "disposition": "independent",
       "evidence": [
         "docs/specs/pearl-dashboard.md",
-        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
       ],
-      "sha256": "af10563928ad67d1e00730102b3b6f3da458cfefd6a76c5631c97282316a98c6"
+      "sha256": "f977ce2fd72dfc42752604f46b3f662693b0b242195e6cffce00fa77eb741f68"
     },
     "nacre/shell-tools/tests/test_pearl_dashboard_focus.py": {
       "disposition": "independent",
@@ -9745,6 +9763,46 @@
       "evidence": [
         "docs/specs/public-brand-cleanup.md: authored here for canonical installation and previous-name regression checks."
       ]
+    },
+    "docs/specs/dashboard-home-layout.md": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+      ],
+      "sha256": "bb4e46a86712de83930227b8b6e8626fceee540f01cbdcc8f50186249ebcaec0"
+    },
+    "nacre/shell/modules/dashboard/NacreDashboardSummary.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+      ],
+      "sha256": "fefb21c8f1b7c501de7a93969aa0fdf3f286a71b647adb4a60b4900826a6f7ae"
+    },
+    "nacre/shell-tools/tests/test_dashboard_summary.py": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+      ],
+      "sha256": "b90520c9c019e383e0b3c81e966234f7f65a2c4db7e6b0d2c1001baaf8480ea1"
+    },
+    "nacre/shell/modules/dashboard/NacreCompactMetric.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+      ],
+      "sha256": "e0be89167766288b6f22db812b362e173dccedb3433ae874a05e41eb3fd9e84e"
+    },
+    "nacre/shell/modules/dashboard/NacreAudioSpectrum.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+      ],
+      "sha256": "034c54ce87537b9526ffc4fb0b2995cda483f949aaf3771dc2d51c714ef7cf2c"
     }
   }
 }

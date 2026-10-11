@@ -1,11 +1,8 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import QtQuick.Layouts
 import QtMultimedia
 import qs.widgets
 import qs.services
-import "overview" as Cards
-import "media/media.js" as Media
 
 Flickable {
     id: root
@@ -172,78 +169,11 @@ Flickable {
                 }
             }
         }
-        GridLayout {
+        NacreDashboardSummary {
+            objectName: "dashboardSummary"
             width: parent.width
-            columns: root.narrow ? 1 : NacrePlayers.active ? 3 : 2
-            columnSpacing: 16
-            rowSpacing: 16
-            Cards.NacreCalendarCard {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 252
-                Layout.preferredWidth: 300
-                color: "transparent"
-            }
-            Column {
-                Layout.fillWidth: true
-                Layout.preferredWidth: 270
-                Layout.alignment: Qt.AlignTop
-                spacing: 12
-                NacreText {
-                    text: "Up next"
-                    font.pointSize: 15
-                    color: NacreTokens.accent
-                }
-                NacreText {
-                    width: parent.width
-                    text: NacreDashboardState.calendar.configured ? NacreDashboardState.calendar.events.length ? "" : "No upcoming events" : "Add a local calendar in dashboard options"
-                    visible: text !== ""
-                    wrapMode: Text.Wrap
-                    color: NacreTokens.mutedInk
-                    font.pointSize: 11
-                }
-                Repeater {
-                    model: NacreDashboardState.calendar.events.slice(0, 3)
-                    Column {
-                        required property var modelData
-                        width: parent.width
-                        spacing: 4
-                        NacreText {
-                            text: parent.modelData.time + "  " + parent.modelData.date
-                            font.pointSize: 9
-                            color: NacreTokens.mutedInk
-                        }
-                        NacreText {
-                            width: parent.width
-                            text: parent.modelData.title
-                            font.pointSize: 11
-                            wrapMode: Text.Wrap
-                        }
-                    }
-                }
-                NacreText {
-                    width: parent.width
-                    text: NacreDashboardState.calendar.error || ""
-                    visible: text !== ""
-                    wrapMode: Text.Wrap
-                    font.pointSize: 9
-                    color: NacreTokens.mutedInk
-                }
-            }
-            Cards.NacreMediaCard {
-                visible: !!NacrePlayers.active
-                Layout.fillWidth: true
-                Layout.preferredWidth: 260
-                Layout.preferredHeight: 252
-                active: root.shouldUpdate
-                color: "transparent"
-            }
-        }
-        NacreText {
-            width: parent.width
-            text: "CPU " + Media.percent(NacreSystemUsage.cpuPerc) + "    RAM " + Media.percent(NacreSystemUsage.memPerc) + "    GPU " + (NacreSystemUsage.gpuUsageAvailable ? Media.percent(NacreSystemUsage.gpuPerc) : "—") + "     " + Updates.count + " updates"
-            font.pointSize: 10
-            color: NacreTokens.mutedInk
-            horizontalAlignment: Text.AlignHCenter
+            height: root.narrow ? implicitHeight : Math.max(300, root.height - hero.height - sections.spacing)
+            active: root.shouldUpdate
         }
     }
 }

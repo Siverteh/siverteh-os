@@ -7,13 +7,14 @@ import "overview.js" as Overview
 NacreOverviewCard {
     id: root
     property bool active: false
+    property bool compact: false
     readonly property var player: NacrePlayers.active
     property real positionSeconds: 0
     property bool artReady: false
     property string artUrl: ""
     readonly property bool sampling: sample.running
     readonly property real progress: player?.positionSupported && player?.lengthSupported ? Overview.progress(positionSeconds, player.length) : 0
-    readonly property real artSize: Math.max(40, Math.min(width - 48, 174, height - 190))
+    readonly property real artSize: Math.max(40, Math.min(width - 48, compact ? 132 : 174, height - (compact ? 136 : 190)))
     function refresh() {
         positionSeconds = player?.positionSupported ? player.position : 0;
     }
@@ -73,7 +74,7 @@ NacreOverviewCard {
     }
     Item {
         id: art
-        y: 20
+        y: root.compact ? 12 : 20
         width: root.artSize + 12
         height: width
         anchors.horizontalCenter: parent.horizontalCenter
@@ -133,9 +134,9 @@ NacreOverviewCard {
     Column {
         id: metadata
         x: 14
-        y: art.y + art.height + 14
+        y: art.y + art.height + (root.compact ? 8 : 14)
         width: root.width - 28
-        spacing: 8
+        spacing: root.compact ? 4 : 8
         NacreText {
             objectName: "mediaTitle"
             width: parent.width
@@ -148,7 +149,7 @@ NacreOverviewCard {
         NacreText {
             width: parent.width
             text: root.player?.trackAlbum || ""
-            visible: text.length > 0
+            visible: !root.compact && text.length > 0
             color: NacreColours.palette.m3onSurfaceVariant
             font.pointSize: 10
             elide: Text.ElideRight
@@ -191,6 +192,7 @@ NacreOverviewCard {
         }
     }
     Rectangle {
+        visible: !root.compact
         x: 20
         y: parent.height - 18
         width: Math.max(0, parent.width - 40)

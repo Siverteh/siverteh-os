@@ -7,6 +7,8 @@ import "overview.js" as Overview
 NacreOverviewCard {
     id: root
     property bool active: false
+    property int updateCount: -1
+    signal updateRequested
     property string username: Quickshell.env("USER") || "User"
     property string operatingSystem: "Linux"
     property real uptimeSeconds: NaN
@@ -28,7 +30,12 @@ NacreOverviewCard {
             icon: "timer",
             text: Overview.uptime(uptimeSeconds)
         }
-    ]
+    ].concat(updateCount >= 0 ? [
+        {
+            icon: "system_update",
+            text: updateCount + " updates"
+        }
+    ] : [])
     FileView {
         path: root.active ? "/etc/os-release" : ""
         printErrors: false
@@ -88,6 +95,14 @@ NacreOverviewCard {
                     text: parent.modelData.text
                     font.pointSize: root.width >= 320 ? 12 : 10
                     elide: Text.ElideRight
+                }
+                NacreInteraction {
+                    visible: parent.index === 4
+                    disabled: parent.index !== 4
+                    accessibleName: "Open package updates"
+                    function onClicked() {
+                        root.updateRequested();
+                    }
                 }
             }
         }

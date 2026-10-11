@@ -144,6 +144,6 @@ Nacre applications use a bounded Super+M reading size; ordinary applications
 keep workspace maximization. The wallpaper queue keeps its publication transports
 ready and idle on stdin, avoiding a fresh interpreter for each warm choice.
 
-The [pearl dashboard](features/dashboard.md) is the top menu: Today, Weather,
+The [pearl dashboard](features/dashboard.md) is the top menu: Dashboard, Weather,
 Media, System and Focus. Its providers share existing wallpaper, Orient, MPRIS,
 weather and notification ownership, with optional private Brain/calendar context.
