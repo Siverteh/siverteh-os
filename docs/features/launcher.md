@@ -8,16 +8,24 @@ Super+A toggles Apps. Super by itself has no launcher binding, avoiding
 accidental opens. Super+W opens Wallpaper directly. The bottom drawer has no
 hover trigger.
 
-The app browser always opens a compact Favorites view, including when empty.
-All apps expands upward to six full rows when the screen has room;
-other categories expand to the standard browsing height; the bottom search field
-stays anchored. Typing also expands the results view. Categories come from desktop-entry metadata and empty categories are
-omitted. Typing searches all visible apps; `>` searches built-in actions.
-The heart toggles a favorite; right-click offers favorite/hide, and the hidden
-apps button restores hidden entries. Ctrl+D toggles the selected app's favorite.
-Tab moves into the category rail, arrows navigate and Enter launches; Escape
-closes. Clicking outside dismisses the panel without activating the app behind
-it. Power actions stay in the existing power menu.
+The app browser always has five rows, whether in Favorites, All apps, a category,
+Actions or search. Smaller outputs scale row/icon height to keep the same five
+slots within the viewport; the bottom search field stays anchored. Categories
+come from desktop-entry metadata and empty app categories are omitted.
+
+Typing searches visible apps and highlights the top-ranked result while the
+search field keeps keyboard focus. Enter launches that selection; arrows let
+you choose another. Actions sits directly below Favorites and lists the same
+built-in actions as `>` search. Within Actions, typing filters actions.
+
+Apps and actions share the heart, right-click favorite menu and Ctrl+D toggle
+(including while typing). Favorites can mix both in the saved order. Action IDs
+are based on the operation and argument, so an Enable/Disable label change keeps
+the favorite. Unavailable saved IDs are skipped; saved data never becomes an
+arbitrary command. Application hiding/restoration remains app-only.
+Tab moves into the category rail; Escape closes. Clicking outside dismisses the
+panel without activating the app behind it. Power controls remain in their
+existing menu.
 
 Preferences are private atomic JSON in `~/.config/nacre/launcher.json`,
 with mode 0600 and locked read/modify/write operations. They are outside source

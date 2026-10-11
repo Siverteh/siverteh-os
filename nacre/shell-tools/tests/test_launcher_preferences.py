@@ -26,6 +26,22 @@ class LauncherPreferencesTests(unittest.TestCase):
             prefs.change("hide", {"id": "two.desktop", "enabled": False})
             self.assertEqual(prefs.load()["hidden"], [])
 
+    def test_action_favorites_roundtrip_alongside_apps(self):
+        with (
+            tempfile.TemporaryDirectory() as folder,
+            patch.object(prefs, "PATH", Path(folder) / "launcher.json"),
+        ):
+            values = [
+                "music.desktop",
+                "nacre-action:toggle-setting:blur",
+                "nacre-action:toggle-setting:animations",
+            ]
+            for value in values:
+                prefs.change("favorite", {"id": value, "enabled": True})
+            self.assertEqual(prefs.load()["favorites"], values)
+            prefs.change("favorite", {"id": values[1], "enabled": False})
+            self.assertEqual(prefs.load()["favorites"], [values[0], values[2]])
+
     def test_invalid_preference_is_rejected_without_writes(self):
         with (
             tempfile.TemporaryDirectory() as folder,

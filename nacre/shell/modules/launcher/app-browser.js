@@ -1,6 +1,7 @@
 .pragma library
 const groups = [
     { id: "favorites", label: "Favorites", icon: "favorite" },
+    { id: "actions", label: "Actions", icon: "bolt" },
     { id: "all", label: "All apps", icon: "apps" },
     { id: "development", label: "Development", icon: "code", categories: ["Development"] },
     { id: "media", label: "Media", icon: "movie", categories: ["AudioVideo", "Audio", "Video"] },
@@ -21,4 +22,14 @@ function available(apps) {
 }
 function matches(item, query) {
     return (item.name + " " + (item.description || "")).toLowerCase().includes(query.toLowerCase());
+}
+
+function actions(items) {
+    return items.filter(item => item.action !== "power").map(item => Object.assign({}, item, {
+        id: "nacre-action:" + item.action + ":" + encodeURIComponent(item.value || ""),
+        kind: "action"
+    }));
+}
+function favorite(id, apps, actions) {
+    return id.startsWith("nacre-action:") ? actions.find(item => item.id === id) : apps.find(item => item.id === id);
 }

@@ -3825,7 +3825,7 @@
     },
     "nacre/shell/modules/launcher/NacreAppBrowser.qml": {
       "disposition": "independent",
-      "sha256": "084d700ff8699d0c30a7eb5109c8183d8f02d4928a8a717d26e9346c94552f6a",
+      "sha256": "17c83e93ef317dc43721f7bcd10f04e376c7c2d10240e254e35c3e8ae8b063da",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
@@ -3835,7 +3835,8 @@
         "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
         "docs/specs/orient-colors.md",
         "docs/features/orient.md",
-        "Current full body/data reviewed: independent Orient 3 portable core, its desktop compatibility adapters, original read-only studio, source attribution/audits/export templates and explicit single-publisher integration. Existing audited own engine moved with module aliases; no Caelestia/ML4W source consulted. Scientific OKLab/CVD coefficients credited to their published definitions, not claimed novel. Gallery artwork generated locally and CC0; private artwork remains outside Git. Current mode/contrast/backend/native checks and visual gallery inspection recorded; full/live release gate still required."
+        "Current full body/data reviewed: independent Orient 3 portable core, its desktop compatibility adapters, original read-only studio, source attribution/audits/export templates and explicit single-publisher integration. Existing audited own engine moved with module aliases; no Caelestia/ML4W source consulted. Scientific OKLab/CVD coefficients credited to their published definitions, not claimed novel. Gallery artwork generated locally and CC0; private artwork remains outside Git. Current mode/contrast/backend/native checks and visual gallery inspection recorded; full/live release gate still required.",
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
       ]
     },
     "nacre/shell/modules/launcher/NacreLauncherPanel.qml": {
@@ -3903,11 +3904,12 @@
     },
     "nacre/shell/modules/launcher/app-browser.js": {
       "disposition": "independent",
-      "sha256": "4b27f799d384df32e762a740870f975ad9b7277c290f0af87b87200f95cbbc4d",
+      "sha256": "04ca975a19b2338607566b3451c96d36581923521290f64f6125de78bc8febaf",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
-        "Full current body individually reviewed. Basis bc7c7e2: fresh launcher/app/wallpaper presentation from behavior specification. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped."
+        "Full current body individually reviewed. Basis bc7c7e2: fresh launcher/app/wallpaper presentation from behavior specification. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
       ]
     },
     "nacre/shell/modules/notifications/NacreNotice.qml": {
@@ -4640,11 +4642,12 @@
     },
     "nacre/shell-tools/tests/test_launcher_preferences.py": {
       "disposition": "independent",
-      "sha256": "ad3463f5313225bd23af5801501ae2b93b34395637e26756afcc433b3a332572",
+      "sha256": "fdc62823eca5481048a0c4298e123473741fece113d32b2cab33fc391fbfb74f",
       "evidence": [
         "docs/specs/persistence-helpers-source-audit.md",
         "docs/nacre/PERSISTENCE-SOURCE-AUDIT.md",
-        "Complete current source/data body reviewed. Basis a3e2420: own temp private preference mutations/permissions/malformed-file preservation fixtures. Later path changes: 548f0b4, bb46dd6, 83b3531, e044859. Actual local source history/body/public native producer and caller contracts plus first-source peer comparison support origin, not creation dates/metrics alone. Prior exposure acknowledged; no upstream/old Caelestia/ML4W body consulted for current own correction or legal clean-room/final-license claim. Framework and other callee/fixture origins remain separate."
+        "Complete current source/data body reviewed. Basis a3e2420: own temp private preference mutations/permissions/malformed-file preservation fixtures. Later path changes: 548f0b4, bb46dd6, 83b3531, e044859. Actual local source history/body/public native producer and caller contracts plus first-source peer comparison support origin, not creation dates/metrics alone. Prior exposure acknowledged; no upstream/old Caelestia/ML4W body consulted for current own correction or legal clean-room/final-license claim. Framework and other callee/fixture origins remain separate.",
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
       ]
     },
     "nacre/shell-tools/tests/test_notification_history.py": {
@@ -5845,14 +5848,15 @@
     },
     "nacre/shell-tools/tests/launcher-qml/tst_launcher.qml": {
       "disposition": "independent",
-      "sha256": "786c684a7fffd5db98757ece1f5d5d53266c2dfe6a4fe2d71302797dbdff309a",
+      "sha256": "0f40691c8c161e3c8b6351a473d5623a9c2a6eb090a463bb780f8bfd48ea8b75",
       "evidence": [
         "docs/specs/native-fixture-source-audit.md",
         "docs/nacre/NATIVE-FIXTURE-SOURCE-AUDIT.md",
         "Complete current body/data reviewed. Local creation a3e2420 siverteh/shell-tools/tests/launcher-qml/tst_launcher.qml; subsequent bc7c7e2, 548f0b4, 2c1d2ca, 83b3531, 0c00c16, a8fe3ca, fedfa0c, 7ed920d. Own native behavior fixture/minimal contract double or measured functional data; no inherited production implementation retained in fixture. External illustration metadata explicitly credited. Whole-upstream/dependency/licensing comparison remains open.",
         "docs/specs/nacre-logo.md: additive AI-specific lettering under the right lip, primary A/secondary I with text contrast protection; shared SVG/publisher/live QML binding and terminal consumer reviewed. Own paths/integration; no upstream implementation copied. Native raster, role, launcher and menu tests cover the change.",
         "docs/specs/nacre-brain.md: current naming/path migration, compatibility aliases, Brain-specific own glyph and shared brand integration explicitly reviewed. Existing independently authored behavior preserved; no upstream source copied. Migration/collision/rollback/profile guard, CLI, publisher/native launcher tests cover the changes. User-supplied shell artwork provenance remains qualified.",
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained."
+        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
       ]
     },
     "nacre/shell-tools/tests/launcher-qml/tst_panel.qml": {
@@ -6260,7 +6264,7 @@
     },
     "nacre/shell-tools/tests/test_launcher_ui.py": {
       "disposition": "independent",
-      "sha256": "42e551538fd4d4df9c7e64f9b76d9ad541644ae32ac71bb0c45d42a0706ef965",
+      "sha256": "0ee354c2457ef05d6d96ebaea305a92f27fb6c029c3bfb2660fcd5a51118fb2f",
       "evidence": [
         "docs/specs/python-fixture-source-audit.md",
         "docs/nacre/PYTHON-FIXTURE-SOURCE-AUDIT.md",
@@ -6270,7 +6274,8 @@
         "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
         "docs/specs/orient-colors.md",
         "docs/features/orient.md",
-        "Current full body/data reviewed: independent Orient 3 portable core, its desktop compatibility adapters, original read-only studio, source attribution/audits/export templates and explicit single-publisher integration. Existing audited own engine moved with module aliases; no Caelestia/ML4W source consulted. Scientific OKLab/CVD coefficients credited to their published definitions, not claimed novel. Gallery artwork generated locally and CC0; private artwork remains outside Git. Current mode/contrast/backend/native checks and visual gallery inspection recorded; full/live release gate still required."
+        "Current full body/data reviewed: independent Orient 3 portable core, its desktop compatibility adapters, original read-only studio, source attribution/audits/export templates and explicit single-publisher integration. Existing audited own engine moved with module aliases; no Caelestia/ML4W source consulted. Scientific OKLab/CVD coefficients credited to their published definitions, not claimed novel. Gallery artwork generated locally and CC0; private artwork remains outside Git. Current mode/contrast/backend/native checks and visual gallery inspection recorded; full/live release gate still required.",
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
       ]
     },
     "nacre/shell-tools/tests/test_media_performance_ui.py": {
@@ -6595,10 +6600,11 @@
     },
     "docs/features/launcher.md": {
       "disposition": "non-implementation",
-      "sha256": "181eb7a69d83c2f2665883e4a4bffda3d57cbe67445eaebc3d2f1c1b0706482e",
+      "sha256": "be8f96e31af491857451040bfaeae87c02fd113298a2cd0f78c0340bcdfce027",
       "evidence": [
         "docs/nacre/DOCUMENTATION-GUIDE-AUDIT.md",
-        "docs/specs/documentation-source-audit.md"
+        "docs/specs/documentation-source-audit.md",
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
       ],
       "notes": "Locally maintained current project behavior/deployment prose reviewed in full with history and reader/source checks; no implementation-origin or license conclusion."
     },
@@ -7516,10 +7522,11 @@
     },
     "docs/specs/launcher.md": {
       "disposition": "non-implementation",
-      "sha256": "0571e68da12a3f040dc2aaaa00e542a7cc1ccd83a24e01cfd28941ff637bc1fc",
+      "sha256": "0e15d7c3d2817f89576ae495b139bdbac60ae92c4605cab075928cc466af8b09",
       "evidence": [
         "docs/nacre/FINAL-COMPARISON.md",
-        "docs/specs/final-provenance-comparison.md"
+        "docs/specs/final-provenance-comparison.md",
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
       ],
       "notes": "Full prose read by fresh read-only reader; no fenced executable implementation. Root reviewed complete creation/change history, registry structure and whole-index upstream matches. Own historical behavior/source-audit prose, public contracts, hashes and tables; earlier status is dated, not current source certification. Initial history: 47ce57299a62f696c9c51b62da8acb606d5bf5a3 Specify the independent Nacre launcher and wallpaper presentation rewrite"
     },

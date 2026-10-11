@@ -42,9 +42,9 @@ class LauncherUITests(unittest.TestCase):
                 target / "fixtures/FastScroll.qml",
             )
             fixtures = {
-                "NacreApps": 'property var all:[{id:"editor",name:"Editor",categories:["Development"],icon:""},{id:"music",name:"Music",categories:["AudioVideo"],icon:""},{id:"browser",name:"Browser",categories:["Network"],icon:""}];readonly property var list:all.filter(a=>!LauncherPreferences.hidden.includes(a.id));function fuzzyQuery(q){return list.filter(a=>a.name.toLowerCase().includes(q.toLowerCase()))} function launch(app){}',
+                "NacreApps": 'property var all:[{id:"editor",name:"Editor",categories:["Development"],icon:""},{id:"music",name:"Music",categories:["AudioVideo"],icon:""},{id:"browser",name:"Browser",categories:["Network"],icon:""}];readonly property var list:all.filter(a=>!LauncherPreferences.hidden.includes(a.id));function fuzzyQuery(q){return list.filter(a=>a.name.toLowerCase().includes(q.toLowerCase()))} property string launched:""; function launch(app){launched=app.id;}',
                 "LauncherPreferences": 'property var favorites:[];property var hidden:[];property string error:"";property bool ready:true;function update(action,id,enabled){const key=action==="favorite"?"favorites":"hidden";let rows=this[key].filter(x=>x!==id);if(enabled)rows.push(id);this[key]=rows;}',
-                "DesktopActions": 'property var list:[{name:"Settings",description:"Desktop settings",action:"settings",icon:"settings"},{name:"Power menu",description:"Power controls",action:"power",icon:"power"}];function execute(action,value){}',
+                "DesktopActions": 'property var list:[{name:"Settings",description:"Desktop settings",action:"settings",icon:"settings"},{name:"Power menu",description:"Power controls",action:"power",icon:"power"},{name:"Disable blur",description:"Background blur",action:"toggle-setting",value:"blur",icon:"blur_on"},{name:"Disable animations",description:"Motion",action:"toggle-setting",value:"animations",icon:"animation"}];property var executed:[];function execute(action,value){executed=[action,value || ""];}',
             }
             for name, body in fixtures.items():
                 (target / "fixtures" / (name + ".qml")).write_text(

@@ -14,19 +14,20 @@ NacreSurface {
     readonly property string query: search.text
     readonly property bool commands: query.trim().startsWith(">")
     readonly property var categories: Catalog.available(NacreApps.list)
+    readonly property var actions: Catalog.actions(DesktopActions.list)
     readonly property var entries: {
-        if (commands)
-            return DesktopActions.list.filter(a => a.action !== "power" && Catalog.matches(a, query.trim().slice(1)));
+        if (commands || category === "actions")
+            return actions.filter(a => Catalog.matches(a, commands ? query.trim().slice(1) : query.trim()));
         if (query.trim())
             return NacreApps.fuzzyQuery(query.trim());
         if (category === "hidden")
             return NacreApps.all.filter(a => LauncherPreferences.hidden.includes(a.id));
         if (category === "favorites")
-            return LauncherPreferences.favorites.map(id => NacreApps.list.find(a => a.id === id)).filter(Boolean);
+            return LauncherPreferences.favorites.map(id => Catalog.favorite(id, NacreApps.list, actions)).filter(Boolean);
         return category === "all" ? NacreApps.list : NacreApps.list.filter(a => Catalog.belongs(a, category));
     }
     implicitWidth: Math.min(980, Quickshell.screens[0].width - 90)
-    implicitHeight: Math.min(category === "favorites" && !query.trim() ? Math.min(450, Math.max(300, 156 + Math.ceil(entries.length / 5) * 119)) : category === "all" ? 6 * 119 + 106 : 570, Quickshell.screens[0].height - 170)
+    implicitHeight: Math.min(5 * 119 + 106, Quickshell.screens[0].height - 170)
     radius: 22
     color: NacreColours.palette.m3surface
     function select(name) {
@@ -44,12 +45,12 @@ NacreSurface {
         const entry = entries[index];
         if (!entry)
             return;
-        if (category === "hidden") {
+        if (category === "hidden" && !query.trim()) {
             LauncherPreferences.update("hide", entry.id, false);
             return;
         }
         visibilities.launcher = false;
-        if (commands)
+        if (entry.kind === "action")
             DesktopActions.execute(entry.action, entry.value);
         else
             NacreApps.launch(entry);
@@ -68,8 +69,17 @@ NacreSurface {
         search.forceActiveFocus();
         return true;
     }
-    onEntriesChanged: if (grid.currentIndex >= entries.length)
-        grid.currentIndex = Math.max(0, entries.length - 1)
+    function selectFirst() {
+        grid.currentIndex = entries.length ? 0 : -1;
+        grid.positionViewAtBeginning();
+    }
+    onQueryChanged: selectFirst()
+    onEntriesChanged: {
+        if (query.trim())
+            selectFirst();
+        else if (grid.currentIndex >= entries.length || grid.currentIndex < 0)
+            grid.currentIndex = entries.length ? Math.max(0, Math.min(grid.currentIndex, entries.length - 1)) : -1;
+    }
     Component.onCompleted: reset()
     Connections {
         target: root.visibilities
@@ -152,7 +162,7 @@ NacreSurface {
         width: parent.width - 216
         height: parent.height - 106
         cellWidth: Math.max(116, width / Math.max(1, Math.floor(width / 140)))
-        cellHeight: 119
+        cellHeight: height / 5
         clip: true
         model: root.entries
         currentIndex: 0
@@ -162,35 +172,39 @@ NacreSurface {
             id: tile
             required property var modelData
             required property int index
-            readonly property bool aiApplication: !root.commands && (modelData.id === "nacre-ai" || modelData.id === "nacre-ai.desktop")
-            readonly property bool brainApplication: !root.commands && (modelData.id === "nacre-brain" || modelData.id === "nacre-brain.desktop")
-            readonly property bool colorsApplication: !root.commands && (modelData.id === "nacre-colors" || modelData.id === "nacre-colors.desktop")
-            readonly property bool settingsApplication: !root.commands && (modelData.id === "nacre-settings" || modelData.id === "nacre-settings.desktop")
+            objectName: "launcherTile_" + index
+            readonly property bool actionEntry: modelData.kind === "action"
+            readonly property bool selected: grid.currentIndex === index
+            readonly property real iconSize: Math.min(52, Math.max(24, grid.cellHeight - 64))
+            readonly property bool aiApplication: !actionEntry && (modelData.id === "nacre-ai" || modelData.id === "nacre-ai.desktop")
+            readonly property bool brainApplication: !actionEntry && (modelData.id === "nacre-brain" || modelData.id === "nacre-brain.desktop")
+            readonly property bool colorsApplication: !actionEntry && (modelData.id === "nacre-colors" || modelData.id === "nacre-colors.desktop")
+            readonly property bool settingsApplication: !actionEntry && (modelData.id === "nacre-settings" || modelData.id === "nacre-settings.desktop")
             width: grid.cellWidth - 8
-            height: 111
+            height: grid.cellHeight - 8
             radius: 15
-            color: grid.activeFocus && grid.currentIndex === index ? NacreColours.palette.m3primaryContainer : tileHover.hovered ? NacreColours.palette.m3surfaceContainerHigh : "transparent"
+            color: tile.selected ? NacreColours.palette.m3primaryContainer : tileHover.hovered ? NacreColours.palette.m3surfaceContainerHigh : "transparent"
             HoverHandler {
                 id: tileHover
             }
             Image {
                 id: appIcon
                 x: (parent.width - width) / 2
-                y: 12
-                width: 52
-                height: 52
-                source: !root.commands && !tile.aiApplication && !tile.brainApplication && !tile.settingsApplication && !tile.colorsApplication ? Quickshell.iconPath(tile.modelData.icon, true) : ""
+                y: Math.min(12, grid.cellHeight * .1)
+                width: tile.iconSize
+                height: tile.iconSize
+                source: !tile.actionEntry && !tile.aiApplication && !tile.brainApplication && !tile.settingsApplication && !tile.colorsApplication ? Quickshell.iconPath(tile.modelData.icon, true) : ""
                 asynchronous: true
-                visible: !root.commands && !tile.aiApplication && !tile.brainApplication && !tile.settingsApplication && !tile.colorsApplication && status === Image.Ready
+                visible: !tile.actionEntry && !tile.aiApplication && !tile.brainApplication && !tile.settingsApplication && !tile.colorsApplication && status === Image.Ready
                 sourceSize.width: 52
                 sourceSize.height: 52
             }
             BrandLogo {
                 objectName: "nacreAiAppLogo"
                 anchors.horizontalCenter: parent.horizontalCenter
-                y: 12
-                width: 52
-                height: 52
+                y: Math.min(12, grid.cellHeight * .1)
+                width: tile.iconSize
+                height: tile.iconSize
                 ai: tile.aiApplication
                 brain: tile.brainApplication
                 settings: tile.settingsApplication
@@ -199,27 +213,30 @@ NacreSurface {
             }
             NacreIcon {
                 anchors.horizontalCenter: parent.horizontalCenter
-                y: 15
-                text: root.commands ? tile.modelData.icon || "apps" : "apps"
-                visible: !tile.aiApplication && !tile.brainApplication && !tile.settingsApplication && !tile.colorsApplication && (root.commands || appIcon.status === Image.Error || appIcon.status === Image.Null)
-                font.pointSize: 34
+                y: Math.min(15, grid.cellHeight * .12)
+                text: tile.actionEntry ? tile.modelData.icon || "apps" : "apps"
+                visible: !tile.aiApplication && !tile.brainApplication && !tile.settingsApplication && !tile.colorsApplication && (tile.actionEntry || appIcon.status === Image.Error || appIcon.status === Image.Null)
+                font.pointSize: tile.iconSize * .65
             }
             NacreText {
                 x: 8
-                y: 74
+                y: Math.min(74, grid.cellHeight - 40)
                 width: parent.width - 16
+                height: Math.max(0, parent.height - y - 4)
+                wrapMode: Text.Wrap
+                maximumLineCount: 2
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
                 text: tile.modelData.name
                 font.pointSize: 10
-                color: grid.activeFocus && grid.currentIndex === tile.index ? NacreColours.palette.m3onPrimaryContainer : NacreColours.palette.m3onSurface
+                color: tile.selected ? NacreColours.palette.m3onPrimaryContainer : NacreColours.palette.m3onSurface
             }
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: event => {
                     grid.currentIndex = tile.index;
-                    if (event.button === Qt.RightButton && !root.commands) {
+                    if (event.button === Qt.RightButton) {
                         root.contextEntry = tile.modelData;
                         const point = tile.mapToItem(root, event.x, event.y);
                         context.x = Math.max(0, Math.min(root.width - context.width, point.x));
@@ -236,7 +253,7 @@ NacreSurface {
                 height: 24
                 radius: 12
                 color: "transparent"
-                visible: !root.commands && root.category !== "hidden" && (tileHover.hovered || LauncherPreferences.favorites.includes(tile.modelData.id))
+                visible: root.category !== "hidden" && (tileHover.hovered || LauncherPreferences.favorites.includes(tile.modelData.id))
                 NacreIcon {
                     anchors.centerIn: parent
                     text: "favorite"
@@ -269,7 +286,7 @@ NacreSurface {
         x: 214
         y: 78
         visible: !root.entries.length
-        text: root.category === "favorites" && !root.query ? "Add favorites with the heart on an app" : "No matches"
+        text: root.category === "favorites" && !root.query ? "Add apps or actions with their heart button" : "No matches"
         color: NacreColours.palette.m3onSurfaceVariant
         font.pointSize: 11
     }
@@ -281,11 +298,16 @@ NacreSurface {
         width: parent.width - 32
         height: 46
         padding: 14
-        placeholderText: "Search apps or > actions"
-        onTextChanged: grid.currentIndex = 0
+        placeholderText: root.category === "actions" ? "Search actions" : "Search apps or > actions"
         Keys.onDownPressed: grid.forceActiveFocus()
         Keys.onTabPressed: rail.forceActiveFocus()
         onAccepted: root.activate(Math.max(0, grid.currentIndex))
+        Keys.onPressed: event => {
+            if (event.key === Qt.Key_D && event.modifiers & Qt.ControlModifier) {
+                root.favorite(root.entries[grid.currentIndex]);
+                event.accepted = true;
+            }
+        }
         Keys.onEscapePressed: root.visibilities.launcher = false
     }
     Popup {
@@ -309,6 +331,7 @@ NacreSurface {
                 }
             }
             ActionButton {
+                visible: root.contextEntry?.kind !== "action"
                 text: root.category === "hidden" ? "Show application" : "Hide application"
                 compact: true
                 onClicked: {
@@ -330,7 +353,10 @@ NacreSurface {
                 count: root.entries.length,
                 query: root.query,
                 columns: Math.max(1, Math.floor(grid.width / grid.cellWidth)),
-                height: root.height
+                height: root.height,
+                visibleRows: 5,
+                currentIndex: grid.currentIndex,
+                selectedId: root.entries[grid.currentIndex]?.id || ""
             });
         }
     }

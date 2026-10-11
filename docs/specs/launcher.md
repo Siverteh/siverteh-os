@@ -40,20 +40,22 @@ by recovery, not a particular inherited internal object tree.
 
 ## Application browsing and actions
 
-Super+A opens compact Favorites every time, including an empty Favorites list.
-All apps expands upward to six rows when available; categories and text search
-expand the results. The search field stays at the bottom. Category labels come
-from standard desktop entries; omit empty categories, honor hidden apps and keep
-favorites ordered/persisted by the existing private preference service.
+Super+A opens Favorites at a constant five-row height. All categories, Actions,
+search and empty results retain that height. Smaller outputs scale the row/icon
+height to fit five rows. Search stays anchored at the bottom. Categories reflect
+installed desktop entries; omit empty app categories and honor hidden apps.
 
-Typing searches visible apps; `>` searches known desktop actions. Preserve right
-click favorite/hide/restore, Ctrl+D favorite toggle, category-rail Tab navigation,
-arrow selection, Enter launch, Escape dismissal and fast/inertial scrolling.
-Launching uses the existing systemd/UWSM owner. Power controls remain in the power
-menu, not a footer. Handle empty results, application removal and index clamping.
-Queries are text; never interpret search as arbitrary shell code. Keep the existing
-fallback command-palette route through fresh implementation, not an inherited
-list stack kept alive solely for compatibility.
+Search ranks visible apps, visibly selects the best result while typing and
+Enter launches it without a click. Keep arrows, Tab, Escape and fast scrolling.
+Actions follows Favorites in the rail and exposes the registered `>` actions;
+its ordinary text search filters those actions. Power controls stay separate.
+Heart/context-menu/Ctrl+D support both apps and actions, including from search.
+Use stable namespaced operation/argument IDs in the existing private favorites
+array; mixed favorites retain order, dynamic labels update, unknown IDs cannot
+execute. Hide/restore applies only to apps. Category/search changes select the
+first result; favorite changes must not reset unrelated All-app navigation.
+Maintain existing preference locking/permissions and systemd/UWSM launch owner.
+No arbitrary shell text, second preference owner or service.
 
 ## Wallpaper views
 
@@ -75,7 +77,7 @@ reduced motion. Settings uses the same caches; no new idle polling/preparation.
 
 ## Acceptance and migration
 
-Use actual replacement QML/JS in tests: compact/expanded geometry, category/search,
+Use actual replacement QML/JS in tests: fixed five-row geometry, category/search,
 favorites/hiding/restore, key/pointer navigation, action dispatch, empty/removed
 entries, open/close/focus/teardown, wallpaper filters/layout selection/navigation,
 hex hit masks, image-ready retention and private preference preservation.
