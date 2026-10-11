@@ -6,6 +6,9 @@ Slider {
     id: root
     property real progress: 0
     property string label: ""
+    property color accent: NacreTokens.accent
+    property color second: NacreTokens.orientSecondary
+    property color track: NacreTokens.raised
     property real lastUserValue: 0
     property bool dirty: false
     signal dragBegan
@@ -43,12 +46,22 @@ Slider {
         width: root.availableWidth
         height: 6
         radius: 3
-        color: NacreTokens.raised
+        color: root.track
         NacreSurface {
             width: root.position * parent.width
             height: parent.height
             radius: 3
-            color: NacreTokens.accent
+            gradient: Gradient {
+                orientation: Gradient.Horizontal
+                GradientStop {
+                    position: 0
+                    color: root.accent
+                }
+                GradientStop {
+                    position: 1
+                    color: root.second
+                }
+            }
             opacity: root.enabled ? 1 : .4
         }
     }
@@ -56,11 +69,11 @@ Slider {
         x: root.leftPadding + root.visualPosition * (root.availableWidth - width)
         y: root.topPadding + (root.availableHeight - height) / 2
         width: 16
-        height: 26
+        height: 16
         radius: 8
-        color: NacreTokens.accent
+        color: "#f2efee"
+        border.color: root.accent
         opacity: root.enabled ? 1 : .4
-        border.width: root.visualFocus ? 1 : 0
-        border.color: NacreTokens.ink
+        border.width: root.visualFocus ? 2 : 1
     }
 }

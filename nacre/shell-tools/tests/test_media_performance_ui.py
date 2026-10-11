@@ -27,6 +27,20 @@ def prepare_pages(target):
         .read_text()
         .replace("import qs.services", 'import "."')
     )
+    for name, body in {
+        "NacreMediaDetails": 'property var palette:({});property var lines:[];property var spectrum:[];property string message:""',
+        "NacreDashboardState": "property var preferences:({albumPalette:true});function save(key,value){}",
+    }.items():
+        (fixtures / (name + ".qml")).write_text(
+            "pragma Singleton\nimport QtQuick\nQtObject {" + body + "}"
+        )
+        with (fixtures / "qmldir").open("a") as manifest:
+            manifest.write(f"\nsingleton {name} 1.0 {name}.qml\n")
+    (fixtures / "NacreScrollBar.qml").write_text(
+        (SHELL / "widgets/NacreScrollBar.qml").read_text()
+    )
+    with (fixtures / "qmldir").open("a") as manifest:
+        manifest.write("\nNacreScrollBar 1.0 NacreScrollBar.qml\n")
     for name in ("NacreMediaPage", "NacrePerformancePage"):
         source = (SHELL / "modules/dashboard" / (name + ".qml")).read_text()
         source = source.replace("import Quickshell.Services.Mpris", "").replace(

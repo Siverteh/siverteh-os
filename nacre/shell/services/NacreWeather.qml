@@ -50,6 +50,10 @@ Singleton {
             for (const key of ["feelsLike", "high", "low"])
                 if (data[key] !== undefined && data[key] !== null && (!Number.isFinite(data[key]) || data[key] < -150 || data[key] > 150))
                     throw new Error();
+            if (data.hours !== undefined && (!Array.isArray(data.hours) || data.hours.length > 24 || !data.hours.every(hour => typeof hour.time === "string" && hour.time.length <= 32 && Number.isFinite(hour.temperature) && Math.abs(hour.temperature) <= 150 && (hour.rain === null || Number.isFinite(hour.rain) && hour.rain >= 0 && hour.rain <= 100))))
+                throw new Error();
+            if (data.days !== undefined && (!Array.isArray(data.days) || data.days.length > 10 || !data.days.every(day => typeof day.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(day.date) && Number.isFinite(day.low) && Number.isFinite(day.high) && day.low <= day.high && Math.abs(day.low) <= 150 && Math.abs(day.high) <= 150 && typeof day.sunrise === "string" && typeof day.sunset === "string")))
+                throw new Error();
             if (cached && reading.checked && data.checked < reading.checked)
                 return false;
             reading = JSON.parse(JSON.stringify(data));
@@ -88,7 +92,7 @@ Singleton {
     Process {
         id: reader
         objectName: "weatherReader"
-        command: ["python3", Quickshell.env("HOME") + "/.local/share/nacre/shell/tools/weather.py"]
+        command: ["python3", (Quickshell.env("NACRE_DASHBOARD_TOOLS") || Quickshell.env("HOME") + "/.local/share/nacre/shell/tools") + "/weather.py"]
         stdout: StdioCollector {
             onStreamFinished: {
                 if (root.requestLocation === root.desiredLocation)

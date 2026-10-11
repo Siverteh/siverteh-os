@@ -39,7 +39,7 @@ Scope {
         NacrePanelState.closeTransient(view);
         view.previewOnly = true;
         if (name === "dashboard") {
-            view.dashboardTab = Math.max(0, Math.min(3, index));
+            view.dashboardTab = Math.max(0, Math.min(4, index));
             view.dashboard = true;
         } else if (name === "osd")
             view.osd = true;
@@ -70,7 +70,7 @@ Scope {
             if (saved.dashboard === true) {
                 view.dashboardTab = Math.max(0, Math.min(4, Number(saved.tab) || 0));
                 view.dashboard = true;
-                view.dashboardPinned = view.dashboardTab === 4;
+                view.dashboardPinned = false;
             }
             if (saved.left === true) {
                 view.left = true;
@@ -108,10 +108,6 @@ Scope {
         const view = NacrePanelState.getForActive();
         if (!view || !Number.isInteger(index) || index < 0 || index > 4)
             return;
-        if (index === 4) {
-            NacrePanelState.openSettings();
-            return;
-        }
         view.dashboardTab = index;
         view.dashboardPinned = false;
         view.dashboard = true;

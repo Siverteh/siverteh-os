@@ -70,7 +70,7 @@ TestCase {
         view.dashboardTab = 1;
         verify(!state.visibleDashboard);
         verify(!findChild(state, "resourceFastTimer").running);
-        view.dashboardTab = 2;
+        view.dashboardTab = 3;
         verify(state.visibleDashboard);
         view.dashboard = false;
         NacrePanelState.screens = {};

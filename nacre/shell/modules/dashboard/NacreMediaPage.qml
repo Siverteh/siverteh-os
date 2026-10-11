@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls.Basic
 import Quickshell
 import Quickshell.Services.Mpris
 import qs.widgets
@@ -11,6 +12,16 @@ Item {
     required property bool shouldUpdate
     required property PersistentProperties visibilities
     readonly property var player: NacrePlayers.active
+    readonly property color pagePrimary: NacreMediaDetails.palette.primary || NacreTokens.accent
+    readonly property color pageSecondary: NacreMediaDetails.palette.secondary || NacreTokens.orientSecondary
+    readonly property color pageInk: NacreMediaDetails.palette.onSurface || NacreTokens.ink
+    readonly property var lyricLines: NacreMediaDetails.lines
+    readonly property int lyricIndex: {
+        let result = -1;
+        for (let i = 0; i < lyricLines.length && lyricLines[i].time <= positionSeconds; i++)
+            result = i;
+        return result;
+    }
     property real positionSeconds: 0
     property string artwork: ""
     property var seekOwner: null
@@ -21,7 +32,7 @@ Item {
     readonly property real progress: player?.lengthSupported && player?.length > 0 ? Model.fraction(positionSeconds / player.length) : 0
     readonly property bool compact: width < 620
     implicitWidth: 766
-    implicitHeight: Math.max(compact ? 620 : 340, choices.visible ? choices.y + choices.height + 16 : details.y + details.height + 16)
+    implicitHeight: Math.max(compact ? 800 : 540, choices.visible ? choices.y + choices.height + 16 : details.y + details.height + 16)
     function member(actor) {
         return actor && [...NacrePlayers.list].includes(actor);
     }
@@ -114,12 +125,20 @@ Item {
         running: !!(root.shouldUpdate && root.visible && root.player?.isPlaying && root.player?.positionSupported && !seek.pressed)
         onTriggered: root.refresh()
     }
+    Rectangle {
+        anchors.fill: parent
+        radius: 20
+        border.width: 1
+        border.color: Qt.alpha(root.pagePrimary, .3)
+        color: NacreMediaDetails.palette.surface || NacreTokens.raised
+    }
     Flickable {
         id: scroll
         anchors.fill: parent
         contentWidth: width
         clip: true
         boundsBehavior: Flickable.StopAtBounds
+        ScrollBar.vertical: NacreScrollBar {}
         FastScroll {
             view: scroll
         }
@@ -132,6 +151,9 @@ Item {
             height: width
             source: root.artwork
             progress: root.progress
+            first: root.pagePrimary
+            second: root.pageSecondary
+            spectrum: root.shouldUpdate ? NacreMediaDetails.spectrum : []
         }
         Column {
             id: details
@@ -143,7 +165,7 @@ Item {
                 objectName: "fullMediaTitle"
                 width: parent.width
                 text: root.player ? root.player.trackTitle || "Unknown track" : "No media playing"
-                color: NacreTokens.accent
+                color: root.pagePrimary
                 font.pointSize: 17
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
@@ -152,7 +174,7 @@ Item {
                 width: parent.width
                 text: root.player?.trackAlbum || ""
                 visible: text.length > 0
-                color: NacreTokens.mutedInk
+                color: Qt.alpha(root.pageInk, .72)
                 font.pointSize: 11
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
@@ -160,7 +182,7 @@ Item {
             NacreText {
                 width: parent.width
                 text: root.player ? root.player.trackArtist || root.player.identity : "Open a music or video app"
-                color: NacreColours.palette.m3secondary
+                color: root.pageSecondary
                 font.pointSize: 12
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
@@ -169,6 +191,8 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 8
                 Controls.NacreMediaButton {
+                    accent: root.pagePrimary
+                    ink: root.pageInk
                     objectName: "fullPrevious"
                     anchors.verticalCenter: parent.verticalCenter
                     icon: "skip_previous"
@@ -177,6 +201,8 @@ Item {
                     onClicked: root.perform("previous")
                 }
                 Controls.NacreMediaButton {
+                    accent: root.pagePrimary
+                    ink: root.pageInk
                     objectName: "fullToggle"
                     width: 48
                     height: 48
@@ -187,6 +213,8 @@ Item {
                     onClicked: root.perform("toggle")
                 }
                 Controls.NacreMediaButton {
+                    accent: root.pagePrimary
+                    ink: root.pageInk
                     objectName: "fullNext"
                     anchors.verticalCenter: parent.verticalCenter
                     icon: "skip_next"
@@ -197,6 +225,9 @@ Item {
             }
             Controls.NacreMediaSlider {
                 id: seek
+                accent: root.pagePrimary
+                second: root.pageSecondary
+                track: Qt.alpha(root.pageInk, .14)
                 objectName: "fullSeek"
                 width: parent.width
                 enabled: root.canSeek
@@ -212,19 +243,21 @@ Item {
                 NacreText {
                     text: root.player?.positionSupported ? Model.duration(root.positionSeconds) : "—"
                     font.pointSize: 10
-                    color: NacreTokens.mutedInk
+                    color: Qt.alpha(root.pageInk, .72)
                 }
                 NacreText {
                     anchors.right: parent.right
                     text: root.player?.lengthSupported ? Model.duration(root.player.length) : "—"
                     font.pointSize: 10
-                    color: NacreTokens.mutedInk
+                    color: Qt.alpha(root.pageInk, .72)
                 }
             }
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 6
                 Controls.NacreMediaButton {
+                    accent: root.pagePrimary
+                    ink: root.pageInk
                     icon: "shuffle"
                     label: "Shuffle"
                     visible: root.player?.shuffleSupported === true
@@ -233,6 +266,8 @@ Item {
                     onClicked: root.perform("shuffle")
                 }
                 Controls.NacreMediaButton {
+                    accent: root.pagePrimary
+                    ink: root.pageInk
                     icon: root.player?.loopState === MprisLoopState.Track ? "repeat_one" : "repeat"
                     label: "Cycle repeat mode"
                     visible: root.player?.loopSupported === true
@@ -258,6 +293,9 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                 }
                 Controls.NacreMediaSlider {
+                    accent: root.pagePrimary
+                    second: root.pageSecondary
+                    track: Qt.alpha(root.pageInk, .14)
                     objectName: "fullVolume"
                     width: parent.width - 36
                     label: "Player volume"
@@ -269,12 +307,69 @@ Item {
                 }
             }
         }
+        Column {
+            id: lyrics
+            x: root.compact ? 16 : 254
+            y: details.y + details.height + 20
+            width: Math.max(0, root.width - x - 16)
+            spacing: 10
+            NacreText {
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                text: root.lyricIndex > 0 ? root.lyricLines[root.lyricIndex - 1].text : ""
+                font.pointSize: 10
+                color: root.pageInk
+                opacity: .55
+                elide: Text.ElideRight
+            }
+            NacreText {
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                text: root.lyricIndex >= 0 ? root.lyricLines[root.lyricIndex].text : NacreMediaDetails.message || (root.player ? "Loading track details…" : "")
+                font.pointSize: 15
+                color: root.pagePrimary
+                wrapMode: Text.Wrap
+            }
+            NacreText {
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                text: root.lyricIndex >= 0 && root.lyricIndex + 1 < root.lyricLines.length ? root.lyricLines[root.lyricIndex + 1].text : ""
+                font.pointSize: 10
+                color: root.pageInk
+                opacity: .55
+                elide: Text.ElideRight
+            }
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 8
+                ActionButton {
+                    text: "Output device"
+                    icon: "speaker"
+                    compact: true
+                    onClicked: NacrePanelState.openControls("audio")
+                }
+                ActionButton {
+                    text: "Album colors"
+                    compact: true
+                    selected: NacreDashboardState.preferences.albumPalette !== false
+                    onClicked: NacreDashboardState.save("albumPalette", !NacreDashboardState.preferences.albumPalette)
+                }
+            }
+            NacreText {
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                text: NacreMediaDetails.lines.length ? "Lyrics: LRCLIB" : ""
+                font.pointSize: 8
+                color: root.pageInk
+                opacity: .6
+            }
+        }
         Flow {
             id: choices
             objectName: "fullPlayerChoices"
             visible: NacrePlayers.list.length > 1
             x: 16
-            y: details.y + details.height + 12
+            y: lyrics.y + lyrics.height + 12
             width: parent.width - 32
             spacing: 6
             Repeater {
@@ -290,6 +385,6 @@ Item {
                 }
             }
         }
-        contentHeight: root.implicitHeight
+        contentHeight: Math.max(root.implicitHeight, lyrics.y + lyrics.height + 16, choices.visible ? choices.y + choices.height + 16 : 0)
     }
 }

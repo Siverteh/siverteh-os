@@ -40,22 +40,38 @@ class DashboardAssemblyTests(unittest.TestCase):
                     "required property var visibilities",
                 )
                 (target / (name + ".qml")).write_text(source)
+            (fixtures / "NacreDashboardState.qml").write_text(
+                'pragma Singleton\nimport QtQuick\nQtObject {property var tabs:["today","weather","media","system","focus"]}'
+            )
+            (fixtures / "NacrePanelState.qml").write_text(
+                "pragma Singleton\nimport QtQuick\nQtObject {property bool hidden:false;function openSettings(value){}}"
+            )
+            with (fixtures / "qmldir").open("a") as manifest:
+                manifest.write("\nsingleton NacrePanelState 1.0 NacrePanelState.qml\n")
+            (fixtures / "ActionButton.qml").write_text(
+                "import QtQuick\nRectangle {property string text;property string icon;property bool compact:false;property string accessibleLabel;signal clicked;implicitWidth:34;implicitHeight:34}"
+            )
+            with (fixtures / "qmldir").open("a") as manifest:
+                manifest.write(
+                    "\nsingleton NacreDashboardState 1.0 NacreDashboardState.qml\n"
+                )
             for name in (
-                "NacreOverview",
+                "NacreTodayPage",
+                "NacreWeatherPage",
                 "NacreMediaPage",
-                "NacrePerformancePage",
-                "NacreWorkspacePage",
-                "NacreSettings",
+                "NacreSystemPage",
+                "NacreFocusPage",
+                "NacreDashboardCustomize",
             ):
-                fields = {
-                    "NacreOverview": "required property bool shouldUpdate",
-                    "NacreMediaPage": "required property bool shouldUpdate;required property var visibilities",
-                    "NacrePerformancePage": "required property bool shouldUpdate",
-                    "NacreWorkspacePage": "required property var visibilities",
-                    "NacreSettings": "property bool active: true",
-                }[name]
+                fields = (
+                    "required property bool shouldUpdate"
+                    if name != "NacreDashboardCustomize"
+                    else ""
+                )
+                if name in ("NacreTodayPage", "NacreMediaPage"):
+                    fields += ";required property var visibilities"
                 (target / (name + ".qml")).write_text(
-                    f'import QtQuick\nItem {{implicitWidth:820;implicitHeight:420;property string pageName:"{name}";{fields}}}'
+                    f'import QtQuick\nItem {{implicitWidth:940;implicitHeight:550;property string pageName:"{name}";{fields}}}'
                 )
             shutil.copy2(
                 ROOT / "tests/dashboard-qml/tst_dashboard.qml",

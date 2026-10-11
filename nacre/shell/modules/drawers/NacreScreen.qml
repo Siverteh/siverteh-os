@@ -111,6 +111,7 @@ NacreWindow {
         }
         NacreFrameLips {
             id: lips
+            focusProgress: NacreDashboardState.progress
             anchors.fill: parent
             screen: root.screen
             visibilities: flags

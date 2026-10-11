@@ -223,10 +223,11 @@ TestCase {
         view.workspace(-1);
         compare(NacreHyprland.calls.length, 1);
         view.tab(4);
-        verify(NacreSettingsApp.visible);
-        verify(!one.dashboard && !one.dashboardPinned);
+        verify(!NacreSettingsApp.visible);
+        verify(one.dashboard && !one.dashboardPinned);
+        compare(one.dashboardTab, 4);
         view.tab(99);
-        compare(one.dashboardTab, 0);
+        compare(one.dashboardTab, 4);
         verify(!view.restore("{"));
         verify(!view.restore("[]"));
         verify(!view.restore('{"version":2}'));

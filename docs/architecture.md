@@ -284,3 +284,14 @@ and atomic palette publisher; the blocking helper loops introduce no idle pollin
 They restart with the shell and report job failure if their process dies.
 `desktop-actions.py maximize` owns per-window bounded reading-size restoration
 for Nacre apps, with private bounded state keyed by stable window ID/pid/title.
+
+## Pearl dashboard
+
+`modules/dashboard/NacreDashboardPanel.qml` composes five pages inside the shared
+frame. DashboardState owns private tab options and persistent focus deadlines;
+DashboardSystem supplies visible-only native network reads and occasional bounded
+process/disk snapshots; MediaDetails owns track-keyed lyrics/art palette and Cava.
+The existing NacreWeather owner consumes the extended Open-Meteo snapshot. Album
+palettes are page-local and never enter global palette publication. Focus DND
+changes relinquish ownership on manual changes. See [dashboard](features/dashboard.md)
+for controls, external data, privacy, cache limits and performance.

@@ -1868,13 +1868,15 @@
     },
     "nacre/shell-tools/tests/test_lock_widgets.py": {
       "disposition": "independent",
-      "sha256": "c4cd0396f877ddcd5d67ce6ae3842e64449287323271f4e7d8a1f172d585f571",
+      "sha256": "43d5e5f57c3b6ab66930105ec20f2923bfa44624c4e094f4135e810979147a7b",
       "evidence": [
         "docs/specs/lock-appearance-pipeline.md",
         "docs/nacre/PROVENANCE.md#lock-appearance-pipeline-source-review",
         "Own mixed lock/device/weather fixtures introduced a0090ce, layout and dashboard corrections 80a23f2/55fbe20/namespace 548f0b4. Current full test body reviewed; new future-cache/bounded-local-read regressions from observed implementation gaps, fail baseline and pass fix. Stubbed weather/device/IPC actors; actual other helper implementation audits remain separate.",
         "docs/specs/nacre-logo.md",
-        "Current source explicitly reassessed for approved shell identity: geometry-derived paths/names, shared color/contrast/rendering/build changes, or logo fixture/publisher dependencies only. Existing owner behavior retained and actual native/publisher tests run; no blanket origin claim for user artwork."
+        "Current source explicitly reassessed for approved shell identity: geometry-derived paths/names, shared color/contrast/rendering/build changes, or logo fixture/publisher dependencies only. Existing owner behavior retained and actual native/publisher tests run; no blanket origin claim for user artwork.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole body authored/reviewed locally from the own dashboard spec. Existing independent behavior retained where reused. Native/provider tests and real screenshots validate UI, scope, cached/stale data, DND ownership and capability/input guards. No inherited shell implementation consulted; public Qt/Quickshell/Orient/Cava/HTTP APIs remain external dependencies; private data excluded."
       ]
     },
     "nacre/shell-tools/tests/test_lock_ready.py": {
@@ -2768,11 +2770,13 @@
     },
     "nacre/shell/services/NacreSystemUsage.qml": {
       "disposition": "independent",
-      "sha256": "adcb3c01fb2adcfb5befa7617fc7a2333a8419d1847bb4055f29d9de15b6edea",
+      "sha256": "a95b3a723974c35975a2894f9ce34d521e8211cd181ad331574a18613f89cbec",
       "evidence": [
         "docs/specs/services-source-audit.md",
         "docs/nacre/SERVICES-SOURCE-AUDIT.md",
-        "Full current body reviewed; authoring/replacement 18d8aab: Independent native owner/replacement and own compatibility adapter; completed matching provider spec/behavior boundary retained. Later changes: 5da1132. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited."
+        "Full current body reviewed; authoring/replacement 18d8aab: Independent native owner/replacement and own compatibility adapter; completed matching provider spec/behavior boundary retained. Later changes: 5da1132. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell/services/NacreTime.qml": {
@@ -2793,11 +2797,13 @@
     },
     "nacre/shell/services/NacreWeather.qml": {
       "disposition": "independent",
-      "sha256": "9f77095d2717175037977792abd8b2f6da61e99ee764fcec43ccb7a57ed67809",
+      "sha256": "6b7bce0c3a09286fe32d6bb5f45b073c4f5b0f4391a502cafd76b2de67bb77ff",
       "evidence": [
         "docs/specs/services-source-audit.md",
         "docs/nacre/SERVICES-SOURCE-AUDIT.md",
-        "Full current body reviewed; authoring/replacement 28707f7: Independent native owner/replacement and own compatibility adapter; completed matching provider spec/behavior boundary retained. Later changes: none. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited."
+        "Full current body reviewed; authoring/replacement 28707f7: Independent native owner/replacement and own compatibility adapter; completed matching provider spec/behavior boundary retained. Later changes: none. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell/services/Network.qml": {
@@ -2946,13 +2952,15 @@
     },
     "nacre/shell/modules/NacreShellIpc.qml": {
       "disposition": "independent",
-      "sha256": "db743d952245ffb072f7078dcab01ca8b9649640477699e29738cd46df1d7ef5",
+      "sha256": "6f2bdd3b88b3ae0aab320005a67b6a8e3d14b641492ab91c107a3c0b6b8b9d8f",
       "evidence": [
         "docs/specs/core-presentation-source-audit.md",
         "docs/nacre/CORE-PRESENTATION-SOURCE-AUDIT.md",
         "Full current body reviewed; replacement basis 5da1132: Independent root/routing/IPC/shortcut replacement from public contracts; current later battery initialization retained, not inherited shell body. Subsequent current-file history: unchanged. Compatibility names/public preference values are contracts, not old algorithms. Earlier source exposure acknowledged; no old/upstream body consulted for current own API correction. Source code review does not certify all dependency/test/asset origin or hardware/auth paths.",
         "docs/specs/frame-control-center.md",
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained."
+        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ],
       "notes": "Own approved frame/control-center slice reviewed against current Nacre spec and public APIs, without inherited source consultation. Marked geometry and passive feedback remain shared-state owned; no writes on opening or idle polling. Current notification history clock observes actual visibility and reduced-motion feedback settles immediately. New native/ownership/routing/geometry regressions complement existing full checks and live acceptance."
     },
@@ -3355,7 +3363,7 @@
     },
     "nacre/shell/modules/drawers/NacreScreen.qml": {
       "disposition": "independent",
-      "sha256": "94ae526635a48fae5ac8fa3213cbf10410b4c4f6bae81164c159052a7540de69",
+      "sha256": "85606beb5a3651ac0941b18e427cadf13e8149759bc72082a4cd08ecc7ca644b",
       "evidence": [
         "docs/specs/core-presentation-source-audit.md",
         "docs/nacre/CORE-PRESENTATION-SOURCE-AUDIT.md",
@@ -3365,7 +3373,9 @@
         "Current body reviewed: fullscreen visibility uses the stable output model identity rather than reading the surface screen during its own map/unmap transition. Real Wayland fullscreen/open/Escape and log checks validate this integration. Independent local correction, no inherited upstream implementation used.",
         "Current full body reviewed: header now composes above frame and panels within the same per-output Wayland surface, preventing compositor focus raises from covering it. Shared mask retains enabled header input and releases disabled header input; native fixture updated accordingly. Retired separate bar surface. Independently authored local integration from frame-control-center spec, no inherited sources used.",
         "docs/specs/iridescent-frame.md",
-        "Current full body reviewed: independently authored rectangle-union exposed contour, native Qt6.12 gradient rim and flat primary/secondary enamel with finite reduced-motion-aware sweep. Behavior follows own spec; existing logical input/provider ownership retained. Actual QML JS union/overlap/closing tests and native quiet/dark/light/moving-mask/render tests validate it. Visual research used first-party screenshots/README, not upstream implementation bodies; prior exposure acknowledged, no legal clean-room claim."
+        "Current full body reviewed: independently authored rectangle-union exposed contour, native Qt6.12 gradient rim and flat primary/secondary enamel with finite reduced-motion-aware sweep. Behavior follows own spec; existing logical input/provider ownership retained. Actual QML JS union/overlap/closing tests and native quiet/dark/light/moving-mask/render tests validate it. Visual research used first-party screenshots/README, not upstream implementation bodies; prior exposure acknowledged, no legal clean-room claim.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell/modules/drawers/layout.js": {
@@ -3587,33 +3597,39 @@
     },
     "nacre/shell/modules/dashboard/NacreDashboardNavigation.qml": {
       "disposition": "independent",
-      "sha256": "8bdbece9d78b231779b0494801c34adcbad5a0e5d1c55e919c78dcc2461a9e1c",
+      "sha256": "fb7d6f132a1f63089e6b0696d3c0a9c1a5821d858e723a61483d672c3a714ed5",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
         "Full current body individually reviewed. Basis 1cd6ab7: fresh dashboard assembly and immediate navigation. Later current-file changes: 02b2bda. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained."
+        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell/modules/dashboard/NacreDashboardPanel.qml": {
       "disposition": "independent",
-      "sha256": "19136302d2cb55ce0c2a8f722fa68f5a4e8ce5c6538ec44bafa77605ea35c299",
+      "sha256": "ae06910c52056bff6ed06e565cf6d246d845efd506e428393c598a86a3f85169",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
         "Full current body individually reviewed. Basis 1cd6ab7: fresh dashboard assembly and immediate navigation. Later current-file changes: 96c83f4, 19083bd, ed8f1e1, e82a4e6, 0a2b8a2. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
         "docs/specs/visual-cleanup.md",
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained."
+        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ],
       "notes": "Own post-rewrite visual cleanup changes re-reviewed against user requirements/current Nacre source: title/grid geometry, continuous measured picker travel and opaque image buffering, compact device/history presentation, finite motion, faster bounded axis-aware scrolling and cancel-before-settings-reset. Updated native fixtures keep real token/viewport contracts and assert new speed/timing, not retired values. No inherited implementation copied; actual synthetic RHI captures and native input/geometry tests inspected, device/provider/private state untouched. Full deployment/CI gates remain separate."
     },
     "nacre/shell/modules/dashboard/NacreMediaPage.qml": {
       "disposition": "independent",
-      "sha256": "2745068c1f7a879b5e70a88d9140c7b9bbc44c8333f93603d4edc88dc439f81b",
+      "sha256": "30b8c4a901d0fb608d779770e9a27abd03a89a90f6fce399eee74baca512679f",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
-        "Full current body individually reviewed. Basis e82a4e6: fresh media/performance presentation with native capability and lifecycle guards. Later current-file changes: 02b2bda, 13701fc, 3a8f60a. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped."
+        "Full current body individually reviewed. Basis e82a4e6: fresh media/performance presentation with native capability and lifecycle guards. Later current-file changes: 02b2bda, 13701fc, 3a8f60a. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell/modules/dashboard/NacreOverview.qml": {
@@ -3645,29 +3661,35 @@
     },
     "nacre/shell/modules/dashboard/media/NacreAlbum.qml": {
       "disposition": "independent",
-      "sha256": "9bba1804b18ddab5cb64c62838864da730d831e4e9b91c5399409a2da166a1e2",
+      "sha256": "07e50aa8b9ac781a659d20b49a07bce878afcc067abc3e89c0fa4b52ebac782a",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
-        "Full current body individually reviewed. Basis e82a4e6: fresh media/performance presentation with native capability and lifecycle guards. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped."
+        "Full current body individually reviewed. Basis e82a4e6: fresh media/performance presentation with native capability and lifecycle guards. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell/modules/dashboard/media/NacreMediaButton.qml": {
       "disposition": "independent",
-      "sha256": "35ee2f8ef3ac2d8ab41bda99927cc332c7a07a14c49842116d8a25908154c9f0",
+      "sha256": "2e4eba895e4c890a510de6798986fe985d3cd076442f1af316b2e12addd34eaa",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
-        "Full current body individually reviewed. Basis e82a4e6: fresh media/performance presentation with native capability and lifecycle guards. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped."
+        "Full current body individually reviewed. Basis e82a4e6: fresh media/performance presentation with native capability and lifecycle guards. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole body authored/reviewed locally from the own dashboard spec. Existing independent behavior retained where reused. Native/provider tests and real screenshots validate UI, scope, cached/stale data, DND ownership and capability/input guards. No inherited shell implementation consulted; public Qt/Quickshell/Orient/Cava/HTTP APIs remain external dependencies; private data excluded."
       ]
     },
     "nacre/shell/modules/dashboard/media/NacreMediaSlider.qml": {
       "disposition": "independent",
-      "sha256": "b3da92e675a0fa231a37693ca4ae0a7873e1457886f7504f1de5828d7f537633",
+      "sha256": "d60a7cbc756f37d7d82d5a619382925101cbe80a076c282a2c7545531445263f",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
-        "Full current body individually reviewed. Basis e82a4e6: fresh media/performance presentation with native capability and lifecycle guards. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped."
+        "Full current body individually reviewed. Basis e82a4e6: fresh media/performance presentation with native capability and lifecycle guards. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole body authored/reviewed locally from the own dashboard spec. Existing independent behavior retained where reused. Native/provider tests and real screenshots validate UI, scope, cached/stale data, DND ownership and capability/input guards. No inherited shell implementation consulted; public Qt/Quickshell/Orient/Cava/HTTP APIs remain external dependencies; private data excluded."
       ]
     },
     "nacre/shell/modules/dashboard/media/NacreMetricRing.qml": {
@@ -4315,11 +4337,13 @@
     },
     "nacre/shell-tools/weather.py": {
       "disposition": "independent",
-      "sha256": "10eecde6b92f9eb653c88e928dcf134aaac2bd478e5983810652811b4473a7c1",
+      "sha256": "71184b678816e945907ee7c3f92796237d36af00e95ccd6a9b390b4ba7c643c3",
       "evidence": [
         "docs/specs/device-session-source-audit.md",
         "docs/nacre/DEVICE-SESSION-SOURCE-AUDIT.md",
-        "Full current source body reviewed. Basis a0090ce: local bounded HTTPS forecast/cached-stale producer; no vendor weather-service body. Later path changes: 548f0b4, 55fbe20, 83b3531. Current native producer/caller interfaces, local source history and first-source peer comparison support origin; generic native query sequences/shared own helpers are not vendor algorithm inheritance. Prior exposure acknowledged; no old/upstream Caelestia/ML4W body consulted for current correction or legal clean-room/final-license claim. Native libraries and other callee/helper/fixture origins remain separate."
+        "Full current source body reviewed. Basis a0090ce: local bounded HTTPS forecast/cached-stale producer; no vendor weather-service body. Later path changes: 548f0b4, 55fbe20, 83b3531. Current native producer/caller interfaces, local source history and first-source peer comparison support origin; generic native query sequences/shared own helpers are not vendor algorithm inheritance. Prior exposure acknowledged; no old/upstream Caelestia/ML4W body consulted for current correction or legal clean-room/final-license claim. Native libraries and other callee/helper/fixture origins remain separate.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell-tools/power-button-policy.py": {
@@ -5639,12 +5663,14 @@
     },
     "nacre/shell-tools/tests/dashboard-qml/tst_dashboard.qml": {
       "disposition": "independent",
-      "sha256": "873586bcb18685abba7f08ef902a780642160451eeb3a3ab4337eff242906f5b",
+      "sha256": "ef7331f1f6055de35a9725a3ba7cbf4c013cdebe90aef18fc0846aa5be308dbf",
       "evidence": [
         "docs/specs/native-fixture-source-audit.md",
         "docs/nacre/NATIVE-FIXTURE-SOURCE-AUDIT.md",
         "Complete current body/data reviewed. Local creation 1cd6ab7 nacre/shell-tools/tests/dashboard-qml/tst_dashboard.qml; subsequent 96c83f4, 19083bd, ed8f1e1, e82a4e6, 0a2b8a2. Own native behavior fixture/minimal contract double or measured functional data; no inherited production implementation retained in fixture. External illustration metadata explicitly credited. Whole-upstream/dependency/licensing comparison remains open.",
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained."
+        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ],
       "notes": "Own post-rewrite visual cleanup changes re-reviewed against user requirements/current Nacre source: title/grid geometry, continuous measured picker travel and opaque image buffering, compact device/history presentation, finite motion, faster bounded axis-aware scrolling and cancel-before-settings-reset. Updated native fixtures keep real token/viewport contracts and assert new speed/timing, not retired values. No inherited implementation copied; actual synthetic RHI captures and native input/geometry tests inspected, device/provider/private state untouched. Full deployment/CI gates remain separate."
     },
@@ -5759,11 +5785,13 @@
     },
     "nacre/shell-tools/tests/device-qml/tst_NacreSystemUsage.qml": {
       "disposition": "independent",
-      "sha256": "c528d6f129265007b4c2028476d097c79647d5a89e3433186901cb596df26f49",
+      "sha256": "4bd338bedc7e12c63d3296945e7afe3dec5f4ffb65768d9251cbccfe5d7a7c6d",
       "evidence": [
         "docs/specs/native-fixture-source-audit.md",
         "docs/nacre/NATIVE-FIXTURE-SOURCE-AUDIT.md",
-        "Complete current body/data reviewed. Local creation 18d8aab nacre/shell-tools/tests/device-qml/tst_NacreSystemUsage.qml; subsequent 5da1132. Own native behavior fixture/minimal contract double or measured functional data; no inherited production implementation retained in fixture. External illustration metadata explicitly credited. Whole-upstream/dependency/licensing comparison remains open."
+        "Complete current body/data reviewed. Local creation 18d8aab nacre/shell-tools/tests/device-qml/tst_NacreSystemUsage.qml; subsequent 5da1132. Own native behavior fixture/minimal contract double or measured functional data; no inherited production implementation retained in fixture. External illustration metadata explicitly credited. Whole-upstream/dependency/licensing comparison remains open.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell-tools/tests/device-qml/tst_NacreTime.qml": {
@@ -6044,13 +6072,15 @@
     },
     "nacre/shell-tools/tests/state-qml/tst_state.qml": {
       "disposition": "independent",
-      "sha256": "bef810940e44437509f1ec53741c0575b16b0025b8b51c321b241284e4d288a0",
+      "sha256": "eed09ee8a081671e1ebe016dcab8a3f19a839fcd9e6966d5dc3b9feff2078a84",
       "evidence": [
         "docs/specs/native-fixture-source-audit.md",
         "docs/nacre/NATIVE-FIXTURE-SOURCE-AUDIT.md",
         "Complete current body/data reviewed. Local creation 5da1132 nacre/shell-tools/tests/state-qml/tst_state.qml; subsequent none. Own native behavior fixture/minimal contract double or measured functional data; no inherited production implementation retained in fixture. External illustration metadata explicitly credited. Whole-upstream/dependency/licensing comparison remains open.",
         "docs/specs/frame-control-center.md",
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained."
+        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ],
       "notes": "Own approved frame/control-center slice reviewed against current Nacre spec and public APIs, without inherited source consultation. Marked geometry and passive feedback remain shared-state owned; no writes on opening or idle polling. Current notification history clock observes actual visibility and reduced-motion feedback settles immediately. New native/ownership/routing/geometry regressions complement existing full checks and live acceptance."
     },
@@ -6195,11 +6225,13 @@
     },
     "nacre/shell-tools/tests/test_dashboard_assembly.py": {
       "disposition": "independent",
-      "sha256": "61751bd3ba72ddd6fb9fb9999dcf8a4646fa98adf62df5d2a68339fe3d42706d",
+      "sha256": "31d0137f00e6ef1db751682f1474c61281f870ac6a8ff91cc3a781ea6b54812b",
       "evidence": [
         "docs/specs/python-fixture-source-audit.md",
         "docs/nacre/PYTHON-FIXTURE-SOURCE-AUDIT.md",
-        "Full current Python/embedded fixture body and local history reviewed. Creation 1cd6ab7:nacre/shell-tools/tests/test_dashboard_assembly.py; subsequent 19083bd, ed8f1e1, e82a4e6, 0a2b8a2. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open."
+        "Full current Python/embedded fixture body and local history reviewed. Creation 1cd6ab7:nacre/shell-tools/tests/test_dashboard_assembly.py; subsequent 19083bd, ed8f1e1, e82a4e6, 0a2b8a2. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell-tools/tests/test_desktop_wrappers.py": {
@@ -6215,9 +6247,11 @@
     },
     "nacre/shell-tools/tests/test_device_services.py": {
       "disposition": "independent",
-      "sha256": "3b5a2d98099a7e1b711f33d3de4cf419a56176d6fdf60d35b98643921379f5bb",
+      "sha256": "62a4aeda29e14a2cb285892eeef931ac669091c221d28680d8f26b4067f1883a",
       "evidence": [
-        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole body authored/reviewed locally from the own dashboard spec. Existing independent behavior retained where reused. Native/provider tests and real screenshots validate UI, scope, cached/stale data, DND ownership and capability/input guards. No inherited shell implementation consulted; public Qt/Quickshell/Orient/Cava/HTTP APIs remain external dependencies; private data excluded."
       ],
       "notes": "Own approved frame/control-center slice reviewed against current Nacre spec and public APIs, without inherited source consultation. Marked geometry and passive feedback remain shared-state owned; no writes on opening or idle polling. Current notification history clock observes actual visibility and reduced-motion feedback settles immediately. New native/ownership/routing/geometry regressions complement existing full checks and live acceptance."
     },
@@ -6289,11 +6323,13 @@
     },
     "nacre/shell-tools/tests/test_media_performance_ui.py": {
       "disposition": "independent",
-      "sha256": "d0ce13cd801140ee26d51f4117f06f83d07bbb53104f78deed51e9784ba1fe51",
+      "sha256": "a5663864ad023908b3c340cab0ebcc2180b0604436a2d9d7901891b960e34a45",
       "evidence": [
         "docs/specs/python-fixture-source-audit.md",
         "docs/nacre/PYTHON-FIXTURE-SOURCE-AUDIT.md",
-        "Full current Python/embedded fixture body and local history reviewed. Creation e82a4e6:nacre/shell-tools/tests/test_media_performance_ui.py; subsequent 18d8aab. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open."
+        "Full current Python/embedded fixture body and local history reviewed. Creation e82a4e6:nacre/shell-tools/tests/test_media_performance_ui.py; subsequent 18d8aab. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell-tools/tests/test_notifications_ui.py": {
@@ -6522,10 +6558,12 @@
     },
     "docs/architecture.md": {
       "disposition": "non-implementation",
-      "sha256": "1364cd2b2438397452d7dc3b7d009bba023ee3fe804d50f639b761347173ae24",
+      "sha256": "177706bcce3c9b19d5246d468a7ab1ca8cf3eacba6767889ee6affaba2e35341",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
-        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "docs/features/appearance.md": {
@@ -6729,10 +6767,12 @@
     },
     "docs/overview.md": {
       "disposition": "non-implementation",
-      "sha256": "42159817d7783cce466c2bc5ef8953b4cbb0fad7b45dc295ea12ed4af4ece88d",
+      "sha256": "419361b26ad2d2b1f90b82e38f24ad0c0e97f643b27810099d9813fb5486bfb3",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
-        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/login/README.md": {
@@ -8102,7 +8142,7 @@
     },
     "nacre/shell/modules/drawers/NacreFrameLips.qml": {
       "disposition": "independent",
-      "sha256": "b2a86a1da2ff46ca7b9b9d7f171d9c2efef360a618c98837e9b236e8db7c2dac",
+      "sha256": "b07204de1fceba6a1cd8b2332557d05d05ce40d795650e034153d1a015ab35d4",
       "evidence": [
         "docs/specs/frame-control-center.md",
         "Current body reviewed for tiny smooth moving lips and stable frame/header stacking, from frame-control-center spec. Native curved-shape/input and moving-edge fixtures cover geometry; real Wayland focus and bar visibility are checked after deployment. No upstream inherited implementation consulted for these changes.",
@@ -8111,7 +8151,9 @@
         "Current full body reviewed: independently authored rectangle-union exposed contour, native Qt6.12 gradient rim and flat primary/secondary enamel with finite reduced-motion-aware sweep. Behavior follows own spec; existing logical input/provider ownership retained. Actual QML JS union/overlap/closing tests and native quiet/dark/light/moving-mask/render tests validate it. Visual research used first-party screenshots/README, not upstream implementation bodies; prior exposure acknowledged, no legal clean-room claim.",
         "docs/specs/iridescent-frame.md",
         "Current full body reviewed: handle visibility independent of passive hover eligibility during modal/galleries; actual disabled/master-hide options retained. Old painted panel subtrees disable input on logical closing, avoiding interception during explicit handle switches. Native actual-lip and actual-host fixtures cover persistent landmarks, no passive replacement, deliberate switch and stale-control press exclusion. Own local correction, no upstream implementation used.",
-        "Current full body reviewed for moving-handle dismissal: stationary pointer gates cover open and resting trigger regions, and exit only rearms after observing departure. Actual native fixture reproduces return-under-pointer and checks release after departure. Own correction to independently authored hover service; no upstream implementation consulted."
+        "Current full body reviewed for moving-handle dismissal: stationary pointer gates cover open and resting trigger regions, and exit only rearms after observing departure. Actual native fixture reproduces return-under-pointer and checks release after departure. Own correction to independently authored hover service; no upstream implementation consulted.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell/modules/osd/NacreLevelNotice.qml": {
@@ -8140,14 +8182,16 @@
     },
     "nacre/shell/widgets/NacreFrameLip.qml": {
       "disposition": "independent",
-      "sha256": "1a2354b50fa61a60a5646f0f07cd338967ae5a832d0d836d6ffd62eec3cf0eed",
+      "sha256": "c967ad7ece2526d5f436638b00dc5416f17c45f25eaaf54f2eea64d68b1b19bc",
       "evidence": [
         "docs/specs/frame-control-center.md",
         "Current body reviewed for tiny smooth moving lips and stable frame/header stacking, from frame-control-center spec. Native curved-shape/input and moving-edge fixtures cover geometry; real Wayland focus and bar visibility are checked after deployment. No upstream inherited implementation consulted for these changes.",
         "Current body reviewed: only the protruding curve blends body at the join to the existing primary accent at its tip. Finite120ms hover-strength transition respects reduced motion and palette roles update immediately. Native frame pixels verify tinted tips with unchanged body/frame and input geometry. Independent local visual refinement; no inherited implementation consulted.",
         "Current body reviewed: user-approved visible lip depth5px sides/6px top, unchanged lengths. Side cubic controls now reach the full declared depth; top retains1px join overlap. Primary gradient and masks match actual geometry. Native rendered outer-tip pixels distinguish the deeper shape and base/input/moving-edge fixtures pass. Independent local correction without inherited upstream implementation.",
         "docs/specs/iridescent-frame.md",
-        "Current full body reviewed: independently authored rectangle-union exposed contour, native Qt6.12 gradient rim and flat primary/secondary enamel with finite reduced-motion-aware sweep. Behavior follows own spec; existing logical input/provider ownership retained. Actual QML JS union/overlap/closing tests and native quiet/dark/light/moving-mask/render tests validate it. Visual research used first-party screenshots/README, not upstream implementation bodies; prior exposure acknowledged, no legal clean-room claim."
+        "Current full body reviewed: independently authored rectangle-union exposed contour, native Qt6.12 gradient rim and flat primary/secondary enamel with finite reduced-motion-aware sweep. Behavior follows own spec; existing logical input/provider ownership retained. Actual QML JS union/overlap/closing tests and native quiet/dark/light/moving-mask/render tests validate it. Visual research used first-party screenshots/README, not upstream implementation bodies; prior exposure acknowledged, no legal clean-room claim.",
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
       ]
     },
     "nacre/shell/widgets/NacreRangeSlider.qml": {
@@ -9646,6 +9690,150 @@
         "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ],
       "sha256": "787f9c9e62ad5249b22caacea952d71e0802e63c928574316d7df8d8aeae213b"
+    },
+    "docs/features/dashboard.md": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "4d208aeeecf3aadde9df3b5940e73164a7eb388cf79b0c3678b14936ec368dfb"
+    },
+    "docs/specs/pearl-dashboard.md": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "97294baf0c012d6fccd4d581fd57d08c75de457444b08525c25778d818385ba7"
+    },
+    "nacre/shell-tools/dashboard-data.py": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "4c8e2d4f998b6ec6cc0841f33f009a1341d6f5e34ff69ff92462cd657091fef8"
+    },
+    "nacre/shell-tools/dashboard-media.py": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "1a69b6b6d099143f83197f3a519801753b75720836a7041ccccf626bceb64a36"
+    },
+    "nacre/shell-tools/dashboard-system.py": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "2042ecca270419dc3c8a04487b341308bcd3766d22f7ff893074cfbb99ada5e9"
+    },
+    "nacre/shell-tools/tests/test_pearl_dashboard_data.py": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "5f5a05d2f198fcff9c7c682dfff7f8b8724e5e756c6708fc5087f48d47fcdf37"
+    },
+    "nacre/shell/modules/dashboard/NacreChamberGauge.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "c0cb250e66f7a509798991e29cfc142dd9933245e92e99409b710b9df97ac9c8"
+    },
+    "nacre/shell/modules/dashboard/NacreDashboardCustomize.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "4d76ff92fde13c27e68bd8857edcdaa7ea5aa84ecdbe93bdd954b5a0dc50ed5c"
+    },
+    "nacre/shell/modules/dashboard/NacreDashboardHero.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "a1f6ce5497ea4c894ee7f7ac9c07fc57b0f3c165559782b5c4b1de6a29f12900"
+    },
+    "nacre/shell/modules/dashboard/NacreFocusPage.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "b59bc92fd8f5fa7b164613347f8788548a00e9deffe5f44dccdf6b5855a3a1a1"
+    },
+    "nacre/shell/modules/dashboard/NacreSystemPage.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "d259b33c72e6289fbeec28ba22efaf159be3311afe7d5989042323e4021ef67a"
+    },
+    "nacre/shell/modules/dashboard/NacreTodayPage.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "af3e79ec35db5387de72df74b360db3df2645939d16431b7f8dd2023610a7069"
+    },
+    "nacre/shell/modules/dashboard/NacreWeatherPage.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "3d9570bb590794243f5df556e8ade1d03d704c6b42d68bcb597ab39b2d1e812f"
+    },
+    "nacre/shell/modules/dashboard/NacreWeatherSky.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "6028ae8ab7e2b12ea9cafe4fe269f8696536b942be0a79f125096f20b15b4ed8"
+    },
+    "nacre/shell/services/NacreDashboardState.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "3c8efa3334cbf3e15d42f286e0bfcc7f142b51847122fd16184da5aa8e45308f"
+    },
+    "nacre/shell/services/NacreDashboardSystem.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "ac1c2cb37a9e80f89125dfe9667837e3c4b15ab6d9d55a3dbd52d1fafa3aec8a"
+    },
+    "nacre/shell/services/NacreMediaDetails.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+      ],
+      "sha256": "af10563928ad67d1e00730102b3b6f3da458cfefd6a76c5631c97282316a98c6"
+    },
+    "nacre/shell-tools/tests/test_pearl_dashboard_focus.py": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/pearl-dashboard.md",
+        "Whole body authored/reviewed locally from the own dashboard spec. Existing independent behavior retained where reused. Native/provider tests and real screenshots validate UI, scope, cached/stale data, DND ownership and capability/input guards. No inherited shell implementation consulted; public Qt/Quickshell/Orient/Cava/HTTP APIs remain external dependencies; private data excluded."
+      ],
+      "sha256": "c4649749ee1d88d961abb97e88a39a1425757b1578e725e188a0d4f4e5b1b43c"
     }
   }
 }

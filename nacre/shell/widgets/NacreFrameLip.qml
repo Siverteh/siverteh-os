@@ -5,6 +5,7 @@ Item {
     id: root
     required property string edge
     property real base: 10
+    property real progress: 0
     property bool active: false
     property alias hovered: pointer.containsMouse
     readonly property real pointerX: pointer.mouseX
@@ -157,6 +158,15 @@ Item {
                 }
             }
         }
+    }
+    Rectangle {
+        visible: root.edge === "top" && root.progress > 0
+        x: root.visualRect.x + root.shoulder * 2
+        y: 2
+        width: Math.max(0, root.visualRect.width - root.shoulder * 4) * Math.max(0, Math.min(1, root.progress))
+        height: 2
+        radius: 1
+        color: "#f2efee"
     }
     MouseArea {
         id: pointer

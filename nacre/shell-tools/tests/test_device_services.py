@@ -86,6 +86,7 @@ class DeviceServiceTests(unittest.TestCase):
                         .replace("import Quickshell.Io", 'import "fixtures"')
                         .replace("import Quickshell", "")
                         .replace('Quickshell.env("HOME")', '"/fixture"')
+                        .replace('Quickshell.env("NACRE_DASHBOARD_TOOLS")', '""')
                     )
                     (target / (component + ".qml")).write_text(source)
             if name == "NacrePresentation":
@@ -168,6 +169,7 @@ class DeviceServiceTests(unittest.TestCase):
                 .replace("import Quickshell", 'import QtQuick\nimport "fixtures"')
                 .replace("Singleton {", "Item {")
                 .replace('Quickshell.env("HOME")', '"/fixture"')
+                .replace('Quickshell.env("NACRE_DASHBOARD_TOOLS")', '""')
             )
             source = source.replace(
                 "../utils/scripts/wallpaper-rotation.js", "wallpaper-rotation.js"

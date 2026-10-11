@@ -8,6 +8,7 @@ Item {
     required property var screen
     required property var visibilities
     required property var controller
+    property real focusProgress: 0
     readonly property var rimHandles: [handle(top, topRect), handle(left, leftRect), handle(right, rightRect)].filter(Boolean)
     function handle(lip, region) {
         if (!lip.visible)
@@ -61,6 +62,7 @@ Item {
     }
     NacreFrameLip {
         id: top
+        progress: root.focusProgress
         objectName: "frameTopLip"
         active: root.visibilities.dashboard
         edge: "top"
