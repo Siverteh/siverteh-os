@@ -78,8 +78,7 @@ class WelcomeUITests(unittest.TestCase):
             (fixtures / "NacreWallpapers.qml").write_text(
                 "pragma Singleton\nimport QtQuick\nQtObject {property string displayPath:"
                 + json.dumps(samples[0]["path"])
-                + ";property string selectedPath:"
-                ";function pickFiles(){}}"
+                + ';property string selectedPath:"";function pickFiles(){}}'
             )
             with (fixtures / "qmldir").open("a") as stream:
                 stream.write("\nsingleton NacreWallpapers 1.0 NacreWallpapers.qml\n")
@@ -213,12 +212,12 @@ TestCase {id:test;name:"Welcome";width:1200;height:900;visible:true;when:windowS
   findChild(view,"welcomeMode_light").clicked();compare(NacreWelcomeApp.actions[1],"theme:light:");
   findChild(view,"welcomePersonality_pop").clicked();compare(NacreWelcomeApp.actions[2],"theme::pop");verify(findChild(view,"welcomePersonality_pop").selected);
   findChild(view,"welcomePersonality_pearl").clicked();compare(NacreWelcomeApp.actions[3],"theme::pearl");
-  NacreWelcomeApp.demoBusy=true;verify(!findChild(view,"welcomeMode_dark").enabled);NacreWelcomeApp.demoBusy=false;
+  view.forceActiveFocus();NacreWelcomeApp.demoBusy=true;verify(!findChild(view,"welcomeMode_dark").enabled);NacreWelcomeApp.demoBusy=false;
   findChild(view,"welcomeRestoreDemo").clicked();compare(NacreWelcomeApp.actions[4],"restore-demo");verify(!findChild(view,"welcomeRestoreDemo").visible);
   findChild(view,"welcomeColors").clicked();compare(NacreWelcomeApp.actions[5],"colors");
   findChild(view,"welcomeStep_shortcuts").children[0];
   NacreWelcomeApp.jump("shortcuts");wait(180);compare(NacreWelcomeApp.page,"shortcuts");
-  const settingsRow=findChild(view,"welcomeShortcut_settings");verify(settingsRow.height>=80);
+  const settingsRow=findChild(view,"welcomeShortcut_settings");verify(settingsRow.height>findChild(view,"welcomeShortcut_launcher").height);
   for(const child of settingsRow.children){verify(child.y+child.height<=settingsRow.height)}
   verify(canvas.contentHeight>canvas.height);
   NacreWelcomeApp.jump("apps");wait(180);

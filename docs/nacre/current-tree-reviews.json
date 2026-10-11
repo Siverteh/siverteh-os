@@ -9439,9 +9439,9 @@
     "nacre/shell-tools/tests/test_welcome_ui.py": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11 live fit/feedback review: compact130px demo preview keeps secondary actions above the fixed footer; style/mode and scene selection acknowledge clicks immediately while actual palette publication remains with the existing publisher. Pending state resets after completion/error or a new opening. Duplicate valid presentations clear earlier diagnostics. Native click/highlight and ordering fixtures reviewed; no external implementation copied."
+        "2026-10-11 native CI portability review: actual row contents and growth versus single-key rows validate layout across font metrics, replacing an80px machine-specific threshold; corrected quoted empty selectedPath in the safe fixture and focus moved before disabled-control test. Assertions retain overflow detection and style/click/state coverage. Desktop behavior unchanged; independently authored local tests."
       ],
-      "sha256": "fc069d5d13c99f87b0d12ac18d97cbb7f88313618cce8961fd845d6b746c0850"
+      "sha256": "c980027306b58bbf7fd54fb35997dd1f5738c99aa1d1642a7cb43ffec9f01a1e"
     },
     "nacre/shell-tools/welcome.py": {
       "disposition": "independent",
