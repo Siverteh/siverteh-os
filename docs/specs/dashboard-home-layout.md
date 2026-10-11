@@ -48,14 +48,14 @@ baselines and both system actions.
 ## Wallpaper transport refinement
 
 Use Wallpapers and Colors side by side above a pill of the same total width, with three equal slots:
-chevron-left, pause/play, chevron-right. Static images have an empty center; never
+chevron-left, pause/play, chevron-right. Static images show an informative picture glyph in the center; never
 move arrows when changing media type. Both rows share left/right edges; the middle
-slot remains reserved on static images. Give controls themed tooltips and accessible
+slot remains reserved on static images and has no playback action. Give controls themed tooltips and accessible
 labels. Pause uses the single existing wallpaper preference owner, not a new player
 or timer. Previous follows a bounded100entry successful-visit history, with previous
 catalogue entry as the initial fallback. Do not consume history on a failed change.
 Native tests exercise shuffled/sequential history, busy guards, pause persistence
-command, source restart and fixed positions across static/dynamic changes.
+command, noninteractive static indicator, source restart and fixed positions across static/dynamic changes.
 
 Wallpaper history captures the outgoing path when the selection transaction starts.
 The last-poster file can update before the worker response; reading current state

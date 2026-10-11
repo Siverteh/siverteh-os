@@ -8080,9 +8080,10 @@
     "nacre/shell-tools/tests/test_control_tools.py": {
       "disposition": "independent",
       "evidence": [
-        "docs/specs/frame-control-center.md"
+        "docs/specs/frame-control-center.md",
+        "Unit night-light fixtures isolate session runtime environment; external ownership assertions remain intact. Current wallpaper spec now explicitly describes the static picture indicator, superseding empty-center design. No runtime night-light behavior altered."
       ],
-      "sha256": "9fe06ba1fb597472276e5a98aa49db1780f9e30120283d0433d6d8ac1b65f2b8",
+      "sha256": "81a0471966a2be86536f883a70712baf9ae133b395d255ec716c4e969668fb8d",
       "notes": "Own approved frame/control-center slice reviewed against current Nacre spec and public APIs, without inherited source consultation. Marked geometry and passive feedback remain shared-state owned; no writes on opening or idle polling. Current notification history clock observes actual visibility and reduced-motion feedback settles immediately. New native/ownership/routing/geometry regressions complement existing full checks and live acceptance."
     },
     "nacre/shell/modules/controlcenter/NacreControlCenter.qml": {
@@ -9842,9 +9843,10 @@
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
         "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
         "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted.",
-        "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted."
+        "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted.",
+        "Unit night-light fixtures isolate session runtime environment; external ownership assertions remain intact. Current wallpaper spec now explicitly describes the static picture indicator, superseding empty-center design. No runtime night-light behavior altered."
       ],
-      "sha256": "ded038fef58f577d5bf0512708dc5d32fdd6eca7251171b6d547bc67fa7f3192"
+      "sha256": "f9f3c84404b9121f98e25efcdb96dd0cfde30cc0443efec783a17b374b9ed621"
     },
     "nacre/shell/modules/dashboard/NacreDashboardSummary.qml": {
       "disposition": "independent",

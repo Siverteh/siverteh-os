@@ -15,6 +15,15 @@ spec.loader.exec_module(tools)
 
 
 class ControlToolsTests(unittest.TestCase):
+    def setUp(self):
+        # Unit fixtures must not discover a night-light socket from the live desktop.
+        self.enterContext(
+            patch.dict(
+                tools.os.environ,
+                {"HYPRLAND_INSTANCE_SIGNATURE": "", "XDG_RUNTIME_DIR": ""},
+            )
+        )
+
     def test_state_discovery_is_readonly_and_external_owner_is_visible(self):
         with (
             tempfile.TemporaryDirectory() as folder,
