@@ -78,7 +78,8 @@ class WelcomeUITests(unittest.TestCase):
             (fixtures / "NacreWallpapers.qml").write_text(
                 "pragma Singleton\nimport QtQuick\nQtObject {property string displayPath:"
                 + json.dumps(samples[0]["path"])
-                + ";function pickFiles(){}}"
+                + ";property string selectedPath:"
+                ";function pickFiles(){}}"
             )
             with (fixtures / "qmldir").open("a") as stream:
                 stream.write("\nsingleton NacreWallpapers 1.0 NacreWallpapers.qml\n")
@@ -110,11 +111,11 @@ class WelcomeUITests(unittest.TestCase):
 import QtQuick
 QtObject { property string page:"welcome";property var steps:["welcome","colors","shortcuts","apps","ready"];readonly property int step:Math.max(0,steps.indexOf(page));property string error:"";property bool busy:false;
  property var data:({preferences:{showAtLogin:true},available:{ai:false,brain:false},shortcuts:SHORTCUTS});
- property var actions:[];property string optionalApp:"";property var demoEntries:SAMPLES;property bool demoBusy:false;property string demoError:"";property bool demoStarting:false;property bool demoChanged:false;property bool demoRestored:false;
+ property string requestedMode:"";property string requestedPersonality:"";property var actions:[];property string optionalApp:"";property var demoEntries:SAMPLES;property bool demoBusy:false;property string demoError:"";property bool demoStarting:false;property bool demoChanged:false;property bool demoRestored:false;
  property var appearance:({palettePreset:"wallpaper",paletteMode:"CURRENT_MODE",palettePersonality:"natural"});
  function refresh(){}function setup(name){optionalApp=name}function selectDemo(path){demoChanged=true;actions=[...actions,"scene:"+path]}
  function restoreDemo(){actions=[...actions,"restore-demo"];demoChanged=false;demoRestored=true}
- function themeDemo(mode,name){actions=[...actions,"theme:"+mode+":"+name]}
+ function themeDemo(mode,name){if(mode)requestedMode=mode;if(name)requestedPersonality=name;actions=[...actions,"theme:"+mode+":"+name]}
  function route(name){actions=[...actions,name]} function link(name){actions=[...actions,"link:"+name]}
  function setStartup(value){data=Object.assign({},data,{preferences:{showAtLogin:value}})}
  function openCredit(url){actions=[...actions,"credit:"+url]}
@@ -210,7 +211,7 @@ TestCase {id:test;name:"Welcome";width:1200;height:900;visible:true;when:windowS
   const hit=findChild(scene,"nacreInteractionFeedback").parent;mouseClick(hit,20,20);
   compare(NacreWelcomeApp.actions[0],"scene:"+NacreWelcomeApp.demoEntries[1].path);
   findChild(view,"welcomeMode_light").clicked();compare(NacreWelcomeApp.actions[1],"theme:light:");
-  findChild(view,"welcomePersonality_pop").clicked();compare(NacreWelcomeApp.actions[2],"theme::pop");
+  findChild(view,"welcomePersonality_pop").clicked();compare(NacreWelcomeApp.actions[2],"theme::pop");verify(findChild(view,"welcomePersonality_pop").selected);
   findChild(view,"welcomePersonality_pearl").clicked();compare(NacreWelcomeApp.actions[3],"theme::pearl");
   NacreWelcomeApp.demoBusy=true;verify(!findChild(view,"welcomeMode_dark").enabled);NacreWelcomeApp.demoBusy=false;
   findChild(view,"welcomeRestoreDemo").clicked();compare(NacreWelcomeApp.actions[4],"restore-demo");verify(!findChild(view,"welcomeRestoreDemo").visible);

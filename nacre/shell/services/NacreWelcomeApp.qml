@@ -26,6 +26,8 @@ Singleton {
     property bool demoChanged: false
     property bool demoRestored: false
     property bool demoStarting: false
+    property string requestedMode: ""
+    property string requestedPersonality: ""
     readonly property bool demoBusy: demoStarting || NacreWallpapers.demoRestoring || NacreWallpapers.themeBusy || !!NacreWallpapers.selectedPath || !!NacreWallpapers.queuedPath
     readonly property var appearance: NacreWallpapers.appearancePreferences
     readonly property string demoError: error || NacreWallpapers.error || ""
@@ -62,10 +64,14 @@ Singleton {
         const value = {
             palettePreset: "wallpaper"
         };
-        if (["dark", "light"].includes(mode))
+        if (["dark", "light"].includes(mode)) {
+            requestedMode = mode;
             value.paletteMode = mode;
-        if (["natural", "pigment", "harmony", "pop", "mist", "vivid", "pearl", "tide"].includes(personality))
+        }
+        if (["natural", "pigment", "harmony", "pop", "mist", "vivid", "pearl", "tide"].includes(personality)) {
+            requestedPersonality = personality;
             value.palettePersonality = personality;
+        }
         if (Object.keys(value).length > 1) {
             demoChanged = true;
             demoRestored = false;
@@ -81,6 +87,10 @@ Singleton {
     Connections {
         target: NacreWallpapers
         function onThemeBusyChanged() {
+            if (!NacreWallpapers.themeBusy) {
+                root.requestedMode = "";
+                root.requestedPersonality = "";
+            }
             root.captureWhenReady();
         }
         function onSelectedPathChanged() {
@@ -162,6 +172,8 @@ Singleton {
         visible = true;
         optionalApp = "";
         if (newSession) {
+            requestedMode = "";
+            requestedPersonality = "";
             demoGeneration++;
             demoEntries = [];
             demoSnapshot = "";

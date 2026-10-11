@@ -58,8 +58,10 @@ Singleton {
             return false;
         const record = JSON.parse(JSON.stringify(data));
         record.poster = canonicalPoster(record.poster);
-        if (JSON.stringify(record) === JSON.stringify(pending))
+        if (JSON.stringify(record) === JSON.stringify(pending)) {
+            error = "";
             return true;
+        }
         const commit = !active.colours || active.poster === record.poster;
         state = {
             pending: record,

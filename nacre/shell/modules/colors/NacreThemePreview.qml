@@ -72,7 +72,7 @@ Rectangle {
         x: 14
         y: root.compact ? 40 : 50
         width: parent.width - 28
-        height: root.compact ? 100 : 120
+        height: root.compact ? 80 : 120
         radius: 9
         color: root.c("surfaceContainer")
         Rectangle {
@@ -112,7 +112,7 @@ Rectangle {
         }
         Rectangle {
             x: parent.width - 105
-            y: root.compact ? 82 : 84
+            y: root.compact ? 76 : 84
             width: 90
             height: 3
             color: root.c("secondary")

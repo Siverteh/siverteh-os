@@ -29,7 +29,7 @@ Column {
                     color: NacreTokens.raised
                     border.width: selected ? 2 : 1
                     border.color: selected ? Qt.alpha(NacreTokens.ink, .65) : Qt.alpha(NacreTokens.outline, .4)
-                    readonly property bool selected: NacreWallpapers.displayPath === tile.modelData.path
+                    readonly property bool selected: (NacreWallpapers.selectedPath || NacreWallpapers.displayPath) === tile.modelData.path
                     enabled: !NacreWelcomeApp.demoBusy
                     NacreClip {
                         x: 4
@@ -116,7 +116,7 @@ Column {
                     objectName: "welcomePersonality_" + modelData
                     text: modelData.charAt(0).toUpperCase() + modelData.slice(1)
                     compact: true
-                    selected: NacreWelcomeApp.appearance.palettePersonality === modelData
+                    selected: (NacreWelcomeApp.requestedPersonality || NacreWelcomeApp.appearance.palettePersonality) === modelData
                     enabled: !NacreWelcomeApp.demoBusy
                     onClicked: NacreWelcomeApp.themeDemo("", modelData)
                 }
@@ -135,7 +135,7 @@ Column {
                     accessibleLabel: modelData === "dark" ? "Dark colors" : "Light colors"
                     icon: modelData === "dark" ? "dark_mode" : "light_mode"
                     compact: true
-                    selected: NacreWelcomeApp.appearance.paletteMode === modelData
+                    selected: (NacreWelcomeApp.requestedMode || NacreWelcomeApp.appearance.paletteMode) === modelData
                     enabled: !NacreWelcomeApp.demoBusy
                     onClicked: NacreWelcomeApp.themeDemo(modelData, "")
                 }
@@ -154,7 +154,7 @@ Column {
                 tide: "Colors gently warmed or cooled with the time of day",
                 pop: "A bold contrasting detail becomes the accent",
                 pearl: "Neutral surfaces and Nacre's mother-of-pearl tones"
-            })[NacreWelcomeApp.appearance.palettePersonality] || "Your chosen color style"
+            })[NacreWelcomeApp.requestedPersonality || NacreWelcomeApp.appearance.palettePersonality] || "Your chosen color style"
         font.pointSize: 10
         color: NacreTokens.mutedInk
     }
@@ -163,7 +163,7 @@ Column {
         spacing: 18
         NacreThemePreview {
             width: Math.min(440, parent.width * .58)
-            height: 150
+            height: 130
             compact: true
             palette: NacrePresentation.active.colours || {}
             wallpaper: NacreWallpapers.displayPreview || ""

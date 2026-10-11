@@ -2798,9 +2798,9 @@
     },
     "nacre/shell/services/NacrePresentation.qml": {
       "disposition": "independent",
-      "sha256": "9129b33865fef4cf889ab1c69cd09742d32abf4a0043a8a3a0c4b0e0e9659d72",
+      "sha256": "33b1fdedc464cb6a2e7ed90db602726f7f2bf8e53c6cadb5164abf4db8ccfc52",
       "evidence": [
-        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
+        "2026-10-11 live fit/feedback review: compact130px demo preview keeps secondary actions above the fixed footer; style/mode and scene selection acknowledge clicks immediately while actual palette publication remains with the existing publisher. Pending state resets after completion/error or a new opening. Duplicate valid presentations clear earlier diagnostics. Native click/highlight and ordering fixtures reviewed; no external implementation copied."
       ]
     },
     "nacre/shell/services/NacreSystemUsage.qml": {
@@ -5782,9 +5782,9 @@
     },
     "nacre/shell-tools/tests/device-qml/tst_NacrePresentation.qml": {
       "disposition": "independent",
-      "sha256": "5eafdfd5a9c3fdf6d04ff43f5bfdb9a6c45056e3ccd3cff7b7bebcc3653d5e82",
+      "sha256": "1994e5015d7baec7fb2def73149a9dc0e43877cb87cc72d11738c238685e5b51",
       "evidence": [
-        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
+        "2026-10-11 live fit/feedback review: compact130px demo preview keeps secondary actions above the fixed footer; style/mode and scene selection acknowledge clicks immediately while actual palette publication remains with the existing publisher. Pending state resets after completion/error or a new opening. Duplicate valid presentations clear earlier diagnostics. Native click/highlight and ordering fixtures reviewed; no external implementation copied."
       ]
     },
     "nacre/shell-tools/tests/device-qml/tst_NacreSystemUsage.qml": {
@@ -9315,9 +9315,9 @@
     },
     "nacre/shell/modules/colors/NacreThemePreview.qml": {
       "disposition": "independent",
-      "sha256": "6e7dbbd1608bae344da51a588f6937c01ecea91416a189fecf5c013bf4bc9c12",
+      "sha256": "c32d8787d138dbfbe87c8fd48de9ede6fb54f69b6a834f07923fb9153ba6c402",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 live fit/feedback review: compact130px demo preview keeps secondary actions above the fixed footer; style/mode and scene selection acknowledge clicks immediately while actual palette publication remains with the existing publisher. Pending state resets after completion/error or a new opening. Duplicate valid presentations clear earlier diagnostics. Native click/highlight and ordering fixtures reviewed; no external implementation copied."
       ]
     },
     "nacre/shell/services/NacreColorsApp.qml": {
@@ -9411,9 +9411,9 @@
     "docs/features/welcome.md": {
       "disposition": "non-implementation",
       "evidence": [
-        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
+        "2026-10-11 live fit/feedback review: compact130px demo preview keeps secondary actions above the fixed footer; style/mode and scene selection acknowledge clicks immediately while actual palette publication remains with the existing publisher. Pending state resets after completion/error or a new opening. Duplicate valid presentations clear earlier diagnostics. Native click/highlight and ordering fixtures reviewed; no external implementation copied."
       ],
-      "sha256": "d8130b8556d12ed32ee8ac90b175d265982229fd53f94a313cf6ef0f8a1f891f"
+      "sha256": "3eab3371b4f4d604b0d08b2dd5b43f252552078c6bd62046a34ee8b15084318e"
     },
     "docs/specs/welcome.md": {
       "disposition": "non-implementation",
@@ -9439,9 +9439,9 @@
     "nacre/shell-tools/tests/test_welcome_ui.py": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 live fit/feedback review: compact130px demo preview keeps secondary actions above the fixed footer; style/mode and scene selection acknowledge clicks immediately while actual palette publication remains with the existing publisher. Pending state resets after completion/error or a new opening. Duplicate valid presentations clear earlier diagnostics. Native click/highlight and ordering fixtures reviewed; no external implementation copied."
       ],
-      "sha256": "d9942a9c47773d0f2d562788f0e72c228b2fd40a1f7c08d03d8c44eee0a4297f"
+      "sha256": "fc069d5d13c99f87b0d12ac18d97cbb7f88313618cce8961fd845d6b746c0850"
     },
     "nacre/shell-tools/welcome.py": {
       "disposition": "independent",
@@ -9490,9 +9490,9 @@
     "nacre/shell/services/NacreWelcomeApp.qml": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 live fit/feedback review: compact130px demo preview keeps secondary actions above the fixed footer; style/mode and scene selection acknowledge clicks immediately while actual palette publication remains with the existing publisher. Pending state resets after completion/error or a new opening. Duplicate valid presentations clear earlier diagnostics. Native click/highlight and ordering fixtures reviewed; no external implementation copied."
       ],
-      "sha256": "53cc47983fd55b95cb2f02d754c4b3eecdb9794b503f3b6bdef3ae40fded745d"
+      "sha256": "3f5acda4367fdf74d3de9d2e8fecb11f3fcc2683d082be74c8cc83b6a81e494d"
     },
     "docs/specs/welcome-live-demo.md": {
       "disposition": "non-implementation",
@@ -9506,9 +9506,9 @@
     "nacre/shell/modules/welcome/NacreWelcomeDemo.qml": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
+        "2026-10-11 live fit/feedback review: compact130px demo preview keeps secondary actions above the fixed footer; style/mode and scene selection acknowledge clicks immediately while actual palette publication remains with the existing publisher. Pending state resets after completion/error or a new opening. Duplicate valid presentations clear earlier diagnostics. Native click/highlight and ordering fixtures reviewed; no external implementation copied."
       ],
-      "sha256": "8845e527cc77fd760b4474a4a955611c53600fa4792af2d826b8d7d1e71d411f"
+      "sha256": "377c1a51dddc423e2558e62f55b124f56e98c90b7f3674c94b15b385c19c38ee"
     },
     "nacre/shell-tools/demo-wallpapers.py": {
       "disposition": "independent",

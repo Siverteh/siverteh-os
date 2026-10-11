@@ -51,7 +51,9 @@ TestCase {
         verify(state.accept(earlier));
         verify(state.accept(newer));
         const revision = state.revision;
+        state.error = "Earlier invalid read";
         verify(state.accept(newer));
+        compare(state.error, "");
         compare(state.revision, revision);
         verify(!state.accept(earlier));
         compare(state.pending.poster, "/fixture/second");

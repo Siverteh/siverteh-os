@@ -54,3 +54,7 @@ Publication sequence numbers reject delayed older reads; matching image readines
 still gates new wallpapers. Welcome holds only four full-size still previews while
 active, then releases them. Warm-up also prepares demo login backgrounds, avoiding
 first-click image conversion. No idle animation, polling or second publisher.
+
+Clicked styles/modes and scene rings acknowledge the request immediately while
+the actual palette remains publication-owned. Pending highlights settle to the
+committed selection or return to it on failure; previews show committed colors.
