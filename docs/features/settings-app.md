@@ -51,3 +51,7 @@ back to the normal path. Accent selection and color calculations are unchanged.
 Super+S is the only managed shortcut for Settings. Settings opens centered and floating;
 Super+M uses the same maximized toggle as any other window. Super+T toggles
 floating when desired.
+
+Floating maximization inherits the normal outer gaps with
+`general.float_gaps = -1`, so Super+M keeps the same frame spacing as tiled
+windows. This follows private outer-gap changes without custom resize state.

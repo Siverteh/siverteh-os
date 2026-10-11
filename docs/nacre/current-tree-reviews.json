@@ -1433,11 +1433,12 @@
     },
     "hypr/conf/window.lua": {
       "disposition": "independent",
-      "sha256": "ffe06e58a31864af0f8887d46e7deeee2207e77ac1c422cf20708bba2a1b366f",
+      "sha256": "a4ee1ac624d3817ae234cb3de410a21741ecfbd8a24a47dc75022d7e061e5511",
       "evidence": [
         "docs/specs/session-defaults.md",
         "docs/nacre/PROVENANCE.md#session-input-and-placement-default-replacement",
-        "replacement 0ffb982: bodies deleted then independently composed from native option observations/public contracts and Hyprland APIs; installed bytes and native behavior verified; root/private dependencies remain separate audits"
+        "replacement 0ffb982: bodies deleted then independently composed from native option observations/public contracts and Hyprland APIs; installed bytes and native behavior verified; root/private dependencies remain separate audits",
+        "2026-10-11 native gap refinement: general.float_gaps=-1 inherits ordinary outer gaps. Live floating maximized geometry matches tiled at[23,63]/1874x1114 versus[11,51]/1898x1138 before; no binding or resize helper change. Installed option and official Hyprland variable documentation checked."
       ]
     },
     "hypr/conf/animation.lua": {
@@ -8445,11 +8446,12 @@
     },
     "docs/features/settings-app.md": {
       "disposition": "non-implementation",
-      "sha256": "ebdd80c4e1dc23be90e88af81b3d161ae1669b22852b3c985cc2473c3f4e3d3d",
+      "sha256": "34bcb8040718893871d9f637eee3e493f4baa54f15058080d5f35c4c8d54b775",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
         "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
-        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied.",
+        "2026-10-11 native gap refinement: general.float_gaps=-1 inherits ordinary outer gaps. Live floating maximized geometry matches tiled at[23,63]/1874x1114 versus[11,51]/1898x1138 before; no binding or resize helper change. Installed option and official Hyprland variable documentation checked."
       ]
     },
     "docs/specs/settings-app.md": {
