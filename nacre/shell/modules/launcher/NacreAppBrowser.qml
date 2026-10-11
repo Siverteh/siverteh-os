@@ -97,6 +97,15 @@ NacreSurface {
                 hidden: "hidden"
             })[name] || (NacreMenu.resolve(name) ? name : "apps"));
     }
+    function resolveLeafRoute() {
+        const node = NacreMenu.node(route);
+        if (node?.kind !== "action")
+            return;
+        const selected = node.id;
+        route = Menu.parentOf(selected) || "home";
+        selection = entries.findIndex(entry => entry.id === selected);
+        keyboardSelection = selection >= 0;
+    }
     function reset() {
         activePrompt = NacreMenuPrompt.active && NacreMenuPrompt.ownerView === visibilities ? NacreMenuPrompt.request : null;
         history = [];
@@ -110,6 +119,7 @@ NacreSurface {
         keyboardSelection = false;
         search.text = visibilities.launcherQuery || "";
         selection = picker ? Menu.firstEnabled(entries) : scope.text ? Menu.firstEnabled(entries) : -1;
+        resolveLeafRoute();
         NacreMenu.prepare(route, query, true);
         if (inputPicker) {
             form = {
@@ -372,6 +382,13 @@ NacreSurface {
         function onLauncherRequestChanged() {
             if (root.visibilities.launcher)
                 Qt.callLater(root.reset);
+        }
+    }
+    Connections {
+        target: NacreMenu
+        function onCatalogChanged() {
+            if (root.visibilities.launcher && !root.query)
+                root.resolveLeafRoute();
         }
     }
     Connections {
@@ -1090,6 +1107,9 @@ NacreSurface {
                 count: root.entries.length,
                 query: ["ai", "brain"].includes(root.scope.kind) ? root.scope.prefix : root.query,
                 columns: root.appLayout ? Math.max(1, Math.floor(grid.width / grid.cellWidth)) : 1,
+                width: root.width,
+                x: root.mapToItem(null, 0, 0).x,
+                y: root.mapToItem(null, 0, 0).y,
                 height: root.height,
                 visibleRows: root.appLayout ? 5 : Math.floor(results.height / 58),
                 currentIndex: root.hasSelection ? root.selection : -1,

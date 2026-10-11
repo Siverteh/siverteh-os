@@ -3847,7 +3847,7 @@
     },
     "nacre/shell/modules/launcher/NacreAppBrowser.qml": {
       "disposition": "independent",
-      "sha256": "0e6227db489315c38c17c09b68136056fce83b44166dbbe08a143be8c5c346b1",
+      "sha256": "749147f08474ff3edbff7fe19f0376a3f3a298a0faf3aee51177fa240e7bc457",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
@@ -3860,7 +3860,8 @@
         "Current full body/data reviewed: independent Orient 3 portable core, its desktop compatibility adapters, original read-only studio, source attribution/audits/export templates and explicit single-publisher integration. Existing audited own engine moved with module aliases; no Caelestia/ML4W source consulted. Scientific OKLab/CVD coefficients credited to their published definitions, not claimed novel. Gallery artwork generated locally and CC0; private artwork remains outside Git. Current mode/contrast/backend/native checks and visual gallery inspection recorded; full/live release gate still required.",
         "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied.",
         "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied.",
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "2026-10-11: initial leaf-route resolution selects its parent and row without execution; native Qt regression added; safe debug geometry exposed for layout inspection."
       ]
     },
     "nacre/shell/modules/launcher/NacreLauncherPanel.qml": {
@@ -9866,9 +9867,10 @@
     "nacre/shell-tools/tests/launcher-qml/tst_universal.qml": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "2026-10-11: initial leaf-route resolution selects its parent and row without execution; native Qt regression added; safe debug geometry exposed for layout inspection."
       ],
-      "sha256": "c01265f266370454b7d5db2a90439517b7a7b6be69a598a3159ed2d4810d92a4"
+      "sha256": "cf1c61cebfbb9466c107c852193d5304482cdbd603e5b8245774ef3424126237"
     },
     "nacre/shell-tools/tests/test_screenshot.py": {
       "disposition": "independent",
