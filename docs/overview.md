@@ -136,3 +136,7 @@ independent of manual activation and persists across desktop updates.
 
 Colors and Welcome use the [shared application layout](specs/colors-welcome-performance.md);
 Natural is the original balance, Pigment the newer selection policy.
+
+Nacre applications use a bounded Super+M reading size; ordinary applications
+keep workspace maximization. The wallpaper queue keeps its publication transports
+ready and idle on stdin, avoiding a fresh interpreter for each warm choice.

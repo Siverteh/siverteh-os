@@ -24,6 +24,8 @@ Item {
     Connections {
         target: NacreWelcomeApp
         function onPageChanged() {
+            wheel.cancel();
+            wheel.destination = 0;
             canvas.contentY = 0;
             if (NacreTokens.motionEnabled) {
                 root.pageOffset = NacreWelcomeApp.step >= root.previousStep ? 24 : -24;
@@ -47,9 +49,19 @@ Item {
         boundsBehavior: Flickable.StopAtBounds
         maximumFlickVelocity: 3400
         FastScroll {
+            id: wheel
+            objectName: "welcomeWheel"
             view: canvas
+            step: 170
+            pixelMultiplier: 1
+            kinetic: false
+            smoothDuration: 110
         }
-        ScrollBar.vertical: NacreScrollBar {}
+        ScrollBar.vertical: NacreScrollBar {
+            id: scrollBar
+            onPressedChanged: if (pressed)
+                wheel.cancel()
+        }
         Column {
             id: body
             width: canvas.width
@@ -123,30 +135,20 @@ Item {
                 NacreWelcomeDemo {
                     width: parent.width
                 }
-                Row {
-                    spacing: 8
-                    ActionButton {
-                        objectName: "welcomeColors"
-                        text: "Open Colors"
-                        compact: true
-                        onClicked: NacreWelcomeApp.route("colors")
-                    }
-                    ActionButton {
-                        text: "More wallpapers"
-                        compact: true
-                        onClicked: NacreWelcomeApp.route("wallpaper")
-                    }
-                }
             }
             Column {
                 visible: NacreWelcomeApp.page === "shortcuts"
                 width: parent.width
                 spacing: 14
                 NacreText {
+                    width: parent.width
+                    wrapMode: Text.Wrap
                     text: "Getting around"
                     font.pointSize: 25
                 }
                 NacreText {
+                    width: parent.width
+                    wrapMode: Text.Wrap
                     text: "Your current shortcuts, grouped by what they do. Scroll to explore."
                     font.pointSize: 11
                     color: NacreTokens.mutedInk
@@ -210,6 +212,8 @@ Item {
                 spacing: 14
                 visible: NacreWelcomeApp.page === "apps"
                 NacreText {
+                    width: parent.width
+                    wrapMode: Text.Wrap
                     text: "The Nacre suite"
                     font.pointSize: 23
                 }

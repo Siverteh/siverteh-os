@@ -134,7 +134,10 @@ def svg(template=True, colors=None, variant="full"):
     text = templates()[variant]
     if template:
         return text
-    roles = role_colors(colors)
+    return paint_svg(text, role_colors(colors))
+
+
+def paint_svg(text, roles):
     for name, value in roles.items():
         text = text.replace("@" + name + "@", value)
     return text.replace("currentColor", roles["PRIMARY"])
@@ -293,13 +296,18 @@ def refresh_terminal_menus(home, proc=Path("/proc")):
 def publish(colors, home=None):
     home = Path.home() if home is None else Path(home)
     folder = home / ".local/share/nacre/branding"
-    raw = cached_png(svg(False, colors), home)
+    patterns, roles = templates(), role_colors(colors)
+
+    def render(variant):
+        return paint_svg(patterns[variant], roles)
+
+    raw = cached_png(render("full"), home)
     atomic(folder / "nacre-lock.png", raw)
     # Kitty composites alpha over its own background, including opacity effects.
     # Baking a palette surface into the image produces a visible square.
     atomic(folder / "nacre.png", raw)
     for application in ("ai", "brain", "settings", "colors"):
-        raw = cached_png(svg(False, colors, application + "-full"), home)
+        raw = cached_png(render(application + "-full"), home)
         atomic(folder / ("nacre-" + application + ".png"), raw)
     for variant, name in [
         ("full", "nacre.svg"),
@@ -318,29 +326,29 @@ def publish(colors, home=None):
         ("colors-compact", "nacre-colors-compact.svg"),
         ("colors-symbolic", "nacre-colors-symbolic.svg"),
     ]:
-        atomic(folder / name, svg(False, colors, variant).encode())
+        atomic(folder / name, render(variant).encode())
     atomic(folder / "nacre-text.txt", text_logo(home=home).encode())
     atomic(folder / "nacre-ai-text.txt", text_logo("ai-symbolic", home).encode())
 
     atomic(
         home / ".local/share/icons/hicolor/scalable/apps/nacre.svg",
-        svg(False, colors, "full").encode(),
+        render("full").encode(),
     )
     atomic(
         home / ".local/share/icons/hicolor/scalable/apps/nacre-ai.svg",
-        svg(False, colors, "ai-full").encode(),
+        render("ai-full").encode(),
     )
     atomic(
         home / ".local/share/icons/hicolor/scalable/apps/nacre-brain.svg",
-        svg(False, colors, "brain-full").encode(),
+        render("brain-full").encode(),
     )
     atomic(
         home / ".local/share/icons/hicolor/scalable/apps/nacre-colors.svg",
-        svg(False, colors, "colors-full").encode(),
+        render("colors-full").encode(),
     )
     atomic(
         home / ".local/share/icons/hicolor/scalable/apps/nacre-settings.svg",
-        svg(False, colors, "settings-full").encode(),
+        render("settings-full").encode(),
     )
     # Already-open old menus read the previous filename; it contains the new art.
     for legacy, current in [

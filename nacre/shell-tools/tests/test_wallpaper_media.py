@@ -469,3 +469,35 @@ class WallpaperAccentTests(unittest.TestCase):
                 with self.assertRaises(RuntimeError):
                     media.theme({"paletteAccent": "aabbcc"})
                 self.assertEqual(media.settings()["palettePreset"], "ocean")
+
+
+class PersistentPublisherTests(unittest.TestCase):
+    def test_serial_transport_recovers_after_invalid_request_and_streams_before_completion(
+        self,
+    ):
+        import io
+        import os
+
+        lines = [
+            {"action": "theme", "value": {"paletteMode": "light"}},
+            {"action": "unknown", "value": {}},
+            {"action": "preferences", "value": {"layout": "hexagons"}},
+        ]
+        stream = io.StringIO("".join(json.dumps(item) + "\n" for item in lines))
+        output = io.StringIO()
+
+        def theme(value):
+            print(json.dumps({"presentation": {"mode": "light"}}), flush=True)
+            return {"paletteMode": value["paletteMode"]}
+
+        with (
+            patch.dict(os.environ, {}, clear=False),
+            patch.object(media, "theme", side_effect=theme),
+            patch.object(media, "preference", side_effect=lambda value: value),
+        ):
+            self.assertEqual(media.serve(stream, output), 0)
+        result = [json.loads(line) for line in output.getvalue().splitlines()]
+        self.assertTrue(result[0]["ready"])
+        self.assertEqual(result[1]["presentation"]["mode"], "light")
+        self.assertEqual([r["code"] for r in result if r.get("done")], [0, 1, 0])
+        self.assertEqual(result[-1]["result"]["layout"], "hexagons")

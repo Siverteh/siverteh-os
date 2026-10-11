@@ -73,7 +73,8 @@ hl.window_rule({
 hl.window_rule({
     name = "nacre-colors-app",
     match = { class = "^org[.]quickshell$", title = "^Nacre Colors$" },
-    float = false,
+    float = true,
+    center = true,
 })
 
 -- Welcome is a normal single-instance app, sized by its responsive Qt window.

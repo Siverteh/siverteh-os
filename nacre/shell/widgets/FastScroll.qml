@@ -114,7 +114,11 @@ WheelHandler {
             return;
         view.cancelFlick();
         const base = motion.running ? destination : position();
-        destination = Math.max(origin(), Math.min(maximum(), base + delta));
+        const next = Math.max(origin(), Math.min(maximum(), base + delta));
+        // Repeated wheel input at an edge must not restart an unfinished glide.
+        if (motion.running && next === destination)
+            return;
+        destination = next;
         motion.stop();
         if (smooth && motionEnabled) {
             motion.from = position();

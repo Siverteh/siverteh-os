@@ -9,8 +9,8 @@ FloatingWindow {
     title: "Nacre Colors"
     visible: NacreColorsApp.visible
     minimumSize: Qt.size(760, 560)
-    implicitWidth: Math.min(1260, Math.max(760, (screen?.width || 1920) * .78))
-    implicitHeight: Math.min(900, Math.max(560, (screen?.height || 1200) * .82))
+    implicitWidth: Math.min(1100, Math.max(760, (screen?.width || 1920) * .68))
+    implicitHeight: Math.min(780, Math.max(560, (screen?.height || 1200) * .70))
     color: NacreTokens.body
     updatesEnabled: NacreColorsApp.active
     function activate() {

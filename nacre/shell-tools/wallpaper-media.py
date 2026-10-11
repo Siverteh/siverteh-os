@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Local wallpaper catalog, video posters, private picker preferences and selection."""
 
-import argparse, fcntl, hashlib, json, os, re, shutil, subprocess, sys, tempfile, urllib.parse, time
+import argparse, functools, fcntl, hashlib, json, os, re, shutil, subprocess, sys, tempfile, urllib.parse, time
 from pathlib import Path
 from PIL import Image, ImageOps
 
@@ -453,13 +453,7 @@ def prepared_theme(poster, live=True):
         if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
             return False
         thumbnail = HOME / ".cache/nacre/wallpapers" / digest / "thumbnail.jpg"
-        import importlib.util
-
-        spec = importlib.util.spec_from_file_location(
-            "palette", Path(__file__).with_name("classic-state.py")
-        )
-        palette = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(palette)
+        palette = demo_module("classic-state")
         return palette.commit_prepared(
             HOME, poster, data, thumbnail, live=live, allow_mode_change=True
         )
@@ -611,13 +605,7 @@ def select(path):
                 thumbnail.parent.mkdir(parents=True, exist_ok=True)
                 with Image.open(item["preview"]) as image:
                     image.convert("RGB").save(thumbnail, quality=85)
-            import importlib.util
-
-            spec = importlib.util.spec_from_file_location(
-                "palette", Path(__file__).with_name("classic-state.py")
-            )
-            palette = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(palette)
+            palette = demo_module("classic-state")
             prepared = palette.commit_prepared(HOME, item["poster"], data, thumbnail)
         except (OSError, ValueError, KeyError):
             prepared = False
@@ -672,6 +660,7 @@ def import_files(paths):
     return copied
 
 
+@functools.lru_cache(maxsize=8)
 def demo_module(name):
     import importlib.util
 
@@ -766,6 +755,40 @@ def demo_restore(token):
     return {"media": item, "preferences": settings()}
 
 
+def serve(input_stream=None, output_stream=None):
+    """One serial publisher transport; blocking stdin consumes no idle CPU."""
+    input_stream = sys.stdin if input_stream is None else input_stream
+    output_stream = sys.stdout if output_stream is None else output_stream
+    import contextlib
+
+    os.environ["NACRE_PRESENTATION_STREAM"] = "1"
+    print(json.dumps({"ready": True}), file=output_stream, flush=True)
+    for line in input_stream:
+        try:
+            if len(line) > 65536:
+                raise ValueError("Palette request is too large")
+            request = json.loads(line)
+            action, value = request["action"], request["value"]
+            with contextlib.redirect_stdout(output_stream):
+                if action == "select" and isinstance(value, str):
+                    result = select(value)
+                elif action in ("theme", "preferences") and isinstance(value, dict):
+                    result = theme(value) if action == "theme" else preference(value)
+                else:
+                    raise ValueError("Invalid palette request")
+            response = {"done": True, "code": 0, "result": result}
+        except (
+            OSError,
+            ValueError,
+            KeyError,
+            TypeError,
+            subprocess.SubprocessError,
+        ) as error:
+            response = {"done": True, "code": 1, "result": {"error": str(error)[:240]}}
+        print(json.dumps(response), file=output_stream, flush=True)
+    return 0
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument(
@@ -781,6 +804,7 @@ def main():
             "pick",
             "session",
             "warm",
+            "serve",
         ],
     )
     p.add_argument("path", nargs="?")
@@ -789,6 +813,8 @@ def main():
     if a.stream_presentation:
         os.environ["NACRE_PRESENTATION_STREAM"] = "1"
     try:
+        if a.action == "serve":
+            return serve()
         if a.action == "session":
             display = subprocess.check_output(
                 [

@@ -18,6 +18,14 @@ spec.loader.exec_module(brand)
 
 
 class NacreBrandingTests(unittest.TestCase):
+    def test_batched_vector_publication_matches_individual_role_rendering(self):
+        colors = json.loads((ROOT / "reference-style.json").read_text())["colours"]
+        patterns, roles = brand.templates(), brand.role_colors(colors)
+        for variant, template in patterns.items():
+            self.assertEqual(
+                brand.paint_svg(template, roles), brand.svg(False, colors, variant)
+            )
+
     def test_master_is_the_exact_approved_archive_artwork(self):
         self.assertEqual(
             hashlib.sha256(brand.MASTER.read_bytes()).hexdigest(),

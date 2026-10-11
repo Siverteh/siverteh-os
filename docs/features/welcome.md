@@ -7,7 +7,7 @@ Back/Next and clickable progress dots, with Enter to continue and Escape to clos
 2. Your colors: four small credited scenes, all eight color styles, dark/light
    icons and a live desktop/role strip. Choosing changes the real desktop through
    its existing publisher. Undo appears after changes and restores the opening
-   wallpaper/palette; Open Colors and More wallpapers are the secondary actions.
+   wallpaper/palette. Open the other tools from the Apps page.
 3. Getting around: scrollable shortcut groups read live from described Hyprland binds.
    Alternative keys share a flexible-height row. Missing bindings are not guessed.
 4. Apps: Settings/Colors plus optional AI/Brain with honest setup guides.
@@ -21,7 +21,7 @@ the claim and can retry. Finishing a manual tour also suppresses automatic start
 Legacy `showAtLogin: false` remains an opt-out, and manual launcher opens always work.
 Closing/skipping does not auto-install anything or reset chosen colors. Existing
 snapshot/publisher error protection and original animated-source restoration stay.
-Rotation pauses throughout an active tour. Panels remain normal captionless windows.
+Rotation pauses throughout an active tour. Panels remain captionless resizable windows.
 Pages move briefly only on navigation, honoring reduced motion; no idle teaser loop.
 
 ## Offline artwork and credits
@@ -58,3 +58,16 @@ first-click image conversion. No idle animation, polling or second publisher.
 Clicked styles/modes and scene rings acknowledge the request immediately while
 the actual palette remains publication-owned. Pending highlights settle to the
 committed selection or return to it on failure; previews show committed colors.
+
+Super+M toggles a centered reading size for Nacre apps (Welcome up to1020×740,
+Settings1160×820, Colors1200×850, with smaller-monitor bounds), then restores
+the prior size/tiling. It does not enlarge these apps to the whole display.
+Super+S is the sole managed Settings shortcut. Welcome uses170px wheel steps
+with110ms easing, unamplified touchpad pixels and no added release momentum;
+scrollbar dragging and page navigation stop prior motion. App descriptions wrap
+and their Open button moves below the text on narrower windows.
+
+Palette transports stay ready inside the shell: two serial request endpoints
+reuse Python/module initialization, sleep on stdin between actions and are
+recreated with the renderer. The existing preference/selection queue and shared
+publication lock retain write ownership; helper CLI commands still work.

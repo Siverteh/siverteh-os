@@ -370,13 +370,14 @@ Singleton {
             followup.start();
         }
     }
-    Process {
+    NacrePaletteTask {
         id: commit
         objectName: "wallpaperCommit"
         property string requestPath: ""
         command: ["python3", root.tool, "select", requestPath, "--stream-presentation"]
-        stdout: SplitParser {
-            onRead: data => {
+        readonly property Connections output: Connections {
+            target: commit.stdout
+            function onRead(data) {
                 if (!root.receivePresentation(data))
                     root.commitReceived = root.publishSelection(data);
             }
@@ -392,15 +393,16 @@ Singleton {
             followup.start();
         }
     }
-    Process {
+    NacrePaletteTask {
         id: prefWorker
         objectName: "wallpaperPreferences"
         property var value: ({})
         command: ["python3", root.tool, Object.keys(value).some(key => key.startsWith("palette")) ? "theme" : "preferences", "--stream-presentation"]
         stdinEnabled: true
         onStarted: write(JSON.stringify(value) + "\n")
-        stdout: SplitParser {
-            onRead: data => {
+        readonly property Connections output: Connections {
+            target: prefWorker.stdout
+            function onRead(data) {
                 if (!root.receivePresentation(data))
                     root.preferenceReceived = root.publishPreference(data);
             }

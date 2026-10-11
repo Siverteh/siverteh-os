@@ -263,7 +263,7 @@ warmer precomputes selected scene modes/styles and never publishes. See feature
 `NacreColorsApp` owns private staged previews; only explicit Apply calls the
 existing wallpaper/palette publisher. Its observed swatches combine disjoint
 color families and major neutrals, independently of generated accent selection.
-Colors uses normal tiled Hyprland geometry; Welcome remains a smaller floating
+Colors uses bounded floating Hyprland geometry; Welcome remains a smaller floating
 window. Neither has a separate shell service or palette publication owner.
 
 `NacreWelcomeApp` owns the tour and per-opening Undo baseline. `welcome.py` owns
@@ -272,3 +272,10 @@ completion suppresses future automatic login opens. Live described compositor
 bindings supply the grouped scrolling guide, without displaying command arguments.
 The finite read-only wallpaper warm-up includes all licensed demo styles/modes;
 unchanged validated originals use stat receipts and changed files revalidate.
+
+`NacrePaletteTask` is a serial stdin/stdout transport owned by `NacreWallpapers`.
+Selection and preference endpoints retain the same mutually exclusive queue
+and atomic palette publisher; the blocking helper loops introduce no idle polling.
+They restart with the shell and report job failure if their process dies.
+`desktop-actions.py maximize` owns per-window bounded reading-size restoration
+for Nacre apps, with private bounded state keyed by stable window ID/pid/title.

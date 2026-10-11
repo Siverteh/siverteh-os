@@ -51,6 +51,12 @@ class DeviceServiceTests(unittest.TestCase):
             (fixtures / "Process.qml").write_text(
                 "import QtQuick\nQtObject {property var command:[];property var environment:({});property bool running:false;property QtObject stdout;property QtObject stderr;signal exited(int exitCode,int exitStatus);signal started();property bool stdinEnabled:false;property var writes:[];function write(text){writes=[...writes,text]}property int starts:0;onRunningChanged:if(running){starts++;Qt.callLater(()=>{if(running)started()})}}"
             )
+            if name == "NacreWallpapers":
+                (fixtures / "NacrePaletteTask.qml").write_text(
+                    "import QtQuick\nProcess {stdout:SplitParser{}}"
+                )
+                with (fixtures / "qmldir").open("a") as manifest:
+                    manifest.write("NacrePaletteTask 1.0 NacrePaletteTask.qml\n")
             (fixtures / "StdioCollector.qml").write_text(
                 'import QtQuick\nQtObject {property string text:"";signal streamFinished()}'
             )
@@ -184,6 +190,9 @@ class DeviceServiceTests(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertNotIn("QWARN", result.stdout + result.stderr)
+
+    def test_persistent_palette_transport_ready_stream_done_and_restart(self):
+        self.run_service("NacrePaletteTask")
 
     def test_control_tools_discovery_explicit_actions_and_capture_lifetime(self):
         self.run_service("NacreControlTools")

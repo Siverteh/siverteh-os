@@ -1480,9 +1480,9 @@
     },
     "hypr/conf/keybinding.lua": {
       "disposition": "independent",
-      "sha256": "82eb9a493eed2987d20dd5f4a40dc0dbe6e7fb94457ddb548a72ccdf6e4d213e",
+      "sha256": "008f5e1da4cce635202462be33716807af55966d9b90dc655772201ca6912b5f",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "nacre/shell-tools/binding-contracts.lua": {
@@ -1699,9 +1699,9 @@
     },
     "hypr/conf/nacre.lua": {
       "disposition": "independent",
-      "sha256": "dcb265a02e5e508122405d7573a323ff86d16295007ba8efb8b8f22e85049178",
+      "sha256": "3a335a7e89b69aba36d89ee0c0448c3ebf8ddc3b54404991f96485b1230f649f",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "tools/tests/test_config_defaults.py": {
@@ -1767,25 +1767,9 @@
     },
     "nacre/shell-tools/branding.py": {
       "disposition": "independent",
-      "sha256": "bf083942c57572fb907248d460083ccf97d32149ffe8a384ab77652bfc8f4835",
+      "sha256": "33c62019a8b95ef40a3dfe3e99af7cac7c3d94aca8825da1b1a39326da7eb46a",
       "evidence": [
-        "docs/specs/branding-source-audit.md",
-        "docs/nacre/PROVENANCE.md#branding-source-and-asset-review",
-        "Locally introduced generator b0632b9 for explicit SH polygons, compact/runtime/control refresh changes 772e23b/8ad6532/8ff30bc and import/format/home corrections 14a55db/dfecaf0/bb46dd6 traced. Current own body reviewed and no five-line peer/predecessor copies found as supporting evidence. Corrected source emitter to NacreColours and build-only CLI side effects; actual reproduction and native rendering tests pass. No upstream body copied while implementing corrections.",
-        "docs/specs/nacre-logo.md",
-        "Current source explicitly reassessed for approved shell identity: geometry-derived paths/names, shared color/contrast/rendering/build changes, or logo fixture/publisher dependencies only. Existing owner behavior retained and actual native/publisher tests run; no blanket origin claim for user artwork.",
-        "docs/specs/nacre-logo.md: reviewed transparent terminal publication correction from actual user screenshot; removes baked rectangle and verifies alpha without changing geometry or palette roles.",
-        "docs/specs/terminal-logo-refresh.md: independently authored event-driven Kitty image registration/frame editing and scoped default/resolved menu redraw; native PTY/image behavior and retired process/device rejection tested.",
-        "docs/features/terminal-branding.md: independently authored managed Nacre AI desktop entry and shared palette icon output; validated Name/Exec/TryExec/StartupWMClass without changing accounts or worker ownership.",
-        "docs/specs/nacre-logo.md: additive AI-specific lettering under the right lip, primary A/secondary I with text contrast protection; shared SVG/publisher/live QML binding and terminal consumer reviewed. Own paths/integration; no upstream implementation copied. Native raster, role, launcher and menu tests cover the change.",
-        "docs/specs/nacre-brain.md: current naming/path migration, compatibility aliases, Brain-specific own glyph and shared brand integration explicitly reviewed. Existing independently authored behavior preserved; no upstream source copied. Migration/collision/rollback/profile guard, CLI, publisher/native launcher tests cover the changes. User-supplied shell artwork provenance remains qualified.",
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
-        "docs/specs/settings-app.md: full changed body reviewed. Own shared app-glyph geometry, explicit active-palette UI, bounded read-only artwork caching and current-wallpaper treatment preparation; no upstream implementation used. Focused native Settings, branding and media tests passed.",
-        "docs/specs/orient-colors.md",
-        "docs/features/orient.md",
-        "Current full body/data reviewed: independent Orient 3 portable core, its desktop compatibility adapters, original read-only studio, source attribution/audits/export templates and explicit single-publisher integration. Existing audited own engine moved with module aliases; no Caelestia/ML4W source consulted. Scientific OKLab/CVD coefficients credited to their published definitions, not claimed novel. Gallery artwork generated locally and CC0; private artwork remains outside Git. Current mode/contrast/backend/native checks and visual gallery inspection recorded; full/live release gate still required.",
-        "2026-10-10 Nacre Welcome implementation reviewed against docs/specs/welcome.md: independently authored lazy native app and content, existing owner routes, shared standard logo, serialized atomic private startup preferences, per-Hyprland-instance deduplication/retry and bounded service IPC. No external welcome/shell implementation consulted/copied; primary public behavior docs only. Existing app/helper/deployment/branding/startup edits reviewed in full relevant boundaries. Native wide/narrow, dark/light and actual-vector-logo preflight inspected; ownership/login/native tests cover malformed configuration, disabled/manual behavior and controls. Busy AI backend/credentials and palette publication untouched; managed full/live deployment still required.",
-        "2026-10-11 Colors/Welcome/responsiveness review against docs/specs/colors-welcome-performance.md: earlier independently authored Orient Natural grouping restored from own9c9089f; previous subject/perceptual policy preserved as Pigment, with modern contrast/census and explicit time/body options. Shared captionless header, slim final-role values, gray/shadow census+Other, lazy Compare, themed collapsed controls and explicit Apply; native independent control/geometry tests reviewed. Five-page tour preserves existing startup/snapshot/optional/bind owners; credited diverse licensed scenes with verified lossless derivatives. Real Quickshell0.3.2 raw milliseconds diagnosed, finite banners retain history/actions; cache1024 addresses measured770ms raster churn in1083ms prepared commit, with triple poster prefetch and35ms debounce. No external implementation copied; fonts/logo pipeline regenerated by existing owner. Full/live verification required."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "nacre/shell/widgets/BrandLogo.qml": {
@@ -2232,13 +2216,9 @@
     },
     "nacre/shell/widgets/FastScroll.qml": {
       "disposition": "independent",
-      "sha256": "9dcc663e981c361c54914e4af602c3374f5bcf67eb5f4eb37223ba907c63df17",
+      "sha256": "4c3acf9ad11f2dba8b3f9321e4c59a5c92281ea293f11bd2975d5f4e0207e95f",
       "evidence": [
-        "docs/specs/foundation-source-audit.md",
-        "docs/nacre/FOUNDATION-SOURCE-AUDIT.md",
-        "docs/specs/foundation-controls.md",
-        "Current full body reviewed; basis e3d0298: Local chat scrolling owner, momentum 973e0a4, shared speed 36dc0ba; current Qt WheelHandler/finite animation/native flick implementation retained. Subsequent current-file history: 548f0b4, 2c1d2ca, 83b3531, 36dc0ba, 973e0a4, 5c3cd84. Public scalar API/default data and compatibility names are not an inherited algorithm. Prior source exposure acknowledged; no old/upstream body consulted for current correction. Separate dependency/test/whole-tree reviews remain.",
-        "docs/specs/visual-cleanup.md"
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ],
       "notes": "Own post-rewrite visual cleanup changes re-reviewed against user requirements/current Nacre source: title/grid geometry, continuous measured picker travel and opaque image buffering, compact device/history presentation, finite motion, faster bounded axis-aware scrolling and cancel-before-settings-reset. Updated native fixtures keep real token/viewport contracts and assert new speed/timing, not retired values. No inherited implementation copied; actual synthetic RHI captures and native input/geometry tests inspected, device/provider/private state untouched. Full deployment/CI gates remain separate."
     },
@@ -2823,9 +2803,9 @@
     },
     "nacre/shell/services/NacreWallpapers.qml": {
       "disposition": "independent",
-      "sha256": "ab56b57f75dcfe2711845e880df245e3df964fcfbffd6bb98c7333e42452dcf3",
+      "sha256": "560c987baf1a4ea3eac8822b74f9f471ede94341e6738d6f8350aac5700d7cca",
       "evidence": [
-        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "nacre/shell/services/NacreWeather.qml": {
@@ -4283,13 +4263,9 @@
     },
     "nacre/shell-tools/desktop-actions.py": {
       "disposition": "independent",
-      "sha256": "d24ada88f1a8ef36c8cd38d39d6b67a54ec9ec6d7b0c09ccbe8e9f15461bd677",
+      "sha256": "4826d0ae7ee3881a7773aa347b671cb58d7d93dba1e0032d13be455aa3d0ecc2",
       "evidence": [
-        "docs/specs/device-session-source-audit.md",
-        "docs/nacre/DEVICE-SESSION-SOURCE-AUDIT.md",
-        "Full current source body reviewed. Basis ba5e48f: local desktop/AI launch dispatch separated from own Brain controller; bounded native command and UWSM interfaces reviewed. Later path changes: 548f0b4. Current native producer/caller interfaces, local source history and first-source peer comparison support origin; generic native query sequences/shared own helpers are not vendor algorithm inheritance. Prior exposure acknowledged; no old/upstream Caelestia/ML4W body consulted for current correction or legal clean-room/final-license claim. Native libraries and other callee/helper/fixture origins remain separate.",
-        "docs/features/terminal-branding.md: public nacre-ai entry point forwards to existing private controller; reviewed argument/status preservation, managed deployment, canonical help and desktop launch routes; accounts and workers unchanged.",
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "nacre/shell-tools/device-actions.py": {
@@ -4440,11 +4416,9 @@
     },
     "nacre/shell-tools/tests/test_desktop_actions.py": {
       "disposition": "independent",
-      "sha256": "229b22ca0864ff2f422c5e0e1b165a3bbcda1ab794c09afd731d12fd4d09e759",
+      "sha256": "195d6b662f630e2912a1db8b3e8e68463e55f3debf2d8438b10b0fef9e062fcd",
       "evidence": [
-        "docs/specs/device-session-source-audit.md",
-        "docs/nacre/DEVICE-SESSION-SOURCE-AUDIT.md",
-        "Full current source body reviewed. Basis ba5e48f: own fake launch/run routing, range and command-injection guards. Later path changes: 548f0b4. Current native producer/caller interfaces, local source history and first-source peer comparison support origin; generic native query sequences/shared own helpers are not vendor algorithm inheritance. Prior exposure acknowledged; no old/upstream Caelestia/ML4W body consulted for current correction or legal clean-room/final-license claim. Native libraries and other callee/helper/fixture origins remain separate."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "nacre/shell-tools/tests/test_device_location.py": {
@@ -4634,9 +4608,9 @@
     },
     "nacre/shell-tools/wallpaper-media.py": {
       "disposition": "independent",
-      "sha256": "55d4c9a360e3e038e595d62cba8f92b7a14dd0576cb747c5c4936f3db186013c",
+      "sha256": "ce77d2ba4ebf7937f21aca7fa82875be5c434fa3d9c2e4948c9f5e4d738a7610",
       "evidence": [
-        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "nacre/shell-tools/wallpaper-watch.py": {
@@ -4707,9 +4681,9 @@
     },
     "nacre/shell-tools/tests/test_wallpaper_media.py": {
       "disposition": "independent",
-      "sha256": "85d15e3c9cb78b307d18d3c17bd5218d0c6ea96ed494e370a1179cb0df72ab23",
+      "sha256": "07466c59730853f06d3bae032d956207848718af172ad2486bb40c03f60baeaa",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "nacre/shell-tools/tests/test_wallpaper_watch.py": {
@@ -6118,9 +6092,9 @@
     },
     "tools/tests/fixtures/keybindings-contract.json": {
       "disposition": "non-implementation",
-      "sha256": "9816d19323a33649788e7642d9e6680f66d98f758418e0e05ce5e2336ba4b087",
+      "sha256": "715e2cba068c50127b7e96ef4caf5f1c5c6c3527975af1e0c92e677e242b44c9",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "tools/tests/fixtures/window-routing-contract.json": {
@@ -6241,9 +6215,9 @@
     },
     "nacre/shell-tools/tests/test_device_services.py": {
       "disposition": "independent",
-      "sha256": "ed93e00f675053a338988f9c372153f546c097d7fded3a26b55e54593bd21563",
+      "sha256": "3b5a2d98099a7e1b711f33d3de4cf419a56176d6fdf60d35b98643921379f5bb",
       "evidence": [
-        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ],
       "notes": "Own approved frame/control-center slice reviewed against current Nacre spec and public APIs, without inherited source consultation. Marked geometry and passive feedback remain shared-state owned; no writes on opening or idle polling. Current notification history clock observes actual visibility and reduced-motion feedback settles immediately. New native/ownership/routing/geometry regressions complement existing full checks and live acceptance."
     },
@@ -6436,14 +6410,9 @@
     },
     "nacre/shell-tools/tests/test_wallpaper_rotation.py": {
       "disposition": "independent",
-      "sha256": "ee61302190512602b5a6c00fbc4d668b43ac462217e77cfc817a137ad288a85d",
+      "sha256": "7bd65c83f4cd3e753dc4da796b524f61f688d7f782d0f4fd01cefc160edd48a5",
       "evidence": [
-        "docs/specs/python-fixture-source-audit.md",
-        "docs/nacre/PYTHON-FIXTURE-SOURCE-AUDIT.md",
-        "Full current Python/embedded fixture body and local history reviewed. Creation 4ea19d5:siverteh/shell-tools/tests/test_wallpaper_rotation.py; subsequent 5da1132, 28707f7, eea01b9, 9a3b9a7, 548f0b4. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open.",
-        "docs/specs/settings-app.md: fixture now exercises standalone Appearance visibility, pause on Appearance, resume on another settings page or close; native production rotation test passed.",
-        "Final cold-start and rotation integration review: demo fills on catalogue/window-ready events after media metadata assignment, without polling; no stable samples replaced during interactions. Native wallpaper/provider fixtures add explicit inactive Welcome dependency and a real deadline-preserving pause/resume case. Existing assertions keep warnings/errors fatal. docs/specs/welcome-live-demo.md.",
-        "2026-10-10 Explicit demoRestore stand-in added to native rotation fixture after strict warning gate caught the missing new process reference. Existing assertions unchanged; new test verifies restore pauses rotation without resetting the deadline. Independent fixture only; production queue/publisher unchanged. docs/specs/welcome-live-demo.md."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "nacre/shell-tools/tests/test_workspace_ui.py": {
@@ -6467,12 +6436,9 @@
     },
     "tools/tests/test_bindings.py": {
       "disposition": "independent",
-      "sha256": "95e1524cbf8bed9502ce1f79419763bc2faeb931600cda4d5591c9ffaae3fb0f",
+      "sha256": "166e69701e6ef7e175ea3575177430b279f6b4d5e9d00d7eab0d4c0502e03d53",
       "evidence": [
-        "docs/specs/python-fixture-source-audit.md",
-        "docs/nacre/PYTHON-FIXTURE-SOURCE-AUDIT.md",
-        "Full current Python/embedded fixture body and local history reviewed. Creation 9a435c3:tools/tests/test_bindings.py; subsequent none. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open.",
-        "docs/specs/settings-app.md: full changed body reviewed. Own shared app-glyph geometry, explicit active-palette UI, bounded read-only artwork caching and current-wallpaper treatment preparation; no upstream implementation used. Focused native Settings, branding and media tests passed."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "tools/tests/test_compositor_entrypoint.py": {
@@ -6554,9 +6520,9 @@
     },
     "docs/architecture.md": {
       "disposition": "non-implementation",
-      "sha256": "1e562413ffadd545efed105edbc61540e683a8f523e5fe44c770162b9cefafe1",
+      "sha256": "e68317204cfe382ea44e8587f7f261fab012db754fba8bc181d01b63c0edda38",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "docs/features/appearance.md": {
@@ -6737,9 +6703,9 @@
     },
     "docs/features/wallpapers.md": {
       "disposition": "non-implementation",
-      "sha256": "ca5802587efe226170d337b9236d8467ba499cfbee858d6a6d5c35e165655758",
+      "sha256": "64863e1bfe7cecfb5feb289f4cb0da805066b2813812ecf84648ff755592a692",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ],
       "notes": "Live compositor screenshot review requires an opaque full-viewport cached wallpaper backdrop to conceal underlying applications, without the former inset rectangle. Own existing double-buffered backdrop reused with full viewport geometry; no inherited source consulted. Native viewport/backdrop readiness and prior opaque fade tests retained."
     },
@@ -6755,9 +6721,9 @@
     },
     "docs/overview.md": {
       "disposition": "non-implementation",
-      "sha256": "70c31075cfcf9f51294fee0e73a01248ee7cf8e7b083077927eb62fc8a3ba799",
+      "sha256": "595ea67771b46de26cc23ee7d05950a21235caf0f13aa66d430d57a82766608e",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "nacre/login/README.md": {
@@ -7904,12 +7870,9 @@
     },
     "nacre/shell-tools/tests/test_nacre_branding.py": {
       "disposition": "independent",
-      "sha256": "3aee49c2ce50d2573481f80f7c7d5a303e1240d150d2fef02faca18f2e84f446",
+      "sha256": "6f668cef9f223bfbeb4081fa1fb5a2809f84a8923a5742901c064b69164494c8",
       "evidence": [
-        "docs/specs/nacre-logo.md",
-        "User supplied and authorized the master artwork for Nacre; exact archive bytes retained, no independent source-creation/licensing certification. Derived assets use that master geometry, public SVG/native APIs and own palette/raster/widget integration. Symbolic geometry exactly matches the supplied rendition. Generated source is audited as own generation around the user-provided asset, not a claim to author its geometry.",
-        "docs/specs/nacre-logo.md: additive AI-specific lettering under the right lip, primary A/secondary I with text contrast protection; shared SVG/publisher/live QML binding and terminal consumer reviewed. Own paths/integration; no upstream implementation copied. Native raster, role, launcher and menu tests cover the change.",
-        "docs/specs/nacre-brain.md: current naming/path migration, compatibility aliases, Brain-specific own glyph and shared brand integration explicitly reviewed. Existing independently authored behavior preserved; no upstream source copied. Migration/collision/rollback/profile guard, CLI, publisher/native launcher tests cover the changes. User-supplied shell artwork provenance remains qualified."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "nacre/shell/branding/nacre-master.svg": {
@@ -8500,12 +8463,9 @@
     },
     "docs/features/settings-app.md": {
       "disposition": "non-implementation",
-      "sha256": "6e6354009deaeb40cef3aa419954a925116671f1e4aac8a057daae6f95a9f6b0",
+      "sha256": "bcdbdc6ef887f0b729db9d236983365f5620a72aa506e4a26b2ea115aaa5f249",
       "evidence": [
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
-        "docs/specs/settings-app.md: full changed body reviewed. Own shared app-glyph geometry, explicit active-palette UI, bounded read-only artwork caching and current-wallpaper treatment preparation; no upstream implementation used. Focused native Settings, branding and media tests passed.",
-        "docs/features/settings-app.md: independent prepared Natural/Harmony fast path inspected, retains classic-state locked publisher and cache identity checks; native fake-home integration confirms publication and malformed/wrong-treatment rejection. No upstream code used.",
-        "2026-10-10 app header simplification reviewed: remove own caption-button rows, use full-width drag area, retain compositor and existing keyboard controls. Live Brain header already has no such buttons; no browser profile modifications. Existing native parse/lifecycle and live visual/keyboard gates remain required."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "docs/specs/settings-app.md": {
@@ -9308,9 +9268,9 @@
     },
     "nacre/shell/modules/colors/NacreColorsWindow.qml": {
       "disposition": "independent",
-      "sha256": "6367a28d6b46700e378bbad146f1b7e0ca1ba69e261ba20be247ee115a620497",
+      "sha256": "52066b51d9344acbb72885682d98830536936d6f49fc23259aa4de7a305c3eaa",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
     },
     "nacre/shell/modules/colors/NacreThemePreview.qml": {
@@ -9411,9 +9371,9 @@
     "docs/features/welcome.md": {
       "disposition": "non-implementation",
       "evidence": [
-        "2026-10-11 live fit/feedback review: compact130px demo preview keeps secondary actions above the fixed footer; style/mode and scene selection acknowledge clicks immediately while actual palette publication remains with the existing publisher. Pending state resets after completion/error or a new opening. Duplicate valid presentations clear earlier diagnostics. Native click/highlight and ordering fixtures reviewed; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ],
-      "sha256": "3eab3371b4f4d604b0d08b2dd5b43f252552078c6bd62046a34ee8b15084318e"
+      "sha256": "4ce7fad47bdbcb8c79b86749109b43d758cc85094f771721ff7d1c3f04a15c52"
     },
     "docs/specs/welcome.md": {
       "disposition": "non-implementation",
@@ -9439,9 +9399,9 @@
     "nacre/shell-tools/tests/test_welcome_ui.py": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11 native CI portability review: actual row contents and growth versus single-key rows validate layout across font metrics, replacing an80px machine-specific threshold; corrected quoted empty selectedPath in the safe fixture and focus moved before disabled-control test. Assertions retain overflow detection and style/click/state coverage. Desktop behavior unchanged; independently authored local tests."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ],
-      "sha256": "c980027306b58bbf7fd54fb35997dd1f5738c99aa1d1642a7cb43ffec9f01a1e"
+      "sha256": "738fcd3aff3c282db9989212911140de116e70e2651df0444a660a6924c4a5a8"
     },
     "nacre/shell-tools/welcome.py": {
       "disposition": "independent",
@@ -9460,17 +9420,16 @@
     "nacre/shell/modules/welcome/NacreWelcomeRow.qml": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-10 Nacre Welcome implementation reviewed against docs/specs/welcome.md: independently authored lazy native app and content, existing owner routes, shared standard logo, serialized atomic private startup preferences, per-Hyprland-instance deduplication/retry and bounded service IPC. No external welcome/shell implementation consulted/copied; primary public behavior docs only. Existing app/helper/deployment/branding/startup edits reviewed in full relevant boundaries. Native wide/narrow, dark/light and actual-vector-logo preflight inspected; ownership/login/native tests cover malformed configuration, disabled/manual behavior and controls. Busy AI backend/credentials and palette publication untouched; managed full/live deployment still required.",
-        "2026-10-10 Welcome live-demo refinements reviewed: independent cached four-scene component, existing NacreWallpapers publication/queue and rotation pause integration, active binding descriptions/introspection without static keys or raw commands, missing optional-component guide and distinct fallback readiness, compact plain-language intro. No other shell implementation consulted/copied. Own actual-logo/light-dark/native controls fixtures and live-remap/Lua-registration tests reviewed; normal full/live deployment still required. No new palette algorithm/account/installation owner or idle polling. docs/specs/welcome-live-demo.md; docs/features/welcome.md."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ],
-      "sha256": "87781054fb6f5a42d1cd6e2e327bdcd56f8bd8df405b7d458af1414a35e9fda0"
+      "sha256": "2eca87d632d0154aa4d271480cf8ef37e1e8bfc7ad515c1185c8aa3d4d5a81b8"
     },
     "nacre/shell/modules/welcome/NacreWelcomeView.qml": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ],
-      "sha256": "e11f6ef6fd91662ab57b8711c849a1ead14436ba0050c3e3bead8945d24735e8"
+      "sha256": "ea5d0e74c91627bafa9c2d960d814dc2e56b0eb5be26c7724e7ac8871f61c7d6"
     },
     "nacre/shell/modules/welcome/NacreWelcomeWindow.qml": {
       "disposition": "independent",
@@ -9625,6 +9584,27 @@
         "2026-10-11 Colors/Welcome/responsiveness review against docs/specs/colors-welcome-performance.md: earlier independently authored Orient Natural grouping restored from own9c9089f; previous subject/perceptual policy preserved as Pigment, with modern contrast/census and explicit time/body options. Shared captionless header, slim final-role values, gray/shadow census+Other, lazy Compare, themed collapsed controls and explicit Apply; native independent control/geometry tests reviewed. Five-page tour preserves existing startup/snapshot/optional/bind owners; credited diverse licensed scenes with verified lossless derivatives. Real Quickshell0.3.2 raw milliseconds diagnosed, finite banners retain history/actions; cache1024 addresses measured770ms raster churn in1083ms prepared commit, with triple poster prefetch and35ms debounce. No external implementation copied; fonts/logo pipeline regenerated by existing owner. Full/live verification required."
       ],
       "sha256": "13a1a41f7c05c694575c36663b24b5610a053c543fac71cfd636cd5e72e62feb"
+    },
+    "docs/specs/nacre-app-sizing.md": {
+      "sha256": "c826678a3ebba02c06490c77a75377b4cec8502e4e35033d9d239e5d874a7941",
+      "disposition": "non-implementation",
+      "evidence": [
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
+      ]
+    },
+    "nacre/shell-tools/tests/device-qml/tst_NacrePaletteTask.qml": {
+      "sha256": "a01f4c50e3b4fe019e19bba06f85748c4acebd4da6b16d0b3708938a3b27fcfa",
+      "disposition": "independent",
+      "evidence": [
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
+      ]
+    },
+    "nacre/shell/services/NacrePaletteTask.qml": {
+      "sha256": "fdc0653bceddcd53439259d861fc4cf1fd6869f5b9d78c5ea7a51ce391963fb9",
+      "disposition": "independent",
+      "evidence": [
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
+      ]
     }
   }
 }

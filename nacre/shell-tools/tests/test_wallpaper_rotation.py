@@ -35,7 +35,8 @@ class RotationTests(unittest.TestCase):
                 ROOT.parent / "shell/services/app-search.js", target / "app-search.js"
             )
             source = remove_objects(
-                source, r"\b(Process|FileView|IpcHandler|Variants)\s*\{"
+                source,
+                r"\b(Process|NacrePaletteTask|FileView|IpcHandler|Variants)\s*\{",
             )
             source = remove_objects(source, r"\bTimer\s*\{\s*interval:\s*2500\b")
             source = re.sub(
@@ -56,7 +57,7 @@ class RotationTests(unittest.TestCase):
             for name in ["wallpaper-rotation.js"]:
                 shutil.copy2(ROOT.parent / "shell/utils/scripts" / name, target / name)
             services = {
-                "NacreWelcomeApp": 'property bool active:false;property string page:"home"',
+                "NacreWelcomeApp": 'property bool active:false;property string page:"home";property var demoEntries:[]',
                 "NacrePaths": 'property string state:"/tmp";property string pictures:"/tmp"',
                 "NacrePresentation": "property var pending:({});property var active:({})",
                 "WallpaperPlayback": "property bool sleeping:false;property bool locked:false",

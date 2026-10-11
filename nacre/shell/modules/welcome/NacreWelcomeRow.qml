@@ -12,8 +12,9 @@ NacreSurface {
     property bool available: true
     property bool optional: false
     property bool showGlyph: true
+    readonly property bool stacked: width < 640
     signal clicked
-    implicitHeight: Math.max(76, description.y + description.implicitHeight + 18)
+    implicitHeight: Math.max(76, description.y + description.implicitHeight + (stacked ? button.implicitHeight + 32 : 18))
     color: NacreTokens.raised
     radius: 12
     NacreIcon {
@@ -30,7 +31,7 @@ NacreSurface {
         id: title
         x: root.leadingSpace
         y: 16
-        width: root.width - x - button.width - 40
+        width: Math.max(80, root.width - x - (root.stacked ? 18 : button.width + 40))
         text: root.heading
         color: root.optional ? NacreTokens.mutedInk : NacreTokens.ink
         font.pointSize: 13
@@ -50,7 +51,7 @@ NacreSurface {
         id: button
         anchors.right: parent.right
         anchors.rightMargin: 18
-        anchors.verticalCenter: parent.verticalCenter
+        y: root.stacked ? description.y + description.implicitHeight + 12 : (parent.height - height) / 2
         text: root.available ? root.buttonText : "Not installed"
         enabled: root.available
         onClicked: root.clicked()

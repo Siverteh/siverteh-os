@@ -214,9 +214,13 @@ TestCase {id:test;name:"Welcome";width:1200;height:900;visible:true;when:windowS
   findChild(view,"welcomePersonality_pearl").clicked();compare(NacreWelcomeApp.actions[3],"theme::pearl");
   view.forceActiveFocus();NacreWelcomeApp.demoBusy=true;verify(!findChild(view,"welcomeMode_dark").enabled);NacreWelcomeApp.demoBusy=false;
   findChild(view,"welcomeRestoreDemo").clicked();compare(NacreWelcomeApp.actions[4],"restore-demo");verify(!findChild(view,"welcomeRestoreDemo").visible);
-  findChild(view,"welcomeColors").clicked();compare(NacreWelcomeApp.actions[5],"colors");
+  compare(findChild(view,"welcomeColors"),null);
   findChild(view,"welcomeStep_shortcuts").children[0];
   NacreWelcomeApp.jump("shortcuts");wait(180);compare(NacreWelcomeApp.page,"shortcuts");
+  const wheel=findChild(view,"welcomeWheel");compare(wheel.pixelMultiplier,1);compare(wheel.kinetic,false);
+  wheel.scrollBy(100000,true);wait(180);verify(Math.abs(canvas.contentY-wheel.maximum())<1);
+  const bottom=canvas.contentY;for(let i=0;i<20;i++)wheel.scrollBy(200,true);wait(140);compare(canvas.contentY,bottom);
+  wheel.scrollBy(-100000,true);wait(150);verify(canvas.contentY<1);
   const settingsRow=findChild(view,"welcomeShortcut_settings");verify(settingsRow.height>findChild(view,"welcomeShortcut_launcher").height);
   for(const child of settingsRow.children){verify(child.y+child.height<=settingsRow.height)}
   verify(canvas.contentHeight>canvas.height);
@@ -224,6 +228,8 @@ TestCase {id:test;name:"Welcome";width:1200;height:900;visible:true;when:windowS
   findChild(view,"welcomeAppRow_ai").clicked();compare(NacreWelcomeApp.optionalApp,"ai");
   compare(findChild(view,"welcomeAppRow_ai").icon,"chat_bubble");
   compare(findChild(view,"welcomeAppRow_brain").icon,"neurology");
+  preview.width=480;wait(80);
+  for(const app of ["settings","colors","ai","brain"]){const row=findChild(view,"welcomeAppRow_"+app);verify(row.stacked);for(const child of row.children){if(child.visible && child.implicitHeight!==undefined)verify(child.y+child.height<=row.height+1)}}
   NacreWelcomeApp.jump("ready");wait(180);
   preview.width=672;preview.height=440;wait(30);verify(canvas.height>100);
   verify(footer.y+footer.height<=view.height);verify(findChild(view,"welcomeDone").x>=0);

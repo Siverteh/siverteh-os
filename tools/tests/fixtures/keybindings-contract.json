@@ -578,11 +578,9 @@
   {
     "action": {
       "args": [
-        {
-          "mode": "maximized"
-        }
+        "python3 ~/.local/share/nacre/shell/tools/desktop-actions.py maximize"
       ],
-      "method": "window.fullscreen"
+      "method": "exec_cmd"
     },
     "flags": {
       "description": "Nacre:maximize"
@@ -625,19 +623,6 @@
     },
     "flags": {},
     "keys": "SUPER + ALT + H",
-    "submap": ""
-  },
-  {
-    "action": {
-      "args": [
-        "~/.local/bin/nacre-settings"
-      ],
-      "method": "exec_cmd"
-    },
-    "flags": {
-      "description": "Nacre:settings"
-    },
-    "keys": "SUPER + ALT + K",
     "submap": ""
   },
   {
@@ -1223,19 +1208,6 @@
     },
     "flags": {},
     "keys": "SUPER + O",
-    "submap": ""
-  },
-  {
-    "action": {
-      "args": [
-        "~/.local/bin/nacre-settings"
-      ],
-      "method": "exec_cmd"
-    },
-    "flags": {
-      "description": "Nacre:settings"
-    },
-    "keys": "SUPER + SHIFT + O",
     "submap": ""
   },
   {
