@@ -11,16 +11,16 @@ jobs:
     container: ghcr.io/archlinux/archlinux:latest
     steps:
       - name: Install target-platform checks
-        run: pacman -Syu --noconfirm --needed git python python-pip python-pillow ruff lua fish qt6-declarative qt6-wayland quickshell qt6-multimedia qt6-multimedia-ffmpeg qt6-imageformats gcc pkgconf gtk3 librsvg kconfig kcolorscheme breeze nodejs xorg-server-xvfb xorg-xauth mesa dbus ttf-dejavu
+        run: pacman -Syu --noconfirm --needed git python python-pip python-pillow ruff lua fish qt6-declarative qt6-wayland quickshell qt6-multimedia qt6-multimedia-ffmpeg qt6-imageformats gcc pkgconf gtk3 librsvg kconfig kcolorscheme breeze nodejs npm xorg-server-xvfb xorg-xauth mesa dbus ttf-dejavu
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Install the pinned palette engine in an isolated environment
         run: |
           python -m venv /tmp/check-env
           /tmp/check-env/bin/pip install ./nacre/shell-cli ruff==0.16.10
+      - name: Install development-only JavaScript formatter
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Source and native UI regression checks
         run: |
           # Container root reads a runner-owned checkout; trust only this workspace.
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           dbus-run-session -- xvfb-run -a /tmp/check-env/bin/python tools/check.py
-      - name: Require completed source reviews and immutable metadata
-        run: python tools/provenance.py --complete --metadata-revision "$(git rev-parse HEAD)"

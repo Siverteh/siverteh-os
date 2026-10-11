@@ -38,9 +38,11 @@ class GeneratedPresetTests(unittest.TestCase):
             home = target / "private-home"
             home.mkdir()
             script = target / "generate-palettes.py"
-            script.write_bytes((ROOT / "generate-palettes.py").read_bytes())
+            script.write_bytes(
+                (ROOT.parents[1] / "tools/generate-palettes.py").read_bytes()
+            )
             result = subprocess.run(
-                [sys.executable, str(script)],
+                [sys.executable, str(script), "--output-dir", str(target)],
                 env={**os.environ, "HOME": str(home)},
                 capture_output=True,
                 text=True,
@@ -66,7 +68,7 @@ class GeneratedPresetTests(unittest.TestCase):
 
         self.assertTrue(ENGINE_ID.startswith("orient-"))
         spec = importlib.util.spec_from_file_location(
-            "palette_generator", ROOT / "generate-palettes.py"
+            "palette_generator", ROOT.parents[1] / "tools/generate-palettes.py"
         )
         generator = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(generator)

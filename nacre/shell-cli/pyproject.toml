@@ -17,4 +17,5 @@ nacre_shell = "nacre_shell:main"
 packages = ["src/orient", "src/nacre_shell"]
 
 [tool.ruff]
+extend = "../../ruff.toml"
 line-length = 120

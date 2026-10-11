@@ -2,7 +2,8 @@
 """Own the native shortcut routes without replacing personal compositor config."""
 
 from pathlib import Path
-import datetime as dt, subprocess
+import datetime as dt
+import subprocess
 
 ROOT = Path(__file__).resolve().parent
 HOME = Path.home()

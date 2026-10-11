@@ -1,8 +1,9 @@
 # Nacre independent implementation tracker
 
-Current file dispositions are tracked by `tools/provenance.py` and
-`current-tree-reviews.json`. The completed area records below are dated historical
-evidence; their pending-work statements describe that date, not today's inventory.
+The completed exact-file registry and audit tool are archived at Git tag
+`provenance-audit-complete-2026-10-11`; see [the archive](CURRENT-TREE-AUDIT.md).
+Future changes do not require per-file review metadata. The completed area
+records below are dated historical evidence; their pending-work statements describe that date, not today's inventory.
 The [final comparison](FINAL-COMPARISON.md) records current source/runtime coverage
 and remaining validation. Visual cleanup and public extraction follow separately.
 

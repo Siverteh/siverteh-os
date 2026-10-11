@@ -295,9 +295,15 @@ def main():
                 raise ValueError("Unknown dashboard action")
             result = snapshot(args.action in ("context", "capture"))
         print(json.dumps(result, allow_nan=False))
-    except Exception as error:
+    except (
+        OSError,
+        ValueError,
+        KeyError,
+        TypeError,
+        subprocess.SubprocessError,
+    ) as error:
         print(json.dumps(dict(error=str(error)[:240])))
-        raise SystemExit(1)
+        raise SystemExit(1) from None
 
 
 if __name__ == "__main__":

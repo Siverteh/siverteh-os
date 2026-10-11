@@ -1,4 +1,7 @@
-import importlib.util, json, tempfile, unittest
+import importlib.util
+import json
+import tempfile
+import unittest
 from pathlib import Path
 from unittest.mock import patch
 
@@ -51,7 +54,8 @@ class DesktopSettingsTests(unittest.TestCase):
             desktop.display_plan(monitors[:1], "eDP-1", "mirror")
 
     def test_presets_return_to_custom_normal_preferences(self):
-        import io, sys
+        import io
+        import sys
         from contextlib import redirect_stdout
 
         with tempfile.TemporaryDirectory() as folder:
@@ -80,7 +84,8 @@ class DesktopSettingsTests(unittest.TestCase):
                     self.assertEqual(desktop.load()[key], normal[key], key)
 
     def test_presets_do_not_restore_old_lock_privacy_or_weather(self):
-        import io, sys
+        import io
+        import sys
         from contextlib import redirect_stdout
 
         with tempfile.TemporaryDirectory() as folder:
@@ -114,7 +119,8 @@ class DesktopSettingsTests(unittest.TestCase):
                 self.assertFalse(desktop.load()["lockNotificationContents"])
 
     def test_every_preset_preserves_current_lock_and_weather_preferences(self):
-        import io, sys
+        import io
+        import sys
         from contextlib import redirect_stdout
 
         private = dict(

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Reproducible fixed palettes using Orient's independent role policy."""
 
+import argparse
 import json
 from pathlib import Path
 from nacre_shell.engine import default_palette
@@ -56,10 +57,21 @@ def build():
     return presets
 
 
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=Path(__file__).resolve().parents[1] / "nacre/shell-tools",
+    )
+    args = parser.parse_args()
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    for name, value in (
+        ("palette-presets.json", build()),
+        ("reference-style.json", default_palette()),
+    ):
+        (args.output_dir / name).write_text(json.dumps(value, indent=2) + "\n")
+
+
 if __name__ == "__main__":
-    Path(__file__).with_name("palette-presets.json").write_text(
-        json.dumps(build(), indent=2) + "\n"
-    )
-    Path(__file__).with_name("reference-style.json").write_text(
-        json.dumps(default_palette(), indent=2) + "\n"
-    )
+    main()

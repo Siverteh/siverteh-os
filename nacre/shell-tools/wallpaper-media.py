@@ -1,7 +1,19 @@
 #!/usr/bin/env python3
 """Local wallpaper catalog, video posters, private picker preferences and selection."""
 
-import argparse, functools, fcntl, hashlib, json, os, re, shutil, subprocess, sys, tempfile, urllib.parse, time
+import argparse
+import functools
+import fcntl
+import hashlib
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+import urllib.parse
+import time
 from pathlib import Path
 from PIL import Image, ImageOps
 
@@ -160,7 +172,7 @@ def theme(value):
                 capture_output=True,
                 timeout=60,
             )
-    except Exception:
+    except Exception:  # noqa: BLE001 — Rollback must run for any failure before the original exception is re-raised.
         preference({key: previous[key] for key in changes})
         raise
     return result
@@ -333,7 +345,15 @@ def catalog():
         if path.is_file() and path.suffix.lower() in IMAGES | VIDEOS:
             try:
                 rows.append(describe(path))
-            except Exception:
+            except (
+                OSError,
+                ValueError,
+                KeyError,
+                TypeError,
+                RuntimeError,
+                subprocess.SubprocessError,
+                Image.DecompressionBombError,
+            ):
                 errors.append(path.name)
     return dict(
         entries=rows,
@@ -922,7 +942,15 @@ def main():
                 paths = json.loads(sys.stdin.readline())
             result = {"imported": import_files(paths)}
         print(json.dumps(result))
-    except Exception as e:
+    except (
+        OSError,
+        ValueError,
+        KeyError,
+        TypeError,
+        RuntimeError,
+        subprocess.SubprocessError,
+        Image.DecompressionBombError,
+    ) as e:
         print(json.dumps({"error": str(e)}))
         sys.exit(1)
 

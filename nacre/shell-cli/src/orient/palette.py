@@ -37,6 +37,69 @@ SEMANTIC_SEEDS = {
 }
 
 
+def _readable_roles(colors, levels):
+    # A complete opaque text-role matrix, including Dim/terminal consumers.
+    all_backgrounds = [colors[k] for k in levels] + [colors["frame"]]
+    for role in (
+        "onSurface",
+        "onSurfaceVariant",
+        "primary",
+        "secondary",
+        "tertiary",
+        "error",
+        "success",
+        "primaryDim",
+        "secondaryDim",
+        "tertiaryDim",
+        "errorDim",
+        "successDim",
+    ):
+        colors[role] = readable(colors[role], all_backgrounds)
+    for role in ("primary", "secondary", "tertiary", "error", "success"):
+        colors["on" + role.title()] = foreground(colors[role])
+    colors["onBackground"] = colors["text"] = colors["onSurface"]
+    colors["subtext0"] = colors["subtext1"] = colors["onSurfaceVariant"]
+    colors["surfaceTint"] = colors["primary"]
+    validate(colors)
+    return colors
+
+
+def _semantic_roles(colors, hue, backgrounds):
+    # Legacy adapters are role names only; named ANSI colors keep their meaning.
+    semantic = SEMANTIC_SEEDS
+    for role, value in semantic.items():
+        light, c, h = lch(value)
+        # At most four degrees: error remains red, success green, links blue.
+        themed = color(light, c, h + 4 * math.sin(math.radians(hue - h)))
+        colors[role] = readable(themed, backgrounds)
+    for role, value in {
+        "text": "onSurface",
+        "subtext1": "onSurfaceVariant",
+        "subtext0": "onSurfaceVariant",
+        "overlay2": "outline",
+        "overlay1": "outline",
+        "overlay0": "outlineVariant",
+        "surface2": "surfaceContainerHighest",
+        "surface1": "surfaceContainerHigh",
+        "surface0": "surfaceContainer",
+        "base": "surface",
+        "mantle": "surfaceContainerLowest",
+        "crust": "surfaceContainerLowest",
+        "klink": "blue",
+        "kvisited": "mauve",
+        "knegative": "error",
+        "kneutral": "yellow",
+        "kpositive": "success",
+    }.items():
+        colors[role] = colors[value]
+    for role in ("klink", "kvisited", "knegative", "kneutral", "kpositive"):
+        colors[role + "Selection"] = readable(colors[role], [colors["primary"]], 4.5)
+    ansi = ("surface", "red", "green", "yellow", "blue", "mauve", "teal", "onSurface")
+    for i, role in enumerate(ansi):
+        colors[f"term{i}"] = colors[role]
+        colors[f"term{i + 8}"] = colors["onSurfaceVariant"] if i == 0 else colors[role]
+
+
 def supporting_sources(seed, candidates, harmony=False):
     """Select real pigment families; Harmony favors coverage and related hues."""
     records = [dict(c) if isinstance(c, dict) else {"hex": clean(c)} for c in candidates]
@@ -95,6 +158,79 @@ def background_policy(personality, background_from_wallpaper=None):
     if type(background_from_wallpaper) is not bool:
         raise ValueError("Background from wallpaper must be a boolean")
     return personality, background_from_wallpaper
+
+
+def _accent_family(
+    colors,
+    backgrounds,
+    role,
+    source,
+    strength,
+    *,
+    brightness,
+    saturation,
+    personality,
+    variant,
+    harmony,
+    dark,
+    soft,
+    chroma,
+):
+    light, c, h = lch(source)
+    light = max(0.0, min(1.0, light + brightness))
+    c = c * strength * saturation * (1.35 if personality == "vivid" else 1.0)
+    if variant == "monochrome" and role in ("primary", "secondary", "tertiary"):
+        c = 0
+    if (
+        harmony
+        and role in ("primary", "secondary", "tertiary")
+        and 85 <= h <= 145
+        and light < 0.62
+        and 0.012 <= c < 0.12
+    ):
+        light = 0.70
+    if role == "primary":
+        c = chroma
+    # Lift dark pigments without turning the same saturation into a gray tint.
+    # Relative OKLCH strength grows with lightness, bounded by sRGB gamut.
+    lifted = max(light, 0.60) if dark and not soft and c >= 0.012 else light
+    lifted_chroma = c * min(1.8, lifted / max(light, 0.12))
+    if dark and not soft and variant != "monochrome" and c >= 0.012:
+        # Subtle real hues need enough strength to remain distinct when lifted.
+        lifted_chroma = max(lifted_chroma, min(0.065, c * 3.0))
+    if not soft and variant != "vibrant":
+        lifted_chroma = min(lifted_chroma, 0.19 if role == "primary" else 0.16)
+    if not dark and role in ("primary", "secondary", "tertiary"):
+        # Shadow pigments need a usable middle tone in light mode too.
+        # Keep source hue/chroma; contrast may make a small final adjustment.
+        lifted = max(0.52, min(0.58, light))
+        lifted_chroma = c
+        # Pale warm pigments lose their warmth at text-safe middle tones.
+        # Give just their UI accents extra chroma; source hue stays intact.
+        if light >= 0.65 and 45 <= h <= 110 and 0.012 <= c <= 0.12:
+            lifted = 0.62
+            lifted_chroma = min(0.14, c * 1.28 + 0.01)
+        if c < 0.012 or variant == "monochrome":
+            lifted = {"primary": 0.50, "secondary": 0.41, "tertiary": 0.35}[role]
+    accent = readable(color(lifted, lifted_chroma, h), backgrounds)
+    container_chroma = min(max(c * 0.65, min(0.045, c * 1.7)), 0.095) if dark and not soft else min(c * 0.42, 0.085)
+    container = color(0.35 if dark else 0.88, container_chroma, h)
+    colors[role] = accent
+    colors["on" + role.title()] = foreground(accent)
+    colors[role + "Dim"] = readable(color(lch(accent)[0] + (-0.025 if dark else 0.025), c, h), backgrounds)
+    colors[role + "Container"] = container
+    colors["on" + role.title() + "Container"] = readable(
+        color(0.93 if dark else 0.22, min(c * 0.3, 0.05), h), [container]
+    )
+    if role in ("primary", "secondary", "tertiary"):
+        fixed = color(0.87, min(c, 0.14), h)
+        fixed_dim = color(0.78, min(c, 0.14), h)
+        colors[role + "Fixed"] = fixed
+        colors[role + "FixedDim"] = fixed_dim
+        colors["on" + role.title() + "Fixed"] = readable(color(0.20, min(c, 0.07), h), [fixed, fixed_dim])
+        colors["on" + role.title() + "FixedVariant"] = readable(color(0.35, min(c, 0.07), h), [fixed, fixed_dim])
+        colors[role + "PaletteKeyColor"] = color(light, c, h)
+        colors[role + "_paletteKeyColor"] = colors[role + "PaletteKeyColor"]
 
 
 def generate(
@@ -196,61 +332,21 @@ def generate(
     colors["inverseOnSurface"] = readable(color(0.25 if dark else 0.92, tint, hue), [colors["inverseSurface"]])
 
     def family(role, source, strength=1.0):
-        light, c, h = lch(source)
-        light = max(0.0, min(1.0, light + brightness))
-        c = c * strength * saturation * (1.35 if personality == "vivid" else 1.0)
-        if variant == "monochrome" and role in ("primary", "secondary", "tertiary"):
-            c = 0
-        if (
-            harmony
-            and role in ("primary", "secondary", "tertiary")
-            and 85 <= h <= 145
-            and light < 0.62
-            and 0.012 <= c < 0.12
-        ):
-            light = 0.70
-        if role == "primary":
-            c = chroma
-        # Lift dark pigments without turning the same saturation into a gray tint.
-        # Relative OKLCH strength grows with lightness, bounded by sRGB gamut.
-        lifted = max(light, 0.60) if dark and not soft and c >= 0.012 else light
-        lifted_chroma = c * min(1.8, lifted / max(light, 0.12))
-        if dark and not soft and variant != "monochrome" and c >= 0.012:
-            # Subtle real hues need enough strength to remain distinct when lifted.
-            lifted_chroma = max(lifted_chroma, min(0.065, c * 3.0))
-        if not soft and variant != "vibrant":
-            lifted_chroma = min(lifted_chroma, 0.19 if role == "primary" else 0.16)
-        if not dark and role in ("primary", "secondary", "tertiary"):
-            # Shadow pigments need a usable middle tone in light mode too.
-            # Keep source hue/chroma; contrast may make a small final adjustment.
-            lifted = max(0.52, min(0.58, light))
-            lifted_chroma = c
-            # Pale warm pigments lose their warmth at text-safe middle tones.
-            # Give just their UI accents extra chroma; source hue stays intact.
-            if light >= 0.65 and 45 <= h <= 110 and 0.012 <= c <= 0.12:
-                lifted = 0.62
-                lifted_chroma = min(0.14, c * 1.28 + 0.01)
-            if c < 0.012 or variant == "monochrome":
-                lifted = {"primary": 0.50, "secondary": 0.41, "tertiary": 0.35}[role]
-        accent = readable(color(lifted, lifted_chroma, h), backgrounds)
-        container_chroma = min(max(c * 0.65, min(0.045, c * 1.7)), 0.095) if dark and not soft else min(c * 0.42, 0.085)
-        container = color(0.35 if dark else 0.88, container_chroma, h)
-        colors[role] = accent
-        colors["on" + role.title()] = foreground(accent)
-        colors[role + "Dim"] = readable(color(lch(accent)[0] + (-0.025 if dark else 0.025), c, h), backgrounds)
-        colors[role + "Container"] = container
-        colors["on" + role.title() + "Container"] = readable(
-            color(0.93 if dark else 0.22, min(c * 0.3, 0.05), h), [container]
+        _accent_family(
+            colors,
+            backgrounds,
+            role,
+            source,
+            strength,
+            brightness=brightness,
+            saturation=saturation,
+            personality=personality,
+            variant=variant,
+            harmony=harmony,
+            dark=dark,
+            soft=soft,
+            chroma=chroma,
         )
-        if role in ("primary", "secondary", "tertiary"):
-            fixed = color(0.87, min(c, 0.14), h)
-            fixed_dim = color(0.78, min(c, 0.14), h)
-            colors[role + "Fixed"] = fixed
-            colors[role + "FixedDim"] = fixed_dim
-            colors["on" + role.title() + "Fixed"] = readable(color(0.20, min(c, 0.07), h), [fixed, fixed_dim])
-            colors["on" + role.title() + "FixedVariant"] = readable(color(0.35, min(c, 0.07), h), [fixed, fixed_dim])
-            colors[role + "PaletteKeyColor"] = color(light, c, h)
-            colors[role + "_paletteKeyColor"] = colors[role + "PaletteKeyColor"]
 
     sources = supporting_sources(seed, companions, harmony)
     if personality == "harmony":
@@ -305,63 +401,8 @@ def generate(
     colors["neutral_variant_paletteKeyColor"] = colors["neutralVariantPaletteKeyColor"]
     colors["errorPaletteKeyColor"] = "df303e"
 
-    # Legacy adapters are role names only; named ANSI colors keep their meaning.
-    semantic = SEMANTIC_SEEDS
-    for role, value in semantic.items():
-        light, c, h = lch(value)
-        # At most four degrees: error remains red, success green, links blue.
-        themed = color(light, c, h + 4 * math.sin(math.radians(hue - h)))
-        colors[role] = readable(themed, backgrounds)
-    for role, value in {
-        "text": "onSurface",
-        "subtext1": "onSurfaceVariant",
-        "subtext0": "onSurfaceVariant",
-        "overlay2": "outline",
-        "overlay1": "outline",
-        "overlay0": "outlineVariant",
-        "surface2": "surfaceContainerHighest",
-        "surface1": "surfaceContainerHigh",
-        "surface0": "surfaceContainer",
-        "base": "surface",
-        "mantle": "surfaceContainerLowest",
-        "crust": "surfaceContainerLowest",
-        "klink": "blue",
-        "kvisited": "mauve",
-        "knegative": "error",
-        "kneutral": "yellow",
-        "kpositive": "success",
-    }.items():
-        colors[role] = colors[value]
-    for role in ("klink", "kvisited", "knegative", "kneutral", "kpositive"):
-        colors[role + "Selection"] = readable(colors[role], [colors["primary"]], 4.5)
-    ansi = ("surface", "red", "green", "yellow", "blue", "mauve", "teal", "onSurface")
-    for i, role in enumerate(ansi):
-        colors[f"term{i}"] = colors[role]
-        colors[f"term{i + 8}"] = colors["onSurfaceVariant"] if i == 0 else colors[role]
-    # A complete opaque text-role matrix, including Dim/terminal consumers.
-    all_backgrounds = [colors[k] for k in levels] + [colors["frame"]]
-    for role in (
-        "onSurface",
-        "onSurfaceVariant",
-        "primary",
-        "secondary",
-        "tertiary",
-        "error",
-        "success",
-        "primaryDim",
-        "secondaryDim",
-        "tertiaryDim",
-        "errorDim",
-        "successDim",
-    ):
-        colors[role] = readable(colors[role], all_backgrounds)
-    for role in ("primary", "secondary", "tertiary", "error", "success"):
-        colors["on" + role.title()] = foreground(colors[role])
-    colors["onBackground"] = colors["text"] = colors["onSurface"]
-    colors["subtext0"] = colors["subtext1"] = colors["onSurfaceVariant"]
-    colors["surfaceTint"] = colors["primary"]
-    validate(colors)
-    return colors
+    _semantic_roles(colors, hue, backgrounds)
+    return _readable_roles(colors, levels)
 
 
 def validate(colors):

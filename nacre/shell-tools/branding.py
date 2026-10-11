@@ -77,7 +77,7 @@ def luminance(value):
     values = [
         v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4 for v in values
     ]
-    return sum(v * w for v, w in zip(values, (0.2126, 0.7152, 0.0722)))
+    return sum(v * w for v, w in zip(values, (0.2126, 0.7152, 0.0722), strict=True))
 
 
 def role_colors(colors):
@@ -110,7 +110,8 @@ def role_colors(colors):
         b = [int(target[i : i + 2], 16) for i in (1, 3, 5)]
         for step in range(1, 21):
             result = "#" + "".join(
-                f"{round(x + (y - x) * step / 20):02x}" for x, y in zip(a, b)
+                f"{round(x + (y - x) * step / 20):02x}"
+                for x, y in zip(a, b, strict=True)
             )
             if ratio(result) >= minimum:
                 return result

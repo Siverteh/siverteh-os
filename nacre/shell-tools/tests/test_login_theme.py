@@ -1,4 +1,8 @@
-import importlib.util, tempfile, unittest, os, configparser
+import importlib.util
+import tempfile
+import unittest
+import os
+import configparser
 from unittest.mock import patch
 from pathlib import Path
 from PIL import Image

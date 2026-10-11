@@ -1,7 +1,6 @@
 """Host-independent menu discovery, package arguments and owned tool lifecycle."""
 
 import importlib.util
-import json
 from pathlib import Path
 import tempfile
 import unittest

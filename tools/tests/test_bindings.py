@@ -19,7 +19,10 @@ class BindingContractTests(unittest.TestCase):
             (TOOLS / "tests/fixtures/keybindings-contract.json").read_text()
         )
         actual = capture(TOOLS.parent / "hypr/conf/keybinding.lua")
-        normalize = lambda rows: sorted(json.dumps(row, sort_keys=True) for row in rows)
+
+        def normalize(rows):
+            return sorted(json.dumps(row, sort_keys=True) for row in rows)
+
         self.assertEqual(normalize(actual), normalize(expected))
         self.assertEqual(len(actual), 95)
 

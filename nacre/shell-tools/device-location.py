@@ -119,13 +119,13 @@ def detect():
         if simple is not None:
             try:
                 simple.get_client().call_stop_sync(None)
-            except Exception:
+            except Exception:  # noqa: BLE001 — GI/service boundary may raise backend-specific errors; location is optional.
                 pass
 
 
 if __name__ == "__main__":
     try:
         print(json.dumps(detect()))
-    except Exception:
+    except Exception:  # noqa: BLE001 — GI/service boundary may raise backend-specific errors; location is optional.
         print(json.dumps({"error": "No trustworthy device location available"}))
-        raise SystemExit(1)
+        raise SystemExit(1) from None

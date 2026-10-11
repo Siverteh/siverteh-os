@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """Bounded device actions; authentication stays in the native managers."""
 
-import argparse, json, re, subprocess, os
+import argparse
+import json
+import re
+import subprocess
+import os
 
 
 def command(action, value=""):
@@ -85,7 +89,14 @@ def main():
         ):
             raise RuntimeError(output.strip()[:400] or "Device action failed")
         print(json.dumps(dict(message=output.strip()[:400] or "Device updated")))
-    except Exception as e:
+    except (
+        OSError,
+        ValueError,
+        KeyError,
+        TypeError,
+        RuntimeError,
+        subprocess.SubprocessError,
+    ) as e:
         print(json.dumps(dict(error=str(e))))
 
 

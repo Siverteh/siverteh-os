@@ -20,12 +20,6 @@ TestCase {
         }
     }
     Component {
-        id: performance
-        NacrePerformancePage {
-            shouldUpdate: true
-        }
-    }
-    Component {
         id: player
         QtObject {
             property string identity: "Fixture player"
@@ -238,30 +232,8 @@ TestCase {
         compare(view.artwork, "");
         compare(view.sampling, false);
     }
-    function test_performance_missing_data_units_and_narrow_pages() {
-        const view = createTemporaryObject(performance, test);
-        wait(20);
-        compare(view.metrics[0].detail, "Unavailable");
-        compare(view.metrics[0].value, "—°C");
-        NacreSystemUsage.gpuTemp = 0;
-        compare(view.metrics[0].value, "—°C");
-        NacreSystemUsage.gpuUsageAvailable = true;
-        compare(view.metrics[0].value, "0°C");
-        NacreSystemUsage.gpuUsageAvailable = false;
-        compare(view.metrics[1].detail, "15%");
-        compare(view.metrics[2].value, "14.6 GiB");
-        verify(findChild(view, "performanceSummary").text.includes("root free"));
+    function test_narrow_media_pages() {
         for (const width of [300, 508, 766, 835]) {
-            const data = createTemporaryObject(performance, test, {
-                width,
-                height: 400
-            });
-            wait(10);
-            for (let i = 0; i < 3; i++) {
-                const ring = findChild(data, "performanceMetric" + i);
-                verify(ring.x + ring.width <= width + .01);
-                verify(ring.diameter > 0);
-            }
             const media = createTemporaryObject(page, test, {
                 width,
                 height: 400

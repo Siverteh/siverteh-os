@@ -1,3 +1,7 @@
+> Historical completed audit: the exact registry/tool and this comparison are
+> preserved at `provenance-audit-complete-2026-10-11`. The per-change hash gate
+> has since been retired; see [the archive policy](CURRENT-TREE-AUDIT.md).
+
 # Final current-source and runtime comparison
 
 Review date: 2026-10-10. Baseline main:

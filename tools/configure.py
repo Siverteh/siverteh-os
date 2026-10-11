@@ -304,7 +304,7 @@ def apply(home, root=ROOT, migrate=False, app_routes_only=False, migrate_idle=Fa
         and not private_monitor.exists()
     ):
         atomic(private_monitor, monitor.read_bytes())
-    for dest, target in links.items():
+    for dest, _target in links.items():
         saved = backup / dest.relative_to(home)
         dest.unlink()
         if dest.name in RETIRED_DIRS:

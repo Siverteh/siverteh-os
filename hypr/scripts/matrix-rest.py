@@ -33,7 +33,9 @@ def read_rgb(role, fallback):
 
 
 def blend(first, second, weight):
-    return tuple(round(a * (1 - weight) + b * weight) for a, b in zip(first, second))
+    return tuple(
+        round(a * (1 - weight) + b * weight) for a, b in zip(first, second, strict=True)
+    )
 
 
 def dim(color, multiplier):

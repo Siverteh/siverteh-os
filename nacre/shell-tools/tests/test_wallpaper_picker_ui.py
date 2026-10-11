@@ -1,5 +1,9 @@
 from qml_source import remove_objects, install_foundation_interaction
-import os, shutil, subprocess, tempfile, unittest
+import os
+import shutil
+import subprocess
+import tempfile
+import unittest
 from pathlib import Path
 
 try:

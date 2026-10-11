@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Private launcher favorites/hidden IDs; atomic updates preserve concurrent edits."""
 
-import argparse, fcntl, json, os, tempfile, sys, time
+import argparse
+import fcntl
+import json
+import os
+import tempfile
+import sys
+import time
 from pathlib import Path
 
 PATH = Path.home() / ".config/nacre/launcher.json"
@@ -104,6 +110,6 @@ if __name__ == "__main__":
                 else change(a.action, json.loads(sys.stdin.readline()))
             )
         )
-    except Exception as e:
+    except (OSError, ValueError, KeyError, TypeError) as e:
         print(json.dumps({"error": str(e)}))
         sys.exit(1)

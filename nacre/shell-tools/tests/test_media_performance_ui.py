@@ -1,4 +1,4 @@
-"""Actual media/performance pages with native Qt controls and service contracts."""
+"""Actual media page with native Qt controls and service contracts."""
 
 import os
 from pathlib import Path
@@ -7,14 +7,14 @@ import subprocess
 import tempfile
 import unittest
 
-from test_overview_ui import prepare_overview
+from dashboard_fixtures import prepare_dashboard
 
 ROOT = Path(__file__).resolve().parents[1]
 SHELL = ROOT.parent / "shell"
 
 
 def prepare_pages(target):
-    prepare_overview(target)
+    prepare_dashboard(target)
     fixtures = target / "fixtures"
     (fixtures / "NacrePlayers.qml").write_text(
         "pragma Singleton\nimport QtQuick\nQtObject {property var list:[];property var active:null;property var manualActive:null;onManualActiveChanged:if(manualActive)active=manualActive}"
@@ -41,7 +41,7 @@ def prepare_pages(target):
     )
     with (fixtures / "qmldir").open("a") as manifest:
         manifest.write("\nNacreScrollBar 1.0 NacreScrollBar.qml\n")
-    for name in ("NacreMediaPage", "NacrePerformancePage"):
+    for name in ("NacreMediaPage",):
         source = (SHELL / "modules/dashboard" / (name + ".qml")).read_text()
         source = source.replace("import Quickshell.Services.Mpris", "").replace(
             "import Quickshell", ""
@@ -69,7 +69,7 @@ def prepare_pages(target):
             (target / "media" / path.name).write_text(source)
 
 
-class MediaPerformanceUITests(unittest.TestCase):
+class MediaUITests(unittest.TestCase):
     def test_control_transactions_resource_data_and_layout(self):
         runner = Path("/usr/lib/qt6/bin/qmltestrunner")
         if not runner.exists():

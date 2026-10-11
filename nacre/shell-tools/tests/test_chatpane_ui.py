@@ -2,7 +2,11 @@ from qml_source import install_foundation_interaction
 
 """Exercise the production composer with a fixture backend and Qt Quick controls."""
 
-import os, shutil, subprocess, tempfile, unittest
+import os
+import shutil
+import subprocess
+import tempfile
+import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]

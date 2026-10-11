@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Keep existing desktop applications alive when the shell service is restarted."""
 
-import json, os, subprocess, time
+import json
+import os
+import subprocess
+import time
 from pathlib import Path
 
 

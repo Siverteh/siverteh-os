@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
 """Versioned desktop releases: snapshot, stage, exercise, promote, or restore."""
 
-import argparse, datetime as dt, fcntl, hashlib, importlib.util, json, os, shutil, subprocess, sys
+import argparse
+import datetime as dt
+import fcntl
+import hashlib
+import importlib.util
+import json
+import os
+import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 HOME = Path.home()

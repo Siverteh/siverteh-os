@@ -18,7 +18,6 @@ sys.path.insert(0, str(TOOLS.parent / "shell-cli/src"))
 spec = importlib.util.spec_from_file_location("colors_app_backend", TOOLS / "colors.py")
 colors = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(colors)
-from orient.engine import default_palette
 
 
 class ColorsBackendTests(unittest.TestCase):

@@ -139,7 +139,7 @@ def action(name, folder=None, window=None, quiet=False):
             write_record(path, number)
             try:
                 dispatch("window.move", ident, workspace=HIDDEN, follow=False)
-            except Exception:
+            except Exception:  # noqa: BLE001 — Rollback must run for any failure before the original exception is re-raised.
                 path.unlink(missing_ok=True)
                 raise
             announce("Window hidden")

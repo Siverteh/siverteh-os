@@ -229,7 +229,7 @@ def apply(home, manifest, fetch=download, refresh=True):
             change(registry, registry_data, 0o600)
             if refresh:
                 cache_refresh(home)
-        except Exception:
+        except Exception:  # noqa: BLE001 — Rollback must run for any failure before the original exception is re-raised.
             if operations:
                 restore_locked(home, transaction, refresh=refresh)
             raise

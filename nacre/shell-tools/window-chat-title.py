@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """Resolve only a running terminal's named chat; never read auth/conversation bodies."""
 
-import json, os, re, sys, unicodedata
+import json
+import os
+import re
+import sys
+import unicodedata
 from pathlib import Path
 
 

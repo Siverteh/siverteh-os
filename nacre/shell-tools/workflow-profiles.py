@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Saved personal audio/display/startup intent, applied only on explicit preset use."""
 
-import json, subprocess
+import json
+import subprocess
 from pathlib import Path
 
 HOME = Path.home()
@@ -89,7 +90,7 @@ def apply(name):
         m = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(m)
         clients = json.loads(run(["hyprctl", "clients", "-j"]))
-        for label, workspace, argv, exists in m.plan(clients):
+        for label, _workspace, argv, exists in m.plan(clients):
             if label in profile["roles"] and not exists:
                 subprocess.Popen(
                     ["systemd-run", "--user", "--scope", "--collect", "--quiet", *argv],

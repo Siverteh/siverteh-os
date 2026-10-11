@@ -247,14 +247,8 @@ def note_timestamp(body):
     return ""
 
 
-def graph():
-    """Derived topic grouping, explicit source links, dated-note activity proxy.
-
-    Never counts file mtimes or claims to read private chat transcripts. Shared
-    evidence appears once and may relate to more than one hub.
-    """
-    today = dt.datetime.now(dt.timezone.utc).date()
-    nodes, links, notes = [], [], []
+def _graph_notes(today):
+    notes = []
     lookup = {}
     if VAULT.exists():
         for p in sorted(VAULT.rglob("*.md")):
@@ -296,6 +290,10 @@ def graph():
             )
             notes.append(item)
             lookup[rel] = ident
+    return notes, lookup
+
+
+def _graph_source_links(notes, lookup):
     source_pairs = set()
     stems = {}
     for path, ident in lookup.items():
@@ -334,12 +332,126 @@ def graph():
                     ident = matches[0]
             if ident and ident != n["id"]:
                 source_pairs.add((n["id"], ident))
-    links.extend(
+    links = list(
         dict(source=a, target=b, kind="source") for a, b in sorted(source_pairs)
     )
     for n in notes:
         n["references"] = [b for a, b in source_pairs if a == n["id"]]
         n["featureText"] = DISCOVERY.features(n)[1]
+    return links
+
+
+def _graph_group_nodes(subjects, notes, links):
+    nodes = []
+    by_id = {note["id"]: note for note in notes}
+    for subject in subjects:
+        members = [by_id[ident] for ident in subject["members"]]
+        display_category = (
+            subject["category"]
+            if subject["category"] in THEMES
+            else category(subject["label"], " ".join(n["label"] for n in members))[0]
+        )
+        days = {}
+        unique = set()
+        for n in members:
+            signature = hashlib.sha256(
+                DISCOVERY.clean(n["text"]).casefold().encode()
+            ).hexdigest()
+            if n.get("recorded") and signature not in unique:
+                days[n["date"]] = days.get(n["date"], 0) + n["activity"]
+                unique.add(signature)
+        activity = sum(math.log1p(value) for value in days.values())
+        nodes.append(
+            dict(
+                id=subject["id"],
+                label=subject["label"],
+                kind="hub",
+                count=len(members),
+                activity=round(activity, 3),
+                radius=20 + 8 * math.log1p(activity),
+                category=display_category,
+                color=THEMES[display_category][1],
+                themeLabel=THEMES[display_category][0],
+                themeReason="declared" if subject["category"] else "inferred",
+                origin=subject["origin"],
+                parent=subject["parent"],
+                summary="Grouped from saved knowledge; automatic suggestions are not verified facts.",
+            )
+        )
+        topic_covered = set()
+        for topic in subject["topics"]:
+            topic_category = (
+                topic["category"]
+                if topic["category"] in THEMES
+                else category(
+                    topic["label"],
+                    " ".join(by_id[i]["label"] for i in topic["members"]),
+                )[0]
+            )
+            nodes.append(
+                dict(
+                    id=topic["id"],
+                    label=topic["label"],
+                    kind="topic",
+                    parent=subject["id"],
+                    count=len(topic["members"]),
+                    activity=0,
+                    radius=12,
+                    category=topic_category,
+                    color=THEMES[topic_category][1],
+                    groupReason=topic["origin"],
+                    summary="Topics emerge from annotations and coherent note communities.",
+                )
+            )
+            links.append(
+                dict(
+                    source=subject["id"],
+                    target=topic["id"],
+                    kind="group",
+                    reason=topic["origin"],
+                )
+            )
+            for ident in topic["members"]:
+                links.append(
+                    dict(
+                        source=topic["id"],
+                        target=ident,
+                        kind="group",
+                        reason=topic["origin"],
+                    )
+                )
+                topic_covered.add(ident)
+        for ident, assignment in subject["members"].items():
+            if ident not in topic_covered:
+                links.append(
+                    dict(
+                        source=subject["id"],
+                        target=ident,
+                        kind="group",
+                        **assignment,
+                    )
+                )
+        if subject["parent"]:
+            links.append(
+                dict(
+                    source=subject["parent"],
+                    target=subject["id"],
+                    kind="group",
+                    reason="promoted topic",
+                )
+            )
+    return nodes
+
+
+def graph():
+    """Derived topic grouping, explicit source links, dated-note activity proxy.
+
+    Never counts file mtimes or claims to read private chat transcripts. Shared
+    evidence appears once and may relate to more than one hub.
+    """
+    today = dt.datetime.now(dt.timezone.utc).date()
+    notes, lookup = _graph_notes(today)
+    links = _graph_source_links(notes, lookup)
     derived = VAULT / ".brain-state/discovery"
     try:
         overrides = (
@@ -381,110 +493,7 @@ def graph():
         tmp.write_text(json.dumps(report))
         tmp.chmod(0o600)
         os.replace(tmp, derived / "subjects.json")
-        for subject in subjects:
-            members = [
-                next(n for n in notes if n["id"] == ident)
-                for ident in subject["members"]
-            ]
-            display_category = (
-                subject["category"]
-                if subject["category"] in THEMES
-                else category(subject["label"], " ".join(n["label"] for n in members))[
-                    0
-                ]
-            )
-            days = {}
-            unique = set()
-            for n in members:
-                signature = hashlib.sha256(
-                    DISCOVERY.clean(n["text"]).casefold().encode()
-                ).hexdigest()
-                if n.get("recorded") and signature not in unique:
-                    days[n["date"]] = days.get(n["date"], 0) + n["activity"]
-                    unique.add(signature)
-            activity = sum(math.log1p(value) for value in days.values())
-            nodes.append(
-                dict(
-                    id=subject["id"],
-                    label=subject["label"],
-                    kind="hub",
-                    count=len(members),
-                    activity=round(activity, 3),
-                    radius=20 + 8 * math.log1p(activity),
-                    category=display_category,
-                    color=THEMES[display_category][1],
-                    themeLabel=THEMES[display_category][0],
-                    themeReason="declared" if subject["category"] else "inferred",
-                    origin=subject["origin"],
-                    parent=subject["parent"],
-                    summary="Grouped from saved knowledge; automatic suggestions are not verified facts.",
-                )
-            )
-            topic_covered = set()
-            for topic in subject["topics"]:
-                topic_category = (
-                    topic["category"]
-                    if topic["category"] in THEMES
-                    else category(
-                        topic["label"],
-                        " ".join(
-                            next(n["label"] for n in notes if n["id"] == i)
-                            for i in topic["members"]
-                        ),
-                    )[0]
-                )
-                nodes.append(
-                    dict(
-                        id=topic["id"],
-                        label=topic["label"],
-                        kind="topic",
-                        parent=subject["id"],
-                        count=len(topic["members"]),
-                        activity=0,
-                        radius=12,
-                        category=topic_category,
-                        color=THEMES[topic_category][1],
-                        groupReason=topic["origin"],
-                        summary="Topics emerge from annotations and coherent note communities.",
-                    )
-                )
-                links.append(
-                    dict(
-                        source=subject["id"],
-                        target=topic["id"],
-                        kind="group",
-                        reason=topic["origin"],
-                    )
-                )
-                for ident in topic["members"]:
-                    links.append(
-                        dict(
-                            source=topic["id"],
-                            target=ident,
-                            kind="group",
-                            reason=topic["origin"],
-                        )
-                    )
-                    topic_covered.add(ident)
-            for ident, assignment in subject["members"].items():
-                if ident not in topic_covered:
-                    links.append(
-                        dict(
-                            source=subject["id"],
-                            target=ident,
-                            kind="group",
-                            **assignment,
-                        )
-                    )
-            if subject["parent"]:
-                links.append(
-                    dict(
-                        source=subject["parent"],
-                        target=subject["id"],
-                        kind="group",
-                        reason="promoted topic",
-                    )
-                )
+        nodes = _graph_group_nodes(subjects, notes, links)
         nodes.extend(
             {
                 k: v

@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """Publish only wallpaper/color data for the root-owned Nacre login theme."""
 
-import configparser, hashlib, io, json, os, tempfile
+import configparser
+import hashlib
+import io
+import json
+import os
+import tempfile
 from pathlib import Path
 from PIL import Image, ImageFilter, ImageOps
 

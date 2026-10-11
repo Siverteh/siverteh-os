@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 """Readiness and non-disruptive login/resume/hotplug evidence; no secret values."""
 
-import argparse, datetime as dt, json, os, selectors, socket, subprocess, time
+import argparse
+import datetime as dt
+import json
+import os
+import selectors
+import socket
+import subprocess
+import time
 from pathlib import Path
 
 HOME = Path.home()

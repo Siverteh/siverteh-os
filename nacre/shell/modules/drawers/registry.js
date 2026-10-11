@@ -3,8 +3,12 @@
 function register(service, name, state, host) {
     if (!service || !name)
         return;
-    service.screens = Object.assign({}, service.screens, { [name]: state });
-    service.panels = Object.assign({}, service.panels, { [name]: host });
+    service.screens = Object.assign({}, service.screens, {
+        [name]: state
+    });
+    service.panels = Object.assign({}, service.panels, {
+        [name]: host
+    });
 }
 
 function release(service, name, state, host) {

@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
 """Automatic travel timezone updates. The UTC clock remains NTP-owned."""
 
-import argparse, datetime as dt, json, os, re, shutil, subprocess, time, fcntl, contextlib
+import argparse
+import datetime as dt
+import json
+import os
+import re
+import shutil
+import subprocess
+import time
+import fcntl
+import contextlib
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -162,7 +171,14 @@ def update_locked(force=False):
                 error="",
             ),
         )
-    except Exception:
+    except (
+        OSError,
+        ValueError,
+        KeyError,
+        TypeError,
+        RuntimeError,
+        subprocess.SubprocessError,
+    ):
         current = run("timedatectl", "show", "--property=Timezone", "--value")
         fallback = (
             config.get("lastTrustedTimezone")
@@ -340,9 +356,16 @@ def main():
         elif a.action == "manual":
             manual(a.value)
         print(json.dumps(state()))
-    except Exception as e:
+    except (
+        OSError,
+        ValueError,
+        KeyError,
+        TypeError,
+        RuntimeError,
+        subprocess.SubprocessError,
+    ) as e:
         print(json.dumps(dict(error=str(e))))
-        raise SystemExit(1)
+        raise SystemExit(1) from None
 
 
 if __name__ == "__main__":

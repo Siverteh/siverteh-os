@@ -230,4 +230,4 @@ if __name__ == "__main__":
         main()
     except (ValueError, OSError, subprocess.CalledProcessError) as error:
         print(f"nacre-brain: {error}", file=sys.stderr)
-        raise SystemExit(1)
+        raise SystemExit(1) from None

@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
 """Install or reload Nacre native shell source with a reversible cutover."""
 
-import argparse, datetime as dt, hashlib, json, os, shutil, signal, subprocess, time
+import argparse
+import datetime as dt
+import hashlib
+import json
+import os
+import shutil
+import signal
+import subprocess
+import time
 from pathlib import Path
 
 HOME = Path.home()

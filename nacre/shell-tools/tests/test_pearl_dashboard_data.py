@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from zoneinfo import ZoneInfoNotFoundError
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,7 +39,7 @@ class PearlDashboardDataTests(unittest.TestCase):
                 data.validate({"focusMinutes": value})
         with self.assertRaises(ValueError):
             data.validate({"calendarFile": "relative.ics"})
-        with self.assertRaises(Exception):
+        with self.assertRaises(ZoneInfoNotFoundError):
             data.validate({"homeZone": "bad/zone"})
 
     def test_private_writes_and_focus_deadline_survive_pause_and_resume(self):

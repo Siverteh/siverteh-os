@@ -170,7 +170,7 @@ def pigment_families(records):
         pigment = [r["coverage"] * (0.25 + 0.75 * min(r["lightness"] / 0.65, 1)) for r in members]
         mass = sum(pigment)
         labs = [lab_from_rgb(tuple(int(r["hex"][k : k + 2], 16) / 255 for k in (0, 2, 4))) for r in members]
-        light, a, b = (sum(lab[k] * w for lab, w in zip(labs, pigment)) / mass for k in range(3))
+        light, a, b = (sum(lab[k] * w for lab, w in zip(labs, pigment, strict=True)) / mass for k in range(3))
         chroma = math.hypot(a, b)
         salience = sum(r["salience"] * r["coverage"] for r in members) / coverage
         cells = Counter()
@@ -245,7 +245,7 @@ def analyze(path):
             strength = math.hypot(value[1], value[2])
             return (0.0, value[1] * 0.1 / strength, value[2] * 0.1 / strength)
 
-        def compatible(other):
+        def compatible(other, lab=lab):
             chromatic = math.hypot(lab[1], lab[2]) >= 0.012
             other_chromatic = math.hypot(other[1], other[2]) >= 0.012
             if chromatic != other_chromatic:

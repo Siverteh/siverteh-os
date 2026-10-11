@@ -1,7 +1,6 @@
 """Read-only hardware discovery and guarded command boundaries."""
 
 import importlib.util
-import json
 from pathlib import Path
 import subprocess
 import tempfile

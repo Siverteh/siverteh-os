@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Validated desktop preferences and reversible connected-display arrangement."""
 
-import argparse, fcntl, json, subprocess, sys, time, uuid
+import argparse
+import fcntl
+import json
+import subprocess
+import sys
+import time
+import uuid
 from pathlib import Path
 from importlib.util import spec_from_file_location, module_from_spec
 
@@ -225,9 +231,12 @@ def display_plan(monitors, primary, mode):
         raise ValueError("Selected display is disconnected")
     main = dict(main, x=0, y=0, mirrorOf="none")
     result = [main]
-    width = lambda m: round(
-        (m["height"] if (m.get("transform") or 0) % 2 else m["width"]) / m["scale"]
-    )
+
+    def width(m):
+        return round(
+            (m["height"] if (m.get("transform") or 0) % 2 else m["width"]) / m["scale"]
+        )
+
     x = width(main) if mode == "extend-right" else 0
     for original in monitors:
         if original["name"] == primary:
@@ -450,7 +459,7 @@ def main():
                 try:
                     hypr("eval", monitor_lua(plan))
                     persist(data)
-                except Exception:
+                except Exception:  # noqa: BLE001 — Restore pending display transaction or report failure to the settings client.
                     revert(token)
                     raise
             elif a.action == "confirm":
@@ -458,7 +467,7 @@ def main():
             elif a.action in ("revert", "rollback-after"):
                 revert(a.args[0] if a.args else None)
             print(json.dumps(state()))
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001 — Restore pending display transaction or report failure to the settings client.
             print(
                 json.dumps(
                     dict(data=load(), error=str(error), pending=PENDING.exists())

@@ -5,6 +5,7 @@ import importlib.util
 from pathlib import Path
 import subprocess
 import unittest
+import re
 from unittest.mock import Mock
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -52,4 +53,4 @@ class SettingsLauncherTests(unittest.TestCase):
             ROOT / "nacre/shell/modules/settings/settings-catalog.js"
         ).read_text()
         for page in settings.PAGES:
-            self.assertIn('id:"' + page + '"', catalog)
+            self.assertRegex(catalog, r'\bid:\s*"' + re.escape(page) + r'"')

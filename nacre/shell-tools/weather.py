@@ -171,7 +171,7 @@ def refresh():
                 )
             )
             data["aqi"] = air.get("current", {}).get("us_aqi")
-        except Exception:
+        except (OSError, ValueError, KeyError, TypeError, RuntimeError):
             data["aqi"] = None
         CACHE.parent.mkdir(parents=True, exist_ok=True)
         temp = CACHE.with_suffix(".tmp")
@@ -179,7 +179,7 @@ def refresh():
         temp.chmod(0o600)
         temp.replace(CACHE)
         return data
-    except Exception:
+    except (OSError, ValueError, KeyError, TypeError, RuntimeError):
         return dict(
             previous,
             stale=True,

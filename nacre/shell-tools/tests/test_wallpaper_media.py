@@ -1,5 +1,9 @@
 import shutil
-import importlib.util, json, os, tempfile, unittest
+import importlib.util
+import json
+import os
+import tempfile
+import unittest
 from pathlib import Path
 from unittest.mock import patch
 from PIL import Image
@@ -26,6 +30,23 @@ class WallpaperMediaTests(unittest.TestCase):
         )
         isolated.start()
         self.addCleanup(isolated.stop)
+
+    def test_decoder_safety_failure_does_not_break_the_wallpaper_library(self):
+        media.LIBRARY.mkdir(parents=True)
+        bad = media.LIBRARY / "bad.png"
+        good = media.LIBRARY / "good.png"
+        bad.write_bytes(b"invalid")
+        good.write_bytes(b"fixture")
+
+        def describe(path):
+            if path == bad:
+                raise Image.DecompressionBombError("Image is unsafe to decode")
+            return {"path": str(path)}
+
+        with patch.object(media, "describe", side_effect=describe):
+            result = media.catalog()
+        self.assertEqual(result["errors"], ["bad.png"])
+        self.assertEqual(result["entries"], [{"path": str(good)}])
 
     def test_source_preference_migrates_without_changing_file_on_read(self):
         media.PREFS.parent.mkdir(parents=True)

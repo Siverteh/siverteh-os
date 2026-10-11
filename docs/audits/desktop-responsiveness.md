@@ -74,7 +74,7 @@ was evaluated in an isolated process; no global or renderer tuning is applied.
   filenames alone is not evidence of less runtime work.
 - Native timers, event watches and optional-tools discovery serve different
   purposes. Avoid replacing event delivery with frequent subprocess polling.
-- Keep source reviews, specs and exact-revision CI alongside meaningful behavior
+- Keep specs, normal code reviews and exact-revision CI alongside meaningful behavior
   checks. Formatting/parser success alone does not prove readiness or smoothness.
 
 ## Remaining limits

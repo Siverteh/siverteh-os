@@ -29,3 +29,6 @@ auth.json
 !nacre/shell-tools/demo-wallpapers/*.jpg
 !nacre/shell-tools/demo-wallpapers/*.png
 !nacre/shell-tools/demo-wallpapers/*.webp
+
+# Development-only JavaScript formatter.
+node_modules/

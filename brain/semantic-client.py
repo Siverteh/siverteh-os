@@ -1,6 +1,10 @@
 """Revision cache and bounded local worker; no document upload or inference network calls."""
 
-import json, os, selectors, subprocess, threading
+import json
+import os
+import selectors
+import subprocess
+import threading
 from pathlib import Path
 
 
@@ -52,7 +56,7 @@ class SemanticClient:
                         reply = json.loads(self.process.stdout.readline())
                         if len(reply.get("vectors", [])) != len(batch):
                             raise ValueError("Incomplete embeddings")
-                        for n, vector in zip(batch, reply["vectors"]):
+                        for n, vector in zip(batch, reply["vectors"], strict=True):
                             cache[n["id"]] = {
                                 "revision": n["revision"],
                                 "vector": vector,
@@ -66,7 +70,13 @@ class SemanticClient:
                     tmp.write_text(json.dumps(cache))
                     tmp.chmod(0o600)
                     os.replace(tmp, path)
-                except Exception:
+                except (
+                    OSError,
+                    ValueError,
+                    KeyError,
+                    TypeError,
+                    subprocess.SubprocessError,
+                ):
                     if self.process and self.process.poll() is None:
                         self.process.terminate()
                     self.process = None

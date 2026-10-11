@@ -15,9 +15,15 @@ function dayKey(date) {
 function calendar(year, month, firstWeekday) {
     const first = new Date(year, month, 1, 12);
     const offset = (first.getDay() - firstWeekday + 7) % 7;
-    return Array.from({length: 42}, (_, index) => {
+    return Array.from({
+        length: 42
+    }, (_, index) => {
         const date = new Date(year, month, index - offset + 1, 12);
-        return {day: date.getDate(), key: dayKey(date), inMonth: date.getMonth() === first.getMonth()};
+        return {
+            day: date.getDate(),
+            key: dayKey(date),
+            inMonth: date.getMonth() === first.getMonth()
+        };
     });
 }
 function osName(text) {
@@ -44,12 +50,36 @@ function inViewport(box, top, height) {
 function layout(width) {
     const w = Math.max(1, width), gap = 12;
     if (w < 420) {
-        return {height: 1444, weather: [0,0,w,158], host:[0,170,w,158], clock:[0,340,w,170], calendar:[0,522,w,320], resources:[0,854,w,220], media:[0,1086,w,358]};
+        return {
+            height: 1444,
+            weather: [0, 0, w, 158],
+            host: [0, 170, w, 158],
+            clock: [0, 340, w, 170],
+            calendar: [0, 522, w, 320],
+            resources: [0, 854, w, 220],
+            media: [0, 1086, w, 358]
+        };
     }
     if (w < 700) {
-        const weather = (w-gap)*0.4;
-        return {height:756, weather:[0,0,weather,158], host:[weather+gap,0,w-weather-gap,158], clock:[0,170,100,318], calendar:[112,170,w-112,318], resources:[0,500,112,256], media:[124,500,w-124,256]};
+        const weather = (w - gap) * 0.4;
+        return {
+            height: 756,
+            weather: [0, 0, weather, 158],
+            host: [weather + gap, 0, w - weather - gap, 158],
+            clock: [0, 170, 100, 318],
+            calendar: [112, 170, w - 112, 318],
+            resources: [0, 500, 112, 256],
+            media: [124, 500, w - 124, 256]
+        };
     }
-    const side = 206, main = w-side-gap, weather = (main-gap)*0.38;
-    return {height:488, weather:[0,0,weather,158], host:[weather+gap,0,main-weather-gap,158], clock:[0,170,112,318], calendar:[124,170,main-248,318], resources:[main-112,170,112,318], media:[w-side,0,side,488]};
+    const side = 206, main = w - side - gap, weather = (main - gap) * 0.38;
+    return {
+        height: 488,
+        weather: [0, 0, weather, 158],
+        host: [weather + gap, 0, main - weather - gap, 158],
+        clock: [0, 170, 112, 318],
+        calendar: [124, 170, main - 248, 318],
+        resources: [main - 112, 170, 112, 318],
+        media: [w - side, 0, side, 488]
+    };
 }

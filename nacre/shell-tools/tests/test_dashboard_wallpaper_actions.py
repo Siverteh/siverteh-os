@@ -6,7 +6,7 @@ import shutil
 import subprocess
 import tempfile
 import unittest
-from test_overview_ui import prepare_overview
+from dashboard_fixtures import prepare_dashboard
 
 ROOT = Path(__file__).resolve().parents[1]
 SHELL = ROOT.parent / "shell"
@@ -19,7 +19,7 @@ class DashboardWallpaperActionsTests(unittest.TestCase):
             self.skipTest("Qt Quick Test unavailable")
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory)
-            prepare_overview(target)
+            prepare_dashboard(target)
             fixtures = target / "fixtures"
             definitions = {
                 "NacreWallpapers": 'property string poster:"";property string displayPreview:"";property string displayPath:"";property bool displayDynamic:false;property bool displayAnimated:false;property bool rotationReady:true;property bool themeBusy:false;property int previousCalls:0;property int pauseCalls:0;function previousWallpaper(){previousCalls++;}function toggleMotion(){pauseCalls++;WallpaperPlayback.paused=!WallpaperPlayback.paused;}property var preferences:({palettePersonality:"natural"});property int nextCalls:0;function advanceRotation(manual){if(manual)nextCalls++;}',

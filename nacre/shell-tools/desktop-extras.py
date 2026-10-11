@@ -1,7 +1,17 @@
 #!/usr/bin/env python3
 """Private, on-demand data adapters for Nacre desktop panels."""
 
-import argparse, hashlib, json, os, re, runpy, subprocess, sys, unicodedata, time, uuid
+import argparse
+import hashlib
+import json
+import os
+import re
+import runpy
+import subprocess
+import sys
+import unicodedata
+import time
+import uuid
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -189,13 +199,13 @@ def brain_search(query):
         if not all(w in fold for w in words):
             continue
         title = next(
-            (l[2:] for l in text.splitlines() if l.startswith("# ")), path.stem
+            (line[2:] for line in text.splitlines() if line.startswith("# ")), path.stem
         )
         excerpt = next(
             (
-                l
-                for l in text.splitlines()
-                if any(w in l.casefold() for w in words) and not l.startswith("#")
+                line
+                for line in text.splitlines()
+                if any(w in line.casefold() for w in words) and not line.startswith("#")
             ),
             title,
         )
@@ -570,7 +580,14 @@ def main():
                 dict(action=args.action, result=result, query=payload.get("query", ""))
             )
         )
-    except Exception:
+    except (
+        OSError,
+        ValueError,
+        KeyError,
+        TypeError,
+        RuntimeError,
+        subprocess.SubprocessError,
+    ):
         print(
             json.dumps(
                 dict(

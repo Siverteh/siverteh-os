@@ -38,7 +38,7 @@ def sdk():
         import claude_agent_sdk
 
         return claude_agent_sdk
-    except ImportError:
+    except ImportError as error:
         python = Path.home() / ".local/share/nacre/ai/claude-sdk/bin/python"
         if python.is_file() and Path(sys.prefix) != python.parent.parent:
             os.execv(
@@ -46,7 +46,7 @@ def sdk():
             )
         raise ValueError(
             "Install the Claude history dependency: python3 ai/install-claude.py"
-        )
+        ) from error
 
 
 def running_sessions(project, account):
@@ -288,4 +288,4 @@ if __name__ == "__main__":
         main()
     except (ValueError, OSError, subprocess.SubprocessError) as error:
         print(f"nacre-ai-claude: {error}", file=sys.stderr)
-        raise SystemExit(1)
+        raise SystemExit(1) from None

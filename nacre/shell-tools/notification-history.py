@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Private notification snapshots; native action handles stay in the renderer."""
 
-import json, sys, importlib.util, re
+import json
+import sys
+import importlib.util
+import re
 from pathlib import Path
 
 PATH = Path.home() / ".local/state/nacre/shell/notifications/history.json"

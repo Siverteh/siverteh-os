@@ -21,13 +21,13 @@ def simulate(value, vision="normal"):
     if vision not in MATRICES:
         raise ValueError("Unknown vision simulation")
     channels = tuple(linear(v) for v in rgb(value))
-    result = [max(0.0, min(1.0, sum(v * w for v, w in zip(channels, row)))) for row in MATRICES[vision]]
+    result = [max(0.0, min(1.0, sum(v * w for v, w in zip(channels, row, strict=True)))) for row in MATRICES[vision]]
     return "".join(f"{round(encoded(v) * 255):02x}" for v in result)
 
 
 def difference(a, b, vision="normal"):
     x, y = (lab_from_rgb(rgb(simulate(v, vision))) for v in (a, b))
-    return sum((u - v) ** 2 for u, v in zip(x, y)) ** 0.5
+    return sum((u - v) ** 2 for u, v in zip(x, y, strict=True)) ** 0.5
 
 
 def text_pairs(colors):

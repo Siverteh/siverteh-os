@@ -44,3 +44,5 @@ explicitly licensed artist wallpapers with attribution and full license texts. O
 | Super+B | Brain on workspace 6 |
 
 Startup targets browser 1, AI 2, Discord 3, Spotify 4, mail 5 and Brain 6; editors route to 7. Plain terminals can open on any workspace. The native shell is maintained under nacre/; current source/dependency evidence is mapped in the [final comparison](docs/nacre/FINAL-COMPARISON.md). Third-party and historical credits remain properly scoped, including the [Orient NOTICE](nacre/shell-cli/NOTICE).
+
+Contributor checks and the completed audit archive are documented in [Maintaining Nacre](docs/maintenance.md).

@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Private drafts, user-selected local attachments, clipboard and area screenshots."""
 
-import argparse, hashlib, json, os, subprocess, sys, uuid
+import argparse
+import hashlib
+import json
+import os
+import subprocess
+import sys
+import uuid
 from pathlib import Path
 from urllib.parse import urlparse, unquote
 
@@ -117,5 +123,5 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except Exception as e:
+    except (OSError, ValueError, KeyError, TypeError, IndexError) as e:
         print(json.dumps(dict(error=str(e))))

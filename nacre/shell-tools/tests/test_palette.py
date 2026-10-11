@@ -204,7 +204,7 @@ class PaletteCommitTest(unittest.TestCase):
         self.assertEqual(len({p["id"] for p in presets}), 30)
         vivid = [p for p in presets if p["group"] == "vivid"]
         soft = [p for p in presets if p["id"].startswith("soft-")]
-        for preset, softened in zip(vivid, soft):
+        for preset, softened in zip(vivid, soft, strict=True):
             colors = preset["modes"]["dark"]
             rgb = [int(colors["primary"][i : i + 2], 16) / 255 for i in (0, 2, 4)]
             soft_rgb = [

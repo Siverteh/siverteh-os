@@ -1,4 +1,7 @@
-import importlib.util, json, tempfile, unittest
+import importlib.util
+import json
+import tempfile
+import unittest
 import io
 from pathlib import Path
 from unittest.mock import patch
@@ -38,6 +41,28 @@ class LockAndDeviceTests(unittest.TestCase):
             ):
                 self.assertEqual(info.snapshot(), {"notifications": []})
                 fetch.assert_called_once_with("lockWidgets", "state")
+
+    def test_decoder_safety_failure_keeps_the_lock_artwork_fallback(self):
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            source = home / "art.bin"
+            source.write_bytes(b"fixture")
+            with (
+                patch.object(info, "HOME", home),
+                patch.object(info, "CACHE", home / "lock-widgets.json"),
+                patch.object(
+                    info.Image,
+                    "open",
+                    side_effect=info.Image.DecompressionBombError("Unsafe image"),
+                ),
+            ):
+                result = info.artwork({"media": {"art": source.as_uri()}})
+            self.assertEqual(
+                result, str(home / ".local/share/nacre/branding/nacre-lock.png")
+            )
+            self.assertFalse(
+                json.loads((home / "lock-art-source.json").read_text())["ok"]
+            )
 
     def test_local_artwork_read_is_bounded_before_decoding(self):
         class BoundedStream(io.BytesIO):
@@ -148,7 +173,7 @@ class LockAndDeviceTests(unittest.TestCase):
             )
             scale = min(width / 2048, height / 1152)
             # Each control must be centered on its prepared rounded button.
-            for x, action in ((165, "previous"), (238, "toggle"), (311, "next")):
+            for x, _action in ((165, "previous"), (238, "toggle"), (311, "next")):
                 pattern = f"position = {round((x - 720) * scale)}, {round((405 - 687) * scale)}"
                 self.assertIn(pattern, output)
             self.assertEqual(output.count("input-field {"), 1)

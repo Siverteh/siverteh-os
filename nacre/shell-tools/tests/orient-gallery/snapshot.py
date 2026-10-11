@@ -1,7 +1,9 @@
 """Deterministic role snapshots; no live theme or per-user state writes."""
 
 from pathlib import Path
-import sys, json, tempfile
+import sys
+import json
+import tempfile
 
 SOURCE = Path(__file__).resolve().parents[3] / "shell-cli/src"
 sys.path.insert(0, str(SOURCE))

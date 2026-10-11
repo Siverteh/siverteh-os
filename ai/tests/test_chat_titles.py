@@ -99,7 +99,8 @@ class ChatTitles(unittest.TestCase):
             close.assert_called_once()
 
     def test_mcp_only_exposes_naming_and_preserves_thread_identity(self):
-        import io, json
+        import io
+        import json
 
         chat = module("nacre-ai-chat")
         requests = [

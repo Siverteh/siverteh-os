@@ -170,7 +170,7 @@ def request(kind, title, rows=None, initial="", timeout=300):
         try:
             fcntl.flock(guard, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
-            raise ValueError("Another selector is already open")
+            raise ValueError("Another selector is already open") from None
         ident = uuid.uuid4().hex
         path = ROOT / ident
         path.mkdir(mode=0o700)

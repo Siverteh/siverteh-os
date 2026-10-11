@@ -95,5 +95,5 @@ if __name__ == "__main__":
                 raise ValueError("Unknown action")
             terminate(int(sys.argv[2]), sys.argv[3])
         print(json.dumps(snapshot()))
-    except Exception as error:
+    except (OSError, ValueError, KeyError, TypeError, IndexError) as error:
         print(json.dumps(dict(error=str(error)[:180])))

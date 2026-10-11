@@ -1,4 +1,5 @@
 .pragma library
+
 const fallback = {
     "surface": "111213",
     "surfaceDim": "111213",
@@ -129,32 +130,52 @@ const fallback = {
 };
 const names = ["rosewater", "flamingo", "pink", "mauve", "red", "maroon", "peach", "yellow", "green", "teal", "sky", "sapphire", "blue", "lavender"];
 function roleName(key) {
-    if (names.includes(key)) return key;
+    if (names.includes(key))
+        return key;
     return "m3" + key.replace(/PaletteKeyColor$/, "_paletteKeyColor");
 }
 function prepare(data) {
-    if (!data || !["dark", "light"].includes(data.mode) || !data.colours || Array.isArray(data.colours)) return null;
+    if (!data || !["dark", "light"].includes(data.mode) || !data.colours || Array.isArray(data.colours))
+        return null;
     const colours = data.colours, palette = {};
     for (const key of Object.keys(fallback)) {
         const value = colours[key];
-        if (typeof value !== "string" || !/^#?[0-9a-fA-F]{6}$/.test(value)) return null;
+        if (typeof value !== "string" || !/^#?[0-9a-fA-F]{6}$/.test(value))
+            return null;
         const hex = value.replace(/^#/, "");
-        const color = Qt.rgba(parseInt(hex.slice(0,2),16)/255,parseInt(hex.slice(2,4),16)/255,parseInt(hex.slice(4,6),16)/255,1);
+        const color = Qt.rgba(parseInt(hex.slice(0, 2), 16) / 255, parseInt(hex.slice(2, 4), 16) / 255, parseInt(hex.slice(4, 6), 16) / 255, 1);
         palette[roleName(key)] = color;
-        if (key === "neutralVariantPaletteKeyColor") palette.m3neutral_variant_paletteKeyColor = color;
+        if (key === "neutralVariantPaletteKeyColor")
+            palette.m3neutral_variant_paletteKeyColor = color;
         palette[key] = color;
     }
-    return {light:data.mode === "light", palette:palette, raw:data};
+    return {
+        light: data.mode === "light",
+        palette: palette,
+        raw: data
+    };
 }
 function textPayload(text) {
-    if (typeof text !== "string" || text.length > 2097152) return null;
-    try { if (text.trim().startsWith("{")) return JSON.parse(text); } catch(failure) {return null;}
-    const data = {mode:"dark",colours:{}};
+    if (typeof text !== "string" || text.length > 2097152)
+        return null;
+    try {
+        if (text.trim().startsWith("{"))
+            return JSON.parse(text);
+    } catch (failure) {
+        return null;
+    }
+    const data = {
+        mode: "dark",
+        colours: {}
+    };
     for (const line of text.split(/\n/)) {
-        const match=/^(\w+)\s+(.+)$/.exec(line.trim());
-        if (!match) continue;
-        if (match[1] === "mode") data.mode = match[2];
-        else if (Object.prototype.hasOwnProperty.call(fallback, match[1])) data.colours[match[1]] = match[2];
+        const match = /^(\w+)\s+(.+)$/.exec(line.trim());
+        if (!match)
+            continue;
+        if (match[1] === "mode")
+            data.mode = match[2];
+        else if (Object.prototype.hasOwnProperty.call(fallback, match[1]))
+            data.colours[match[1]] = match[2];
     }
     return data;
 }

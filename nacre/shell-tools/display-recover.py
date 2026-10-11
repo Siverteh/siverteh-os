@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
 """Recreate renderer surfaces after output geometry/DPR changes, preserving safe UI flags."""
 
-import argparse, fcntl, json, os, subprocess, time, sys, tempfile, uuid
+import argparse
+import fcntl
+import json
+import os
+import subprocess
+import time
+import sys
+import tempfile
+import uuid
 from pathlib import Path
 
 HOME = Path.home()

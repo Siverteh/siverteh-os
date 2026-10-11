@@ -12,6 +12,8 @@ import time
 import urllib.parse
 import urllib.request
 
+from PIL import Image
+
 HOME = Path.home()
 CACHE = HOME / ".cache/nacre/dashboard-media"
 
@@ -82,11 +84,10 @@ def track_data(meta):
                 if data.get("instrumental")
                 else "No synced lyrics found",
             )
-        except Exception:
+        except (OSError, ValueError, KeyError, TypeError):
             result["lyricsMessage"] = "Lyrics unavailable for this track"
     if meta.get("palette") and meta.get("art"):
         try:
-            from PIL import Image
             from orient.engine import from_image
 
             art = meta["art"]
@@ -111,7 +112,7 @@ def track_data(meta):
                 key: "#" + colors[key].lstrip("#")
                 for key in ("surface", "onSurface", "primary", "secondary", "tertiary")
             }
-        except Exception:
+        except (OSError, ValueError, KeyError, TypeError, Image.DecompressionBombError):
             result["palette"] = {}
     result["cacheSeconds"] = (
         14 * 86400
@@ -150,7 +151,7 @@ if __name__ == "__main__":
     else:
         try:
             print(json.dumps(track_data(json.loads(sys.argv[1]))))
-        except Exception:
+        except (OSError, ValueError, KeyError, TypeError):
             print(
                 json.dumps(
                     dict(

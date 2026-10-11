@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Local maintenance facts and explicitly requested recovery actions."""
 
-import argparse, datetime as dt, hashlib, json, subprocess, sys, time
+import argparse
+import datetime as dt
+import hashlib
+import json
+import subprocess
+import sys
+import time
 from pathlib import Path
 
 HOME = Path.home()
@@ -227,5 +233,12 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except Exception as e:
+    except (
+        OSError,
+        ValueError,
+        KeyError,
+        TypeError,
+        RuntimeError,
+        subprocess.SubprocessError,
+    ) as e:
         print(json.dumps(dict(error=str(e))))

@@ -49,7 +49,7 @@ def main():
     python_files = []
     for path in ROOT.rglob("*"):
         if not path.is_file() or any(
-            part in (".git", "__pycache__", "build", "dist", ".venv")
+            part in (".git", "__pycache__", "build", "dist", ".venv", "node_modules")
             for part in path.parts
         ):
             continue
@@ -75,15 +75,13 @@ def main():
     ruff = shutil.which("ruff")
     if ruff:
         run([ruff, "format", "--target-version", "py313", "--check", *python_files])
-        print("Python formatting passed.", flush=True)
+        run([ruff, "check", *python_files])
+        print("Python formatting and lint passed.", flush=True)
+    elif os.environ.get("CI"):
+        raise RuntimeError("CI requires the pinned Ruff formatter and linter")
     else:
-        print("Ruff unavailable; Python formatting check skipped.", flush=True)
+        print("Ruff unavailable; Python formatting/lint checks skipped.", flush=True)
     print("Python, JSON, shell syntax and retired-tree checks passed.", flush=True)
-    run([sys.executable, str(ROOT / "tools/provenance.py"), "--check"])
-    print(
-        "Provenance registry integrity passed (pending audits remain explicit).",
-        flush=True,
-    )
     from window_rules import conflicts, bind_conflicts
 
     extra_lua = [ROOT / "nacre/shell-tools/shortcuts.lua"]
@@ -105,13 +103,15 @@ def main():
         print("Lua syntax passed.", flush=True)
     formatter = Path("/usr/lib/qt6/bin/qmlformat")
     if formatter.exists():
-        for path in (ROOT / "nacre").rglob("*.qml"):
+        for path in [*(ROOT / "nacre").rglob("*.qml"), *(ROOT / "nacre").rglob("*.js")]:
             formatted = run([str(formatter), str(path)], stdout_only=True)
             if formatted != path.read_text():
                 raise RuntimeError(
-                    "QML formatting differs: " + str(path.relative_to(ROOT))
+                    "Qt source formatting differs: " + str(path.relative_to(ROOT))
                 )
-        print("All desktop QML parsed with local Qt.", flush=True)
+        print(
+            "All desktop QML/JavaScript parsed and formatted with local Qt.", flush=True
+        )
     else:
         print(
             "Desktop QML parser skipped; target-host validation remains required.",
@@ -155,6 +155,7 @@ def main():
             "Palette CLI smoke check skipped: install its pinned Python dependencies.",
             flush=True,
         )
+    prettier = ROOT / "node_modules/prettier/bin/prettier.cjs"
     node = shutil.which("node")
     node_cmd = (
         [node]
@@ -163,7 +164,16 @@ def main():
     )
     if node_cmd:
         run([*node_cmd, "--check", str(ROOT / "brain/web/app.js")])
-        print("Brain JavaScript syntax passed.", flush=True)
+        if prettier.is_file():
+            run([*node_cmd, str(prettier), "--check", str(ROOT / "brain/web/app.js")])
+            print("Brain JavaScript syntax and formatting passed.", flush=True)
+        elif os.environ.get("CI"):
+            raise RuntimeError("Install development formatter with npm ci")
+        else:
+            print(
+                "Brain JavaScript syntax passed; formatter unavailable (npm ci).",
+                flush=True,
+            )
     else:
         print("Node.js checks skipped: Node.js unavailable.", flush=True)
 

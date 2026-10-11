@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 """Read-only cached update count; refreshing never upgrades or modifies packages."""
 
-import argparse, fcntl, json, os, shutil, subprocess, time
+import argparse
+import fcntl
+import json
+import sys
+import os
+import shutil
+import subprocess
+import time
 from pathlib import Path
 
 CACHE = Path.home() / ".cache/nacre/updates.json"
@@ -157,8 +164,6 @@ def main():
             start_new_session=True,
         )
 
-
-import sys
 
 if __name__ == "__main__":
     main()

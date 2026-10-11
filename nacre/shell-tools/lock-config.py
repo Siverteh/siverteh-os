@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Render the Nacre Hyprlock layout; PAM and session locking stay Hyprlock-owned."""
 
-import json, shlex, subprocess
+import json
+import shlex
+import subprocess
 from pathlib import Path
 
 
@@ -73,13 +75,13 @@ def render(
             )
         )
 
-        def position(x, y):
+        def position(x, y, scale=scale):
             return str(round((x - 720) * scale)) + ", " + str(round((405 - y) * scale))
 
         def rgba(key, alpha="ff"):
             return "rgba(" + colors[key] + alpha + ")"
 
-        def label(text, x, y, size, role="onSurface", **extra):
+        def label(text, x, y, size, role="onSurface", name=name, scale=scale, **extra):
             return block(
                 "label",
                 name,

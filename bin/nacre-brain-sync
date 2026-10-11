@@ -16,7 +16,6 @@ import subprocess
 import sys
 import tempfile
 import time
-import uuid
 
 loader = importlib.machinery.SourceFileLoader(
     "nacre_brain", str(Path(__file__).resolve().with_name("nacre-brain"))
@@ -360,7 +359,7 @@ if __name__ == "__main__":
                     "Remote exchange timed out; synchronization will retry",
                     file=sys.stderr,
                 )
-                raise SystemExit(75)
+                raise SystemExit(75) from None
             else:
                 current = read_status()
                 if current.get("state") not in ("authentication", "protocol", "failed"):
@@ -368,4 +367,4 @@ if __name__ == "__main__":
                         "failed", "Local sync failed; inspect the sync journal"
                     )
         print(f"nacre-brain-sync: {error}", file=sys.stderr)
-        raise SystemExit(1)
+        raise SystemExit(1) from None

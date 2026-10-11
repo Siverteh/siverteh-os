@@ -40,7 +40,9 @@ daemon or arbitrary code evaluation is introduced.
 
 The shell composes shared providers once. `NacrePanelState` owns per-output view
 state; `NacreShellIpc` exposes control/recovery queries; `NacreShellShortcuts`
-handles native shortcut callbacks. Old type names forward to current owners.
+handles native shortcut callbacks. Unused legacy type forwarders and retired
+overview/performance/workspace pages have been removed. The shared calendar,
+host and media cards remain owned by the current dashboard summary.
 `NacreDesktop`/`NacreScreen` compose the frame and panels; input masks release
 closing regions before visual geometry finishes. Registration/teardown preserves
 newer and other-output owners.
@@ -318,3 +320,26 @@ explicit software/tools and owned reminder/recording units, with no idle daemon.
 NacreMenuPrompt and menu-cli.py reuse this same window for private pick/input
 sessions. Routes navigate only; they cannot execute leaf actions automatically.
 LauncherPreferences remains the sole favorites/hidden/recent store.
+
+## Maintenance and completed audit
+
+The completed rewrite provenance inventory is frozen at Git tag
+`provenance-audit-complete-2026-10-11`; attribution and historical audit documents
+remain, while future changes use normal review, formatting, lint and tests.
+`tools/check.py` enforces Ruff defaults plus bugbear and broad-exception checks,
+Qt formatting for QML/native JavaScript, and pinned development-only Prettier
+for the browser. Test import bootstraps and rollback/plugin boundaries have narrow,
+explained exceptions. No formatter dependency is installed in the desktop runtime.
+
+`tools/generate-palettes.py` regenerates checked-in role data (explicit
+`--output-dir` is available for isolated tests); `tools/fetch-wallpapers.py` is a
+developer collection utility. Neither is shipped as a shell runtime helper.
+
+Orient separates image analysis, minority-accent choice, role provenance and
+accent/readability policies. The existing publisher still owns the publication
+lock and order; its presentation, application, terminal, lock/login and live
+reload stages are private helpers, not independent writers. Brain discovery
+uses per-query state with ordered stages; graph collection, link resolution and
+node construction are separate. Lock rendering owns a short-lived painter with
+individual card methods. These boundaries preserve caller contracts and make
+subsequent changes reviewable in smaller pieces.

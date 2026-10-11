@@ -2,11 +2,10 @@
 
 import os
 from pathlib import Path
-import shutil
 import subprocess
 import tempfile
 import unittest
-from test_overview_ui import prepare_overview
+from dashboard_fixtures import prepare_dashboard
 
 ROOT = Path(__file__).resolve().parents[1]
 SHELL = ROOT.parent / "shell"
@@ -19,7 +18,7 @@ class DashboardSummaryTests(unittest.TestCase):
             self.skipTest("Qt Quick Test unavailable")
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory)
-            prepare_overview(target)
+            prepare_dashboard(target)
             fixtures = target / "fixtures"
             definitions = {
                 "Updates": "property int count:8",

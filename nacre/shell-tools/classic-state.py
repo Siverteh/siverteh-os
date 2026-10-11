@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
 """Commit one wallpaper palette to the shell, window frame and native choosers."""
 
-import fcntl, json, os, re, signal, subprocess, sys, tempfile, time
+import fcntl
+import json
+import os
+import re
+import signal
+import subprocess
+import sys
+import tempfile
+import time
 from pathlib import Path
 from contextlib import contextmanager
 import threading
@@ -230,7 +238,7 @@ def restore_demo(home, snapshot, live=True):
             if thumbnail.is_file():
                 atomic_symlink(state / "wallpaper/thumbnail.jpg", thumbnail)
             apply_palette(home, str(poster), live=live)
-        except Exception:
+        except Exception:  # noqa: BLE001 — Restore all published state before re-raising any failure.
             for path, text in previous.items():
                 if text is None:
                     path.unlink(missing_ok=True)
@@ -260,7 +268,7 @@ def restore_demo(home, snapshot, live=True):
 def luminance(value):
     rgb = [int(value.lstrip("#")[i : i + 2], 16) / 255 for i in (0, 2, 4)]
     rgb = [v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4 for v in rgb]
-    return sum(v * w for v, w in zip(rgb, (0.2126, 0.7152, 0.0722)))
+    return sum(v * w for v, w in zip(rgb, (0.2126, 0.7152, 0.0722), strict=True))
 
 
 def readable(value, background, minimum=4.5):
@@ -306,38 +314,7 @@ def apply_palette(home, wallpaper=None, live=True):
         return _apply_palette(home, wallpaper, live=live)
 
 
-def _apply_palette(home, wallpaper=None, live=True):
-    state = home / ".local/state/nacre"
-    data = json.loads((state / "scheme.json").read_text())
-    preferences = home / ".config/nacre/wallpaper-picker.json"
-    options = json.loads(preferences.read_text()) if preferences.exists() else {}
-    preset = options.get("palettePreset", "wallpaper")
-    fixed = preset != "wallpaper"
-    if fixed:
-        presets = json.loads(
-            Path(__file__).with_name("palette-presets.json").read_text()
-        )
-        for favorite in (
-            json.loads((home / ".config/nacre/colors.json").read_text()).get(
-                "favorites", []
-            )
-            if (home / ".config/nacre/colors.json").exists()
-            else []
-        ):
-            presets.append(dict(favorite, id="favorite:" + favorite["id"]))
-        chosen = next((item for item in presets if item["id"] == preset), None)
-        mode = options.get("paletteMode", "dark")
-        if chosen is None or mode not in ("dark", "light"):
-            raise ValueError("Invalid fixed palette preference")
-        data = dict(data, mode=mode, colours=chosen["modes"][mode])
-    colors = validated_colors(data)
-    if fixed:
-        # Resolve preferences only after the complete candidate passes validation.
-        atomic_write(state / "scheme.json", json.dumps(data))
-    # Validate required roles before publishing any state.
-    primary, secondary, inactive, shadow = (
-        colors[k] for k in ("primary", "secondary", "outlineVariant", "shadow")
-    )
+def _publish_presentation(home, state, data, colors, wallpaper, fixed, preset, options):
     selected = (
         str(Path(wallpaper).expanduser().resolve())
         if wallpaper
@@ -403,26 +380,9 @@ def _apply_palette(home, wallpaper=None, live=True):
                 }
             ),
         )
-    brand = Path(__file__).with_name("branding.py")
-    if brand.exists():
-        import importlib.util
 
-        spec = importlib.util.spec_from_file_location("brand", brand)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        module.publish(colors, home)
-    # Publish the native shell palette before slower compatibility/login assets.
-    atomic_write(state / "scheme/current-mode.txt", data["mode"])
-    atomic_write(
-        state / "scheme/current.txt",
-        "\n".join(k + " " + v for k, v in colors.items()) + "\n",
-    )
-    lua = render_template(home, "hypr-palette.lua.in", colors)
-    atomic_write(home / ".config/nacre/palette.lua", lua)
-    atomic_write(
-        home / ".config/nacre/rofi.rasi",
-        render_template(home, "rofi-colors.rasi.in", colors),
-    )
+
+def _publish_application_colors(home, colors, data, live):
     # GTK and qtct use the same committed palette, rather than the old blue files.
     import importlib.util
 
@@ -526,6 +486,10 @@ def _apply_palette(home, wallpaper=None, live=True):
                 capture_output=True,
                 timeout=3,
             )
+    return icon_theme
+
+
+def _publish_terminal_colors(home, colors, data):
     # Existing updater prompts and terminal apps share the committed colors too.
     for name, role in {
         "primary": "primary",
@@ -601,6 +565,9 @@ def _apply_palette(home, wallpaper=None, live=True):
         home / ".config/nacre/kitty-colors.conf",
         render_template(home, "kitty-colors.conf.in", terminal_roles),
     )
+
+
+def _publish_lock_login(home, state, colors, wallpaper):
     selected = (
         str(Path(wallpaper).expanduser().resolve())
         if wallpaper
@@ -648,10 +615,8 @@ def _apply_palette(home, wallpaper=None, live=True):
         except (OSError, ValueError, ImportError):
             pass  # A login-theme image failure must not interrupt the desktop palette.
 
-    if wallpaper is not None:
-        atomic_write(
-            state / "wallpaper/last.txt", str(Path(wallpaper).expanduser().resolve())
-        )
+
+def _reload_desktop_consumers(data, icon_theme, lua, live):
     if live:
         # Kitty documents SIGUSR1 as a config reload; it leaves terminal sessions running.
         for proc in Path("/proc").iterdir():
@@ -725,6 +690,69 @@ def _apply_palette(home, wallpaper=None, live=True):
                 + result.stderr.strip(),
                 file=sys.stderr,
             )
+
+
+def _apply_palette(home, wallpaper=None, live=True):
+    state = home / ".local/state/nacre"
+    data = json.loads((state / "scheme.json").read_text())
+    preferences = home / ".config/nacre/wallpaper-picker.json"
+    options = json.loads(preferences.read_text()) if preferences.exists() else {}
+    preset = options.get("palettePreset", "wallpaper")
+    fixed = preset != "wallpaper"
+    if fixed:
+        presets = json.loads(
+            Path(__file__).with_name("palette-presets.json").read_text()
+        )
+        for favorite in (
+            json.loads((home / ".config/nacre/colors.json").read_text()).get(
+                "favorites", []
+            )
+            if (home / ".config/nacre/colors.json").exists()
+            else []
+        ):
+            presets.append(dict(favorite, id="favorite:" + favorite["id"]))
+        chosen = next((item for item in presets if item["id"] == preset), None)
+        mode = options.get("paletteMode", "dark")
+        if chosen is None or mode not in ("dark", "light"):
+            raise ValueError("Invalid fixed palette preference")
+        data = dict(data, mode=mode, colours=chosen["modes"][mode])
+    colors = validated_colors(data)
+    if fixed:
+        # Resolve preferences only after the complete candidate passes validation.
+        atomic_write(state / "scheme.json", json.dumps(data))
+    # Validate required roles before publishing any state.
+    primary, secondary, inactive, shadow = (
+        colors[k] for k in ("primary", "secondary", "outlineVariant", "shadow")
+    )
+    _publish_presentation(home, state, data, colors, wallpaper, fixed, preset, options)
+    brand = Path(__file__).with_name("branding.py")
+    if brand.exists():
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("brand", brand)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        module.publish(colors, home)
+    # Publish the native shell palette before slower compatibility/login assets.
+    atomic_write(state / "scheme/current-mode.txt", data["mode"])
+    atomic_write(
+        state / "scheme/current.txt",
+        "\n".join(k + " " + v for k, v in colors.items()) + "\n",
+    )
+    lua = render_template(home, "hypr-palette.lua.in", colors)
+    atomic_write(home / ".config/nacre/palette.lua", lua)
+    atomic_write(
+        home / ".config/nacre/rofi.rasi",
+        render_template(home, "rofi-colors.rasi.in", colors),
+    )
+    icon_theme = _publish_application_colors(home, colors, data, live)
+    _publish_terminal_colors(home, colors, data)
+    _publish_lock_login(home, state, colors, wallpaper)
+    if wallpaper is not None:
+        atomic_write(
+            state / "wallpaper/last.txt", str(Path(wallpaper).expanduser().resolve())
+        )
+    _reload_desktop_consumers(data, icon_theme, lua, live)
 
 
 if __name__ == "__main__":

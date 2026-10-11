@@ -159,4 +159,4 @@ if __name__ == "__main__":
         main()
     except (ValueError, KeyError, OSError) as error:
         print(f"nacre-brain-maintain: {error}", file=sys.stderr)
-        raise SystemExit(1)
+        raise SystemExit(1) from None

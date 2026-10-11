@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
 """Read-only lock widgets and an allowlist of media actions. No authentication data."""
 
-import argparse, fcntl, html, json, os, subprocess, time, urllib.request, urllib.parse, io
+import argparse
+import fcntl
+import html
+import json
+import os
+import subprocess
+import time
+import urllib.request
+import urllib.parse
+import io
 from PIL import Image, ImageFont
 from functools import lru_cache
 import math
@@ -46,7 +55,14 @@ def snapshot():
             pass
         try:
             data = json.loads(ipc("lockWidgets", "state"))
-        except Exception:
+        except (
+            OSError,
+            ValueError,
+            KeyError,
+            TypeError,
+            subprocess.SubprocessError,
+            Image.DecompressionBombError,
+        ):
             return {}  # Never display indefinitely stale notification contents.
         temp = CACHE.with_suffix(".tmp")
         temp.write_text(json.dumps(dict(time=time.time(), data=data)))
@@ -209,7 +225,14 @@ def artwork(data):
             temporary.replace(output)
             output.chmod(0o600)
             ok = True
-    except Exception:
+    except (
+        OSError,
+        ValueError,
+        KeyError,
+        TypeError,
+        subprocess.SubprocessError,
+        Image.DecompressionBombError,
+    ):
         pass
     metadata.write_text(
         json.dumps(dict(fingerprint=fingerprint, checked=time.time(), ok=ok))

@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Idempotent six-workspace session profile; ordinary terminals stay unrestricted."""
 
-import fcntl, json, os, subprocess, time, shutil, importlib.util
+import fcntl
+import json
+import os
+import subprocess
+import time
+import shutil
+import importlib.util
 from pathlib import Path
 
 HOME = Path.home()

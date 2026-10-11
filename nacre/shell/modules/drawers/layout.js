@@ -6,12 +6,24 @@ function attached(edge, viewportWidth, viewportHeight, width, height, offset) {
     const centeredX = Math.max(0, (viewportWidth - width) / 2);
     const centeredY = Math.max(0, (viewportHeight - height) / 2);
     if (edge === "left")
-        return { x: 0, y: centeredY };
+        return {
+            x: 0,
+            y: centeredY
+        };
     if (edge === "right")
-        return { x: Math.max(0, viewportWidth - width - (offset || 0)), y: centeredY };
+        return {
+            x: Math.max(0, viewportWidth - width - (offset || 0)),
+            y: centeredY
+        };
     if (edge === "bottom")
-        return { x: centeredX, y: Math.max(0, viewportHeight - height) };
-    return { x: centeredX, y: 0 };
+        return {
+            x: centeredX,
+            y: Math.max(0, viewportHeight - height)
+        };
+    return {
+        x: centeredX,
+        y: 0
+    };
 }
 
 function popout(viewportX, viewportWidth, center, width, targetWidth, corner) {
