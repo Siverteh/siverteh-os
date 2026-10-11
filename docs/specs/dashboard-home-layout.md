@@ -75,6 +75,6 @@ Colors remains available. Native layout checks cover580px,360px and240px views.
 
 The center badge blends into the shared transport background and uses the same
 ink color as the arrows. Its hover,
-focus and hit region match the badge itself; the surrounding reserved slot stays
-quiet. Static tooltip hover follows the same badge bounds. Native geometry and
+focus and hit region fill the entire center slot, matching the arrow controls
+without an inactive gap. Static tooltip hover uses that full slot as well. Native geometry and
 pointer checks cover the original larger-highlight mismatch.

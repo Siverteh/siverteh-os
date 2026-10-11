@@ -250,7 +250,7 @@ Flickable {
             id: centerBadge
             objectName: "wallpaperCenterBadge"
             anchors.centerIn: parent
-            width: Math.min(38, parent.width)
+            width: parent.width
             height: parent.height
             radius: 9
             color: "transparent"
