@@ -227,7 +227,12 @@
       "value": "tasks",
       "description": "Open your assistant workspace",
       "brand": "ai",
-      "capability": "ai"
+      "capability": "ai",
+      "aliases": [
+        "ai",
+        "assistant",
+        "ai workspace"
+      ]
     },
     {
       "id": "actions.assistant.new",
@@ -271,7 +276,12 @@
       "value": "brain",
       "description": "Browse your private knowledge",
       "brand": "brain",
-      "capability": "brain"
+      "capability": "brain",
+      "aliases": [
+        "brain",
+        "notes",
+        "knowledge"
+      ]
     },
     {
       "id": "actions.assistant.capture",
@@ -614,7 +624,12 @@
       "operation": "legacy",
       "value": "colors",
       "description": "Preview, fine-tune and export themes",
-      "brand": "colors"
+      "brand": "colors",
+      "aliases": [
+        "colors",
+        "colours",
+        "orient"
+      ]
     },
     {
       "id": "setup.appearance",
@@ -634,7 +649,13 @@
       "operation": "settings",
       "value": "desktop",
       "description": "Layout and desktop controls",
-      "brand": "settings"
+      "brand": "settings",
+      "aliases": [
+        "input",
+        "keyboard",
+        "mouse",
+        "desktop settings"
+      ]
     },
     {
       "id": "setup.displays",
@@ -664,7 +685,12 @@
       "operation": "settings",
       "value": "network",
       "description": "Wi-Fi and connections",
-      "brand": "settings"
+      "brand": "settings",
+      "aliases": [
+        "wifi",
+        "wireless",
+        "network settings"
+      ]
     },
     {
       "id": "setup.bluetooth",
@@ -925,10 +951,10 @@
     {
       "id": "learn.news",
       "kind": "action",
-      "label": "Nacre changes",
+      "label": "Nacre project",
       "icon": "public",
       "operation": "url",
-      "value": "https://github.com/Siverteh/siverteh-os/commits/main/",
+      "value": "https://github.com/nacre-desktop/nacre",
       "description": ""
     },
     {
@@ -979,6 +1005,76 @@
       "value": "poweroff",
       "description": "Close apps and turn off",
       "confirm": "Shut down?"
+    },
+    {
+      "id": "actions.files",
+      "kind": "action",
+      "label": "Files",
+      "icon": "folder_open",
+      "operation": "legacy",
+      "value": "files",
+      "description": "Browse folders and archives",
+      "aliases": [
+        "files",
+        "file manager",
+        "dolphin"
+      ]
+    },
+    {
+      "id": "actions.terminal",
+      "kind": "action",
+      "label": "Terminal",
+      "icon": "terminal",
+      "operation": "legacy",
+      "value": "terminal",
+      "description": "Open a new terminal",
+      "aliases": [
+        "terminal",
+        "kitty"
+      ]
+    },
+    {
+      "id": "actions.apps",
+      "kind": "action",
+      "label": "All apps",
+      "icon": "apps",
+      "operation": "route",
+      "value": "apps",
+      "description": "Browse installed applications"
+    },
+    {
+      "id": "actions.controls.profile",
+      "kind": "group",
+      "label": "Power profile",
+      "icon": "battery_full",
+      "description": "Choose battery life or responsiveness"
+    },
+    {
+      "id": "actions.controls.profile.power-saver",
+      "kind": "action",
+      "label": "Power saver",
+      "icon": "battery_full",
+      "operation": "power-profile",
+      "value": "power-saver",
+      "state": "power-profile"
+    },
+    {
+      "id": "actions.controls.profile.balanced",
+      "kind": "action",
+      "label": "Balanced",
+      "icon": "battery_full",
+      "operation": "power-profile",
+      "value": "balanced",
+      "state": "power-profile"
+    },
+    {
+      "id": "actions.controls.profile.performance",
+      "kind": "action",
+      "label": "Performance",
+      "icon": "battery_full",
+      "operation": "power-profile",
+      "value": "performance",
+      "state": "power-profile"
     }
   ],
   "software": [

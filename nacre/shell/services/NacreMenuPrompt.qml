@@ -7,6 +7,7 @@ Singleton {
     id: root
     property var request: null
     property string message: ""
+    property var queued: []
     readonly property bool active: !!request
     readonly property var ownerView: request ? NacrePanelState.screens[request.screenName] || null : null
     readonly property string cli: Quickshell.env("HOME") + "/.local/share/nacre/shell/tools/menu-cli.py"
@@ -15,8 +16,11 @@ Singleton {
             return;
         const view = NacrePanelState.getForActive();
         const blocked = active || !!view && (view.launcher || view.session || view.left || view.dashboard && view.dashboardPinned);
-        if (reader.running || writer.running)
+        if (reader.running || writer.running) {
+            if (!queued.includes(ident) && queued.length < 2)
+                queued = [...queued, ident];
             return;
+        }
         reader.ident = ident;
         reader.blocked = blocked;
         reader.running = true;
@@ -40,10 +44,23 @@ Singleton {
         if (request?.id === ident)
             finish("", true);
     }
+    function next() {
+        if (!reader.running && !writer.running && queued.length) {
+            const ident = queued[0];
+            queued = queued.slice(1);
+            open(ident);
+        }
+    }
+    Timer {
+        id: followup
+        interval: 1
+        onTriggered: root.next()
+    }
     Process {
         id: reader
         property string ident: ""
         property bool blocked: false
+        onExited: followup.restart()
         command: ["python3", root.cli, "read-request", ident]
         stdout: StdioCollector {
             onStreamFinished: {
@@ -75,6 +92,7 @@ Singleton {
         id: writer
         property string ident: ""
         property var response: ({})
+        onExited: followup.restart()
         stdinEnabled: true
         command: ["python3", root.cli, "respond", ident]
         onStarted: write(JSON.stringify(response) + "\n")

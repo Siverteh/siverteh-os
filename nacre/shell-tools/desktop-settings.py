@@ -44,7 +44,9 @@ DEFAULTS = dict(
     weatherFahrenheit=False,
     interfaceFont="",
 )
-PRESET_KEYS = [key for key in DEFAULTS if not key.startswith(("lock", "weather", "interface"))]
+PRESET_KEYS = [
+    key for key in DEFAULTS if not key.startswith(("lock", "weather", "interface"))
+]
 OPTIONS = {
     "animations": "animations.enabled",
     "blur": "decoration.blur.enabled",

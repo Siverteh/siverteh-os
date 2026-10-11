@@ -1,6 +1,6 @@
 .pragma library
 
-const operations = ["tool", "route", "calculator", "legacy", "scope", "toggle", "next-wallpaper", "personality", "background", "palette-mode", "setting-toggle", "settings", "config", "form", "maintenance", "info", "url", "power", "command"];
+const operations = ["tool", "route", "calculator", "legacy", "scope", "toggle", "next-wallpaper", "personality", "background", "palette-mode", "setting-toggle", "settings", "config", "form", "maintenance", "info", "url", "power", "power-profile", "command"];
 const providers = ["apps", "wallpapers", "accents", "fonts", "software", "packages", "installed", "windows", "wifi", "bluetooth", "clipboard", "keys", "emoji", "timers", "webapps"];
 const fields = ["id", "kind", "label", "description", "icon", "operation", "value", "provider", "capability", "state", "confirm", "brand", "aliases", "hidden", "arguments"];
 const aliases = {favorites:"home",all:"apps",actions:"actions",settings:"setup",system:"power",clipboard:"actions.clipboard",keys:"learn.shortcuts",overview:"actions.windows",palette:"style",wallpaper:"style.wallpapers"};
@@ -50,15 +50,17 @@ function merge(baseText, userText) {
                 else { positions.set(row.id, candidate.length); candidate.push(Object.assign({}, row)); }
             }
             checkTree(candidate);
-            return {rows:candidate.filter(row => !row.hidden), software:base.software || [], error:""};
+            return {rows:visibleRows(candidate), software:base.software || [], error:""};
         } catch (failure) { error = "Menu extension: " + failure.message + ". Built-in entries remain available."; }
     }
     checkTree(rows);
-    return {rows:rows.filter(row => !row.hidden), software:base.software || [], error:error};
+    return {rows:visibleRows(rows), software:base.software || [], error:error};
 }
+function visibleRows(rows) { return rows.filter(row => !row.hidden && !rows.some(parent => parent.hidden && row.id.startsWith(parent.id+"."))); }
 function checkTree(rows) {
     const entries = new Map(rows.map(row => [row.id, row]));
     const routeAliases = new Map();
+    if (entries.get("home")?.kind !== "group" || entries.get("home").hidden) throw new Error("Home must remain available");
     for (const row of rows) {
         validate(row, false);
         const parent = parentOf(row.id);
@@ -92,7 +94,7 @@ function trail(id, rows) {
 }
 function children(route, rows) { return rows.filter(row => parentOf(row.id) === route); }
 function scope(query) {
-    const trimmed = String(query || "").trimStart(), prefix = trimmed.charAt(0);
+    const trimmed = String(query || "").replace(/^\s+/, ""), prefix = trimmed.charAt(0);
     const kind = ({">":"actions", "=":"calculator", "#":"brain", "?":"ai", "/":"help"})[prefix] || "all";
     return {kind:kind, text:kind === "all" ? trimmed.trim() : trimmed.slice(1).trim(), prefix:kind === "all" ? "" : prefix};
 }
@@ -126,7 +128,7 @@ function favorite(id, apps, rows, legacy) {
 function alphabetical(rows) { return rows.slice().sort((a,b) => (a.name || a.label).toLowerCase().localeCompare((b.name || b.label).toLowerCase()) || stable(a).localeCompare(stable(b))); }
 function application(entry) {
     const brand = ({"nacre-ai":"ai", "nacre-brain":"brain", "nacre-colors":"colors", "nacre-settings":"settings", "nacre-welcome":"welcome"})[entry.id.replace(/\.desktop$/,"")] || "";
-    return {id:entry.id,kind:"app",name:entry.name,label:entry.name,description:entry.comment || "Open this application",icon:entry.icon,brand:brand,app:entry,breadcrumb:"All apps",operation:"app",disabled:false};
+    return {id:entry.id,kind:"app",name:entry.name,label:entry.name,description:entry.comment || "Open this application",icon:entry.icon,brand:brand,aliases:entry.keywords || [],app:entry,breadcrumb:"All apps",operation:"app",disabled:false};
 }
 function entry(row, rows) {
     return Object.assign({}, row, {name:row.label,breadcrumb:trail(parentOf(row.id),rows).map(item => item.label).join(" › ")});

@@ -13,7 +13,8 @@ def load():
     except FileNotFoundError:
         data = {}
     if not isinstance(data, dict) or any(
-        not isinstance(data.get(key, []), list) for key in ("favorites", "hidden", "recent")
+        not isinstance(data.get(key, []), list)
+        for key in ("favorites", "hidden", "recent")
     ):
         raise ValueError("Invalid launcher preferences; original file preserved")
     return {

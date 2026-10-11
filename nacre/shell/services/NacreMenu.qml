@@ -28,6 +28,8 @@ Singleton {
     property var packageRows: []
     property string packageMessage: ""
     property string packageWanted: ""
+    property var ownership: ({})
+    property string ownershipWanted: ""
     property bool refreshing: stateWorker.running
     readonly property var rows: catalog.rows
     readonly property var navigation: Model.rail(rows)
@@ -80,7 +82,16 @@ Singleton {
             packageDelay.restart();
         }
     }
+    function profileValue(value) {
+        return ({
+                "power-saver": PowerProfile.PowerSaver,
+                balanced: PowerProfile.Balanced,
+                performance: PowerProfile.Performance
+            })[value];
+    }
     function stateFor(row) {
+        if (row.state === "power-profile")
+            return PowerProfiles.profile === profileValue(row.value);
         if (row.state === "setting")
             return DesktopSettings.data[row.value] !== false;
         if (row.state === "personality")
@@ -118,6 +129,10 @@ Singleton {
         if (row.value === "night-light") {
             result.disabled = !NacreControlTools.data.nightLightSupported || !!NacreControlTools.data.nightLightExternal;
             result.reason = NacreControlTools.data.nightLightExternal ? "Managed by an existing controller" : result.disabled ? "Install hyprsunset to use Night light" : "";
+        }
+        if (row.operation === "power-profile" && row.value === "performance" && !PowerProfiles.hasPerformanceProfile) {
+            result.disabled = true;
+            result.reason = "Performance profile is unavailable on this device";
         }
         if (row.value === "mute")
             result.disabled = !NacreAudio.available;
@@ -473,8 +488,14 @@ Singleton {
             return Model.ranked(allStatic().filter(row => row.kind !== "group"), scope.text);
         if (route === "software.packages")
             return provider(route, scope.text);
-        if (scope.text)
+        if (scope.text) {
+            if (!["home", "apps", "hidden"].includes(route)) {
+                const local = allStatic().filter(row => row.id.startsWith(route + "."));
+                const groups = rows.filter(row => row.provider && (row.id === route || row.id.startsWith(route + ".")));
+                return Model.ranked(local.concat(...groups.map(row => provider(row.id, scope.text))), scope.text);
+            }
             return Model.ranked(globalRows(), scope.text);
+        }
         if (route === "home")
             return favorites();
         if (route === "apps")
@@ -490,7 +511,7 @@ Singleton {
             LauncherPreferences.update("record", Model.stable(row), true);
     }
     function keepOpen(row) {
-        return ["toggle", "setting-toggle", "personality", "background", "palette-mode", "accent", "wallpaper", "next-wallpaper", "font", "info", "scope", "form", "timer-cancel", "webapp-remove"].includes(row.operation);
+        return ["toggle", "setting-toggle", "personality", "background", "palette-mode", "accent", "wallpaper", "next-wallpaper", "font", "info", "scope", "form", "timer-cancel", "webapp-remove", "power-profile"].includes(row.operation);
     }
     function execute(row, confirmed = false) {
         if (!row || row.disabled || row.kind === "group")
@@ -542,6 +563,10 @@ Singleton {
             if (list.length)
                 NacreWallpapers.setWallpaper(list[(list.findIndex(entry => entry.path === NacreWallpapers.current) + 1) % list.length].path);
             return !!list.length;
+        }
+        if (operation === "power-profile" && profileValue(value) !== undefined) {
+            PowerProfiles.profile = profileValue(value);
+            return true;
         }
         if (operation === "font") {
             DesktopSettings.set("interfaceFont", value);
@@ -674,6 +699,44 @@ Singleton {
         actionWorker.payload = payload;
         actionWorker.running = true;
         return true;
+    }
+    function inspectApp(entry) {
+        if (entry?.kind !== "app")
+            return;
+        ownershipWanted = entry.id;
+        if (!ownershipWorker.running) {
+            ownershipWorker.ident = entry.id;
+            ownershipWorker.running = true;
+        }
+    }
+    function supportPackage(entry) {
+        return ({
+                record: "wf-recorder",
+                ocr: "tesseract",
+                qr: "zbar",
+                "color-picker": "hyprpicker",
+                capture: "grim"
+            })[entry?.capability] || (entry?.value === "night-light" ? "hyprsunset" : "");
+    }
+    Process {
+        id: ownershipWorker
+        property string ident: ""
+        command: ["python3", root.tools + "/menu-backend.py", "ownership", ident]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    const data = JSON.parse(text);
+                    if (typeof data.package === "string")
+                        root.ownership = Object.assign({}, root.ownership, {
+                            [ownershipWorker.ident]: data.package
+                        });
+                } catch (failure) {}
+            }
+        }
+        onExited: if (root.ownershipWanted !== ident) {
+            ident = root.ownershipWanted;
+            running = true;
+        }
     }
     FileView {
         path: root.tools + "/launcher-menu.json"

@@ -81,11 +81,11 @@ NacreSurface {
         }
         Row {
             spacing: 10
-            ActionButton {
+            NacreMenuButton {
                 text: "Cancel"
                 onClicked: root.cancelled()
             }
-            ActionButton {
+            NacreMenuButton {
                 text: root.form.button || "Continue"
                 selected: true
                 onClicked: root.submit()

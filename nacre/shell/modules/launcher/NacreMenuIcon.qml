@@ -33,13 +33,13 @@ Item {
         visible: !!root.entry.emoji
         text: root.entry.emoji || ""
         font.family: "Noto Color Emoji"
-        font.pixelSize: root.size * .8
+        font.pointSize: root.size * .6
     }
     NacreIcon {
         anchors.centerIn: parent
         visible: !root.entry.brand && !root.entry.emoji && !image.visible
         text: root.entry.icon || "chevron_right"
-        font.pixelSize: root.size * .72
+        font.pointSize: root.size * .5
         color: NacreColours.palette.m3onSurface
     }
 }

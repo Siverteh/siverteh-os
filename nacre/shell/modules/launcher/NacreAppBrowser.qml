@@ -21,7 +21,7 @@ NacreSurface {
     property var confirmation: null
     property var form: null
     property var activePrompt: null
-    readonly property string query: search.text
+    readonly property string query: search?.text || ""
     readonly property var scope: Menu.scope(query)
     readonly property bool calculation: scope.kind === "calculator"
     readonly property var calculationResult: calculation ? Calculator.evaluate(scope.text) : ({
@@ -61,7 +61,7 @@ NacreSurface {
     readonly property var breadcrumb: Menu.trail(route, NacreMenu.rows)
     readonly property real contentX: picker ? 20 : 182
     readonly property real contentWidth: width - contentX - (showDetails ? 270 : 20)
-    readonly property real bodyHeight: height - 168
+    readonly property real bodyHeight: height - 184
     implicitWidth: Math.min(1100, Math.max(540, viewportWidth - 80))
     implicitHeight: Math.min(590, Math.max(340, viewportHeight - 150))
     radius: 22
@@ -249,6 +249,7 @@ NacreSurface {
         if (!entry || ["calculation", "choice"].includes(entry.kind))
             return;
         contextEntry = entry;
+        NacreMenu.inspectApp(entry);
         context.x = Math.max(8, width - context.width - 16);
         context.y = Math.max(8, height - context.height - 86);
         context.open();
@@ -419,7 +420,7 @@ NacreSurface {
                 required property var modelData
                 required property int index
                 width: rail.width
-                height: 37
+                height: Math.min(37, Math.max(28, (rail.height - (NacreMenu.navigation.length - 1) * 3) / Math.max(1, NacreMenu.navigation.length)))
                 radius: 9
                 color: root.route.split(".")[0] === modelData.id ? Qt.tint(NacreColours.palette.m3surface, Qt.alpha(NacreColours.palette.m3onSurface, .075)) : "transparent"
                 Rectangle {
@@ -464,7 +465,7 @@ NacreSurface {
                 step: 160
             }
         }
-        ActionButton {
+        NacreMenuButton {
             anchors.bottom: parent.bottom
             text: "Hidden apps"
             compact: true
@@ -486,7 +487,7 @@ NacreSurface {
         y: 17
         spacing: 5
         visible: !root.picker
-        ActionButton {
+        NacreMenuButton {
             compact: true
             icon: "chevron_left"
             visible: root.route !== "home" || !!root.query
@@ -546,6 +547,7 @@ NacreSurface {
             required property var modelData
             required property int index
             readonly property bool selected: root.hasSelection && root.selection === index
+            readonly property bool compactTile: grid.cellHeight < 72
             objectName: "launcherTile_" + index
             width: grid.cellWidth - 6
             height: grid.cellHeight - 5
@@ -572,21 +574,21 @@ NacreSurface {
                 size: Math.min(38, Math.max(24, grid.cellHeight - 48))
                 width: size
                 height: size
-                anchors.horizontalCenter: parent.horizontalCenter
-                y: 7
+                x: tile.compactTile ? 8 : (parent.width - width) / 2
+                y: tile.compactTile ? (parent.height - height) / 2 : 7
             }
             NacreText {
-                x: 7
-                y: Math.min(49, grid.cellHeight - 32)
-                width: parent.width - 14
-                height: parent.height - y - 4
+                x: tile.compactTile ? 42 : 7
+                y: tile.compactTile ? (parent.height - 20) / 2 : Math.min(49, grid.cellHeight - 32)
+                width: parent.width - x - 7
+                height: tile.compactTile ? 20 : parent.height - y - 4
                 text: tile.modelData.name
                 textFormat: Text.PlainText
                 font.pointSize: 10
                 wrapMode: Text.Wrap
-                maximumLineCount: 2
+                maximumLineCount: tile.compactTile ? 1 : 2
                 elide: Text.ElideRight
-                horizontalAlignment: Text.AlignHCenter
+                horizontalAlignment: tile.compactTile ? Text.AlignLeft : Text.AlignHCenter
             }
             MouseArea {
                 anchors.fill: parent
@@ -597,14 +599,26 @@ NacreSurface {
                     event.button === Qt.RightButton ? root.actionsFor(tile.modelData) : root.run(tile.modelData);
                 }
             }
-            NacreIcon {
-                x: parent.width - 20
-                y: 4
-                text: "favorite"
-                fill: 1
-                font.pointSize: 10
-                visible: LauncherPreferences.favorites.includes(Menu.stable(tile.modelData))
-                color: NacreColours.palette.m3primary
+            NacreSurface {
+                x: parent.width - 24
+                y: 3
+                width: 23
+                height: 23
+                radius: 7
+                color: "transparent"
+                visible: !tile.compactTile && (tileHover.hovered || LauncherPreferences.favorites.includes(Menu.stable(tile.modelData)))
+                NacreIcon {
+                    anchors.centerIn: parent
+                    text: "favorite"
+                    fill: LauncherPreferences.favorites.includes(Menu.stable(tile.modelData)) ? 1 : 0
+                    font.pointSize: 11
+                    color: NacreColours.palette.m3primary
+                }
+                NacreInteraction {
+                    function onClicked() {
+                        root.favorite(tile.modelData);
+                    }
+                }
             }
         }
         Keys.onReturnPressed: root.activate(root.selection)
@@ -621,7 +635,7 @@ NacreSurface {
         x: root.contentX
         y: root.picker ? 54 : 84
         width: root.contentWidth
-        height: root.bodyHeight + (root.picker ? 30 : 0)
+        height: Math.floor(root.bodyHeight / 58) * 58 + (root.picker ? 30 : 0)
         model: root.entries
         currentIndex: root.selection
         keyNavigationEnabled: false
@@ -747,7 +761,7 @@ NacreSurface {
                 }
                 NacreText {
                     width: parent.width
-                    text: root.previewEntry?.name || "Within reach"
+                    text: root.previewEntry?.name || "Your desktop"
                     textFormat: Text.PlainText
                     font.pointSize: 14
                     wrapMode: Text.Wrap
@@ -791,13 +805,13 @@ NacreSurface {
                     font.pointSize: 10
                     wrapMode: Text.Wrap
                 }
-                ActionButton {
+                NacreMenuButton {
                     width: parent.width
                     visible: !!root.previewEntry && root.previewEntry.kind !== "group" && !root.previewEntry.disabled && root.previewEntry.operation !== "info"
                     text: root.previewEntry?.operation === "wallpaper" ? "Use wallpaper" : root.previewEntry?.operation === "font" ? "Use font" : root.previewEntry?.operation === "install-package" ? "Install" : root.previewEntry?.kind === "app" ? "Open app" : "Run"
                     onClicked: root.run(root.previewEntry)
                 }
-                ActionButton {
+                NacreMenuButton {
                     width: parent.width
                     visible: !!root.previewEntry
                     text: root.previewEntry?.kind === "group" ? "Open section" : "Item actions"
@@ -806,11 +820,11 @@ NacreSurface {
                 NacreText {
                     text: "Recent"
                     font.pointSize: 10
-                    visible: !root.previewEntry
+                    visible: !root.previewEntry && NacreMenu.recent().length > 0
                 }
                 Repeater {
                     model: root.previewEntry ? [] : NacreMenu.recent()
-                    delegate: ActionButton {
+                    delegate: NacreMenuButton {
                         required property var modelData
                         width: detailColumn.width
                         compact: true
@@ -818,14 +832,19 @@ NacreSurface {
                         onClicked: root.run(modelData)
                     }
                 }
-                ActionButton {
+                NacreText {
+                    text: "Quick controls"
+                    font.pointSize: 10
+                    visible: !root.previewEntry
+                }
+                NacreMenuButton {
                     width: parent.width
                     visible: !root.previewEntry
                     compact: true
                     text: "Do not disturb: " + (DesktopSettings.data.dnd ? "On" : "Off")
                     onClicked: NacreMenu.execute(NacreMenu.node("actions.controls.dnd"))
                 }
-                ActionButton {
+                NacreMenuButton {
                     width: parent.width
                     visible: !root.previewEntry
                     compact: true
@@ -915,14 +934,14 @@ NacreSurface {
             }
             NacreText {
                 width: parent.width
-                text: root.confirmation?.operation === "power" ? "Your running apps and tasks will be put away. Save anything you need before continuing." : "The desktop shell will reload. Your applications stay running."
+                text: root.confirmation?.operation === "power" ? (root.confirmation?.value === "suspend" ? "Your applications stay open while the laptop sleeps." : "This will close your running apps and tasks. Save your work before continuing.") : "The desktop shell will reload. Your applications stay running."
                 textFormat: Text.PlainText
                 wrapMode: Text.Wrap
                 color: NacreColours.palette.m3onSurfaceVariant
             }
             Row {
                 spacing: 12
-                ActionButton {
+                NacreMenuButton {
                     id: cancelConfirmation
                     text: "Cancel"
                     onClicked: {
@@ -930,7 +949,7 @@ NacreSurface {
                         search.forceActiveFocus();
                     }
                 }
-                ActionButton {
+                NacreMenuButton {
                     text: root.confirmation?.name || "Continue"
                     onClicked: {
                         const entry = root.confirmation;
@@ -964,7 +983,7 @@ NacreSurface {
                 elide: Text.ElideRight
                 textFormat: Text.PlainText
             }
-            ActionButton {
+            NacreMenuButton {
                 width: parent.width
                 compact: true
                 text: "Open"
@@ -975,7 +994,7 @@ NacreSurface {
                     root.run(entry);
                 }
             }
-            ActionButton {
+            NacreMenuButton {
                 width: parent.width
                 compact: true
                 text: root.contextEntry && LauncherPreferences.favorites.includes(Menu.stable(root.contextEntry)) ? "Remove favorite" : "Add favorite"
@@ -984,7 +1003,7 @@ NacreSurface {
                     context.close();
                 }
             }
-            ActionButton {
+            NacreMenuButton {
                 width: parent.width
                 compact: true
                 visible: root.contextEntry?.kind === "app"
@@ -994,21 +1013,22 @@ NacreSurface {
                     context.close();
                 }
             }
-            ActionButton {
+            NacreMenuButton {
                 width: parent.width
                 compact: true
-                visible: !!root.contextEntry?.package && root.contextEntry?.checked
+                visible: (!!root.contextEntry?.package && root.contextEntry?.checked) || (!!root.contextEntry && !!NacreMenu.ownership[root.contextEntry.id])
                 text: "Remove package"
                 onClicked: {
                     const entry = Object.assign({}, root.contextEntry, {
                         disabled: false,
-                        operation: "remove-package"
+                        operation: "remove-package",
+                        value: root.contextEntry.package || NacreMenu.ownership[root.contextEntry.id]
                     });
                     context.close();
                     root.run(entry);
                 }
             }
-            ActionButton {
+            NacreMenuButton {
                 width: parent.width
                 compact: true
                 visible: root.contextEntry?.webapp === true
@@ -1018,6 +1038,23 @@ NacreSurface {
                         operation: "webapp-remove"
                     }));
                     context.close();
+                }
+            }
+            NacreMenuButton {
+                width: parent.width
+                compact: true
+                visible: !!NacreMenu.supportPackage(root.contextEntry) && !!root.contextEntry?.disabled
+                text: "Install support"
+                onClicked: {
+                    const pkg = NacreMenu.supportPackage(root.contextEntry);
+                    context.close();
+                    root.run({
+                        id: "software.support",
+                        kind: "action",
+                        name: pkg,
+                        operation: "install-package",
+                        value: pkg
+                    });
                 }
             }
             NacreText {

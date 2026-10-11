@@ -27,6 +27,7 @@ Scope {
             leftPinned: view?.leftPinned ?? false,
             query: view?.launcherQuery || "",
             launcherMode: view?.launcherMode || "apps",
+            launcherRoute: view?.launcherRoute || "home",
             reveal: NacrePanelState.reveal,
             notificationsSuppressed: Object.values(NacrePanelState.panels).some(panel => panel.notifications?.suppressed === true)
         };

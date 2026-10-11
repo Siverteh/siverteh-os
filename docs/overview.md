@@ -147,3 +147,5 @@ ready and idle on stdin, avoiding a fresh interpreter for each warm choice.
 The [pearl dashboard](features/dashboard.md) is the top menu: Dashboard, Weather,
 Media, System and Focus. Its providers share existing wallpaper, Orient, MPRIS,
 weather and notification ownership, with optional private Brain/calendar context.
+
+Super+A is the universal desktop entry point: Home, All apps, Actions, Style, Setup, Software, Health, Learn and Power. See [the launcher guide](features/launcher.md) for routes, scopes and shared selectors.
