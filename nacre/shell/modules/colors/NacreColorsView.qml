@@ -539,14 +539,6 @@ Item {
             y: 30
             spacing: 8
             ActionButton {
-                text: ""
-                icon: "favorite_border"
-                accessibleLabel: "Save favorite"
-                compact: true
-                enabled: root.ready && !NacreColorsApp.actionBusy
-                onClicked: NacreColorsApp.action("favorite")
-            }
-            ActionButton {
                 objectName: "exportThemes"
                 text: "Export"
                 icon: "upload"

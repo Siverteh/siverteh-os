@@ -6,7 +6,7 @@ Back/Next and clickable progress dots, with Enter to continue and Escape to clos
 1. Welcome: logo and “Mother-of-pearl. Colors shaped by your wallpaper.”
 2. Your colors: four small credited scenes, all eight color styles, dark/light
    icons and a live desktop/role strip. Choosing changes the real desktop through
-   its existing publisher. A larger live preview and labeled role swatches show the committed colors.
+   its existing publisher. A full-width live preview with labeled role swatches underneath show the committed colors.
    Open the other tools from the Apps page.
 3. Getting around: scrollable shortcut groups read live from described Hyprland binds.
    Alternative keys share a flexible-height row. Missing bindings are not guessed.
@@ -42,7 +42,8 @@ before writes. Reopening a visible app retains its baseline. Native tests cover
 navigation, source/mode controls, optional guides, keyboard/geometry/startup and
 exact restoration. See [spec](../specs/colors-welcome-performance.md).
 
-Welcome opens tiled, like Settings and Colors. Its live preview adapts to the
+Welcome opens centered and floating at up to1020×760 logical pixels, like
+Settings and Colors. Its hero scales with available height, up to320px. Its live preview adapts to the
 available space without painting outside its frame. The read-only cache
 prepares every selected demo scene in both modes and all styles once, skips current
 entries, and verifies unchanged immutable image copies by file identity after
@@ -79,3 +80,8 @@ Palette transports stay ready inside the shell: two serial request endpoints
 reuse Python/module initialization, sleep on stdin between actions and are
 recreated with the renderer. The existing preference/selection queue and shared
 publication lock retain write ownership; helper CLI commands still work.
+
+Personal cards omit collection captions; licensed bundled scenes retain attribution.
+The preview height shares a finite viewport budget with cards and controls, while
+small windows remain scrollable. Enlarging the window grows the hero and preview;
+standard compositor maximize/restore retains the original floating geometry.

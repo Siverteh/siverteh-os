@@ -87,26 +87,27 @@ Item {
                 spacing: 24
                 Item {
                     width: 1
-                    height: 30
+                    height: Math.max(18, canvas.height * .12)
                 }
                 BrandLogo {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    width: 200
-                    height: 200
+                    objectName: "welcomeHeroLogo"
+                    width: Math.max(180, Math.min(320, canvas.height * .38))
+                    height: width
                     compact: false
                     motionEnabled: NacreTokens.motionEnabled
                 }
                 NacreText {
                     width: parent.width
                     text: "Nacre"
-                    font.pointSize: 36
+                    font.pointSize: Math.max(30, Math.min(46, canvas.height * .065))
                     font.weight: Font.Medium
                     horizontalAlignment: Text.AlignHCenter
                 }
                 NacreText {
                     width: parent.width
                     text: "Mother-of-pearl. Colors shaped by your wallpaper."
-                    font.pointSize: 14
+                    font.pointSize: Math.max(13, Math.min(17, root.width / 100))
                     wrapMode: Text.Wrap
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -134,6 +135,7 @@ Item {
                 }
                 NacreWelcomeDemo {
                     width: parent.width
+                    availableHeight: Math.max(300, canvas.height - 90)
                 }
             }
             Column {

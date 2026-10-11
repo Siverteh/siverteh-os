@@ -1700,10 +1700,11 @@
     },
     "hypr/conf/nacre.lua": {
       "disposition": "independent",
-      "sha256": "12860ef214be1a23b14e48bfb3d5d3e0cd83edce78670e9825166460e95ff8f4",
+      "sha256": "3a335a7e89b69aba36d89ee0c0448c3ebf8ddc3b54404991f96485b1230f649f",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
       ]
     },
     "tools/tests/test_config_defaults.py": {
@@ -6689,10 +6690,11 @@
     },
     "docs/features/wallpapers.md": {
       "disposition": "non-implementation",
-      "sha256": "5b7ec3441750b364fc3a269f85d1d87e10650c881b11fc7933653306aa510900",
+      "sha256": "edb5d880b0a854784329f45782c6f4098b4e3320948f927249f9c1d42c57b29f",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
       ],
       "notes": "Live compositor screenshot review requires an opaque full-viewport cached wallpaper backdrop to conceal underlying applications, without the former inset rectangle. Own existing double-buffered backdrop reused with full viewport geometry; no inherited source consulted. Native viewport/backdrop readiness and prior opaque fade tests retained."
     },
@@ -8443,10 +8445,11 @@
     },
     "docs/features/settings-app.md": {
       "disposition": "non-implementation",
-      "sha256": "14b0b9db830e7975079584483de1c70e0f54ceaed44eecdba5dc98ebdd772abe",
+      "sha256": "ebdd80c4e1dc23be90e88af81b3d161ae1669b22852b3c985cc2473c3f4e3d3d",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
       ]
     },
     "docs/specs/settings-app.md": {
@@ -9243,10 +9246,11 @@
     },
     "nacre/shell/modules/colors/NacreColorsView.qml": {
       "disposition": "independent",
-      "sha256": "721fec1b374fadae9effc27b1e9000f63812488d07259aac48bd43bf17452a8f",
+      "sha256": "c9330749dd2cc15daa93abddea483726a489911284b2511471f5320c90c6efe9",
       "evidence": [
         "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
       ]
     },
     "nacre/shell/modules/colors/NacreColorsWindow.qml": {
@@ -9357,9 +9361,10 @@
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
         "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
-        "2026-10-11 follow-up: already-cached palettes also prepare/repair independent branding raster cache, proven by deleting raster files and rewarming without recomputing palettes or publishing. Welcome captions reserve two lines for aligned private-scene labels. Existing cache identities/publication ownership unchanged."
+        "2026-10-11 follow-up: already-cached palettes also prepare/repair independent branding raster cache, proven by deleting raster files and rewarming without recomputing palettes or publishing. Welcome captions reserve two lines for aligned private-scene labels. Existing cache identities/publication ownership unchanged.",
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
       ],
-      "sha256": "44df92336cad742df1b80fced2e95da1039efc479490a8afbd257623372ba289"
+      "sha256": "4f66dca8d4107029a7e7c140b2bd537cc09e842d5c8b25263fd11bc48205bff4"
     },
     "docs/specs/welcome.md": {
       "disposition": "non-implementation",
@@ -9386,9 +9391,10 @@
       "disposition": "independent",
       "evidence": [
         "2026-10-11 live visual follow-up: expose retained image readiness from the single branding template, regenerate Qt/login outputs through branding.py, and qualify appLogo.ready. This removes ReferenceError and fallback glyphs drawn over loaded app logos. Native Welcome test now rejects QWARN and passes varying DPI. Geometry and color engine unchanged; independently authored correction within existing pipeline.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
       ],
-      "sha256": "e755706d93c86dc2ed1aaceaad22a9536e12122c43fc886a5c64cd9eca52787b"
+      "sha256": "f678567460753b41a89495b1325b557097d3e7a6ea563be694227066b5710a33"
     },
     "nacre/shell-tools/welcome.py": {
       "disposition": "independent",
@@ -9416,17 +9422,19 @@
       "disposition": "independent",
       "evidence": [
         "2026-10-11 live visual follow-up: expose retained image readiness from the single branding template, regenerate Qt/login outputs through branding.py, and qualify appLogo.ready. This removes ReferenceError and fallback glyphs drawn over loaded app logos. Native Welcome test now rejects QWARN and passes varying DPI. Geometry and color engine unchanged; independently authored correction within existing pipeline.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
       ],
-      "sha256": "c2cc9d357c349c0da9ebebf5be404fbca1f8bd1047c25990484849673cc87dd0"
+      "sha256": "47349104fd63fe401239ec644f43e35d28d68be2166a4905137b0c0dbc29576a"
     },
     "nacre/shell/modules/welcome/NacreWelcomeWindow.qml": {
       "disposition": "independent",
       "evidence": [
         "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
       ],
-      "sha256": "b49b2be0a9c57f297f2068b86a08dfe95048d9af5cbb466f0816559c9cab0369"
+      "sha256": "6e022a7c266733d4c92bc891952da9d3b673b3221fd35429a28ffeceb33692b1"
     },
     "nacre/shell/modules/welcome/welcome-catalog.js": {
       "disposition": "independent",
@@ -9457,9 +9465,10 @@
       "evidence": [
         "2026-10-11 live fit/feedback review: compact130px demo preview keeps secondary actions above the fixed footer; style/mode and scene selection acknowledge clicks immediately while actual palette publication remains with the existing publisher. Pending state resets after completion/error or a new opening. Duplicate valid presentations clear earlier diagnostics. Native click/highlight and ordering fixtures reviewed; no external implementation copied.",
         "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
-        "2026-10-11 follow-up: already-cached palettes also prepare/repair independent branding raster cache, proven by deleting raster files and rewarming without recomputing palettes or publishing. Welcome captions reserve two lines for aligned private-scene labels. Existing cache identities/publication ownership unchanged."
+        "2026-10-11 follow-up: already-cached palettes also prepare/repair independent branding raster cache, proven by deleting raster files and rewarming without recomputing palettes or publishing. Welcome captions reserve two lines for aligned private-scene labels. Existing cache identities/publication ownership unchanged.",
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
       ],
-      "sha256": "ae27d37030191913e234bb0497050ef299a3ecb753aa01d5504a777c93ee4c75"
+      "sha256": "23df5c92a67e2298e3960694f3edbab9b132c89599ed2e16d3ac78d768322b8c"
     },
     "nacre/shell-tools/demo-wallpapers.py": {
       "disposition": "independent",
@@ -9579,11 +9588,12 @@
       "sha256": "13a1a41f7c05c694575c36663b24b5610a053c543fac71cfd636cd5e72e62feb"
     },
     "docs/specs/nacre-app-sizing.md": {
-      "sha256": "8321b46eef5763b9dc2e7c1f71bf9b6e78230586d5becd440c7e3aee3b872af1",
+      "sha256": "1c30c59788b96de777e559297720facae1ff232125d84c4e72e17239fad46f43",
       "disposition": "non-implementation",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
       ]
     },
     "nacre/shell-tools/tests/device-qml/tst_NacrePaletteTask.qml": {

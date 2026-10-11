@@ -9,8 +9,8 @@ FloatingWindow {
     title: "Nacre Welcome"
     visible: NacreWelcomeApp.visible
     minimumSize: Qt.size(720, 540)
-    implicitWidth: Math.min(920, Math.max(720, (screen?.width || 1920) * .58))
-    implicitHeight: Math.min(680, Math.max(540, (screen?.height || 1200) * .62))
+    implicitWidth: Math.min(1020, Math.max(720, (screen?.width || 1920) * .64))
+    implicitHeight: Math.min(760, Math.max(540, (screen?.height || 1200) * .70))
     color: NacreTokens.body
     updatesEnabled: NacreWelcomeApp.active
     readonly property alias view: view

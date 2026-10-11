@@ -201,8 +201,10 @@ TestCase {id:test;name:"Welcome";width:1200;height:900;visible:true;when:windowS
   if(prefix){let saved=false;verify(preview.grabToImage(result=>{saved=result.saveToFile(prefix.slice(16)+"-wide.png")}));tryVerify(()=>saved,3000)}
   compare(NacreWelcomeApp.actions.length,0);
   compare(NacreWelcomeApp.page,"welcome");
+  const hero=findChild(view,"welcomeHeroLogo");const initialHero=hero.width;preview.height=1000;wait(30);verify(hero.width>initialHero);verify(hero.width<=320);preview.height=680;wait(30);
   findChild(view,"welcomeDone").clicked();compare(NacreWelcomeApp.page,"colors");wait(200);
   compare(findChild(view,"welcomeScenes").children.length>0,true);
+  const mini=findChild(view,"welcomeDesktopPreview");const roles=findChild(view,"welcomePaletteRoles");compare(mini.width,mini.parent.width);verify(roles.y>=mini.y+mini.height);
   const styles=["natural","pigment","harmony","pop","mist","vivid","pearl","tide"].map(style=>findChild(view,"welcomePersonality_"+style));
   for(const button of styles){verify(button!==null);verify(button.x+button.width<=button.parent.width)}
   for(let i=1;i<styles.length;i++){verify(styles[i].y>styles[i-1].y || styles[i].x>=styles[i-1].x+styles[i-1].width)}

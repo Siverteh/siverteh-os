@@ -48,6 +48,6 @@ publisher, avoiding repeated CLI startup. Input/engine/file identity, treatment,
 mode and variant still gate reuse; missing or invalid data and custom hooks fall
 back to the normal path. Accent selection and color calculations are unchanged.
 
-Super+S is the only managed shortcut for Settings. Settings opens tiled;
+Super+S is the only managed shortcut for Settings. Settings opens centered and floating;
 Super+M uses the same maximized toggle as any other window. Super+T toggles
 floating when desired.

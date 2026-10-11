@@ -6,6 +6,7 @@ import "../colors"
 Column {
     id: root
     spacing: 10
+    property real availableHeight: 600
     readonly property var entries: NacreWelcomeApp.demoEntries
     Row {
         id: scenes
@@ -24,7 +25,7 @@ Column {
                     id: card
                     objectName: "welcomeScene_" + tile.index
                     width: parent.width
-                    height: Math.min(160, width * .56)
+                    height: Math.max(70, Math.min(180, width * .56, root.availableHeight * .22))
                     radius: 12
                     color: NacreTokens.raised
                     border.width: selected ? 2 : 1
@@ -80,12 +81,13 @@ Column {
                 }
                 NacreText {
                     width: parent.width
+                    visible: !!tile.modelData.artist
                     textFormat: Text.RichText
                     font.pointSize: 8.5
                     wrapMode: Text.Wrap
                     color: NacreTokens.mutedInk
                     linkColor: NacreTokens.mutedInk
-                    text: tile.modelData.artist ? "<a href=\"" + tile.modelData.source + "\">" + tile.modelData.artist + "</a> · " + tile.modelData.license.replace(/-/g, " ") : "From your collection"
+                    text: tile.modelData.artist ? "<a href=\"" + tile.modelData.source + "\">" + tile.modelData.artist + "</a> · " + tile.modelData.license.replace(/-/g, " ") : ""
                     onLinkActivated: url => NacreWelcomeApp.openCredit(url)
                 }
             }
@@ -98,6 +100,7 @@ Column {
         color: NacreTokens.mutedInk
     }
     Item {
+        id: styleControls
         width: parent.width
         height: Math.max(styleFlow.implicitHeight, 38)
         Flow {
@@ -145,6 +148,7 @@ Column {
         }
     }
     NacreText {
+        id: styleDescription
         width: parent.width
         wrapMode: Text.Wrap
         text: ({
@@ -160,61 +164,57 @@ Column {
         font.pointSize: 10
         color: NacreTokens.mutedInk
     }
-    Row {
+    NacreThemePreview {
+        objectName: "welcomeDesktopPreview"
         width: parent.width
-        spacing: 18
-        NacreThemePreview {
-            width: parent.width * .62
-            height: Math.max(200, Math.min(300, width * .65))
-            palette: NacrePresentation.active.colours || {}
-            wallpaper: NacreWallpapers.displayPreview || ""
-        }
-        Column {
-            width: Math.max(0, parent.width - parent.children[0].width - 18)
-            spacing: 12
-            NacreText {
-                text: "Your desktop colors"
-                font.pointSize: 11
-            }
-            Repeater {
-                model: [
-                    {
-                        role: "primary",
-                        name: "Main"
-                    },
-                    {
-                        role: "secondary",
-                        name: "Second"
-                    },
-                    {
-                        role: "tertiary",
-                        name: "Third"
-                    },
-                    {
-                        role: "surface",
-                        name: "Background"
-                    }
-                ]
-                Row {
-                    required property var modelData
-                    width: parent.width
-                    spacing: 12
-                    Rectangle {
-                        width: 30
-                        height: 30
-                        radius: 9
-                        color: "#" + (NacrePresentation.active.colours?.[parent.modelData.role] || "202020")
-                        border.width: 1
-                        border.color: NacreTokens.outline
-                    }
-                    NacreText {
-                        width: Math.max(0, parent.width - 42)
-                        height: 30
-                        verticalAlignment: Text.AlignVCenter
-                        text: parent.modelData.name
-                        font.pointSize: 10
-                        elide: Text.ElideRight
-                    }
+        height: Math.max(160, Math.min(420, root.availableHeight - scenes.implicitHeight - styleControls.height - styleDescription.implicitHeight - paletteRoles.height - root.spacing * 4))
+        palette: NacrePresentation.active.colours || {}
+        wallpaper: NacreWallpapers.displayPreview || ""
+    }
+    Flow {
+        id: paletteRoles
+        objectName: "welcomePaletteRoles"
+        width: parent.width
+        spacing: 12
+        Repeater {
+            model: [
+                {
+                    role: "primary",
+                    name: "Main"
+                },
+                {
+                    role: "secondary",
+                    name: "Second"
+                },
+                {
+                    role: "tertiary",
+                    name: "Third"
+                },
+                {
+                    role: "surface",
+                    name: "Background"
+                }
+            ]
+            Row {
+                required property var modelData
+                width: Math.max(140, (paletteRoles.width - 36) / 4)
+                height: 34
+                spacing: 10
+                Rectangle {
+                    width: 34
+                    height: 34
+                    radius: 9
+                    color: "#" + (NacrePresentation.active.colours?.[parent.modelData.role] || "202020")
+                    border.width: 1
+                    border.color: NacreTokens.outline
+                }
+                NacreText {
+                    width: parent.width - 44
+                    height: parent.height
+                    verticalAlignment: Text.AlignVCenter
+                    text: parent.modelData.name
+                    font.pointSize: 10
+                    elide: Text.ElideRight
                 }
             }
         }

@@ -66,18 +66,21 @@ hl.config({ xwayland = { force_zero_scaling = true } })
 hl.window_rule({
     name = "nacre-settings-app",
     match = { class = "^org[.]quickshell$", title = "^Nacre Settings$" },
-    float = false,
+    float = true,
+    center = true,
 })
 
 hl.window_rule({
     name = "nacre-colors-app",
     match = { class = "^org[.]quickshell$", title = "^Nacre Colors$" },
-    float = false,
+    float = true,
+    center = true,
 })
 
 -- Welcome is a normal single-instance app, sized by its responsive Qt window.
 hl.window_rule({
     name = "nacre-welcome",
     match = { class = "^org[.]quickshell$", title = "^Nacre Welcome$" },
-    float = false,
+    float = true,
+    center = true,
 })
