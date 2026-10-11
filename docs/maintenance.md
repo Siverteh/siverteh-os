@@ -1,63 +1,159 @@
-# Maintaining Nacre
+# Maintenance and deployment
 
-Use an isolated worktree and keep host/account state outside Git. Read the
-component ownership map in [architecture](architecture.md) before changing a
-provider. Preview APIs stay read-only; palette publication has one owner.
+This is the maintained source for a CachyOS/Arch desktop using Hyprland's Lua API.
+It is not an installer for an arbitrary Linux distribution. Install OS packages
+through the distribution's package manager, then provision the isolated shell
+palette environment with `python3 nacre/shell-tools/provision.py`. The provisioner
+checks required system packages and builds/tests an immutable palette environment;
+it does not unpack private desktop binaries. Python dependency versions are pinned.
 
-## Checks
+The target host needs Hyprland with Lua support, UWSM, Hypridle/Hyprlock, Kitty,
+Python 3.13+, PipeWire/WirePlumber, NetworkManager, wl-clipboard/cliphist, jq,
+brightnessctl, wtype, polkit's graphical agent and fonts used by the shell. Package update
+checking uses `checkupdates` from pacman-contrib and optionally paru/yay. The
+bar updater uses `paru -Syu --skipreview` so routine updates do not display every
+AUR package file, including long licence documents. Package lists, installation
+confirmation and checksum validation remain enabled. This also skips manual
+inspection of community package scripts; use `paru -Syu --review` when desired.
+Brain needs Chrome/Chromium and Node.js, or the installed `nacre-ai-tools node`
+wrapper. Its local semantic model is optional. Qt's QML parser/test runner provide
+the target-host UI checks; skipped checks are reported explicitly.
 
-Install the pinned development tools (Ruff 0.16.10 and Qt's qmlformat), then run:
+## Review a change
+
+Install the pinned development formatter with `npm ci --ignore-scripts --no-audit --no-fund`.
+[Contributor checks](contributing.md) describe Ruff lint, native JavaScript
+formatting, the completed audit archive and developer generators. This guide
+retains the deployment and recovery workflow.
 
 ```sh
-npm ci --ignore-scripts --no-audit --no-fund
 python3 tools/check.py
+Hyprland --verify-config --config "$PWD/hypr/hyprland.lua"
+./install.sh
 ```
 
-The runner discovers Python scripts including extensionless `bin/` commands,
-checks Ruff formatting/default lint/bugbear/broad catches, parses and formats
-QML/native JS, runs the unit/native Qt suites, and validates the browser JS.
-Prettier is a development dependency only. Optional tools are reported locally;
-CI installs them and requires browser formatting. Fixtures use temporary homes
-and fake device/service owners rather than changing the user's preferences.
+The first check covers configuration ownership, the AI workflow, Brain and native
+shell regressions. CI uses an Arch container with native Qt/QML/Lua checks.
+Hyprland verification, live IPC/input/focus and physical acceptance require the
+target host. Changes to display behavior
+also require real connected displays, not just a unit test. Require the native
+`qmlformat` parser in the Qt toolset for pre-cutover validation; the low-level
+shell installer makes that parse conditional when the tool is absent.
 
-Native JavaScript follows `qmlformat`; browser JavaScript follows the locked
-Prettier version (`npm run format:browser`). The engine inherits the root lint
-policy while retaining its 120-column Python formatter convention.
+## Apply a reviewed plan
 
-Document any broad exception boundary at the catch. Routine filesystem, JSON,
-network and subprocess failures should use explicit types. Transaction rollback
-must run even for an unexpected error and re-raise it. Optional backend boundaries
-may translate failures into their protocol's structured error. Preserve the
-original exception cause when converting an internal error, or explicitly suppress
-it when a CLI has already printed its user-facing error.
-
-## Developer utilities
+Commit the reviewed candidate and keep its checkout clean: release deployment
+refuses an uncommitted/dirty tree. Apply on the running target desktop, where
+Hyprland and `wtype` can exercise the live launcher/Escape gates.
 
 ```sh
-PYTHONPATH=nacre/shell-cli/src python3 tools/generate-palettes.py
-python3 tools/fetch-wallpapers.py
+./install.sh --apply
+./install.sh --apply --component shell
+./install.sh --apply --component brain
 ```
 
-The generator also accepts `--output-dir` for isolated output. The fetcher writes
-the curated trial collection to the user's Pictures directory; it is not an
-installed runtime service. Source changes update Orient's fingerprint, so regenerate
-the checked-in boot seed even when a behavior-preserving refactor keeps all colors
-identical. Gallery/regression tests verify the role policy separately.
+On an older repository-linked installation, add `--migrate-owned` to the initial
+application. This converts only recognized source-linked configuration directories
+into installed copies, saves the original content privately, and preserves the
+host's monitor configuration as a private override. Retired repository-linked
+desktop configuration is backed up and removed. Unrecognized links and subsequent
+local edits cause a refusal before configuration writes.
 
-## Review and history
+`tools/configure.py` tracks deployed file hashes in
+`~/.local/state/nacre/configuration.json`. Routine updates replace files
+only when they still match the previous deployment. Edit host preferences through
+the native settings UI or private override files; source changes belong in Git.
+AI setup is separate: the component manager refuses `--apply --component ai`.
+Use `ai/install.py` for explicit setup, or its reviewed `--helper-only NAME` /
+`--launcher-only` plan and `--apply` for code-only controller updates without
+account/vault setup. See [AI workflow](../ai/README.md). SDDM installation has its
+own documented administrator step.
 
-The rewrite's exact-source audit is complete and frozen at
-[`provenance-audit-complete-2026-10-11`](https://github.com/Siverteh/siverteh-os/tree/provenance-audit-complete-2026-10-11).
-The tagged tree contains its registry, checker and tests. Future changes do not
-maintain a file-hash inventory. Preserve LICENSE, NOTICE, PROVENANCE and applicable
-asset/dependency credits; the historical audit is not a license exemption.
+## Validate and recover
 
-Prefer small helpers at existing behavior boundaries. Keep public entry points
-and error/transaction order intact. For substantial refactors, compare representative
-old/new outputs in addition to tests, and measure any changed hot path. Avoid
-rewriting an entire UI/state machine merely to make a file shorter. Current large
-menu/browser views can be extracted incrementally when their behavior next changes.
+With the required native Qt tools present, shell deployment parses QML before
+cutover, requires native IPC readiness and
+verifies the deployed source against the candidate. The supervisor can restore
+`source.good` after a startup failure; `source.previous` retains the preceding
+deployment. Configuration migration backups include a manifest under
+`~/.local/state/nacre/backups`. Brain deployment keeps a private source backup
+and does not terminate the browser profile or other assistants.
 
-Delete old remote branches only after fetching current heads and checking ancestry
-against main plus open pull requests. Use deletion leases to reject concurrent
-head changes. Preserve unmerged branches and record names/hashes for recovery.
+After applying, check `systemctl --user is-active nacre-shell.service
+nacre-sidebar-ai.service nacre-brain.service` and
+`hyprctl configerrors`. Preserve the original source revision and private backup
+until actual next-login startup has been checked. A health check cannot establish
+that every physical device or cold-boot path works.
+
+Publishing uses ordinary fast-forward pushes after checks. Repository renames
+preserve GitHub history and redirects; update local remotes to the new URL as
+recommended by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository).
+
+For launcher focus changes, also run the opt-in target-host check:
+`python3 tools/check-overlays.py --keyboard /path/to/wtype` with shell panels closed.
+It tests the launcher routes and real Wayland Escape events. Offscreen Qt tests
+cannot detect layer-surface/focus-grab conflicts in the running compositor.
+
+## Complete releases and recovery
+
+`./install.sh --apply` now uses a desktop release transaction. It snapshots only
+owned software/runtime and managed static configuration, exercises the actual
+Wayland launcher/Escape paths, then promotes the candidate. A failed gate restores
+all captured components. Accounts, wallets, browser profiles, conversations and
+personal preferences are outside these snapshots. Operating-system packages
+remain owned by the distribution's package manager.
+
+Candidate configuration snapshot paths come from the same reviewed file map as
+deployment. Generated bytecode is excluded, while older owned files still receive
+backups for removal/rollback. Native Quickshell recovery source/license credits
+are retained in `tools/NOTICE` and `tools/licenses/`.
+
+`~/.local/bin/nacre doctor`, `profile`, `session`, `check`, and `rollback`
+provide the same maintenance actions as the Settings page. Rollback refuses later
+edits instead of silently overwriting them. The sidebar worker stays alive while
+its renderer is replaced; code changes to that worker are activated after it is
+idle. Before pressing Restart/Restore, allow any unsent draft to finish saving.
+
+The session observer records actual login, before-sleep, resume and display-hotplug
+checks in private state. A manual check is labelled manual and cannot establish
+that cold boot or physical suspend/resume passed. Verify those paths on the real
+hardware after saving work; review the recorded event/result in Maintenance.
+
+## Feature documentation
+
+Feature behavior lives in the [overview's feature index](overview.md#feature-guides).
+Git history records changes. Keep this guide focused on checks, deployment,
+rollback and recovery.
+
+## Host overrides and dependency updates
+
+The managed idle file owns lock and sleep hooks and sources private idle listeners
+from `~/.config/nacre/hypridle.local.conf`. `idle-policy.py` migrates old
+full-policy overrides with a backup while preserving timeout values. A Hypridle
+service pre-start helper creates a missing listener file; missing preferences
+mean no idle timeout, with before-sleep locking still active. Private `host.lua`
+continues to own optional power-button and display-wake behavior.
+
+Successful promotion keeps ten newest good releases plus current, previous and
+any retired-native backup. Older eligible good snapshots are pruned only after
+live gates pass. `nacre doctor` reports release disk usage. Failed or unknown
+snapshots remain diagnostic evidence; deletion of retired code requires a separate
+explicit cleanup. Only `tools/configure.py` writes managed `hyprland.lua`; private
+loaders catch errors and continue in monitor, palette, desktop, shortcuts, host order.
+
+Desktop binaries, native libraries and icon artwork are pacman-managed. Perform
+normal full system updates, rather than partial Qt updates. Quickshell uses Qt
+private APIs, so the distribution must rebuild it for matching Qt releases.
+The palette Python environment and app-scoped Thunar style module remain local;
+rebuild the latter with `install-thunar.py` after relevant GTK ABI changes.
+Release rollback restores desktop code/configuration, not system package versions.
+See [runtime ownership](features/runtime.md) for installation and migration.
+
+Release gates require the desktop and any deployed Brain component, and preserve
+services that were active before deployment. A deliberately inactive sidebar
+worker remains inactive; a desktop-only update neither starts it nor fails because
+it was already stopped. Previously active workers must still pass the live gate.
+
+CI pulls the official Arch Linux GHCR base image to avoid Docker Hub anonymous pull
+limits. The full system update/dependency set and native Qt/Lua checks are unchanged.
+See [Arch OCI image documentation](https://github.com/archlinux/archlinux-docker/blob/master/README.md).
