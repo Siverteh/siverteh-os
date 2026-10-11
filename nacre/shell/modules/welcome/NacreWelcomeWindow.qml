@@ -56,7 +56,7 @@ FloatingWindow {
         Image {
             required property var modelData
             visible: false
-            source: "file://" + encodeURIComponent(modelData.path).replace(/%2F/g, "/")
+            source: "file://" + encodeURIComponent(modelData.poster || modelData.path).replace(/%2F/g, "/")
             asynchronous: true
             fillMode: Image.PreserveAspectCrop
             cache: true

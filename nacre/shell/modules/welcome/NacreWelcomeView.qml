@@ -52,8 +52,8 @@ Item {
             id: wheel
             objectName: "welcomeWheel"
             view: canvas
-            step: 170
-            pixelMultiplier: 1
+            step: 380
+            pixelMultiplier: 1.5
             kinetic: false
             smoothDuration: 110
         }
@@ -362,11 +362,6 @@ Item {
                         text: "Help"
                         compact: true
                         onClicked: root.page("help")
-                    }
-                    ActionButton {
-                        text: "Maintenance"
-                        compact: true
-                        onClicked: NacreWelcomeApp.route("settings:maintenance")
                     }
                 }
             }

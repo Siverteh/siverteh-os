@@ -319,6 +319,29 @@ def set_startup(home, value):
     return state(home)
 
 
+def set_demo_wallpapers(home, values):
+    """Private local choices; missing files fall back to licensed bundled art."""
+    if (
+        not isinstance(values, list)
+        or len(values) != 4
+        or any(not isinstance(value, str) for value in values)
+        or len(set(values)) != 4
+    ):
+        raise ValueError("Choose four different local wallpapers")
+    if any(
+        not isinstance(value, str)
+        or not Path(value).is_absolute()
+        or not Path(value).is_file()
+        for value in values
+    ):
+        raise ValueError("Demo wallpapers must be existing absolute local paths")
+    with locked(home):
+        data = preferences(home)
+        data["demoWallpapers"] = values
+        atomic(paths(home)[0], data)
+    return {"configured": True}
+
+
 def claim_login(home, instance):
     if not instance:
         return {"show": False, "claim": ""}
@@ -373,6 +396,7 @@ def main():
         choices=(
             "state",
             "set-startup",
+            "set-demo-wallpapers",
             "finish-tour",
             "claim-login",
             "release-login",
@@ -387,6 +411,8 @@ def main():
             result = state(home)
         elif args.action == "set-startup":
             result = set_startup(home, json.loads(args.value))
+        elif args.action == "set-demo-wallpapers":
+            result = set_demo_wallpapers(home, json.loads(args.value))
         elif args.action == "finish-tour":
             with locked(home):
                 data = preferences(home)

@@ -9,9 +9,7 @@ Item {
     id: root
     focus: true
     property string page: "studio"
-    property string libraryTab: "wallpapers"
     property string query: ""
-    property string family: "All"
     property string vision: "normal"
     property bool fineTune: false
     property var inspected: null
@@ -80,125 +78,21 @@ Item {
             compact: true
             onClicked: fileDialog.open()
         }
-        Item {
-            id: tabs
-            x: 12
-            y: 106
-            width: parent.width - 24
-            height: 34
-            ActionButton {
-                width: parent.width
-                compact: true
-                text: root.libraryTab === "wallpapers" ? "Wallpapers" : root.libraryTab === "saved" ? "Favorites" : "History"
-                icon: "expand_more"
-                onClicked: tabMenu.open()
-            }
-            Popup {
-                id: tabMenu
-                y: 38
-                width: tabs.width
-                padding: 8
-                focus: true
-                closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-                background: NacreSurface {
-                    color: NacreTokens.raised
-                    border.width: 1
-                    border.color: NacreTokens.outline
-                }
-                contentItem: Column {
-                    width: tabMenu.width - 16
-                    spacing: 4
-                    Repeater {
-                        model: [
-                            {
-                                id: "wallpapers",
-                                name: "Wallpapers"
-                            },
-                            {
-                                id: "saved",
-                                name: "Favorites"
-                            },
-                            {
-                                id: "history",
-                                name: "History"
-                            }
-                        ]
-                        ActionButton {
-                            required property var modelData
-                            width: parent.width
-                            compact: true
-                            text: modelData.name
-                            selected: root.libraryTab === modelData.id
-                            onClicked: {
-                                root.libraryTab = modelData.id;
-                                tabMenu.close();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        Item {
-            id: families
-            x: 12
-            y: tabs.y + tabs.height + 10
-            width: parent.width - 24
-            height: 34
-            visible: root.libraryTab === "wallpapers"
-            ActionButton {
-                width: parent.width
-                compact: true
-                text: "Color: " + root.family
-                icon: "expand_more"
-                onClicked: familyMenu.open()
-            }
-            Popup {
-                id: familyMenu
-                y: 38
-                width: families.width
-                padding: 8
-                focus: true
-                closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-                background: NacreSurface {
-                    color: NacreTokens.raised
-                    border.width: 1
-                    border.color: NacreTokens.outline
-                }
-                contentItem: Column {
-                    width: familyMenu.width - 16
-                    spacing: 4
-                    Repeater {
-                        model: ["All", "Blue", "Green", "Teal", "Rose", "Gold", "Copper", "Lilac", "Neutral"]
-                        ActionButton {
-                            required property string modelData
-                            width: parent.width
-                            compact: true
-                            text: modelData
-                            selected: root.family === modelData
-                            onClicked: {
-                                root.family = modelData;
-                                familyMenu.close();
-                            }
-                        }
-                    }
-                }
-            }
-        }
         ListView {
             id: entries
             x: 8
-            y: families.y + (families.visible ? families.height : 0) + 10
+            y: 106
             width: parent.width - 16
             height: Math.max(0, parent.height - y - 8)
             clip: true
             spacing: 6
-            model: root.libraryTab === "saved" ? NacreColorsApp.favorites : root.libraryTab === "history" ? NacreColorsApp.history : NacreColorsApp.library.filter(w => (!root.query || w.name.toLowerCase().includes(root.query.toLowerCase())) && (root.family === "All" || (w.families || []).includes(root.family)))
+            model: NacreColorsApp.library.filter(w => !root.query || w.name.toLowerCase().includes(root.query.toLowerCase()))
             delegate: NacreSurface {
                 id: entry
                 required property var modelData
                 width: entries.width
-                height: root.libraryTab === "wallpapers" ? 88 : 72
-                readonly property bool selected: root.libraryTab === "wallpapers" && NacreColorsApp.options.image === modelData.path
+                height: 88
+                readonly property bool selected: NacreColorsApp.options.image === modelData.path
                 radius: 10
                 color: selected ? Qt.alpha(NacreTokens.accent, .14) : "transparent"
                 border.width: selected ? 1 : 0
@@ -208,14 +102,13 @@ Item {
                     y: 8
                     width: 60
                     height: 42
-                    source: root.libraryTab === "wallpapers" ? "file://" + entry.modelData.thumbnail : ""
+                    source: "file://" + entry.modelData.thumbnail
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true
                     retainWhileLoading: true
-                    visible: root.libraryTab === "wallpapers"
                 }
                 NacreText {
-                    x: root.libraryTab === "wallpapers" ? 77 : 10
+                    x: 77
                     y: 10
                     width: parent.width - x - 10
                     text: entry.modelData.name
@@ -228,19 +121,14 @@ Item {
                     x: 8
                     y: 62
                     width: parent.width - 16
-                    text: root.libraryTab === "wallpapers" ? (entry.modelData.dynamic ? "Dynamic" : "Static") : ""
+                    text: entry.modelData.dynamic ? "Animated" : "Static"
                     font.pointSize: 9
                     color: NacreTokens.mutedInk
                 }
                 NacreInteraction {
                     accessibleName: entry.modelData.name
                     function onClicked() {
-                        if (root.libraryTab === "wallpapers")
-                            NacreColorsApp.choose(entry.modelData.path);
-                        else if (root.libraryTab === "saved")
-                            NacreColorsApp.useFavorite(entry.modelData.id);
-                        else
-                            NacreColorsApp.useHistory(entry.modelData);
+                        NacreColorsApp.choose(entry.modelData.path);
                     }
                 }
             }
@@ -251,7 +139,7 @@ Item {
                 anchors.centerIn: parent
                 width: parent.width - 16
                 visible: entries.count === 0
-                text: root.libraryTab === "saved" ? "Save a palette with Favorite." : root.libraryTab === "history" ? "Applied palettes appear here." : "No matching wallpapers. Open an image to explore it."
+                text: "No matching wallpapers. Open an image to explore it."
                 wrapMode: Text.Wrap
                 font.pointSize: 10
                 color: NacreTokens.mutedInk
@@ -659,11 +547,12 @@ Item {
                 onClicked: NacreColorsApp.action("favorite")
             }
             ActionButton {
-                text: "Share"
-                icon: "share"
+                objectName: "exportThemes"
+                text: "Export"
+                icon: "upload"
                 compact: true
                 enabled: root.ready && !NacreColorsApp.actionBusy
-                onClicked: shareMenu.open()
+                onClicked: NacreColorsApp.action("export")
             }
         }
         ActionButton {
@@ -675,35 +564,6 @@ Item {
             selected: true
             enabled: root.ready && !NacreColorsApp.actionBusy && !NacreColorsApp.applied
             onClicked: NacreColorsApp.action("apply")
-        }
-        Popup {
-            id: shareMenu
-            y: -100
-            padding: 8
-            focus: true
-            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-            background: NacreSurface {
-                color: NacreTokens.raised
-                border.width: 1
-                border.color: NacreTokens.outline
-            }
-            contentItem: Column {
-                spacing: 6
-                ActionButton {
-                    text: "Export themes"
-                    onClicked: {
-                        shareMenu.close();
-                        NacreColorsApp.action("export");
-                    }
-                }
-                ActionButton {
-                    text: "Palette card"
-                    onClicked: {
-                        shareMenu.close();
-                        NacreColorsApp.action("card");
-                    }
-                }
-            }
         }
     }
 }

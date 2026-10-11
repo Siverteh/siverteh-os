@@ -213,11 +213,11 @@ TestCase {id:test;name:"Welcome";width:1200;height:900;visible:true;when:windowS
   findChild(view,"welcomePersonality_pop").clicked();compare(NacreWelcomeApp.actions[2],"theme::pop");verify(findChild(view,"welcomePersonality_pop").selected);
   findChild(view,"welcomePersonality_pearl").clicked();compare(NacreWelcomeApp.actions[3],"theme::pearl");
   view.forceActiveFocus();NacreWelcomeApp.demoBusy=true;verify(!findChild(view,"welcomeMode_dark").enabled);NacreWelcomeApp.demoBusy=false;
-  findChild(view,"welcomeRestoreDemo").clicked();compare(NacreWelcomeApp.actions[4],"restore-demo");verify(!findChild(view,"welcomeRestoreDemo").visible);
+  compare(findChild(view,"welcomeRestoreDemo"),null);
   compare(findChild(view,"welcomeColors"),null);
   findChild(view,"welcomeStep_shortcuts").children[0];
   NacreWelcomeApp.jump("shortcuts");wait(180);compare(NacreWelcomeApp.page,"shortcuts");
-  const wheel=findChild(view,"welcomeWheel");compare(wheel.pixelMultiplier,1);compare(wheel.kinetic,false);
+  const wheel=findChild(view,"welcomeWheel");compare(wheel.pixelMultiplier,1.5);compare(wheel.step,380);compare(wheel.kinetic,false);
   wheel.scrollBy(100000,true);wait(180);verify(Math.abs(canvas.contentY-wheel.maximum())<1);
   const bottom=canvas.contentY;for(let i=0;i<20;i++)wheel.scrollBy(200,true);wait(140);compare(canvas.contentY,bottom);
   wheel.scrollBy(-100000,true);wait(150);verify(canvas.contentY<1);

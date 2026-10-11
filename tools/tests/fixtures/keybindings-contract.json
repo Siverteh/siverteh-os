@@ -578,9 +578,11 @@
   {
     "action": {
       "args": [
-        "python3 ~/.local/share/nacre/shell/tools/desktop-actions.py maximize"
+        {
+          "mode": "maximized"
+        }
       ],
-      "method": "exec_cmd"
+      "method": "window.fullscreen"
     },
     "flags": {
       "description": "Nacre:maximize"

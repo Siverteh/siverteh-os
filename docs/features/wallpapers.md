@@ -166,5 +166,5 @@ Colors displays observed color families alongside major neutral/shadow shades.
 Family coverage sums disjoint source bins, so smaller blue/teal/skin details
 remain visible instead of being crowded out by repeated dark bins. Other contains
 unlisted area. This summary does not alter Natural or the actual generated roles.
-The wallpaper rail uses the active main accent for selection. Colors follows
-bounded floating application sizing; Super+M toggles a centered reading size.
+The wallpaper rail uses the active main accent for selection. Colors opens tiled and uses normal Super+M maximization. Its rail contains
+search and Open image; the footer exports themes directly without a Share menu.

@@ -97,6 +97,38 @@ class WelcomeDemoTests(unittest.TestCase):
             art.ensure(home, fast=True)
             self.assertTrue(Path(entries[1]["path"]).is_file())
 
+    def test_private_scene_choices_and_missing_file_fallback(self):
+        welcome = load("welcome")
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            paths = []
+            for index in range(4):
+                path = home / f"scene-{index}.png"
+                Image.new("RGB", (32, 32), (index * 60, 40, 80)).save(path)
+                paths.append(str(path))
+            welcome.set_demo_wallpapers(home, paths)
+            self.assertEqual(welcome.preferences(home)["demoWallpapers"], paths)
+            self.assertEqual(
+                (home / ".config/nacre/welcome.json").stat().st_mode & 0o777, 0o600
+            )
+            with (
+                patch.object(media, "HOME", home),
+                patch.object(
+                    media,
+                    "describe",
+                    side_effect=lambda path: (
+                        dict(path=path, name=Path(path).stem)
+                        if Path(path).is_file()
+                        else (_ for _ in ()).throw(ValueError("missing"))
+                    ),
+                ),
+            ):
+                self.assertEqual([item["path"] for item in media.demo_scenes()], paths)
+                Path(paths[0]).unlink()
+                self.assertTrue(all(item["license"] for item in media.demo_scenes()))
+            with self.assertRaises(ValueError):
+                welcome.set_demo_wallpapers(home, [paths[1]] * 4)
+
     def test_snapshot_and_restore_exact_palette_keep_unrelated_preferences(self):
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)
@@ -147,7 +179,11 @@ class WelcomeDemoTests(unittest.TestCase):
                     media,
                     "demo_module",
                     side_effect=lambda name: (
-                        publisher if name == "classic-state" else art
+                        publisher
+                        if name == "classic-state"
+                        else load("welcome")
+                        if name == "welcome"
+                        else art
                     ),
                 ),
             ):
@@ -228,7 +264,11 @@ class WelcomeDemoTests(unittest.TestCase):
                     media,
                     "demo_module",
                     side_effect=lambda name: (
-                        publisher if name == "classic-state" else art
+                        publisher
+                        if name == "classic-state"
+                        else load("welcome")
+                        if name == "welcome"
+                        else art
                     ),
                 ),
                 patch.object(publisher, "apply_palette") as publish,

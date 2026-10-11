@@ -485,10 +485,7 @@ def warm(include_demo=True):
         # Welcome's immutable demo collection is not part of the personal library.
         # Prepare it too, once per engine/preferences revision, never on a timer.
         if include_demo and Path(__file__).with_name("demo-wallpapers").is_dir():
-            scenes.extend(
-                describe(item["path"])
-                for item in demo_module("demo-wallpapers").ensure(HOME, fast=True)
-            )
+            scenes.extend(describe(item["path"]) for item in demo_scenes())
         flavour = read(HOME / ".local/state/nacre/scheme.json", {}).get(
             "flavour", "default"
         )
@@ -672,6 +669,25 @@ def demo_module(name):
     return module
 
 
+def demo_scenes():
+    """Honor private scene choices without distributing personal artwork."""
+    values = demo_module("welcome").preferences(HOME).get("demoWallpapers", [])
+    if (
+        isinstance(values, list)
+        and len(values) == 4
+        and all(isinstance(value, str) for value in values)
+        and len(set(values)) == 4
+    ):
+        try:
+            return [
+                dict(describe(value), license="", artist="", source="", licenseUrl="")
+                for value in values
+            ]
+        except (OSError, ValueError, subprocess.SubprocessError):
+            pass
+    return demo_module("demo-wallpapers").ensure(HOME, fast=True)
+
+
 def demo_start():
     """Capture before any choices; preparing images never publishes a palette."""
     import uuid
@@ -728,7 +744,7 @@ def demo_start():
             reverse=True,
         )[10:]:
             old.unlink()
-        scenes = demo_module("demo-wallpapers").ensure(HOME, fast=True)
+        scenes = demo_scenes()
     entries = [
         dict(
             describe(item["path"]),

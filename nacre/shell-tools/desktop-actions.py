@@ -2,8 +2,6 @@
 """Desktop and AI launch commands, independent of the private knowledge browser."""
 
 import argparse
-import fcntl
-import tempfile
 import json
 import os
 from pathlib import Path
@@ -35,140 +33,7 @@ def launch(command):
 launch_app = launch
 
 
-APP_LIMITS = {
-    "Nacre Welcome": (1020, 740),
-    "Nacre Settings": (1160, 820),
-    "Nacre Colors": (1200, 850),
-    "Nacre Brain": (1160, 820),
-    "Nacre AI": (1100, 800),
-}
-
-
-def workarea(monitor):
-    scale = monitor.get("scale", 1) or 1
-    width, height = monitor["width"] / scale, monitor["height"] / scale
-    if monitor.get("transform", 0) % 2:
-        width, height = height, width
-    left, top, right, bottom = monitor.get("reserved", [0, 0, 0, 0])
-    return (
-        monitor.get("x", 0) + left + 16,
-        monitor.get("y", 0) + top + 16,
-        max(1, width - left - right - 32),
-        max(1, height - top - bottom - 32),
-    )
-
-
-def bounded_geometry(client, monitor, size=None):
-    x, y, available_w, available_h = workarea(monitor)
-    limits = size or APP_LIMITS[client["title"]]
-    width, height = (
-        int(min(limits[0], available_w * 0.84)),
-        int(min(limits[1], available_h * 0.85)),
-    )
-    return [
-        int(x + (available_w - width) / 2),
-        int(y + (available_h - height) / 2),
-        width,
-        height,
-    ]
-
-
-def maximize():
-    """Use a reversible reading size for Nacre apps, normal maximize elsewhere."""
-    client = json.loads(run(["hyprctl", "activewindow", "-j"], "{}"))
-    address = client.get("address", "")
-    if not re.fullmatch(r"0x[0-9a-fA-F]+", address):
-        return
-    window = json.dumps("address:" + address)
-    title = client.get("title", "")
-    is_app = title in APP_LIMITS and (
-        client.get("class") == "org.quickshell" or title in ("Nacre Brain", "Nacre AI")
-    )
-    if not is_app:
-        run(
-            [
-                "hyprctl",
-                "eval",
-                f'hl.dispatch(hl.dsp.window.fullscreen({{mode="maximized",window={window}}}))',
-            ]
-        )
-        return
-    monitors = json.loads(run(["hyprctl", "monitors", "-j"]))
-    monitor = next(item for item in monitors if item["id"] == client["monitor"])
-    folder = HOME / ".local/state/nacre/window-sizes"
-    folder.mkdir(parents=True, exist_ok=True)
-    with (folder / "owner.lock").open("a") as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX)
-        path = folder / "windows.json"
-        data = json.loads(path.read_text()) if path.exists() else {}
-        key = (
-            str(client.get("stableId", address))
-            + ":"
-            + str(client.get("pid", 0))
-            + ":"
-            + title
-        )
-        previous = data.pop(key, None)
-        if previous:
-            area = workarea(monitor)
-            geometry = [
-                previous["at"][0],
-                previous["at"][1],
-                int(min(previous["size"][0], area[2])),
-                int(min(previous["size"][1], area[3])),
-            ]
-            geometry[0], geometry[1] = previous["at"]
-            area = workarea(monitor)
-            geometry[0] = int(
-                max(area[0], min(area[0] + area[2] - geometry[2], geometry[0]))
-            )
-            geometry[1] = int(
-                max(area[1], min(area[1] + area[3] - geometry[3], geometry[1]))
-            )
-        else:
-            previous = {
-                "size": [min(client["size"][i], APP_LIMITS[title][i]) for i in range(2)]
-                if client.get("fullscreen")
-                else client["size"],
-                "at": client["at"],
-                "floating": client["floating"],
-            }
-            data[key] = previous
-            geometry = bounded_geometry(client, monitor)
-        x, y, width, height = geometry
-        commands = [
-            f'hl.dispatch(hl.dsp.window.fullscreen({{mode="maximized",action="unset",window={window}}}))',
-            f'hl.dispatch(hl.dsp.window.fullscreen({{mode="fullscreen",action="unset",window={window}}}))',
-        ]
-        # This host's float dispatcher defaults to toggling, even with "set".
-        # Toggle only from a known state, never an already-floating window.
-        if not client["floating"]:
-            commands.append(
-                f'hl.dispatch(hl.dsp.window.float({{action="toggle",window={window}}}))'
-            )
-        commands += [
-            f"hl.dispatch(hl.dsp.window.resize({{x={width},y={height},relative=false,window={window}}}))",
-            f"hl.dispatch(hl.dsp.window.move({{x={x},y={y},relative=false,window={window}}}))",
-        ]
-        if key not in data and not previous["floating"]:
-            commands.append(
-                f'hl.dispatch(hl.dsp.window.float({{action="toggle",window={window}}}))'
-            )
-        lua = ";".join(commands)
-        run(["hyprctl", "eval", lua])
-        data = dict(list(data.items())[-24:])
-        fd, temporary = tempfile.mkstemp(dir=folder)
-        try:
-            with os.fdopen(fd, "w") as stream:
-                json.dump(data, stream)
-            os.replace(temporary, path)
-        finally:
-            Path(temporary).unlink(missing_ok=True)
-
-
 def action(name, value=""):
-    if name == "maximize":
-        return maximize()
     actions = {
         "network": ["nm-connection-editor"],
         "bluetooth": ["blueman-manager"],

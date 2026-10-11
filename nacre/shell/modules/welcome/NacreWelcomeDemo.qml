@@ -24,7 +24,7 @@ Column {
                     id: card
                     objectName: "welcomeScene_" + tile.index
                     width: parent.width
-                    height: Math.min(100, width * .56)
+                    height: Math.min(160, width * .56)
                     radius: 12
                     color: NacreTokens.raised
                     border.width: selected ? 2 : 1
@@ -73,7 +73,8 @@ Column {
                     width: parent.width
                     text: tile.modelData.name
                     font.pointSize: 10
-                    maximumLineCount: 1
+                    maximumLineCount: 2
+                    wrapMode: Text.Wrap
                     elide: Text.ElideRight
                 }
                 NacreText {
@@ -83,7 +84,7 @@ Column {
                     wrapMode: Text.Wrap
                     color: NacreTokens.mutedInk
                     linkColor: NacreTokens.mutedInk
-                    text: "<a href=\"" + tile.modelData.source + "\">" + tile.modelData.artist + "</a> · " + tile.modelData.license.replace(/-/g, " ")
+                    text: tile.modelData.artist ? "<a href=\"" + tile.modelData.source + "\">" + tile.modelData.artist + "</a> · " + tile.modelData.license.replace(/-/g, " ") : "From your collection"
                     onLinkActivated: url => NacreWelcomeApp.openCredit(url)
                 }
             }
@@ -162,9 +163,8 @@ Column {
         width: parent.width
         spacing: 18
         NacreThemePreview {
-            width: Math.min(440, parent.width * .58)
-            height: 130
-            compact: true
+            width: parent.width * .62
+            height: Math.max(200, Math.min(300, width * .65))
             palette: NacrePresentation.active.colours || {}
             wallpaper: NacreWallpapers.displayPreview || ""
         }
@@ -175,34 +175,52 @@ Column {
                 text: "Your desktop colors"
                 font.pointSize: 11
             }
-            Row {
-                spacing: 8
-                Repeater {
-                    model: ["primary", "secondary", "tertiary", "surface"]
+            Repeater {
+                model: [
+                    {
+                        role: "primary",
+                        name: "Main"
+                    },
+                    {
+                        role: "secondary",
+                        name: "Second"
+                    },
+                    {
+                        role: "tertiary",
+                        name: "Third"
+                    },
+                    {
+                        role: "surface",
+                        name: "Background"
+                    }
+                ]
+                Row {
+                    required property var modelData
+                    width: parent.width
+                    spacing: 12
                     Rectangle {
-                        required property string modelData
-                        width: 32
-                        height: 32
-                        radius: 16
-                        color: "#" + (NacrePresentation.active.colours?.[modelData] || "202020")
+                        width: 30
+                        height: 30
+                        radius: 9
+                        color: "#" + (NacrePresentation.active.colours?.[parent.modelData.role] || "202020")
                         border.width: 1
                         border.color: NacreTokens.outline
                     }
+                    NacreText {
+                        width: Math.max(0, parent.width - 42)
+                        height: 30
+                        verticalAlignment: Text.AlignVCenter
+                        text: parent.modelData.name
+                        font.pointSize: 10
+                        elide: Text.ElideRight
+                    }
                 }
-            }
-            ActionButton {
-                objectName: "welcomeRestoreDemo"
-                text: "Undo: back to your colors"
-                compact: true
-                visible: NacreWelcomeApp.demoChanged
-                enabled: !NacreWelcomeApp.demoBusy
-                onClicked: NacreWelcomeApp.restoreDemo()
             }
         }
     }
     NacreText {
         width: parent.width
-        text: NacreWelcomeApp.demoError || (NacreWelcomeApp.demoBusy ? "Applying to your desktop…" : NacreWelcomeApp.demoRestored ? "Your starting colors are restored." : "")
+        text: NacreWelcomeApp.demoError || (NacreWelcomeApp.demoBusy ? "Applying to your desktop…" : "")
         visible: !!text
         font.pointSize: 10
         wrapMode: Text.Wrap

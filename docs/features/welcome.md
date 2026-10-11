@@ -6,12 +6,12 @@ Back/Next and clickable progress dots, with Enter to continue and Escape to clos
 1. Welcome: logo and “Mother-of-pearl. Colors shaped by your wallpaper.”
 2. Your colors: four small credited scenes, all eight color styles, dark/light
    icons and a live desktop/role strip. Choosing changes the real desktop through
-   its existing publisher. Undo appears after changes and restores the opening
-   wallpaper/palette. Open the other tools from the Apps page.
+   its existing publisher. A larger live preview and labeled role swatches show the committed colors.
+   Open the other tools from the Apps page.
 3. Getting around: scrollable shortcut groups read live from described Hyprland binds.
    Alternative keys share a flexible-height row. Missing bindings are not guessed.
 4. Apps: Settings/Colors plus optional AI/Brain with honest setup guides.
-5. Ready: centered selection recap, Help/Maintenance and Start using Nacre.
+5. Ready: centered selection recap, Help and Start using Nacre.
 
 The launcher can reopen the same tour. `nacre-welcome colors`, `shortcuts`, `apps`,
 `ready` or `help` jumps directly to a section; legacy `home` starts Welcome.
@@ -42,9 +42,9 @@ before writes. Reopening a visible app retains its baseline. Native tests cover
 navigation, source/mode controls, optional guides, keyboard/geometry/startup and
 exact restoration. See [spec](../specs/colors-welcome-performance.md).
 
-Welcome starts at no more than 920×680 logical pixels. Its compact live preview
-fits its own contents rather than cropping a larger desktop. The read-only cache
-prepares every bundled scene in both modes and all styles once, skips current
+Welcome opens tiled, like Settings and Colors. Its live preview adapts to the
+available space without painting outside its frame. The read-only cache
+prepares every selected demo scene in both modes and all styles once, skips current
 entries, and verifies unchanged immutable image copies by file identity after
 full checksum validation. Changed/missing files still require validation/repair.
 
@@ -59,13 +59,20 @@ Clicked styles/modes and scene rings acknowledge the request immediately while
 the actual palette remains publication-owned. Pending highlights settle to the
 committed selection or return to it on failure; previews show committed colors.
 
-Super+M toggles a centered reading size for Nacre apps (Welcome up to1020×740,
-Settings1160×820, Colors1200×850, with smaller-monitor bounds), then restores
-the prior size/tiling. It does not enlarge these apps to the whole display.
-Super+S is the sole managed Settings shortcut. Welcome uses170px wheel steps
-with110ms easing, unamplified touchpad pixels and no added release momentum;
+Super+M uses the ordinary Hyprland maximized toggle for every app; Super+T
+toggles floating when desired. There is no special Nacre size state.
+Super+S is the sole managed Settings shortcut. Welcome uses380px wheel steps
+with110ms easing, 1.5× touchpad pixels and no added release momentum;
 scrollbar dragging and page navigation stop prior motion. App descriptions wrap
 and their Open button moves below the text on narrower windows.
+
+Four existing local paths can be selected privately with
+`welcome.py set-demo-wallpapers '["/absolute/path", ...]'`. These are stored in
+0600 `~/.config/nacre/welcome.json`; personal images never enter the repository.
+Unavailable choices fall back to the credited bundled collection. Video scenes
+use cached posters in the cards and preloader. Both modes and all styles are
+prepared read-only before use. The UI has no Undo button; the bounded internal
+opening snapshot remains available for verification and recovery.
 
 Palette transports stay ready inside the shell: two serial request endpoints
 reuse Python/module initialization, sleep on stdin between actions and are

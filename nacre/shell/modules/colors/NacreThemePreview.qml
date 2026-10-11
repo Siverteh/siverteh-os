@@ -3,12 +3,15 @@ import qs.widgets
 
 Rectangle {
     id: root
+    objectName: "desktopThemePreview"
     required property var palette
     property string wallpaper: ""
     property bool workspaceColors: false
     property bool compact: false
     width: 400
     height: 280
+    readonly property bool condensed: compact || height < 260
+    clip: true
     radius: 14
     color: root.c("frame")
     border.width: 1
@@ -18,9 +21,9 @@ Rectangle {
     }
     Image {
         x: 5
-        y: root.compact ? 30 : 35
+        y: root.condensed ? 30 : 35
         width: parent.width - 10
-        height: parent.height - (root.compact ? 35 : 40)
+        height: parent.height - (root.condensed ? 35 : 40)
         source: root.wallpaper ? "file://" + root.wallpaper : ""
         fillMode: Image.PreserveAspectCrop
         asynchronous: true
@@ -70,9 +73,9 @@ Rectangle {
     }
     Rectangle {
         x: 14
-        y: root.compact ? 40 : 50
+        y: root.condensed ? 40 : 50
         width: parent.width - 28
-        height: root.compact ? 80 : 120
+        height: root.condensed ? Math.min(100, root.height - 50) : Math.min(160, root.height - 160)
         radius: 9
         color: root.c("surfaceContainer")
         Rectangle {
@@ -91,7 +94,7 @@ Rectangle {
         Text {
             x: 12
             y: 40
-            text: root.compact ? "Documents\nPictures" : "Documents\nPictures\nProjects"
+            text: root.condensed ? "Documents\nPictures" : "Documents\nPictures\nProjects"
             font.pointSize: 9
             color: root.c("onSurface")
             lineHeight: 1.3
@@ -112,7 +115,7 @@ Rectangle {
         }
         Rectangle {
             x: parent.width - 105
-            y: root.compact ? 76 : 84
+            y: root.condensed ? 76 : 84
             width: 90
             height: 3
             color: root.c("secondary")
@@ -120,8 +123,8 @@ Rectangle {
     }
     Rectangle {
         x: 14
-        visible: !root.compact
-        y: 183
+        visible: !root.condensed
+        y: root.height - height - 15
         width: (parent.width - 34) * .52
         height: 82
         radius: 7
@@ -151,8 +154,8 @@ Rectangle {
     }
     Rectangle {
         x: parent.width * .57
-        visible: !root.compact
-        y: 190
+        visible: !root.condensed
+        y: root.height - height - 23
         width: parent.width * .43 - 14
         height: 67
         radius: 8
