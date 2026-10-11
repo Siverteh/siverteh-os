@@ -141,3 +141,14 @@ Basic arithmetic retains its small local grammar. Unit expressions such as
 limit, no saved definitions/history and no automatic rate download. Currency
 results use Qalculate's stored rates; refresh those explicitly in Qalculate before
 relying on a current conversion. Qalculate is not installed automatically.
+
+Quick controls use equal Recent/Quick controls headings, explicit On/Off switches
+and short descriptions. Active controls are tinted; updates show a count or
+Up to date. Hover-only previews clear when leaving the grid/list and detail pane;
+Quick controls returns from an app preview without closing the menu. Toggle
+commands are excluded from Recent, while app destinations remain available.
+Recording/tool availability refreshes immediately after package database changes.
+Capture and reminder notifications identify Nacre and use its own icon.
+Night light checks socket liveness, tolerates owned service startup latency and
+retains external-controller protection. It does not mistake stopped sockets for
+an active controller, and off uses identity (normal screen colors).

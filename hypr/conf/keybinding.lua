@@ -78,11 +78,11 @@ install({
     { "SUPER + period", "exec_cmd", "~/.local/bin/nacre-menu actions.emoji" },
     {
         "Print", "exec_cmd",
-        "grim -g \"$(slurp)\" - | wl-copy && notify-send \"Screenshot\" \"Copied to clipboard\"",
+        "grim -g \"$(slurp)\" - | wl-copy && notify-send -a \"Nacre Capture\" -i nacre \"Screenshot\" \"Copied to clipboard\"",
     },
     {
         "SUPER + Print", "exec_cmd",
-        "grim ~/Pictures/Screenshots/screenshot_$(date +%Y%m%d_%H%M%S).png && notify-send \"Screenshot\" \"Saved to Pictures/Screenshots\"",
+        "grim ~/Pictures/Screenshots/screenshot_$(date +%Y%m%d_%H%M%S).png && notify-send -a \"Nacre Capture\" -i nacre \"Screenshot\" \"Saved to Pictures/Screenshots\"",
     },
 })
 

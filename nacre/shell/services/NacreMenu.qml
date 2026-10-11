@@ -441,7 +441,7 @@ Singleton {
     }
     function recent() {
         const candidates = allStatic();
-        return LauncherPreferences.recent.map(id => Model.favorite(id, apps, candidates, legacy)).filter(Boolean).slice(0, 5);
+        return LauncherPreferences.recent.map(id => Model.favorite(id, apps, candidates, legacy)).filter(row => row && !keepOpen(row)).slice(0, 5);
     }
     function brainRows(query) {
         if (DesktopExtras.notesQuery !== query)
@@ -547,7 +547,7 @@ Singleton {
         return Model.children(route, rows).map(decorate).concat(provider(route));
     }
     function record(row) {
-        if (row.operation !== "ask" && row.kind !== "calculation" && row.operation !== "scope" && row.operation !== "info")
+        if (!keepOpen(row) && row.operation !== "ask" && row.kind !== "calculation" && row.operation !== "scope" && row.operation !== "info")
             LauncherPreferences.update("record", Model.stable(row), true);
     }
     function keepOpen(row) {

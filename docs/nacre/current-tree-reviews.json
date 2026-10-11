@@ -1436,12 +1436,14 @@
     },
     "hypr/conf/keybinding.lua": {
       "disposition": "independent",
-      "sha256": "ff8b04bee88075e6cc77945a22ee4aaaf2b51a97fb1b80c3b8de40bfcd9ead6c",
+      "sha256": "f049f69bed952e72bdf8eb48f69ce9cbce235bf4632f54a8d12bd70749d15c8a",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
         "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
-        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ]
     },
     "nacre/shell-tools/binding-contracts.lua": {
@@ -3856,7 +3858,7 @@
     },
     "nacre/shell/modules/launcher/NacreAppBrowser.qml": {
       "disposition": "independent",
-      "sha256": "927d65ad9945d61b74c38b9112609528a831b5fc9642e63dabd4b439b4937cfd",
+      "sha256": "b6f0c0081c307e9cdd70034f0abab7814700ec9ddeb6e829ca932375102460bc",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
@@ -3873,7 +3875,9 @@
         "2026-10-11: initial leaf-route resolution selects its parent and row without execution; native Qt regression added; safe debug geometry exposed for layout inspection.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
         "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
-        "docs/features/launcher.md; independent popup anchor/dynamic clamp/scroll and hover-only Home hearts; production Qt hover-click and small/tall popup geometry regression"
+        "docs/features/launcher.md; independent popup anchor/dynamic clamp/scroll and hover-only Home hearts; production Qt hover-click and small/tall popup geometry regression",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ]
     },
     "nacre/shell/modules/launcher/NacreLauncherPanel.qml": {
@@ -6075,11 +6079,13 @@
     },
     "tools/tests/fixtures/keybindings-contract.json": {
       "disposition": "non-implementation",
-      "sha256": "c29acab76281a56b777ec5532dd592c273e30aedfbe1e54ae1666c417293d90b",
+      "sha256": "dce169a4c2f412837c4d06e32631851c680b9c9854b4f4d2a426667fef8ea3ef",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
         "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
-        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ]
     },
     "tools/tests/fixtures/window-routing-contract.json": {
@@ -6608,7 +6614,7 @@
     },
     "docs/features/launcher.md": {
       "disposition": "non-implementation",
-      "sha256": "deeb37c7fd74a4027c2e160d23c4de8cdb9c469683baa2765b7dc188a4edcdb8",
+      "sha256": "8dcb2501747a78c95fde7abaff5c2ac019f38a5945ee71175e26453362ee75d4",
       "evidence": [
         "docs/nacre/DOCUMENTATION-GUIDE-AUDIT.md",
         "docs/specs/documentation-source-audit.md",
@@ -6618,7 +6624,9 @@
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
         "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
-        "docs/features/launcher.md; independent popup anchor/dynamic clamp/scroll and hover-only Home hearts; production Qt hover-click and small/tall popup geometry regression"
+        "docs/features/launcher.md; independent popup anchor/dynamic clamp/scroll and hover-only Home hearts; production Qt hover-click and small/tall popup geometry regression",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ],
       "notes": "Locally maintained current project behavior/deployment prose reviewed in full with history and reader/source checks; no implementation-origin or license conclusion."
     },
@@ -8064,9 +8072,11 @@
     "nacre/shell-tools/control-tools.py": {
       "disposition": "independent",
       "evidence": [
-        "docs/specs/frame-control-center.md"
+        "docs/specs/frame-control-center.md",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ],
-      "sha256": "2075e5978a18a74cdf7d97980b4c480002a10ad39ed72052eb086fbf977b472b",
+      "sha256": "d76a32352b8eff02c079741742ef345604b7c9795bcfd78223ef4fa6954f914c",
       "notes": "Own approved frame/control-center slice reviewed against current Nacre spec and public APIs, without inherited source consultation. Marked geometry and passive feedback remain shared-state owned; no writes on opening or idle polling. Current notification history clock observes actual visibility and reduced-motion feedback settles immediately. New native/ownership/routing/geometry regressions complement existing full checks and live acceptance."
     },
     "nacre/shell-tools/tests/device-qml/tst_NacreControlTools.qml": {
@@ -8081,9 +8091,11 @@
       "disposition": "independent",
       "evidence": [
         "docs/specs/frame-control-center.md",
-        "Unit night-light fixtures isolate session runtime environment; external ownership assertions remain intact. Current wallpaper spec now explicitly describes the static picture indicator, superseding empty-center design. No runtime night-light behavior altered."
+        "Unit night-light fixtures isolate session runtime environment; external ownership assertions remain intact. Current wallpaper spec now explicitly describes the static picture indicator, superseding empty-center design. No runtime night-light behavior altered.",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ],
-      "sha256": "81a0471966a2be86536f883a70712baf9ae133b395d255ec716c4e969668fb8d",
+      "sha256": "a4d391d81b585c4f835204dc32504912ef3c3295ce9627534ffd4a11fe3e168e",
       "notes": "Own approved frame/control-center slice reviewed against current Nacre spec and public APIs, without inherited source consultation. Marked geometry and passive feedback remain shared-state owned; no writes on opening or idle polling. Current notification history clock observes actual visibility and reduced-motion feedback settles immediately. New native/ownership/routing/geometry regressions complement existing full checks and live acceptance."
     },
     "nacre/shell/modules/controlcenter/NacreControlCenter.qml": {
@@ -9907,9 +9919,11 @@
     "nacre/shell-tools/screenshot.py": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ],
-      "sha256": "0157a619ef0ac939c4d1dcc871d2167b1f3a14ed9af0b367e564af53edc54e5a"
+      "sha256": "117809c4e1f4bd972be3c5daba51c7ca3f4de2a98a92a3c495909f87bb5fea15"
     },
     "nacre/shell-tools/tests/launcher-qml/tst_universal.qml": {
       "disposition": "independent",
@@ -9918,16 +9932,19 @@
         "2026-10-11: initial leaf-route resolution selects its parent and row without execution; native Qt regression added; safe debug geometry exposed for layout inspection.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
         "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
-        "docs/features/launcher.md; independent popup anchor/dynamic clamp/scroll and hover-only Home hearts; production Qt hover-click and small/tall popup geometry regression"
+        "docs/features/launcher.md; independent popup anchor/dynamic clamp/scroll and hover-only Home hearts; production Qt hover-click and small/tall popup geometry regression",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ],
-      "sha256": "c11aedb6a3f757578b355aa88e9a414992f9480befcb6f7d241735ea3c23a7b2"
+      "sha256": "50eeb101b6e6837c5b97a0c33ef71184e1890190fd14a794bada8c0ef4082e67"
     },
     "nacre/shell-tools/tests/test_screenshot.py": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ],
-      "sha256": "4f758151c724467da5060e7b4dca47f4f667a903cc87232c08acc4a8d2f607d0"
+      "sha256": "fe84b9fa0f72fcee89d1187bb5a5c31901ce4d61f3251dc28b5865111f6d728f"
     },
     "nacre/shell-tools/tests/test_menu_cli.py": {
       "disposition": "independent",
@@ -9941,18 +9958,22 @@
       "evidence": [
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
-        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ],
-      "sha256": "40a779cacc4f32edd50102603d9c33567e24c651f28b2081a92c614e692bb026"
+      "sha256": "c2915ce1529f970514bdaf5c4cd2303aaff5ec633d8fe6ccfef8bc1687eee8e5"
     },
     "nacre/shell-tools/tests/test_menu_backend.py": {
       "disposition": "independent",
       "evidence": [
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
-        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ],
-      "sha256": "4353af1fb104911ca88f77677de04be8292adfaee2e44c171f0fa39d956d4c41"
+      "sha256": "12eeff5b30b642827eb9e2800a30c02ed40bad8f61aca82442bbd1bb3a4fef39"
     },
     "nacre/shell-tools/menu.sh": {
       "disposition": "independent",
@@ -9966,9 +9987,11 @@
       "evidence": [
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
-        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ],
-      "sha256": "462ed8a0098b9294a3d30b923d65028dd28bc6c2b8a45e0de4f4f82728b66222"
+      "sha256": "cb8be871a750297a8cf66095c4e81e4ac668aadec3fefad572198aa7fdcc006a"
     },
     "nacre/shell-tools/tests/test_menu_model.py": {
       "disposition": "independent",
@@ -9982,9 +10005,11 @@
       "evidence": [
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
-        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ],
-      "sha256": "f26daed112dd6d910a106e28dd908a31560ad0c5592b64c1dd77758ce29ef784"
+      "sha256": "17cf20d3a144573adbfc386d8834497c475529aa9f60ddc58c5d7ec12ae09a25"
     },
     "nacre/shell-tools/launcher-menu.json": {
       "disposition": "independent",
@@ -10025,9 +10050,11 @@
       "evidence": [
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
-        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
+        "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
       ],
-      "sha256": "1d17e1a36880d5e6425a198c420ea6e5156c2a5e87276c152c9a9e66c26e8875"
+      "sha256": "1b11d6f7418d7677e217c69c9f889e957520fe020a945ac175bb3b0fb13958e3"
     },
     "nacre/shell/modules/launcher/NacreMenuIcon.qml": {
       "disposition": "independent",

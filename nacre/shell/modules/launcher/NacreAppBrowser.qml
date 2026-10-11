@@ -17,6 +17,7 @@ NacreSurface {
     property bool keyboardSelection: false
     property int selection: -1
     property var hoveredEntry: null
+    property bool controlsPinned: false
     property var contextEntry: null
     property rect contextAnchor: Qt.rect(20, 84, 0, 0)
     property var confirmation: null
@@ -68,7 +69,7 @@ NacreSurface {
     }
     readonly property bool hasSelection: keyboardSelection || !!scope.text || picker
     readonly property var selectedEntry: hasSelection && selection >= 0 ? entries[selection] || null : null
-    readonly property var previewEntry: selectedEntry || hoveredEntry
+    readonly property var previewEntry: controlsPinned ? null : selectedEntry || hoveredEntry
     readonly property var breadcrumb: Menu.trail(route, NacreMenu.rows)
     readonly property real contentX: picker ? 20 : 182
     readonly property real contentWidth: width - contentX - (showDetails ? 270 : 20)
@@ -126,6 +127,7 @@ NacreSurface {
         confirmation = null;
         context.close();
         hoveredEntry = null;
+        controlsPinned = false;
         keyboardSelection = false;
         search.text = visibilities.launcherQuery || "";
         selection = picker ? Menu.firstEnabled(entries) : scope.text ? Menu.firstEnabled(entries) : -1;
@@ -275,7 +277,30 @@ NacreSurface {
         NacreMenu.inspectApp(entry);
         context.open();
     }
+    function hoverEntry(entry, inside) {
+        if (inside) {
+            hoverClear.stop();
+            controlsPinned = false;
+            hoveredEntry = entry;
+        } else
+            hoverClear.restart();
+    }
+    function showQuickControls() {
+        controlsPinned = true;
+        hoveredEntry = null;
+        keyboardSelection = false;
+        selection = -1;
+        detailScroll.contentY = 0;
+        search.forceActiveFocus();
+    }
+    Timer {
+        id: hoverClear
+        interval: 160
+        onTriggered: if (!detailHover.hovered)
+            root.hoveredEntry = null
+    }
     function focusResults(delta = 1) {
+        controlsPinned = false;
         keyboardSelection = true;
         selection = Menu.step(entries, selection, delta);
         if (appLayout) {
@@ -370,6 +395,7 @@ NacreSurface {
         search.forceActiveFocus();
     }
     onQueryChanged: {
+        controlsPinned = false;
         keyboardSelection = false;
         hoveredEntry = null;
         selection = scope.text || picker ? Menu.firstEnabled(entries) : -1;
@@ -615,8 +641,7 @@ NacreSurface {
             }
             HoverHandler {
                 id: tileHover
-                onHoveredChanged: if (hovered)
-                    root.hoveredEntry = tile.modelData
+                onHoveredChanged: root.hoverEntry(tile.modelData, hovered)
             }
             NacreMenuIcon {
                 entry: tile.modelData
@@ -714,8 +739,7 @@ NacreSurface {
             }
             HoverHandler {
                 id: rowHover
-                onHoveredChanged: if (hovered)
-                    root.hoveredEntry = row.modelData
+                onHoveredChanged: root.hoverEntry(row.modelData, hovered)
             }
             NacreMenuIcon {
                 entry: row.modelData
@@ -790,6 +814,10 @@ NacreSurface {
         height: root.bodyHeight
         radius: 13
         color: Qt.tint(NacreColours.palette.m3surface, Qt.alpha(NacreColours.palette.m3onSurface, .025))
+        HoverHandler {
+            id: detailHover
+            onHoveredChanged: hovered ? hoverClear.stop() : hoverClear.restart()
+        }
         Flickable {
             id: detailScroll
             anchors.fill: parent
@@ -800,7 +828,15 @@ NacreSurface {
             Column {
                 id: detailColumn
                 width: parent.width
-                spacing: 12
+                spacing: 8
+                NacreMenuButton {
+                    objectName: "launcherBackToControls"
+                    visible: !!root.previewEntry
+                    compact: true
+                    icon: "chevron_left"
+                    text: "Quick controls"
+                    onClicked: root.showQuickControls()
+                }
                 NacreMenuIcon {
                     visible: !!root.previewEntry
                     entry: root.previewEntry || {}
@@ -810,7 +846,8 @@ NacreSurface {
                 }
                 NacreText {
                     width: parent.width
-                    text: root.previewEntry?.name || "Quick controls"
+                    visible: !!root.previewEntry
+                    text: root.previewEntry?.name || ""
                     textFormat: Text.PlainText
                     font.pointSize: 14
                     wrapMode: Text.Wrap
@@ -875,7 +912,7 @@ NacreSurface {
                     visible: !root.previewEntry && NacreMenu.recent().length > 0
                 }
                 Repeater {
-                    model: root.previewEntry ? [] : NacreMenu.recent()
+                    model: root.previewEntry ? [] : NacreMenu.recent().slice(0, 3)
                     delegate: NacreMenuButton {
                         required property var modelData
                         width: detailColumn.width
@@ -885,7 +922,7 @@ NacreSurface {
                     }
                 }
                 NacreText {
-                    text: "Desktop"
+                    text: "Quick controls"
                     font.pointSize: 10
                     visible: !root.previewEntry
                 }
@@ -894,10 +931,18 @@ NacreSurface {
                     delegate: NacreMenuButton {
                         required property string modelData
                         readonly property var item: NacreMenu.node(modelData)
+                        objectName: "launcherToggle_" + modelData.split(".").pop()
+                        toggle: true
+                        description: item?.reason || ({
+                                "actions.controls.dnd": "Silence notification popups",
+                                "actions.controls.night-light": "Make the screen warmer",
+                                "actions.controls.stay-awake": "Prevent automatic sleep"
+                            })[modelData] || ""
+                        stateText: item?.disabled ? "—" : ""
                         width: detailColumn.width
                         compact: true
                         selected: !!item && NacreMenu.stateFor(item)
-                        enabled: !!item && !NacreMenu.decorate(item).disabled
+                        enabled: !!item && !item.disabled && (modelData !== "actions.controls.night-light" || !NacreControlTools.busy)
                         icon: selected ? "check" : item?.icon || ""
                         text: item?.label || ""
                         onClicked: NacreMenu.execute(item)
@@ -907,7 +952,8 @@ NacreSurface {
                     width: parent.width
                     visible: !root.previewEntry
                     compact: true
-                    text: Updates.count ? Updates.count + " updates available" : "System updates"
+                    text: Updates.count ? Updates.count + " updates" : "Up to date"
+                    icon: "system_update"
                     onClicked: root.run(NacreMenu.node("health.updates"))
                 }
             }

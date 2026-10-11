@@ -13,6 +13,15 @@ spec.loader.exec_module(shot)
 
 
 class ScreenshotTests(unittest.TestCase):
+    def test_capture_notification_identifies_nacre(self):
+        from unittest.mock import patch
+
+        with patch.object(shot.subprocess, "run") as run:
+            shot.notify("Saved")
+        command = run.call_args.args[0]
+        self.assertEqual(command[command.index("-a") + 1], "Nacre Capture")
+        self.assertEqual(command[command.index("-i") + 1], "nacre")
+
     def test_cancelled_selection_never_captures_or_clears_clipboard(self):
         for result in (
             SimpleNamespace(returncode=1, stdout=""),
