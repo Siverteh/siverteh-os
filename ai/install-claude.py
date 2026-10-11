@@ -5,7 +5,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-root = Path.home() / ".local/share/siverteh-ai/claude-sdk"
+root = Path.home() / ".local/share/nacre/ai/claude-sdk"
 subprocess.run([sys.executable, "-m", "venv", str(root)], check=True)
 subprocess.run(
     [str(root / "bin/python"), "-m", "pip", "install", "claude-agent-sdk==0.2.162"],

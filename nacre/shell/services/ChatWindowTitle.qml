@@ -5,7 +5,7 @@ import QtQuick
 
 Singleton {
     id: root
-    readonly property int pid: NacreHyprland.activeClient?.wmClass === "siverteh-ai-task" ? (NacreHyprland.activeClient?.pid ?? 0) : 0
+    readonly property int pid: NacreHyprland.activeClient?.wmClass === "nacre-ai-task" ? (NacreHyprland.activeClient?.pid ?? 0) : 0
     property var titles: ({})
     property var threadIds: ({})
     property var pending: []
@@ -25,7 +25,7 @@ Singleton {
 
     // Resolve open chat windows before focus, and retain their names across switches.
     function scan() {
-        const pids = NacreHyprland.clients.filter(c => c.wmClass === "siverteh-ai-task").map(c => c.pid);
+        const pids = NacreHyprland.clients.filter(c => c.wmClass === "nacre-ai-task").map(c => c.pid);
         if (pid && !pids.includes(pid))
             pids.unshift(pid);
         const retained = {};
@@ -61,7 +61,7 @@ Singleton {
     }
     Timer {
         interval: 15000
-        running: NacreHyprland.clients.some(c => c.wmClass === "siverteh-ai-task")
+        running: NacreHyprland.clients.some(c => c.wmClass === "nacre-ai-task")
         repeat: true
         onTriggered: root.scan()
     }

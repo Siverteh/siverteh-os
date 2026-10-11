@@ -37,7 +37,7 @@ class ConfigurationTests(unittest.TestCase):
                 [
                     "kitty",
                     "--class",
-                    "siverteh-ai-dashboard",
+                    "nacre-ai-dashboard",
                     "--title",
                     "Nacre AI",
                     "--",
@@ -46,38 +46,24 @@ class ConfigurationTests(unittest.TestCase):
             )
             self.assertEqual(module.plan(home, root)[0], [])
 
-    def test_nacre_ai_entry_preserves_arguments_and_controller_exit_status(self):
+    def test_nacre_ai_installs_the_actual_executable_controller(self):
         with tempfile.TemporaryDirectory() as directory:
             root, home = Path(directory) / "repo", Path(directory) / "home"
             (root / "bin").mkdir(parents=True)
-            shutil.copy2(module.ROOT / "bin/nacre-ai", root / "bin/nacre-ai")
+            source = module.ROOT / "bin/nacre-ai"
+            shutil.copy2(source, root / "bin/nacre-ai")
             module.apply(home, root)
-            controller = home / ".local/bin/siverteh-ai"
-            controller.write_text(
-                "#!/usr/bin/env python3\nimport json, sys\n"
-                "print(json.dumps(sys.argv[1:]))\nsys.exit(37)\n"
-            )
-            controller.chmod(0o755)
-            args = ["new", "--project", "space and $literal", "--account", "test"]
+            controller = home / ".local/bin/nacre-ai"
+            self.assertEqual(controller.read_bytes(), source.read_bytes())
+            self.assertTrue(os.access(controller, os.X_OK))
             result = subprocess.run(
-                [str(home / ".local/bin/nacre-ai"), *args],
+                [str(controller), "--help"],
                 env={**os.environ, "HOME": str(home)},
                 capture_output=True,
                 text=True,
-                timeout=5,
             )
-            self.assertEqual(result.returncode, 37)
-            self.assertEqual(json.loads(result.stdout), args)
-            default = subprocess.run(
-                [str(home / ".local/bin/nacre-ai")],
-                env={**os.environ, "HOME": str(home)},
-                capture_output=True,
-                text=True,
-                timeout=5,
-            )
-            self.assertEqual(default.returncode, 37)
-            self.assertEqual(json.loads(default.stdout), ["dashboard"])
-            self.assertEqual(module.plan(home, root)[0], [])
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("dashboard", result.stdout)
 
     def test_copy_install_is_repeatable_and_refuses_later_local_edits(self):
         with tempfile.TemporaryDirectory() as directory:

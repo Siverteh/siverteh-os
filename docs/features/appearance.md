@@ -54,7 +54,7 @@ single filesystem crash transaction. Private sidebar/history writes keep their
 existing lightweight atomic primitive; no new polling or per-keystroke disk sync.
 
 The active KDE color scheme is named Nacre. Existing private schemes are
-preserved, including the earlier Siverteh.colors file. Palette-matched folder
+preserved, including the earlier Nacre.colors file. Palette-matched folder
 overlays repair recognized stale source links; custom index files and regular
 artwork overrides stay untouched. Valid cache indexes are reused without writes.
 

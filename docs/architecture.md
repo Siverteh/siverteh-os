@@ -19,11 +19,10 @@ records contain the rewrite history, rather than this component map.
 | Terminal presentation | `kitty/`, `fastfetch/` | Managed static config plus private palette and generated logo |
 
 Desktop preferences/state/cache use the canonical Nacre directories described in
-[the migration guide](features/nacre-rename.md). Legacy command/path aliases keep
-existing callers and releases compatible. Personal AI accounts and vault data
-retain their established directories; renaming a desktop does not migrate those
-credentials or conversations. `observatory` identifiers are compatibility names
-for Brain's service/profile, not another desktop.
+[the migration guide](features/nacre-rename.md). AI accounts, chats and worktrees use `~/.local/share/nacre/ai`; registry/settings
+use `~/.config/nacre/ai` and logs/title state use `~/.local/state/nacre/ai`.
+Legacy aliases, when needed for an existing host, stay outside the public source.
+Brain uses its own canonical runtime, profile and private vault locations.
 
 `tools/configure.py` owns the managed configuration map and its deployment hashes.
 Component installers separately own their declared services/runtime files.
@@ -161,12 +160,12 @@ The approved `nacre/shell/branding/nacre-master.svg` owns the shell and pearl
 geometry. `branding.py` derives compact/symbolic forms, Qt/SDDM data modules, the
 Brain symbol and palette-generated PNG/text outputs. Native librsvg is the PNG
 rasterizer; Quickshell and SDDM use Qt SVG without private native libraries.
-Visible labels use Nacre AI/Brain; private compatibility commands stay intact.
+Visible labels and installed commands use Nacre AI/Brain.
 Login theme code is root-owned; only color/wallpaper appearance remains user-owned.
 
-The public `nacre-ai` command is a managed entry point to the existing private AI
-controller. It forwards arguments and exit status without migrating accounts,
-conversations or worker state; legacy `siverteh-ai` callers remain compatible.
+The public `nacre-ai` command owns the AI controller. Its canonical helper
+commands, terminal classes and sidebar service use Nacre names. AI deployment
+keeps independent provider accounts and existing conversation state intact.
 
 Terminal image refresh remains part of the palette publisher. The Fastfetch
 startup hook registers a Kitty logo against its persistent shell and PTY; palette
@@ -188,8 +187,8 @@ The legacy Thunar route remains a compatibility fallback, without routine rebuil
 
 The knowledge service and vault tools now use `nacre-brain` names. Canonical
 private vault, runtime, browser profile, state and sync paths are documented in
-[the Brain guide](features/nacre-brain.md). Journaled moves retain old-name
-aliases and Obsidian registration; notes/accounts are never release artifacts.
+[the Brain guide](features/nacre-brain.md). Notes/accounts are never release artifacts; local migration journals and aliases
+remain private host maintenance data.
 The shared brand generator derives the Brain-specific glyph, web header and
 palette-bound launcher icon from the same approved shell master.
 

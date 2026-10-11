@@ -1,7 +1,7 @@
 -- Nacre Brain routes; legacy classes remain compatible with open browser windows.
 hl.window_rule({
     name = "nacre-brain",
-    match = { class = "^(nacre-brain|siverteh-brain|chrome-.*(nacre_brain|siverteh-observatory)_auth_open[.]html-.*)$" },
+    match = { class = "^(nacre-brain|nacre-brain|chrome-.*(nacre_brain|nacre-observatory)_auth_open[.]html-.*)$" },
     workspace = "6 silent",
     fullscreen_state = "0 0",
     suppress_event = "fullscreen maximize",
@@ -20,7 +20,7 @@ hl.bind("SUPER + N", hl.dsp.exec_cmd("~/.local/bin/nacre-brain capture"))
 -- A credential handoff updates an existing browser profile, then closes itself.
 hl.window_rule({
     name = "brain-auth-handoff",
-    match = { class = "^(nacre-brain-auth|siverteh-brain-auth|chrome-.*(nacre_brain|siverteh-observatory)_auth_handoff[.]html-.*)$" },
+    match = { class = "^(nacre-brain-auth|nacre-brain-auth|chrome-.*(nacre_brain|nacre-observatory)_auth_handoff[.]html-.*)$" },
     float = true,
     no_initial_focus = true,
     size = "80 80",

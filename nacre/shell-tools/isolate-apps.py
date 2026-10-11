@@ -66,7 +66,7 @@ def main():
             "org.freedesktop.systemd1.Manager",
             "StartTransientUnit",
             "ssa(sv)a(sa(sv))",
-            f"siverteh-app-{pid}-{time.time_ns()}.scope",
+            f"nacre-app-{pid}-{time.time_ns()}.scope",
             "fail",
             "2",
             "PIDs",

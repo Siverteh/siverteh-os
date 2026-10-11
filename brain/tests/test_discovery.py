@@ -188,10 +188,10 @@ class DiscoveryTests(unittest.TestCase):
         self.assertEqual(a["memberships"][0]["subject"], "acme")
 
     def test_body_namespace_prefix_does_not_assign_product_work_to_person(self):
-        person = note(1, "Siverteh", "Personal climbing education")
+        person = note(1, "Ada", "Personal climbing education")
         person.update(
             path="wiki/personal.md",
-            meta={"entity": "world", "name": "Siverteh", "project": "personal"},
+            meta={"entity": "world", "name": "Ada", "project": "personal"},
         )
         product = note(2, "Nacre", "Desktop settings")
         product.update(

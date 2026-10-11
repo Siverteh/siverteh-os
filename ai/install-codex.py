@@ -14,7 +14,7 @@ URL = f"https://github.com/openai/codex/releases/download/rust-v{VERSION}/codex-
 
 if platform.system() != "Linux" or platform.machine() != "x86_64":
     raise SystemExit("This pinned installer targets Linux x86_64")
-root = Path.home() / ".local/share/siverteh-ai/codex/packages"
+root = Path.home() / ".local/share/nacre/ai/codex/packages"
 root.mkdir(parents=True, exist_ok=True)
 target = root / VERSION
 if not target.exists():

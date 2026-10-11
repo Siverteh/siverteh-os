@@ -20,12 +20,7 @@ def helper(name):
 
 def remember(args, body):
     root = Path(
-        os.environ.get(
-            "NACRE_BRAIN",
-            os.environ.get(
-                "SIVERTEH_BRAIN", str(Path.home() / "Documents/Nacre-Brain")
-            ),
-        )
+        os.environ.get("NACRE_BRAIN", str(Path.home() / "Documents/Nacre-Brain"))
     )
     loader = importlib.machinery.SourceFileLoader("memory_brain", helper("nacre-brain"))
     spec = importlib.util.spec_from_loader(loader.name, loader)

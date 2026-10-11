@@ -52,8 +52,7 @@ def check(event="manual"):
             for m in monitors
         ],
         brainWindows=sum(
-            c.get("class")
-            in ("nacre-brain", "siverteh-brain", "chrome-127.0.0.1__-Default")
+            c.get("class") in ("nacre-brain", "chrome-127.0.0.1__-Default")
             for c in clients
         ),
         configErrors=run(["hyprctl", "configerrors"]),

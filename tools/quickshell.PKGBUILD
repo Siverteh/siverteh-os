@@ -3,7 +3,7 @@
 pkgname=quickshell
 pkgver=0.3.1
 pkgrel=1.2
-pkgdesc='Quickshell rebuilt for the installed Qt release (Siverteh local recovery)'
+pkgdesc='Quickshell rebuilt for the installed Qt release (Nacre local recovery)'
 arch=('x86_64')
 url='https://quickshell.org'
 license=('LGPL-3.0-only')
@@ -23,7 +23,7 @@ prepare() {
 build() {
   cmake -S quickshell -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
-    -DINSTALL_QML_PREFIX=lib/qt6/qml -DDISTRIBUTOR='Siverteh local Qt rebuild'
+    -DINSTALL_QML_PREFIX=lib/qt6/qml -DDISTRIBUTOR='Nacre local Qt rebuild'
   cmake --build build --parallel 4
 }
 

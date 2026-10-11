@@ -314,7 +314,7 @@ Singleton {
             audio: ["pavucontrol"],
             network: ["nm-connection-editor"],
             lock: ["loginctl", "lock-session"],
-            load: ["kitty", "--class", "siverteh-ai-task", "--title", "Load chat", "--", "siverteh-ai", "window", "--worker-command", "sessions"],
+            load: ["kitty", "--class", "nacre-ai-task", "--title", "Load chat", "--", "nacre-ai", "window", "--worker-command", "sessions"],
             files: ["nacre-app", "files"],
             terminal: ["kitty"],
             new: ["nacre-shell", "new"],

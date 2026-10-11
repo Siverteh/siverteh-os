@@ -17,7 +17,7 @@ elif text.count(before) != 1:
 else:
     backup = (
         Path.home()
-        / ".local/state/siverteh-ai/backups"
+        / ".local/state/nacre/ai/backups"
         / dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     )
     backup.mkdir(parents=True, mode=0o700)

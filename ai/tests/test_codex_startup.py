@@ -9,7 +9,7 @@ from test_workflow import module
 
 class CodexStartupTests(unittest.TestCase):
     def setUp(self):
-        self.ai = module("siverteh-ai")
+        self.ai = module("nacre-ai")
         self.argv = ["/local/codex", "-C", "/chat", "--add-dir", "/brain"]
         self.env = {"CODEX_HOME": "/accounts/selected"}
 
@@ -97,13 +97,12 @@ class LauncherDeploymentTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             home = Path(folder)
             target = (
-                home
-                / ".local/share/siverteh-ai/conversation-runtime/test/bin/siverteh-ai"
+                home / ".local/share/nacre/ai/conversation-runtime/test/bin/nacre-ai"
             )
             target.parent.mkdir(parents=True)
             target.write_text("prior launcher")
             target.chmod(0o755)
-            link = home / ".local/bin/siverteh-ai"
+            link = home / ".local/bin/nacre-ai"
             link.parent.mkdir(parents=True)
             link.symlink_to(target)
             auth = home / ".codex/auth.json"
@@ -113,14 +112,10 @@ class LauncherDeploymentTests(unittest.TestCase):
             self.assertEqual(target.read_text(), "prior launcher")
             self.assertFalse((home / ".local/state").exists())
             installer.install_launcher(ROOT, home, True)
-            self.assertEqual(
-                target.read_bytes(), (ROOT / "bin/siverteh-ai").read_bytes()
-            )
+            self.assertEqual(target.read_bytes(), (ROOT / "bin/nacre-ai").read_bytes())
             self.assertEqual(target.stat().st_mode & 0o777, 0o755)
             self.assertTrue(link.is_symlink())
-            backups = list(
-                (home / ".local/state/siverteh-ai/backups").glob("*/siverteh-ai")
-            )
+            backups = list((home / ".local/state/nacre/ai/backups").glob("*/nacre-ai"))
             self.assertEqual(len(backups), 1)
             self.assertEqual(backups[0].read_text(), "prior launcher")
             self.assertEqual(auth.read_text(), "existing private data")
@@ -142,32 +137,32 @@ class ControllerDeploymentTests(unittest.TestCase):
         spec.loader.exec_module(installer)
         with tempfile.TemporaryDirectory() as folder:
             home = Path(folder)
-            runtime = home / ".local/share/siverteh-ai/conversation-runtime/test/bin"
+            runtime = home / ".local/share/nacre/ai/conversation-runtime/test/bin"
             runtime.mkdir(parents=True)
-            target = runtime / "siverteh-ai-claude"
+            target = runtime / "nacre-ai-claude"
             target.write_text("prior controller")
             target.chmod(0o755)
-            other = runtime / "siverteh-ai"
+            other = runtime / "nacre-ai"
             other.write_text("running peer")
-            link = home / ".local/bin/siverteh-ai-claude"
+            link = home / ".local/bin/nacre-ai-claude"
             link.parent.mkdir(parents=True)
             link.symlink_to(target)
             private = home / ".claude/private-fixture"
             private.parent.mkdir()
             private.write_text("preserve")
-            installer.install_launcher(ROOT, home, name="siverteh-ai-claude")
+            installer.install_launcher(ROOT, home, name="nacre-ai-claude")
             self.assertEqual(target.read_text(), "prior controller")
             self.assertFalse((home / ".local/state").exists())
-            installer.install_launcher(ROOT, home, True, "siverteh-ai-claude")
+            installer.install_launcher(ROOT, home, True, "nacre-ai-claude")
             self.assertEqual(
-                target.read_bytes(), (ROOT / "bin/siverteh-ai-claude").read_bytes()
+                target.read_bytes(), (ROOT / "bin/nacre-ai-claude").read_bytes()
             )
             self.assertEqual(target.stat().st_mode & 0o777, 0o755)
             self.assertEqual(other.read_text(), "running peer")
             self.assertEqual(private.read_text(), "preserve")
             self.assertTrue(link.is_symlink())
             backup = list(
-                (home / ".local/state/siverteh-ai/backups").glob("*/siverteh-ai-claude")
+                (home / ".local/state/nacre/ai/backups").glob("*/nacre-ai-claude")
             )
             self.assertEqual(len(backup), 1)
             self.assertEqual(backup[0].read_text(), "prior controller")

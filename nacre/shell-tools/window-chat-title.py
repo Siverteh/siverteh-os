@@ -31,9 +31,7 @@ def resolve_info(pid):
             thread = args[args.index(option) + 1]
             if not re.fullmatch(r"[0-9a-f-]{36}", thread):
                 continue
-            file = (
-                Path.home() / ".local/state/siverteh-ai/chat-titles" / f"{thread}.json"
-            )
+            file = Path.home() / ".local/state/nacre/ai/chat-titles" / f"{thread}.json"
             title = ""
             if file.exists():
                 data = json.loads(file.read_text())

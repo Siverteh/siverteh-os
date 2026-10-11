@@ -1,5 +1,5 @@
 [Unit]
-Description=Siverteh persistent sidebar assistant
+Description=Nacre persistent sidebar assistant
 PartOf=graphical-session.target
 After=graphical-session.target
 [Service]

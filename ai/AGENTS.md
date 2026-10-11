@@ -97,7 +97,7 @@ Do not print secrets into transcripts, command arguments, or logs. Do not copy
 Codex authentication between accounts. Account profiles share guidance and the
 vault, while authentication and conversations remain separate.
 
-At the start of project work, read `$HOME/.config/siverteh-ai/projects.json`.
+At the start of project work, read `$HOME/.config/nacre/ai/projects.json`.
 A project with `build_host` uses that SSH host for heavy builds and tests;
 `build_path` identifies its repository there. Keep editing in the selected local
 project, transfer the exact task revision/changes to an isolated remote worktree,
@@ -110,14 +110,14 @@ does not stop them. Record handoff evidence and clean up only clean, idle task
 worktrees once no more edits are needed. Follow each project's own workflow.
 
 Give each new chat a concise, specific 3–7 word title once its task is clear.
-Use the `siverteh_workflow.set_chat_title` MCP tool. Read `CODEX_THREAD_ID`
+Use the `nacre_workflow.set_chat_title` MCP tool. Read `CODEX_THREAD_ID`
 from your shell for its thread_id argument. This uses the supported naming API;
 never edit the session database. Update the title if the task changes materially.
 If the helper is unavailable, continue the task without repeatedly retrying.
 
 
 For multi-step work, use the handoff reference in
-`~/.agents/skills/siverteh-project-work/references/handoff.md` at meaningful
+`~/.agents/skills/nacre-project-work/references/handoff.md` at meaningful
 milestones and before ending unfinished work. On resume, retrieve that checkpoint
 and verify current state. When durable findings conflict or a project reaches a
 milestone, use `~/.agents/skills/nacre-brain/references/maintenance.md` to
@@ -133,9 +133,9 @@ prerequisites in an isolated environment when needed; report unsupported renderi
 rather than claiming visual verification. Never install dependencies into a
 project merely because a general document skill lists them.
 
-Use `siverteh-ai-tools python`, `siverteh-ai-tools node`, or
-`siverteh-ai-tools defuddle` for installed isolated document/extraction tools.
-Their environment is `~/.local/share/siverteh-ai/skill-tools`; it does not replace
+Use `nacre-ai-tools python`, `nacre-ai-tools node`, or
+`nacre-ai-tools defuddle` for installed isolated document/extraction tools.
+Their environment is `~/.local/share/nacre/ai/skill-tools`; it does not replace
 project Python/Node environments. Some upstream document skills assume hosted
 preinstalled tools: use this wrapper here. LibreOffice/Pandoc must be checked
 separately before conversions; never claim rendering or formula recalculation
@@ -150,17 +150,17 @@ substantial ingestion or reconciliation; do not invent a current fact from age a
 ## Conversation-first context and memory
 
 New chats are general conversations, not assigned projects. Resolve the relevant
-repositories only when the user requests work, using `siverteh-ai-context QUERY`
-(or MCP `siverteh_workflow.resolve_context`). Keep the same chat across subjects.
+repositories only when the user requests work, using `nacre-ai-context QUERY`
+(or MCP `nacre_workflow.resolve_context`). Keep the same chat across subjects.
 Resolve ambiguity from the conversation and registry before asking; do not guess
 which repository to modify. Registry build_host/build_path remain authoritative.
 
 The brain includes personal life, ideas, research, devices and skills as well as
 projects. At meaningful milestones, search existing evidence first, then use
-`siverteh-ai-memory --title TITLE --source SOURCE --confidence reported|verified|unverified
+`nacre-ai-memory --title TITLE --source SOURCE --confidence reported|verified|unverified
 --world SUBJECT --topic TOPIC` with a concise Markdown body on stdin. Repeat
 --world to connect several subjects, and --topic for shared subtopics. Codex also
-exposes find_knowledge and remember in siverteh_workflow; Claude uses the same CLI.
+exposes find_knowledge and remember in nacre_workflow; Claude uses the same CLI.
 Keep entity names stable; reuse canonical wiki names/aliases. New subjects create
 missing wiki descriptors automatically; this does not register a coding project.
 Preserve existing curated pages and reconcile them through expected-hash updates.

@@ -15,7 +15,7 @@ def main():
     runtime = Path(os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}"))
     if a.queue:
         data = json.loads(sys.stdin.read(2 * 1024 * 1024))
-        folder = runtime / "siverteh-display-recovery"
+        folder = runtime / "nacre-display-recovery"
         folder.mkdir(parents=True, exist_ok=True, mode=0o700)
         fd, name = tempfile.mkstemp(dir=folder, suffix=".json")
         with os.fdopen(fd, "w") as stream:
@@ -27,7 +27,7 @@ def main():
                 "--user",
                 "--collect",
                 "--quiet",
-                "--unit=siverteh-display-fallback-" + uuid.uuid4().hex,
+                "--unit=nacre-display-fallback-" + uuid.uuid4().hex,
                 sys.executable,
                 str(Path(__file__).resolve()),
                 "@" + name,
@@ -38,14 +38,14 @@ def main():
     saved_path = Path(a.view[1:]) if a.view and a.view.startswith("@") else None
     if saved_path:
         if (
-            not saved_path.is_relative_to(runtime / "siverteh-display-recovery")
+            not saved_path.is_relative_to(runtime / "nacre-display-recovery")
             or saved_path.is_symlink()
         ):
             raise ValueError("Invalid private display snapshot")
         view = json.loads(saved_path.read_text())
     else:
         view = json.loads(a.view or "{}")
-    with (runtime / "siverteh-display-recovery.lock").open("w") as lock:
+    with (runtime / "nacre-display-recovery.lock").open("w") as lock:
         try:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:

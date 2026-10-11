@@ -1,66 +1,36 @@
-# Nacre name migration
+# Nacre locations and naming
 
-Nacre is the desktop previously maintained as Siverteh OS. This change renames
-its source folder, desktop commands, services, palette Python package, user
-preferences and runtime paths. It does not rewrite the inherited implementation,
-change the Linux username, replace the underlying CachyOS identity, or move AI
-accounts, conversations, credentials or the private knowledge vault.
-
-## Canonical locations
+Nacre commands, services and fresh-install paths use the public product name.
+The Linux account name and distribution identity are independent of that name.
+Historical provenance, copyright and NOTICE records retain their original names.
 
 | Component | Canonical path |
 | --- | --- |
-| Project source | `~/nacre`; old checkout name remains a compatibility link |
 | Preferences and private Lua overrides | `~/.config/nacre` |
-| Palette and desktop state | `~/.local/state/nacre` |
-| Renderer backups and drafts | `~/.local/state/nacre/shell` |
-| Palette/image caches | `~/.cache/nacre` |
-| Deployed desktop source | `~/.local/share/nacre/shell` |
-| Palette Python environment | `~/.local/share/nacre/palette-runtime` |
-| Generated branding | `~/.local/share/nacre/branding` |
+| Desktop state | `~/.local/state/nacre` |
+| Desktop caches | `~/.cache/nacre` |
+| Desktop source | `~/.local/share/nacre/shell` |
+| Palette environment | `~/.local/share/nacre/palette-runtime` |
+| Branding | `~/.local/share/nacre/branding` |
 | Maintenance controller | `~/.local/share/nacre/control` |
-| App-scoped Thunar module | `~/.local/share/nacre/thunar-style` |
+| AI accounts, chats, tools and worktrees | `~/.local/share/nacre/ai` |
+| AI registry and settings | `~/.config/nacre/ai` |
+| AI logs, usage and title state | `~/.local/state/nacre/ai` |
 
-The current monogram is retained as artwork pending the separate Nacre logo
-work. The renderer component is now named `BrandLogo`; copyright holders and
-historical attribution in LICENSE/NOTICE are retained.
+`nacre-ai` is the actual controller; helper commands use the same prefix.
+The terminal window classes are `nacre-ai-dashboard` and `nacre-ai-task`.
+The persistent sidebar backend is `nacre-sidebar-ai.service`. Workflow and
+sidebar MCP servers use `nacre_workflow` and `nacre_sidebar` respectively.
 
-## Compatibility and recovery
+The source no longer installs legacy commands, services or path migrations.
+A previously installed host can retain private compatibility aliases for its
+existing workers and rollback data. These aliases are outside Git and are not
+part of a fresh installation. Never copy provider authentication between profiles
+or hosts to perform a name migration. Keep conversations, private notes, browser
+profiles and credentials outside desktop release snapshots.
 
-`tools/nacre_migration.py plan` inventories the namespace migration. `apply`
-preflights every destination, preserves files and permissions, merges only
-non-conflicting entries, journals moves privately, and leaves old directories as
-forwarding links. A conflicting destination or modified service causes refusal
-before changes. `rollback MANIFEST` reverses the namespace operations; subsequent
-data changes are retained rather than replaced with old preferences. The private
-journal remains outside either moved root at `~/.local/state/nacre-name-migration`.
-
-The ordinary install plan reports these operations. Installation migrates the
-namespace before the existing release transaction snapshots/cuts over source.
-During the initial name migration, the renamed palette package was installed
-alongside its legacy package for old releases. The independent Orient replacement
-now uses a fresh environment; historical packages remain only in recovery data.
-Legacy desktop commands forward to the new
-commands; the renderer/observer services have backward aliases. Power-key service
-retirement requires a confirmed replacement logind inhibitor lease first.
-
-`nacre` replaces the `siverteh-os` maintenance command; `nacre-shell` replaces
-`siverteh-os-shell`, and `nacre-app` replaces `siverteh-os-app`. Private AI and
-vault commands keep their personal compatibility identifiers. Their visible
-product labels use the Nacre desktop branding; their account state is unchanged.
-
-The initial migration requires the configs and shell components together. Keep
-private migration journals and the previous validated release until the next
-physical login/suspend checks. Release recovery recognizes old service names and
-retains enablement when restoring an older snapshot.
-
-## System-owned appearance and timezone
-
-After the user deployment is validated, `pkexec /usr/bin/python3
- tools/nacre_system_migration.py` installs the reviewed root-owned name migration.
-It moves the owned greeter/timezone state with compatibility links, retains root
-backups and the exact automatic-timezone preference, updates the greeter's Theme
-entry, and installs the renamed helper/timer. It does not change PAM, autologin,
-login sessions or the current timezone deliberately, and never restarts SDDM.
-Until that operation succeeds, user presentation/status can use the old system
-integration. Root migration recovery is separate from desktop source rollback.
+Root-owned appearance uses `/usr/share/sddm/themes/nacre`,
+`/var/lib/nacre/login`, `/etc/nacre` and `/var/lib/nacre`.
+The current timezone installer owns `nacre-timezone` integration; the login
+installer owns appearance only and never restarts the display manager.
+See [maintenance](../maintenance.md) and [Brain](nacre-brain.md).

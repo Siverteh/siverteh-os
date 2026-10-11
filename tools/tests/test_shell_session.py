@@ -85,8 +85,8 @@ class FishAliasTests(unittest.TestCase):
                     if interactive:
                         command.append("-i")
                     for script in [
-                        "source $argv[1]; functions -q siverteh-update ascii",
-                        "source $argv[1]; siverteh-update $argv[2]; ascii $argv[2]",
+                        "source $argv[1]; functions -q nacre-update ascii",
+                        "source $argv[1]; nacre-update $argv[2]; ascii $argv[2]",
                     ]:
                         subprocess.run(
                             [

@@ -14,17 +14,14 @@ task_id="$(date -u +%Y%m%dT%H%M%S)-$$"
 account_tag="default"
 [[ -z "$account" ]] || account_tag="profile-$account"
 session="ai-$project_id-$account_tag-$task_id"
-worktree="$HOME/.local/share/siverteh-ai/worktrees/$project_id/$task_id"
+worktree="$HOME/.local/share/nacre/ai/worktrees/$project_id/$task_id"
 mkdir -p "$(dirname "$worktree")"
 git -C "$repo" worktree add -b "codex/ai-$project_id-$task_id" "$worktree" HEAD
-vault="${NACRE_BRAIN:-${SIVERTEH_BRAIN:-$HOME/Documents/Nacre-Brain}}"
-if [[ -z "${NACRE_BRAIN:-}${SIVERTEH_BRAIN:-}" && ! -d "$vault" && -d "$HOME/Documents/Siverteh-Brain" ]]; then
-    vault="$HOME/Documents/Siverteh-Brain"
-fi
+vault="${NACRE_BRAIN:-$HOME/Documents/Nacre-Brain}"
 mkdir -p "$vault"
 chmod 700 "$vault"
 if [[ -n "$account" ]]; then
-    printf -v command '%q ' "$HOME/.local/bin/siverteh-ai-account" "$account" --sandbox danger-full-access --ask-for-approval never -C "$worktree" --add-dir "$vault"
+    printf -v command '%q ' "$HOME/.local/bin/nacre-ai-account" "$account" --sandbox danger-full-access --ask-for-approval never -C "$worktree" --add-dir "$vault"
 else
     printf -v command '%q ' codex --sandbox danger-full-access --ask-for-approval never -C "$worktree" --add-dir "$vault"
 fi

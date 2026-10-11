@@ -35,7 +35,7 @@ class ReleaseTests(unittest.TestCase):
                 self.assertEqual((source / "shell.qml").read_text(), "before")
                 self.assertEqual(account.read_text(), "fixture never snapshot")
 
-    def test_controller_and_both_command_names_are_part_of_the_snapshot(self):
+    def test_controller_is_part_of_the_snapshot(self):
         with tempfile.TemporaryDirectory() as folder:
             home = Path(folder)
             repo = home / "repo"
@@ -43,7 +43,6 @@ class ReleaseTests(unittest.TestCase):
             with patch.object(m, "HOME", home):
                 owned = m.paths(repo)
             self.assertIn(home / ".local/bin/nacre", owned)
-            self.assertIn(home / ".local/bin/siverteh-os", owned)
             self.assertIn(home / ".local/share/nacre/control", owned)
 
     def test_rollback_refuses_later_edits(self):
@@ -72,22 +71,18 @@ class RuntimeRetirementTests(unittest.TestCase):
     def test_retirement_preserves_palette_environment_and_is_repeatable(self):
         with tempfile.TemporaryDirectory() as folder:
             home = Path(folder)
-            base = home / ".local/share/siverteh-ai"
-            native = base / "shell-runtime/usr/bin/quickshell"
+            base = home / ".local/share/nacre"
+            native = base / "palette-runtime/usr/bin/quickshell"
             native.parent.mkdir(parents=True)
             native.write_text("old binary")
-            palette = base / "shell-runtime/venv/keep.txt"
+            palette = base / "palette-runtime/venv/keep.txt"
             palette.parent.mkdir()
             palette.write_text("palette environment")
-            thunar = base / "thunar-runtime/usr/bin/thunar"
-            thunar.parent.mkdir(parents=True)
-            thunar.write_text("old file manager")
             release = home / "release"
             with patch.object(m, "HOME", home):
                 retired = m.retire_native_runtimes(release)
-                self.assertEqual(len(retired), 2)
+                self.assertEqual(len(retired), 1)
                 self.assertFalse(native.exists())
-                self.assertFalse(thunar.exists())
                 self.assertEqual(palette.read_text(), "palette environment")
                 self.assertEqual(
                     Path(retired[0]["backup"]).joinpath("bin/quickshell").read_text(),
@@ -126,14 +121,12 @@ class OptionalServiceGateTests(unittest.TestCase):
     def test_stopped_sidebar_is_not_required_or_started_by_desktop_deployment(self):
         active = {"nacre-shell.service", "nacre-brain.service"}
         self.assertNotIn(
-            "siverteh-sidebar-ai.service",
+            "nacre-sidebar-ai.service",
             m.required_live_services(["configs", "shell", "brain"], active),
         )
         self.assertIn(
-            "siverteh-sidebar-ai.service",
-            m.required_live_services(
-                ["shell"], active | {"siverteh-sidebar-ai.service"}
-            ),
+            "nacre-sidebar-ai.service",
+            m.required_live_services(["shell"], active | {"nacre-sidebar-ai.service"}),
         )
         self.assertIn(
             "nacre-brain.service",

@@ -183,7 +183,7 @@ SearchSurface {
                     DropArea {
                         id: drop
                         anchors.fill: parent
-                        keys: ["siverteh-window"]
+                        keys: ["nacre-window"]
                         onDropped: drop => {
                             root.moveWindow(drop.source.address, workspace.modelData);
                             drop.acceptProposedAction();
@@ -205,7 +205,7 @@ SearchSurface {
         opacity: .9
         property string address: root.draggedAddress
         Drag.active: root.dragging
-        Drag.keys: ["siverteh-window"]
+        Drag.keys: ["nacre-window"]
         Drag.source: ghost
         Drag.hotSpot.x: 70
         Drag.hotSpot.y: 30

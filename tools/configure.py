@@ -58,10 +58,6 @@ def files(root=ROOT):
         "nacre-brain",
         "nacre-brain-maintain",
         "nacre-brain-sync",
-        "siverteh-brain",
-        "siverteh-brain-maintain",
-        "siverteh-brain-sync",
-        "siverteh-os-app",
         "xdg-open",
     ):
         result[Path(".local/bin") / name] = root / "bin" / name
@@ -154,8 +150,8 @@ def idle_policy(home, root, migrate_idle):
 
 LEGACY_SYNC = {
     ".config/systemd/user/nacre-power-key.service": "e4ea2240157898be3c3f4355a04985681df0d9cd1a72163f6f6f2316a8b3b200",
-    ".local/bin/siverteh-brain-sync": "b1f7eb81b42ab6c205fb3e9bf19df46371ef31bfe854c6d3e1d984b70ea0c799",
-    ".config/systemd/user/siverteh-brain-sync.service": "8ea45eb1bf5536819ba8fdbda31fa8cae115910db406b950abc3aa5c30ecbc83",
+    ".local/bin/nacre-brain-sync": "b1f7eb81b42ab6c205fb3e9bf19df46371ef31bfe854c6d3e1d984b70ea0c799",
+    ".config/systemd/user/nacre-brain-sync.service": "8ea45eb1bf5536819ba8fdbda31fa8cae115910db406b950abc3aa5c30ecbc83",
 }
 
 
@@ -164,8 +160,6 @@ def plan(home, root=ROOT, migrate=False, app_routes_only=False, migrate_idle=Fal
         idle_policy(home, root, migrate_idle)
         power_policy(home, root, migrate_idle)
     manifest = home / ".local/state/nacre/configuration.json"
-    if not manifest.exists():
-        manifest = home / ".local/state/siverteh-os/configuration.json"
     known = json.loads(manifest.read_text()) if manifest.exists() else {}
     desired = files(root)
     if app_routes_only:
@@ -173,7 +167,7 @@ def plan(home, root=ROOT, migrate=False, app_routes_only=False, migrate_idle=Fal
             path: source
             for path, source in desired.items()
             if path.parent == Path(".local/bin")
-            and path.name in ("nacre-app", "siverteh-os-app", "xdg-open")
+            and path.name in ("nacre-app", "xdg-open")
         }
     links = {}
     for name in (*ACTIVE_DIRS, *RETIRED_DIRS):
@@ -240,11 +234,10 @@ def plan(home, root=ROOT, migrate=False, app_routes_only=False, migrate_idle=Fal
         changed.append((relative, source))
     for relative, previous in known.items():
         if relative in {
-            ".config/systemd/user/siverteh-manual-power.service",
-            ".config/systemd/user/siverteh-os-shell.service",
-            ".config/systemd/user/siverteh-session-watch.service",
+            ".config/systemd/user/nacre-shell.service",
+            ".config/systemd/user/nacre-session-watch.service",
         }:
-            continue  # The namespace migration retains these as service aliases.
+            continue  # The shell installer owns these services independently.
         if app_routes_only and Path(relative).name not in (
             "nacre-app",
             "xdg-open",
@@ -280,7 +273,7 @@ def apply(home, root=ROOT, migrate=False, app_routes_only=False, migrate_idle=Fa
                             str(p): digest(home / p)
                             for p in files(root)
                             if p.parent == Path(".local/bin")
-                            and p.name in ("nacre-app", "siverteh-os-app", "xdg-open")
+                            and p.name in ("nacre-app", "xdg-open")
                         },
                     }
                     if app_routes_only

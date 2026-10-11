@@ -44,7 +44,7 @@ def install():
         "Terminal=false\nDBusActivatable=false\nMimeType=inode/directory;\nCategories=System;FileManager;\n"
     )
 
-    legacy = launcher.with_name("siverteh-thunar.desktop")
+    legacy = launcher.with_name("nacre-thunar-legacy.desktop")
     if legacy.exists():
         legacy.write_text(launcher.read_text() + "NoDisplay=true\n")
         current = subprocess.check_output(

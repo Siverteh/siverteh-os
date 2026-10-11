@@ -48,7 +48,7 @@ NacreSettingsPage {
             spacing: 8
             ActionButton {
                 text: "Accounts, usage and projects"
-                onClicked: AppLaunch.run(["kitty", "--class", "siverteh-ai-dashboard", "--title", "Nacre AI settings", "--", "siverteh-ai", "settings"])
+                onClicked: AppLaunch.run(["kitty", "--class", "nacre-ai-dashboard", "--title", "Nacre AI settings", "--", "nacre-ai", "settings"])
             }
             ActionButton {
                 text: "Open Brain"

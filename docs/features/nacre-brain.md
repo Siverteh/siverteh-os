@@ -19,24 +19,14 @@ Canonical paths:
 - Optional local semantic model: `~/.local/share/nacre/brain-model`
 - Sync configuration: `~/.config/nacre/brain-sync.json`
 
-Deployment reviews the namespace plan before writing. The existing migration
-helper journals moves and refuses conflicting destinations or edited legacy
-units. Notes are moved intact rather than rewritten. Obsidian's registration is
-updated with a backup, preserving its vault ID and unknown fields. The old paths,
-commands and unit names remain compatibility aliases for existing conversations
-and browser windows. New callers use the Nacre names. An explicit `NACRE_BRAIN`
-setting takes precedence; existing `SIVERTEH_BRAIN` overrides remain supported.
-Older remote sync hosts keep their legacy exchange command until migrated.
+An explicit `NACRE_BRAIN` setting selects another vault. `NACRE_BRAIN_DIR`
+can select the browser/index vault. Remote sync hosts need the canonical
+`nacre-brain-sync` command. Keyring references use
+`secret-service://nacre-brain/NAME`.
 
-The service stops for code cutover; the browser profile and other assistant
-workers stay running. Existing cookie state moves with the private state, keeping
-browser authentication intact. No passwords, vault content or browser data enters
-Git or desktop release snapshots. Keyring lookups accept legacy stored secrets;
-new secret references use `secret-service://nacre-brain/NAME`.
-
-Inspect and deploy with the usual checks and `./install.sh` plan/apply. Existing
-repository-linked vault helpers may need `--migrate-owned`; the plan must recognize
-their source ownership. Namespace journals live under the private
-`~/.local/state/nacre-name-migration` directory. `brain/migrate.py` exposes
-`rollback(journal)` for reversing a reviewed move, including Obsidian registration,
-while refusing later edits. See [maintenance](../maintenance.md).
+The service stops briefly for a code update; the browser profile and other
+assistant workers stay running. Browser authentication remains private and uses
+the `nacre_brain` cookie. No passwords, notes or browser data enter Git or desktop
+release snapshots. Existing local aliases are host maintenance data rather than
+fresh-install behavior. Inspect and deploy with the usual checks and
+`./install.sh` plan/apply. See [maintenance](../maintenance.md).

@@ -37,8 +37,8 @@ class IsolatedWorkflowTest(unittest.TestCase):
             "CLAUDE_CONFIG_DIR",
             "NACRE_BRAIN",
             "NACRE_BRAIN_DIR",
-            "SIVERTEH_AI_PROJECTS",
-            "SIVERTEH_AI_SETTINGS",
+            "NACRE_AI_PROJECTS",
+            "NACRE_AI_SETTINGS",
         ):
             environment.pop(key, None)
         environment.update(
@@ -153,11 +153,9 @@ class BrainTests(IsolatedWorkflowTest):
 
 class WorkflowTests(IsolatedWorkflowTest):
     def test_dashboard_forwards_selected_account_to_worker(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
-            patch.object(
-                sys, "argv", ["siverteh-ai", "dashboard", "--account", "second"]
-            ),
+            patch.object(sys, "argv", ["nacre-ai", "dashboard", "--account", "second"]),
             patch.object(ai, "select", side_effect=["New chat", "Close"]),
             patch.object(ai, "project_for", return_value={"id": "example-project"}),
             patch.object(ai.subprocess, "Popen") as launch,
@@ -170,7 +168,7 @@ class WorkflowTests(IsolatedWorkflowTest):
             self.assertEqual(argv[-2:], ["--account", "second"])
 
     def test_gui_warnings_do_not_corrupt_the_menu(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             tempfile.TemporaryDirectory() as tmp,
             patch.dict(os.environ, {"HOME": tmp}),
@@ -185,11 +183,11 @@ class WorkflowTests(IsolatedWorkflowTest):
             self.assertEqual(process.wait(timeout=5), 0)
             self.assertIn(
                 "window diagnostic",
-                (Path(tmp) / ".local/state/siverteh-ai/launcher.log").read_text(),
+                (Path(tmp) / ".local/state/nacre/ai/launcher.log").read_text(),
             )
 
     def test_escape_at_root_and_project_cancel_keep_dashboard_open(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(ai, "select", side_effect=[None, None, "Close"]) as menu,
             patch.object(ai, "project_for", return_value=None),
@@ -200,7 +198,7 @@ class WorkflowTests(IsolatedWorkflowTest):
             launch.assert_not_called()
 
     def test_menu_uses_alternate_screen_without_fzf_scrollback(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with patch.object(ai.curses, "wrapper", return_value=None) as wrapper:
             self.assertIsNone(ai.select(["New task"], "Workspace"))
             wrapper.assert_called_once()
@@ -209,7 +207,7 @@ class WorkflowTests(IsolatedWorkflowTest):
         )
 
     def test_menu_only_has_requested_choices(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with patch.object(ai, "select", return_value="Close") as menu:
             ai.dashboard(SimpleNamespace(account=None))
             self.assertEqual(
@@ -225,7 +223,7 @@ class WorkflowTests(IsolatedWorkflowTest):
             )
 
     def test_remote_shell_uses_supported_terminal_without_changing_parent(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.dict(os.environ, {"TERM": "xterm-kitty"}),
             patch.object(
@@ -243,7 +241,7 @@ class WorkflowTests(IsolatedWorkflowTest):
             self.assertEqual(os.environ["TERM"], "xterm-kitty")
 
     def test_worker_failure_stays_visible_until_enter(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(
                 ai, "project_for", return_value={"id": "example", "host": "dev"}
@@ -259,7 +257,7 @@ class WorkflowTests(IsolatedWorkflowTest):
             wait.assert_called_once()
 
     def test_local_worker_has_writable_worktree_and_brain(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(
                 ai, "project_for", return_value={"id": "example", "path": "/tmp/repo"}
@@ -284,15 +282,15 @@ class WorkflowTests(IsolatedWorkflowTest):
     def test_remote_wrapper_protects_legacy_home_and_honors_separate_accounts(self):
         with tempfile.TemporaryDirectory() as tmp:
             home = Path(tmp)
-            binary = home / ".local/share/siverteh-ai/codex/packages/0.159.2/bin/codex"
+            binary = home / ".local/share/nacre/ai/codex/packages/0.159.2/bin/codex"
             binary.parent.mkdir(parents=True)
             binary.write_text('#!/bin/sh\nprintf "%s\\n" "$CODEX_HOME"\n')
             binary.chmod(0o755)
             for selected, expected in [
-                (home / ".codex", home / ".local/share/siverteh-ai/codex-home"),
+                (home / ".codex", home / ".local/share/nacre/ai/codex-home"),
                 (
-                    home / ".local/share/siverteh-ai/accounts/second",
-                    home / ".local/share/siverteh-ai/accounts/second",
+                    home / ".local/share/nacre/ai/accounts/second",
+                    home / ".local/share/nacre/ai/accounts/second",
                 ),
             ]:
                 result = subprocess.run(
@@ -305,7 +303,7 @@ class WorkflowTests(IsolatedWorkflowTest):
                 self.assertEqual(result.stdout.strip(), str(expected))
 
     def test_remote_resume_displays_names_but_attaches_exact_session(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         project = {"id": "project", "host": "my-server", "path": "/tmp/project"}
         session = "ai-project-profile-work-20260930T140000-123"
         listing = SimpleNamespace(
@@ -334,7 +332,7 @@ class WorkflowTests(IsolatedWorkflowTest):
             self.assertIn("=" + session, execute.call_args.args[1])
 
     def test_saved_chat_resumes_exact_id_and_account(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         item = {
             "id": "thread-1",
             "title": "Camera work",
@@ -364,7 +362,7 @@ class WorkflowTests(IsolatedWorkflowTest):
             )
 
     def test_remote_account_is_forwarded_without_shell_injection(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         project = {
             "id": "project",
             "host": "my-server",
@@ -394,11 +392,9 @@ class WorkflowTests(IsolatedWorkflowTest):
         with tempfile.TemporaryDirectory() as tmp:
             home = Path(tmp)
             (home / ".local/bin").mkdir(parents=True)
-            (home / ".local/bin/siverteh-ai-chat").symlink_to(
-                ROOT / "bin/siverteh-ai-chat"
-            )
-            (home / ".local/bin/siverteh-ai-skills").symlink_to(
-                ROOT / "bin/siverteh-ai-skills"
+            (home / ".local/bin/nacre-ai-chat").symlink_to(ROOT / "bin/nacre-ai-chat")
+            (home / ".local/bin/nacre-ai-skills").symlink_to(
+                ROOT / "bin/nacre-ai-skills"
             )
             (home / ".codex").mkdir()
             (home / ".codex/auth.json").write_text("default authentication")
@@ -410,7 +406,7 @@ class WorkflowTests(IsolatedWorkflowTest):
             result = subprocess.run(
                 [
                     sys.executable,
-                    str(ROOT / "bin/siverteh-ai-account"),
+                    str(ROOT / "bin/nacre-ai-account"),
                     "second",
                     "login",
                 ],
@@ -421,7 +417,7 @@ class WorkflowTests(IsolatedWorkflowTest):
                 capture_output=True,
                 check=True,
             )
-            profile = home / ".local/share/siverteh-ai/accounts/second"
+            profile = home / ".local/share/nacre/ai/accounts/second"
             self.assertEqual(result.stdout.strip(), str(profile))
             self.assertEqual(
                 (home / ".codex/auth.json").read_text(), "default authentication"
@@ -430,14 +426,14 @@ class WorkflowTests(IsolatedWorkflowTest):
             self.assertTrue((profile / "AGENTS.md").is_symlink())
 
     def test_separate_account_home_keeps_shared_guidance_without_auth_copy(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             tempfile.TemporaryDirectory() as tmp,
             patch.dict(os.environ, {"HOME": tmp}),
         ):
             (Path(tmp) / ".local/bin").mkdir(parents=True)
-            (Path(tmp) / ".local/bin/siverteh-ai-chat").symlink_to(
-                ROOT / "bin/siverteh-ai-chat"
+            (Path(tmp) / ".local/bin/nacre-ai-chat").symlink_to(
+                ROOT / "bin/nacre-ai-chat"
             )
             codex = Path(tmp) / ".codex"
             codex.mkdir()
@@ -453,7 +449,7 @@ class WorkflowTests(IsolatedWorkflowTest):
                 ai.local_environment("../escape")
 
     def test_project_registry_rejects_shell_host_syntax(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "projects.json"
             path.write_text(
@@ -470,7 +466,7 @@ class WorkflowTests(IsolatedWorkflowTest):
                 )
             )
             with (
-                patch.dict(os.environ, {"SIVERTEH_AI_PROJECTS": str(path)}),
+                patch.dict(os.environ, {"NACRE_AI_PROJECTS": str(path)}),
                 self.assertRaises(ValueError),
             ):
                 ai.projects()
@@ -481,8 +477,8 @@ class WorkflowTests(IsolatedWorkflowTest):
             (home / ".codex").mkdir()
             (home / ".codex/AGENTS.md").write_text("Existing user rule\n")
             (home / ".codex/auth.json").write_text("Existing account data")
-            (home / ".config/siverteh-ai").mkdir(parents=True)
-            registry = home / ".config/siverteh-ai/projects.json"
+            (home / ".config/nacre/ai").mkdir(parents=True)
+            registry = home / ".config/nacre/ai/projects.json"
             registry.write_text('{"projects": []}')
             env = dict(os.environ, HOME=tmp)
             for _ in range(2):
@@ -494,7 +490,7 @@ class WorkflowTests(IsolatedWorkflowTest):
                 )
             guidance = (home / ".codex/AGENTS.md").read_text()
             self.assertTrue(guidance.startswith("Existing user rule"))
-            self.assertEqual(guidance.count("<!-- siverteh-ai-guidance -->"), 1)
+            self.assertEqual(guidance.count("<!-- nacre-ai-guidance -->"), 1)
             self.assertEqual(
                 (home / ".codex/auth.json").read_text(), "Existing account data"
             )
@@ -520,7 +516,7 @@ class WorkflowTests(IsolatedWorkflowTest):
             self.assertFalse(guidance.is_symlink())
             self.assertTrue(guidance.read_text().startswith("Existing external rule"))
             backups = list(
-                (home / ".local/state/siverteh-ai/backups").glob("*/.codex/AGENTS.md")
+                (home / ".local/state/nacre/ai/backups").glob("*/.codex/AGENTS.md")
             )
             self.assertEqual(len(backups), 1)
             self.assertTrue(backups[0].is_symlink())
@@ -548,7 +544,7 @@ class WorkflowTests(IsolatedWorkflowTest):
             guidance = (home / ".codex/AGENTS.md").read_text()
             self.assertIn(str(moved / "ai/AGENTS.md"), guidance)
             self.assertNotIn(str(ROOT / "ai/AGENTS.md"), guidance)
-            self.assertEqual(guidance.count("<!-- siverteh-ai-guidance -->"), 1)
+            self.assertEqual(guidance.count("<!-- nacre-ai-guidance -->"), 1)
 
 
 if __name__ == "__main__":
@@ -557,7 +553,7 @@ if __name__ == "__main__":
 
 class LatestTaskTests(IsolatedWorkflowTest):
     def test_latest_uses_most_recent_across_projects_without_picker(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         projects = [
             {"id": "one", "host": "dev", "path": "/one"},
             {"id": "two", "host": "prod", "path": "/two"},
@@ -590,7 +586,7 @@ class LatestTaskTests(IsolatedWorkflowTest):
             )
 
     def test_latest_dashboard_does_not_ask_for_project(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(ai, "select", side_effect=["Resume latest chat", "Close"]),
             patch.object(ai, "project_for") as picker,
@@ -601,7 +597,7 @@ class LatestTaskTests(IsolatedWorkflowTest):
             self.assertIn("latest", launch.call_args.args[0])
 
     def test_local_saved_task_resumes_exact_thread_and_worktree(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         project = {"id": "local", "path": "/repo"}
         item = {
             "id": "thread-xyz",
@@ -626,7 +622,7 @@ class LatestTaskTests(IsolatedWorkflowTest):
             self.assertEqual(argv[argv.index("-C") + 1], "/repo-worktree")
 
     def test_no_tasks_returns_to_dashboard_without_starting_new_task(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(ai, "chat_projects", return_value=[{"id": "one"}]),
             patch.object(ai, "project_chats", return_value=[]),
@@ -640,7 +636,7 @@ class LatestTaskTests(IsolatedWorkflowTest):
 
 class NewProjectTests(IsolatedWorkflowTest):
     def test_new_project_registered_without_overwriting_other_projects(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             tempfile.TemporaryDirectory() as temp,
             patch.dict(os.environ, {"HOME": temp}, clear=False),
@@ -651,7 +647,7 @@ class NewProjectTests(IsolatedWorkflowTest):
                     {"projects": [{"id": "old", "label": "Old", "path": "/existing"}]}
                 )
             )
-            with patch.dict(os.environ, {"SIVERTEH_AI_PROJECTS": str(config)}):
+            with patch.dict(os.environ, {"NACRE_AI_PROJECTS": str(config)}):
                 p = ai.create_project("My New Game")
                 self.assertTrue((Path(p["path"]) / ".git").is_dir())
                 self.assertEqual(
@@ -678,14 +674,14 @@ class NewProjectTests(IsolatedWorkflowTest):
                 self.assertNotEqual(head.returncode, 0)
 
     def test_new_project_never_overwrites_existing_folder(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             tempfile.TemporaryDirectory() as temp,
             patch.dict(
                 os.environ,
                 {
                     "HOME": temp,
-                    "SIVERTEH_AI_PROJECTS": str(Path(temp) / "projects.json"),
+                    "NACRE_AI_PROJECTS": str(Path(temp) / "projects.json"),
                 },
             ),
         ):
@@ -697,7 +693,7 @@ class NewProjectTests(IsolatedWorkflowTest):
             self.assertEqual((folder / "important").read_text(), "keep")
 
     def test_project_wizard_back_does_not_create_folder(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(ai, "project_name", return_value=None),
             patch.object(ai, "create_project") as create,
@@ -708,7 +704,7 @@ class NewProjectTests(IsolatedWorkflowTest):
 
 class ProjectBuildHostTests(IsolatedWorkflowTest):
     def test_build_host_does_not_move_local_tasks_to_ssh(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         p = {
             "id": "example",
             "path": "/local/repo",
@@ -730,7 +726,7 @@ class ProjectBuildHostTests(IsolatedWorkflowTest):
             self.assertIn("/local/repo", execute.call_args.args[1])
 
     def test_load_keeps_previous_remote_chat_source(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         p = {
             "id": "example",
             "path": "/local/repo",
@@ -752,7 +748,7 @@ class ProjectBuildHostTests(IsolatedWorkflowTest):
 
 class GeneralChatTests(IsolatedWorkflowTest):
     def test_general_chat_launch_is_not_a_git_task_and_has_separate_folders(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             tempfile.TemporaryDirectory() as temp,
             patch.dict(os.environ, {"HOME": temp}),
@@ -782,7 +778,7 @@ class GeneralChatTests(IsolatedWorkflowTest):
             run.assert_not_called()
 
     def test_general_option_is_only_in_new_task_picker(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(
                 ai,
@@ -800,12 +796,12 @@ class GeneralChatTests(IsolatedWorkflowTest):
             self.assertEqual(ai.project_for(None)["id"], "os")
 
     def test_general_history_is_included_without_registered_projects(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with patch.object(ai, "projects", return_value=[]):
             self.assertEqual([p["id"] for p in ai.chat_projects()], ["general-chat"])
 
     def test_general_history_flag_and_account_forwarded(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(ai, "local_environment", return_value={}),
             patch.object(ai, "prepare_local_codex"),
@@ -821,7 +817,7 @@ class GeneralChatTests(IsolatedWorkflowTest):
             self.assertEqual(argv[argv.index("--account") + 1], "personal")
 
     def test_general_name_cannot_shadow_chat_entry(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with self.assertRaises(ValueError):
             ai.create_project("General chat")
 
@@ -830,7 +826,7 @@ class WorkflowIsolationTests(unittest.TestCase):
     def test_mocked_workflow_leaves_caller_home_and_account_settings_untouched(self):
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)
-            settings = home / ".config/siverteh-ai/settings.json"
+            settings = home / ".config/nacre/ai/settings.json"
             settings.parent.mkdir(parents=True)
             settings.write_text('{"accounts":{"codex":"host-account"}}')
             original = settings.read_bytes()
@@ -839,7 +835,7 @@ class WorkflowIsolationTests(unittest.TestCase):
                 os.environ,
                 {
                     "HOME": directory,
-                    "SIVERTEH_AI_SETTINGS": str(settings),
+                    "NACRE_AI_SETTINGS": str(settings),
                     "CODEX_HOME": str(home / "existing-codex"),
                 },
             ):

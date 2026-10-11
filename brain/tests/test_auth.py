@@ -86,7 +86,7 @@ class BrowserAuthenticationTests(unittest.TestCase):
                         else "http://evil.invalid",
                     }
                     if cookie:
-                        headers["Cookie"] = "siverteh_brain=" + cookie
+                        headers["Cookie"] = "nacre_brain=" + cookie
                     with patch.object(m, "action"):
                         connection.request(
                             "POST",

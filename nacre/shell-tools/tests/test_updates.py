@@ -55,7 +55,7 @@ class UpdateFailureTests(unittest.TestCase):
         ):
             results = [
                 subprocess.CompletedProcess(
-                    [], 0, "distributed by Siverteh local Qt rebuild", ""
+                    [], 0, "distributed by Nacre local Qt rebuild", ""
                 ),
                 subprocess.CompletedProcess([], 0, "", ""),
                 subprocess.CompletedProcess([], 0, "qt6-base 6.12.0-2", ""),

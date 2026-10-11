@@ -8,8 +8,8 @@ from pathlib import Path
 def resolve(query):
     path = Path(
         os.environ.get(
-            "SIVERTEH_AI_PROJECTS",
-            str(Path.home() / ".config/siverteh-ai/projects.json"),
+            "NACRE_AI_PROJECTS",
+            str(Path.home() / ".config/nacre/ai/projects.json"),
         )
     )
     registry = json.loads(path.read_text()) if path.exists() else {}

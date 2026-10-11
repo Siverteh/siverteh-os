@@ -22,7 +22,7 @@
   },
   {
     "match": {
-      "class": "^(siverteh-ai-task|siverteh-ai-dashboard)$"
+      "class": "^(nacre-ai-task|nacre-ai-dashboard)$"
     },
     "name": "ai-workers",
     "workspace": "2 silent"

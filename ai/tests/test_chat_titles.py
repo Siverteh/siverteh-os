@@ -9,7 +9,7 @@ from test_workflow import module
 
 class ChatTitles(unittest.TestCase):
     def test_titles_keep_identity_and_match_running_worktree(self):
-        chat = module("siverteh-ai-chat")
+        chat = module("nacre-ai-chat")
         records = chat.chat_records(
             [
                 {"id": "one", "name": "Fix stream lag", "cwd": "/repo/one"},
@@ -24,7 +24,7 @@ class ChatTitles(unittest.TestCase):
         self.assertEqual([r["id"] for r in records], ["one", "two", "three"])
 
     def test_account_filter_cannot_select_longer_account_prefix(self):
-        chat = module("siverteh-ai-chat")
+        chat = module("nacre-ai-chat")
         valid = "ai-project-profile-work-20260930T140000-123"
         data = (
             valid
@@ -39,27 +39,27 @@ class ChatTitles(unittest.TestCase):
             self.assertEqual(chat.running_sessions("project", "work"), {valid: "/repo"})
 
     def test_title_control_characters_cannot_escape_terminal(self):
-        chat = module("siverteh-ai-chat")
+        chat = module("nacre-ai-chat")
         self.assertEqual(chat.label("hello\r\nworld\x1b"), "helloworld")
         self.assertLessEqual(len(chat.label("x" * 200)), 100)
 
     def test_derived_title_cache_is_private_and_strips_controls(self):
         import json
 
-        chat = module("siverteh-ai-chat")
+        chat = module("nacre-ai-chat")
         with (
             tempfile.TemporaryDirectory() as home,
             patch.dict(os.environ, {"HOME": home}),
         ):
             chat.cache_title("thread-one", "A title\x1b\n")
-            file = Path(home) / ".local/state/siverteh-ai/chat-titles/thread-one.json"
+            file = Path(home) / ".local/state/nacre/ai/chat-titles/thread-one.json"
             self.assertEqual(json.loads(file.read_text()), {"title": "A title"})
             self.assertEqual(file.stat().st_mode & 0o777, 0o600)
             with self.assertRaises(ValueError):
                 chat.cache_title("../escape", "no")
 
     def test_new_chat_window_uses_selected_default_assistant(self):
-        workflow = module("siverteh-ai")
+        workflow = module("nacre-ai")
         args = SimpleNamespace(
             worker_command="new", project=None, account=None, agent=None
         )
@@ -74,20 +74,20 @@ class ChatTitles(unittest.TestCase):
             self.assertEqual(command[command.index("--agent") + 1], "claude")
 
     def test_account_home_stays_isolated(self):
-        chat = module("siverteh-ai-chat")
+        chat = module("nacre-ai-chat")
         with (
             tempfile.TemporaryDirectory() as home,
             patch.dict(os.environ, {"HOME": home}),
         ):
             self.assertEqual(
                 chat.account_env("work")["CODEX_HOME"],
-                str(Path(home) / ".local/share/siverteh-ai/accounts/work"),
+                str(Path(home) / ".local/share/nacre/ai/accounts/work"),
             )
             with self.assertRaises(ValueError):
                 chat.account_env("../other")
 
     def test_failed_handshake_always_cleans_child(self):
-        chat = module("siverteh-ai-chat")
+        chat = module("nacre-ai-chat")
         with (
             patch.object(chat.subprocess, "Popen"),
             patch.object(chat.Codex, "call", side_effect=ValueError("unavailable")),
@@ -101,7 +101,7 @@ class ChatTitles(unittest.TestCase):
     def test_mcp_only_exposes_naming_and_preserves_thread_identity(self):
         import io, json
 
-        chat = module("siverteh-ai-chat")
+        chat = module("nacre-ai-chat")
         requests = [
             {"jsonrpc": "2.0", "id": 1, "method": "tools/list"},
             {
@@ -140,7 +140,7 @@ class ChatTitles(unittest.TestCase):
         self.assertEqual(replies[2]["error"]["code"], -32601)
 
     def test_configure_is_idempotent_and_keeps_other_config(self):
-        chat = module("siverteh-ai-chat")
+        chat = module("nacre-ai-chat")
         with tempfile.TemporaryDirectory() as temp:
             config = Path(temp) / "config.toml"
             config.write_text('model = "existing"\n')
@@ -150,12 +150,12 @@ class ChatTitles(unittest.TestCase):
             chat.configure(env)
             self.assertEqual(config.read_text(), first)
             self.assertEqual(__import__("tomllib").loads(first)["model"], "existing")
-            self.assertEqual(first.count("[mcp_servers.siverteh_workflow]"), 1)
+            self.assertEqual(first.count("[mcp_servers.nacre_workflow]"), 1)
 
 
 class GeneralHistoryTests(unittest.TestCase):
     def test_general_history_accepts_only_chat_directories_without_git(self):
-        chat = module("siverteh-ai-chat")
+        chat = module("nacre-ai-chat")
         with (
             tempfile.TemporaryDirectory() as temp,
             patch.object(chat.subprocess, "run") as git,
@@ -174,7 +174,7 @@ class AccessDefaultsTests(unittest.TestCase):
     def test_configure_sets_full_access_without_changing_nested_settings(self):
         import tomllib
 
-        chat = module("siverteh-ai-chat")
+        chat = module("nacre-ai-chat")
         with tempfile.TemporaryDirectory() as temp:
             config = Path(temp) / "config.toml"
             config.write_text(
@@ -193,7 +193,7 @@ class AccessDefaultsTests(unittest.TestCase):
             self.assertEqual(config.read_text(), text)
 
     def test_invalid_config_is_not_overwritten(self):
-        chat = module("siverteh-ai-chat")
+        chat = module("nacre-ai-chat")
         with tempfile.TemporaryDirectory() as temp:
             config = Path(temp) / "config.toml"
             config.write_text("[broken")

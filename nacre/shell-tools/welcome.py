@@ -300,7 +300,7 @@ def state(home):
         "shortcutError": shortcut_error,
         "preferences": preferences(home),
         "available": {
-            "ai": bool(shutil.which("nacre-ai") and shutil.which("siverteh-ai")),
+            "ai": bool(shutil.which("nacre-ai")),
             "brain": bool(
                 shutil.which("nacre-brain")
                 and (home / ".local/share/nacre/brain/control.py").exists()

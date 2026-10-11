@@ -47,7 +47,7 @@ def extract_verified(image, root):
 def main():
     if platform.system() != "Linux" or platform.machine() != "x86_64":
         raise SystemExit("This pinned installer targets Linux x86_64")
-    root = Path.home() / ".local/share/siverteh-ai/obsidian" / VERSION
+    root = Path.home() / ".local/share/nacre/ai/obsidian" / VERSION
     root.mkdir(parents=True, exist_ok=True)
     image = root / "Obsidian.AppImage"
     if not image.exists():

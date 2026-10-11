@@ -6,7 +6,7 @@ from test_workflow import module, ROOT
 
 class Conversation(unittest.TestCase):
     def test_context_exposes_build_routing_and_ambiguity_without_running(self):
-        ctx = module("siverteh-ai-context")
+        ctx = module("nacre-ai-context")
         with tempfile.TemporaryDirectory() as tmp:
             registry = Path(tmp) / "registry.json"
             registry.write_text(
@@ -26,7 +26,7 @@ class Conversation(unittest.TestCase):
                     }
                 )
             )
-            with patch.dict(os.environ, {"SIVERTEH_AI_PROJECTS": str(registry)}):
+            with patch.dict(os.environ, {"NACRE_AI_PROJECTS": str(registry)}):
                 one = ctx.resolve("fix camera")
                 self.assertEqual(one["matched"][0]["build_host"], "dev-1")
                 self.assertFalse(one["ambiguous"])
@@ -34,7 +34,7 @@ class Conversation(unittest.TestCase):
                 self.assertEqual(ctx.resolve("what is bouldering")["matched"], [])
 
     def test_capture_sanitizes_native_input(self):
-        usage = module("siverteh-ai-usage")
+        usage = module("nacre-ai-usage")
         data = usage.snapshot(
             {
                 "rate_limits": {
@@ -54,7 +54,7 @@ class Conversation(unittest.TestCase):
         self.assertEqual(data["five_hour"]["used_percentage"], 25)
 
     def test_claude_missing_usage_is_explicit_and_account_scoped(self):
-        usage = module("siverteh-ai-usage")
+        usage = module("nacre-ai-usage")
         with (
             tempfile.TemporaryDirectory() as tmp,
             patch.dict(os.environ, {"HOME": tmp}),
@@ -69,7 +69,7 @@ class Conversation(unittest.TestCase):
             env = dict(os.environ, HOME=tmp, NACRE_BRAIN=tmp + "/brain")
             command = [
                 sys.executable,
-                str(ROOT / "bin/siverteh-ai-memory"),
+                str(ROOT / "bin/nacre-ai-memory"),
                 "--title",
                 "A useful result",
                 "--source",
@@ -136,7 +136,7 @@ class Conversation(unittest.TestCase):
             subprocess.run(
                 [
                     sys.executable,
-                    str(ROOT / "bin/siverteh-ai-memory"),
+                    str(ROOT / "bin/nacre-ai-memory"),
                     "--title",
                     "A useful observation",
                     "--source",
@@ -151,7 +151,7 @@ class Conversation(unittest.TestCase):
                     os.environ,
                     HOME=tmp,
                     NACRE_BRAIN=str(root),
-                    SIVERTEH_AI_PROJECTS=str(registry),
+                    NACRE_AI_PROJECTS=str(registry),
                 ),
                 check=True,
             )
@@ -167,7 +167,7 @@ class Conversation(unittest.TestCase):
             subprocess.run(
                 [
                     sys.executable,
-                    str(ROOT / "bin/siverteh-ai-memory"),
+                    str(ROOT / "bin/nacre-ai-memory"),
                     "--title",
                     "Training",
                     "--source",
@@ -191,13 +191,13 @@ if __name__ == "__main__":
 
 class OwnedChatTrust(unittest.TestCase):
     def test_only_created_chat_is_trusted_and_other_settings_survive(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             tempfile.TemporaryDirectory() as tmp,
             patch.dict(os.environ, {"HOME": tmp}),
         ):
             home = Path(tmp)
-            chat = home / ".local/share/siverteh-ai/chats" / ("a" * 32)
+            chat = home / ".local/share/nacre/ai/chats" / ("a" * 32)
             chat.mkdir(parents=True)
             (chat / "AGENTS.md").write_text("Owned launcher guidance")
             config = home / ".codex/config.toml"

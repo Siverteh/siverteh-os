@@ -250,7 +250,7 @@ def atomic(path, data):
 
 def refresh_terminal_menus(home, proc=Path("/proc")):
     """Wake the logo renderer with ncurses' normal resize event; never restart it."""
-    command = Path(home) / ".local/bin/siverteh-ai"
+    command = Path(home) / ".local/bin/nacre-ai"
     expected = {str(command), str(command.resolve())}
     for entry in proc.iterdir():
         if not entry.name.isdigit():
@@ -484,9 +484,7 @@ def build():
         + "</symbol>"
         + text[symbol_match.end() :]
     )
-    text = text.replace('href="#sh"', 'href="#nacre"').replace(
-        "<span>Siverteh<small>Brain</small>", "<span>Nacre<small>Brain</small>"
-    )
+    text = text.replace('href="#sh"', 'href="#nacre"')
     web.write_text(text)
 
 

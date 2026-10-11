@@ -91,7 +91,7 @@ class FileManagerTests(unittest.TestCase):
                 self.assertEqual(
                     index.read_text(), "[Icon Theme]\nName=Custom user theme\n"
                 )
-            old = home / ".local/share/color-schemes/Siverteh.colors"
+            old = home / ".local/share/color-schemes/Custom.colors"
             old.parent.mkdir(parents=True)
             old.write_text("private custom scheme")
             colors = json.loads((ROOT / "palette-presets.json").read_text())[0][
@@ -117,7 +117,7 @@ class FileManagerTests(unittest.TestCase):
             colors = next(p for p in presets if p["id"] == "ocean")["modes"]["dark"]
             kde.publish(home, colors, "ExampleNacreIcons")
             self.assertFalse(
-                (home / ".local/share/color-schemes/Siverteh.colors").exists()
+                (home / ".local/share/color-schemes/Custom.colors").exists()
             )
             parsed = configparser.ConfigParser(interpolation=None)
             parsed.read(config)

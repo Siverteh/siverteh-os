@@ -1,4 +1,4 @@
-"""Pinned font install/migration ownership, drift and rollback behavior."""
+"""Pinned font install ownership, drift and rollback behavior."""
 
 import hashlib
 import importlib.util
@@ -30,25 +30,20 @@ def fixture():
 
 
 class FontSetupTests(unittest.TestCase):
-    def test_verified_legacy_migration_reuses_bytes_and_preserves_custom_file(self):
+    def test_verified_install_preserves_custom_files_is_repeatable_and_reversible(self):
         manifest, payload = fixture()
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)
-            target, legacy, registry = fonts.roots(home)
-            legacy.mkdir(parents=True)
-            (legacy / "Font.ttf").write_bytes(payload)
-            (legacy / "custom.ttf").write_bytes(b"user content")
+            target, registry = fonts.roots(home)
+            target.mkdir(parents=True)
+            (target / "custom.ttf").write_bytes(b"user content")
+            result = fonts.apply(
+                home, manifest, fetch=lambda row: payload, refresh=False
+            )
+            self.assertEqual(target.joinpath("Font.ttf").read_bytes(), payload)
             with patch.object(
                 fonts, "download", side_effect=AssertionError("Network not needed")
             ):
-                result = fonts.apply(
-                    home, manifest, fetch=fonts.download, refresh=False
-                )
-                self.assertEqual(target.joinpath("Font.ttf").read_bytes(), payload)
-                self.assertEqual(
-                    legacy.joinpath("custom.ttf").read_bytes(), b"user content"
-                )
-                self.assertFalse(legacy.joinpath("Font.ttf").exists())
                 self.assertFalse(
                     fonts.apply(home, manifest, fetch=fonts.download, refresh=False)[
                         "changed"
@@ -57,20 +52,21 @@ class FontSetupTests(unittest.TestCase):
             fonts.restore(
                 home, registry.parent / "backups" / result["transaction"], refresh=False
             )
-            self.assertEqual(legacy.joinpath("Font.ttf").read_bytes(), payload)
+            self.assertEqual(
+                target.joinpath("custom.ttf").read_bytes(), b"user content"
+            )
             self.assertFalse(target.joinpath("Font.ttf").exists())
 
     def test_local_drift_refuses_before_any_font_write(self):
         manifest, payload = fixture()
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)
-            target, legacy, _ = fonts.roots(home)
+            target, _ = fonts.roots(home)
             target.mkdir(parents=True)
             target.joinpath("Font.ttf").write_bytes(b"custom edit")
             with self.assertRaisesRegex(ValueError, "Local font edit"):
                 fonts.apply(home, manifest, fetch=lambda row: payload, refresh=False)
             self.assertEqual(target.joinpath("Font.ttf").read_bytes(), b"custom edit")
-            self.assertFalse(legacy.exists())
 
     def test_bad_download_is_rejected_before_promotion(self):
         manifest, _ = fixture()
@@ -80,23 +76,22 @@ class FontSetupTests(unittest.TestCase):
                 fonts.apply(home, manifest, fetch=lambda row: b"wrong", refresh=False)
             self.assertFalse(fonts.roots(home)[0].exists())
 
-    def test_cache_failure_restores_legacy_and_refuses_later_rollback_drift(self):
+    def test_cache_failure_restores_files_and_refuses_later_rollback_drift(self):
         manifest, payload = fixture()
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)
-            target, legacy, registry = fonts.roots(home)
-            legacy.mkdir(parents=True)
-            legacy.joinpath("Font.ttf").write_bytes(payload)
+            target, registry = fonts.roots(home)
             with patch.object(
                 fonts,
                 "cache_refresh",
                 side_effect=[RuntimeError("cache failure"), None],
             ):
                 with self.assertRaisesRegex(RuntimeError, "cache failure"):
-                    fonts.apply(home, manifest)
-            self.assertEqual(legacy.joinpath("Font.ttf").read_bytes(), payload)
+                    fonts.apply(home, manifest, fetch=lambda row: payload)
             self.assertFalse(target.joinpath("Font.ttf").exists())
-            result = fonts.apply(home, manifest, refresh=False)
+            result = fonts.apply(
+                home, manifest, fetch=lambda row: payload, refresh=False
+            )
             target.joinpath("Font.ttf").write_bytes(b"later user edit")
             with self.assertRaisesRegex(ValueError, "Later font edit"):
                 fonts.restore(

@@ -8,8 +8,6 @@ from PIL import Image, ImageFilter, ImageOps
 HOME = Path.home()
 PREVIEW = HOME / ".local/state/nacre/shell/login-preview"
 PUBLIC = Path("/var/lib/nacre/login/appearance")
-if not PUBLIC.is_dir():
-    PUBLIC = Path("/var/lib/siverteh-login/appearance")
 ROLES = {
     "surface": "surface",
     "raised": "surfaceContainer",

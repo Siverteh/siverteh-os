@@ -26,13 +26,7 @@ STATE = HOME / ".local/state/nacre/brain"
 VAULT = Path(
     os.environ.get(
         "NACRE_BRAIN_DIR",
-        os.environ.get(
-            "SIVERTEH_BRAIN_DIR",
-            os.environ.get(
-                "NACRE_BRAIN",
-                os.environ.get("SIVERTEH_BRAIN", str(HOME / "Documents/Nacre-Brain")),
-            ),
-        ),
+        os.environ.get("NACRE_BRAIN", str(HOME / "Documents/Nacre-Brain")),
     )
 )
 PORT = 17843
@@ -552,7 +546,7 @@ def palette():
 
 def action(name, value=""):
     if name == "notes":
-        launch_app(["env", "NACRE_BRAIN_VIEW=notes", "siverteh-ai", "brain"])
+        launch_app(["env", "NACRE_BRAIN_VIEW=notes", "nacre-ai", "brain"])
         return
     if name == "brain":
         ensure_brain(focus=True)
@@ -700,7 +694,7 @@ class Handler(BaseHTTPRequestHandler):
     def authenticated(self):
         try:
             cookies = SimpleCookie(self.headers.get("Cookie", ""))
-            value = cookies.get("siverteh_brain")
+            value = cookies.get("nacre_brain")
             return bool(value and self.server.auth.cookie_valid(value.value))
         except (CookieError, AttributeError):
             return False
@@ -729,7 +723,7 @@ class Handler(BaseHTTPRequestHandler):
             self.send_response(303)
             self.send_header(
                 "Set-Cookie",
-                "siverteh_brain="
+                "nacre_brain="
                 + self.server.auth.cookie
                 + "; Path=/; HttpOnly; SameSite=Strict",
             )
@@ -857,10 +851,7 @@ def ensure_server():
 def browser_profile_pids():
     profiles = {
         ("--user-data-dir=" + str(HOME / path)).encode()
-        for path in (
-            ".local/share/nacre/brain-browser",
-            ".local/share/siverteh-ai/observatory-browser",
-        )
+        for path in (".local/share/nacre/brain-browser",)
     }
     profile_pids = set()
     for process in Path("/proc").iterdir():
@@ -887,17 +878,14 @@ def brain_window():
     windows = [
         c
         for c in clients
-        if c.get("class") in ("nacre-brain", "siverteh-brain")
+        if c.get("class") == "nacre-brain"
         or (
             c.get("pid") in profile_pids
             and (
                 c.get("class") == "chrome-127.0.0.1__-Default"
                 or any(
                     fragment in c.get("class", "")
-                    for fragment in (
-                        "nacre_brain_auth_open.html",
-                        "siverteh-observatory_auth_open.html",
-                    )
+                    for fragment in ("nacre_brain_auth_open.html",)
                 )
             )
         )
@@ -915,10 +903,7 @@ def brain_browser_running():
     # blocks startup. Do not keep asking that same profile for another app.
     profiles = {
         ("--user-data-dir=" + str(HOME / path)).encode()
-        for path in (
-            ".local/share/nacre/brain-browser",
-            ".local/share/siverteh-ai/observatory-browser",
-        )
+        for path in (".local/share/nacre/brain-browser",)
     }
     for process in Path("/proc").iterdir():
         if not process.name.isdigit():

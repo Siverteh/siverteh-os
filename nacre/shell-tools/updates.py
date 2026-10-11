@@ -50,7 +50,7 @@ def qt_update_status(pending):
     version = subprocess.run(
         ["quickshell", "--version", "-v"], capture_output=True, text=True, timeout=10
     )
-    local = "Siverteh local Qt rebuild" in version.stdout
+    local = "Nacre local Qt rebuild" in version.stdout
     if not local:
         package = subprocess.run(
             ["pacman", "-Q", "quickshell"], capture_output=True, text=True, timeout=10

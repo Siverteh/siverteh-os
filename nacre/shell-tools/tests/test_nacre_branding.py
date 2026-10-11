@@ -101,8 +101,8 @@ class NacreBrandingTests(unittest.TestCase):
         command = (
             [node]
             if node
-            else ["siverteh-ai-tools", "node"]
-            if shutil.which("siverteh-ai-tools")
+            else ["nacre-ai-tools", "node"]
+            if shutil.which("nacre-ai-tools")
             else None
         )
         if command is None:

@@ -3,7 +3,7 @@ local routes = {
     { "browser-chrome", "^([Gg]oogle-chrome)$", 1 },
     { "browser-chromium", "^([Cc]hromium)$", 1 },
     { "browser-firefox", "^([Ff]irefox)$", 1 },
-    { "ai-workers", "^(siverteh-ai-task|siverteh-ai-dashboard)$", 2 },
+    { "ai-workers", "^(nacre-ai-task|nacre-ai-dashboard)$", 2 },
     { "discord", "^([Dd]iscord)$", 3 },
     { "spotify", "^([Ss]potify)$", 4 },
     { "mail-evolution", "^(evolution|org[.]gnome[.]Evolution)$", 5 },

@@ -5,9 +5,9 @@ import os
 from pathlib import Path
 import sys
 
-root = Path.home() / ".local/share/siverteh-ai/skill-tools"
+root = Path.home() / ".local/share/nacre/ai/skill-tools"
 if len(sys.argv) < 2:
-    raise SystemExit("Usage: siverteh-ai-tools python|node|defuddle [arguments...]")
+    raise SystemExit("Usage: nacre-ai-tools python|node|defuddle [arguments...]")
 env = dict(os.environ)
 env["PATH"] = os.pathsep.join(
     [

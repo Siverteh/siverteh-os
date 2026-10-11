@@ -12,7 +12,6 @@ import subprocess
 import time
 import urllib.request
 
-import migrate
 
 ROOT = Path(__file__).resolve().parent
 HOME = Path.home()
@@ -32,23 +31,20 @@ def main():
     node_cmd = (
         [node]
         if node
-        else (
-            ["siverteh-ai-tools", "node"] if shutil.which("siverteh-ai-tools") else []
-        )
+        else (["nacre-ai-tools", "node"] if shutil.which("nacre-ai-tools") else [])
     )
     if not node_cmd:
         raise RuntimeError(
             "Node.js is required to validate Brain JavaScript before deployment"
         )
     subprocess.run([*node_cmd, "--check", str(ROOT / "web/app.js")], check=True)
-    print("Brain namespace plan:", migrate.plan(HOME))
     backup = (
         HOME
         / ".local/state/nacre/brain/backups"
         / ("brain-" + dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ"))
     )
     backup.mkdir(parents=True, mode=0o700)
-    existing = DEST if DEST.exists() else HOME / ".local/share/siverteh-ai/observatory"
+    existing = DEST
     if existing.exists():
         shutil.copytree(
             existing, backup / "source", ignore=shutil.ignore_patterns("__pycache__")
@@ -59,24 +55,13 @@ def main():
             "--user",
             "stop",
             "nacre-brain.service",
-            "siverteh-observatory-brain.service",
             "nacre-brain-sync.timer",
             "nacre-brain-check.timer",
-            "siverteh-brain-sync.timer",
-            "siverteh-brain-check.timer",
             "nacre-brain-sync.service",
             "nacre-brain-check.service",
-            "siverteh-brain-sync.service",
-            "siverteh-brain-check.service",
         ],
         capture_output=True,
     )
-    subprocess.run(
-        ["systemctl", "--user", "disable", *migrate.UNITS], capture_output=True
-    )
-    journal = migrate.apply(HOME)
-    if journal:
-        print("Private Brain migration journal:", journal)
     # Old servers may predate the service. Match only this exact program's serve argv.
     for process in Path("/proc").iterdir():
         if not process.name.isdigit():
@@ -86,10 +71,7 @@ def main():
                 continue
             args = (process / "cmdline").read_bytes().split(b"\0")
             if (
-                any(
-                    str(path / "control.py").encode() in args
-                    for path in (DEST, HOME / ".local/share/siverteh-ai/observatory")
-                )
+                any(str(path / "control.py").encode() in args for path in (DEST,))
                 and b"serve" in args
             ):
                 os.kill(int(process.name), signal.SIGTERM)
@@ -112,7 +94,7 @@ def main():
         shutil.copy2(ROOT / name, DEST / name)
     shutil.copytree(ROOT / "web", DEST / "web", dirs_exist_ok=True)
     shutil.copytree(ROOT.parent / "ai/brain", DEST / "templates", dirs_exist_ok=True)
-    for name in ("nacre-brain-ui", "siverteh-brain-ui", "siverteh-observatory"):
+    for name in ("nacre-brain-ui",):
         wrapper = HOME / ".local/bin" / name
         wrapper.parent.mkdir(parents=True, exist_ok=True)
         if wrapper.is_symlink():
@@ -122,13 +104,6 @@ def main():
     service = HOME / ".config/systemd/user/nacre-brain.service"
     service.parent.mkdir(parents=True, exist_ok=True)
     service.write_text((ROOT / "brain.service").read_text())
-    migrate.aliases(HOME)
-    # Skill names are aliases only; do not reinstall AI accounts or guidance.
-    for folder in (".agents/skills", ".codex/skills"):
-        old = HOME / folder / "siverteh-brain"
-        new = HOME / folder / "nacre-brain"
-        if old.exists() and not new.exists():
-            new.symlink_to("siverteh-brain", target_is_directory=True)
     subprocess.run(["systemctl", "--user", "daemon-reload"], check=True)
     subprocess.run(
         [

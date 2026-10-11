@@ -87,26 +87,13 @@ def atomic(path, data, mode=0o644):
 
 def state():
     zone = run("timedatectl", "show", "--property=Timezone", "--value")
-    existing_state = STATE if STATE.exists() else Path("/var/lib/siverteh-os/timezone")
-    existing_config = (
-        CONFIG if CONFIG.exists() else Path("/etc/siverteh-os/timezone.json")
-    )
-    data = read(existing_state / "status.json", {})
+    data = read(STATE / "status.json", {})
     return dict(
-        installed=PROGRAM.exists()
-        or Path("/usr/local/libexec/siverteh-timezone.py").exists(),
-        installedProgram=str(
-            PROGRAM
-            if PROGRAM.exists()
-            else Path("/usr/local/libexec/siverteh-timezone.py")
-        ),
-        automatic=read(existing_config, {}).get("automatic", False),
-        confirmedTimezone=read(existing_config, {}).get("confirmedTimezone", ""),
-        deviceLocation=(LOCATION.exists() and GEOCONFIG.exists())
-        or (
-            Path("/usr/local/libexec/siverteh-device-location.py").exists()
-            and Path("/etc/geoclue/conf.d/80-siverteh-timezone.conf").exists()
-        ),
+        installed=PROGRAM.exists(),
+        installedProgram=str(PROGRAM),
+        automatic=read(CONFIG, {}).get("automatic", False),
+        confirmedTimezone=read(CONFIG, {}).get("confirmedTimezone", ""),
+        deviceLocation=LOCATION.exists() and GEOCONFIG.exists(),
         timezone=zone,
         localTime=dt.datetime.now(ZoneInfo(zone)).strftime("%A, %d %B · %H:%M %Z"),
         **{

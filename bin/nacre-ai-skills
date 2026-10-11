@@ -38,12 +38,12 @@ def expose(source, destination, owned_library=None):
 
 def install(repo, home):
     sources = json.loads((repo / "ai/skill-sources.json").read_text())
-    library = home / ".local/share/siverteh-ai/skill-library"
+    library = home / ".local/share/nacre/ai/skill-library"
     library.mkdir(parents=True, exist_ok=True)
     for source in sources:
         revision = source["revision"]
         url = f"https://codeload.github.com/{source['repo']}/zip/{revision}"
-        request = urllib.request.Request(url, headers={"User-Agent": "siverteh-ai"})
+        request = urllib.request.Request(url, headers={"User-Agent": "nacre-ai"})
         with urllib.request.urlopen(request, timeout=60) as response:
             archive = zipfile.ZipFile(io.BytesIO(response.read()))
         prefix = archive.namelist()[0].split("/")[0] + "/"
@@ -100,7 +100,7 @@ def main():
     if not targets:
         targets = [home / ".claude", home / ".codex"]
         for group in ("accounts", "claude-accounts"):
-            parent = home / ".local/share/siverteh-ai" / group
+            parent = home / ".local/share/nacre/ai" / group
             if parent.exists():
                 targets += [p for p in parent.iterdir() if p.is_dir()]
     for target in targets:

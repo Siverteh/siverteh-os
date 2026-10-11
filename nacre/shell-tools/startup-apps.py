@@ -20,7 +20,7 @@ def plan(clients):
             "Nacre AI",
             2,
             [str(HOME / ".local/bin/nacre-shell"), "tasks"],
-            "siverteh-ai-dashboard" in classes,
+            "nacre-ai-dashboard" in classes,
         ),
         ("Discord", 3, ["discord"], bool(classes & {"discord"})),
         ("Spotify", 4, ["spotify"], "spotify" in classes),
@@ -53,7 +53,7 @@ def plan(clients):
 def main():
     lock = (
         Path(os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}"))
-        / "siverteh-startup-apps.lock"
+        / "nacre-startup-apps.lock"
     )
     with lock.open("w") as guard:
         try:

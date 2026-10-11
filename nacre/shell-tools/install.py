@@ -143,9 +143,6 @@ def deploy(code_only=False):
     # Retire the superseded procedural-image dedication from owned helper code.
     # The release transaction snapshots this tree before activation.
     (DEST / "tools/demo-wallpapers.LICENSE").unlink(missing_ok=True)
-    shutil.copyfile(
-        ROOT.parents[1] / "tools/nacre_migration.py", DEST / "tools/nacre_migration.py"
-    )
     # Licensed demo artwork is ready offline on fresh installs. Validate/cache the
     # original bytes; never resize or import into/overwrite the private library.
     subprocess.run(
@@ -170,20 +167,14 @@ def deploy(code_only=False):
     shell_service.parent.mkdir(parents=True, exist_ok=True)
     shell_service.unlink(missing_ok=True) if shell_service.is_symlink() else None
     shutil.copyfile(ROOT / "nacre-shell.service", shell_service)
-    chat_service = HOME / ".config/systemd/user/siverteh-sidebar-ai.service"
+    chat_service = HOME / ".config/systemd/user/nacre-sidebar-ai.service"
     chat_service.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(ROOT / "siverteh-sidebar-ai.service", chat_service)
+    shutil.copyfile(ROOT / "nacre-sidebar-ai.service", chat_service)
     observer = HOME / ".config/systemd/user/nacre-session-watch.service"
     shutil.copyfile(ROOT / "nacre-session-watch.service", observer)
     subprocess.run(["python3", str(ROOT / "idle-policy.py")], check=True)
     idle_dropin = HOME / ".config/systemd/user/hypridle.service.d/nacre.conf"
     idle_dropin.parent.mkdir(parents=True, exist_ok=True)
-    old_idle = idle_dropin.with_name("siverteh.conf")
-    if (
-        old_idle.is_file()
-        and "siverteh-shell/tools/idle-policy.py" in old_idle.read_text()
-    ):
-        old_idle.unlink()
     idle_dropin.write_text(
         "[Service]\nExecStartPre=/usr/bin/python3 %h/.local/share/nacre/shell/tools/idle-policy.py\n"
     )
@@ -223,14 +214,6 @@ def deploy(code_only=False):
         stdout=subprocess.DEVNULL,
     )
     subprocess.run(["python3", str(ROOT / "install-dolphin.py")], check=True)
-    import importlib.util
-
-    spec = importlib.util.spec_from_file_location(
-        "nacre_migration", ROOT.parents[1] / "tools/nacre_migration.py"
-    )
-    migration = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(migration)
-    migration.install_service_aliases()
     subprocess.run(
         ["systemctl", "--user", "enable", "nacre-shell.service"],
         check=True,
@@ -245,14 +228,6 @@ def deploy(code_only=False):
         ]:
             shutil.copyfile(ROOT / src, dest)
             dest.chmod(0o755)
-        legacy = HOME / ".local/bin/siverteh-os-shell"
-        legacy.write_text('#!/bin/sh\nexec "$HOME/.local/bin/nacre-shell" "$@"\n')
-        legacy.chmod(0o755)
-        old_cli = DEST / "bin/siverteh_shell"
-        old_cli.write_text(
-            '#!/bin/sh\nexec "$HOME/.local/share/nacre/shell/bin/nacre_shell" "$@"\n'
-        )
-        old_cli.chmod(0o755)
         current = HOME / ".config/quickshell/nacre"
         current.unlink(missing_ok=True)
         current.symlink_to(DEST / "source")

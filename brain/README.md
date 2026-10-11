@@ -18,7 +18,7 @@ Subjects and topics emerge from the private vault, world/topic annotations and l
 
 ## Deploy
 
-Optional semantic setup: run `siverteh-ai-tools python brain/provision-semantic.py` once to create an isolated CPU environment and download public model weights. No vault documents are sent during setup. Then deploy the brain. Without this environment, the index reports its lexical fallback and remains usable.
+Optional semantic setup: run `nacre-ai-tools python brain/provision-semantic.py` once to create an isolated CPU environment and download public model weights. No vault documents are sent during setup. Then deploy the brain. Without this environment, the index reports its lexical fallback and remains usable.
 
 For ordinary deployment, run `./install.sh --component brain` to inspect the plan,
 then `./install.sh --apply --component brain` from a clean committed checkout.
@@ -34,7 +34,7 @@ token rotates per server start and stays in private mode-0600 state. Actions als
 For browser checks, create a separate `BrainServer` with synthetic notes, disposable
 HOME/XDG state and an isolated headless Chrome profile. Authenticate that fixture
 through its own bootstrap URL before running
-`siverteh-ai-tools node brain/tests/browser-check.mjs`. Use BRAIN_TEST_CDP and
+`nacre-ai-tools node brain/tests/browser-check.mjs`. Use BRAIN_TEST_CDP and
 BRAIN_TEST_URL to select the isolated debug port and authenticated fixture URL.
 Never point this harness at the live vault or an existing browser profile. Checks cover map clicks, reader, full-text search, confidence isolation, dynamic subjects, safe Markdown, light palette and narrow layouts. Screenshots stay in the private user state directory. This browser test is separate from the persistent brain window and authenticated browsers.
 

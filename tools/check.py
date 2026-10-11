@@ -136,10 +136,6 @@ def main():
         )
         print(suite + ": " + summary.replace("\n", "; "), flush=True)
     cli_python = Path.home() / ".local/share/nacre/palette-runtime/venv/bin/python"
-    if not cli_python.exists():
-        cli_python = (
-            Path.home() / ".local/share/siverteh-ai/shell-runtime/venv/bin/python"
-        )
     if not cli_python.exists() and importlib.util.find_spec("PIL"):
         cli_python = Path(sys.executable)
     if cli_python.exists():
@@ -163,9 +159,7 @@ def main():
     node_cmd = (
         [node]
         if node
-        else (
-            ["siverteh-ai-tools", "node"] if shutil.which("siverteh-ai-tools") else []
-        )
+        else (["nacre-ai-tools", "node"] if shutil.which("nacre-ai-tools") else [])
     )
     if node_cmd:
         run([*node_cmd, "--check", str(ROOT / "brain/web/app.js")])

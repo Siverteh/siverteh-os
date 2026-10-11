@@ -14,14 +14,10 @@ import uuid
 
 
 def vault_path():
-    override = os.environ.get("NACRE_BRAIN", os.environ.get("SIVERTEH_BRAIN"))
+    override = os.environ.get("NACRE_BRAIN")
     if override:
         return Path(override).expanduser().resolve()
-    canonical = Path.home() / "Documents/Nacre-Brain"
-    legacy = Path.home() / "Documents/Siverteh-Brain"
-    return (
-        legacy if not canonical.exists() and legacy.exists() else canonical
-    ).resolve()
+    return (Path.home() / "Documents/Nacre-Brain").resolve()
 
 
 def initialize():
@@ -213,7 +209,7 @@ def main():
         if not program:
             raise ValueError("Supply a command after --")
         value = ""
-        for service in ("nacre-brain", "siverteh-brain"):
+        for service in ("nacre-brain",):
             result = subprocess.run(
                 ["secret-tool", "lookup", "service", service, "name", args.name],
                 capture_output=True,

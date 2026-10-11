@@ -8,7 +8,7 @@ HOME = Path.home()
 STATE = HOME / ".local/state/nacre"
 SERVICES = [
     "nacre-shell.service",
-    "siverteh-sidebar-ai.service",
+    "nacre-sidebar-ai.service",
     "nacre-brain.service",
     "nacre-session-watch.service",
     "hypridle.service",

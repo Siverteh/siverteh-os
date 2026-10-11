@@ -5,8 +5,8 @@ set -euo pipefail
 app="$HOME/.config/hypr/scripts/matrix-rest.py"
 log_dir="${XDG_CACHE_HOME:-$HOME/.cache}/matrix-rest"
 log_file="$log_dir/matrix-rest.log"
-class_name="siverteh-matrix"
-title="Siverteh Matrix Sleep"
+class_name="nacre-matrix"
+title="Nacre Matrix Sleep"
 
 mkdir -p "$log_dir"
 

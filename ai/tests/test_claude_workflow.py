@@ -10,7 +10,7 @@ from test_workflow import module
 
 class ClaudeWorkflowTests(unittest.TestCase):
     def test_new_chat_uses_default_without_project_or_provider_picker(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(ai, "default_assistant", return_value="claude"),
             patch.object(ai, "select", side_effect=["New chat", "Close"]) as select,
@@ -26,7 +26,7 @@ class ClaudeWorkflowTests(unittest.TestCase):
             project.assert_not_called()
 
     def test_escape_at_dashboard_does_not_launch(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(ai, "select", side_effect=[None, "Close"]),
             patch.object(ai, "launch_background") as launch,
@@ -35,7 +35,7 @@ class ClaudeWorkflowTests(unittest.TestCase):
             launch.assert_not_called()
 
     def test_combined_history_contains_both_agents_and_old_remote_sources(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         p = {
             "id": "p",
             "path": "/repo",
@@ -60,7 +60,7 @@ class ClaudeWorkflowTests(unittest.TestCase):
             self.assertEqual(rows[3]["project"]["host"], "dev")
 
     def test_latest_across_agents_resumes_exact_claude_id_without_touching_codex(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         p = {"id": "p", "path": "/repo"}
         rows = [
             {"id": "codex-id", "agent": "codex", "updated_at": 1, "project": p},
@@ -88,7 +88,7 @@ class ClaudeWorkflowTests(unittest.TestCase):
             codex.assert_not_called()
 
     def test_history_rows_show_assistant_even_for_identical_titles(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         p = {"id": "p", "path": "/repo", "label": "Project"}
         rows = [
             {
@@ -114,7 +114,7 @@ class ClaudeWorkflowTests(unittest.TestCase):
             self.assertIn("Claude Code", details[1])
 
     def test_claude_time_units_and_deduplication(self):
-        c = module("siverteh-ai-claude")
+        c = module("nacre-ai-claude")
         row = SimpleNamespace(
             session_id="one",
             custom_title="Native title",
@@ -130,7 +130,7 @@ class ClaudeWorkflowTests(unittest.TestCase):
         self.assertEqual(records[0]["state"], "running")
 
     def test_named_accounts_have_distinct_claude_home_not_codex_auth(self):
-        c = module("siverteh-ai-claude")
+        c = module("nacre-ai-claude")
         with (
             tempfile.TemporaryDirectory() as temp,
             patch.dict(os.environ, {"HOME": temp, "CODEX_HOME": "/codex"}),
@@ -138,7 +138,7 @@ class ClaudeWorkflowTests(unittest.TestCase):
             env = c.environment("work")
             self.assertEqual(
                 env["CLAUDE_CONFIG_DIR"],
-                str(Path(temp) / ".local/share/siverteh-ai/claude-accounts/work"),
+                str(Path(temp) / ".local/share/nacre/ai/claude-accounts/work"),
             )
             self.assertEqual(env["CODEX_HOME"], "/codex")
             self.assertFalse(Path(env["CLAUDE_CONFIG_DIR"]).exists())
@@ -146,7 +146,7 @@ class ClaudeWorkflowTests(unittest.TestCase):
                 c.environment("../../bad")
 
     def test_new_claude_general_chat_does_not_create_git_worktree(self):
-        c = module("siverteh-ai-claude")
+        c = module("nacre-ai-claude")
         with (
             tempfile.TemporaryDirectory() as temp,
             patch.object(c.subprocess, "run") as git,
@@ -158,7 +158,7 @@ class ClaudeWorkflowTests(unittest.TestCase):
             git.assert_not_called()
 
     def test_claude_project_creates_independent_worktree_in_empty_repo(self):
-        c = module("siverteh-ai-claude")
+        c = module("nacre-ai-claude")
         with (
             tempfile.TemporaryDirectory() as temp,
             patch.dict(os.environ, {"HOME": temp}),
@@ -173,7 +173,7 @@ class ClaudeWorkflowTests(unittest.TestCase):
             self.assertTrue((p / ".git").is_file())
 
     def test_remote_claude_uses_tmux_and_quotes_paths(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         argv = ai.claude_command(
             {"id": "p", "path": "/my repo", "host": "dev"}, "new", "work"
         )
@@ -182,7 +182,7 @@ class ClaudeWorkflowTests(unittest.TestCase):
         self.assertIn("--tmux", argv[-1])
 
     def test_absent_claude_history_does_not_require_sdk_or_login(self):
-        c = module("siverteh-ai-claude")
+        c = module("nacre-ai-claude")
         with (
             tempfile.TemporaryDirectory() as temp,
             patch.dict(os.environ, {"CLAUDE_CONFIG_DIR": temp}),
@@ -194,11 +194,11 @@ class ClaudeWorkflowTests(unittest.TestCase):
 
 class AccountSettingsTests(unittest.TestCase):
     def test_selections_are_independent_private_and_explicit_default_wins(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             tempfile.TemporaryDirectory() as temp,
             patch.dict(
-                os.environ, {"SIVERTEH_AI_SETTINGS": str(Path(temp) / "settings.json")}
+                os.environ, {"NACRE_AI_SETTINGS": str(Path(temp) / "settings.json")}
             ),
         ):
             ai.select_account("codex", "work")
@@ -214,7 +214,7 @@ class AccountSettingsTests(unittest.TestCase):
                 ai.select_account("codex", "../../bad")
 
     def test_failed_login_keeps_selected_accounts_unchanged(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(
                 ai.subprocess, "run", return_value=SimpleNamespace(returncode=1)
@@ -226,7 +226,7 @@ class AccountSettingsTests(unittest.TestCase):
             activate.assert_not_called()
 
     def test_successful_login_activates_only_chosen_provider(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(
                 ai.subprocess, "run", return_value=SimpleNamespace(returncode=0)
@@ -238,7 +238,7 @@ class AccountSettingsTests(unittest.TestCase):
             activate.assert_called_once_with("claude", "new")
 
     def test_settings_back_does_not_change_account_or_launch_login(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(ai, "select", return_value=None),
             patch.object(ai, "select_account") as activate,
@@ -249,7 +249,7 @@ class AccountSettingsTests(unittest.TestCase):
             login.assert_not_called()
 
     def test_history_resume_pins_the_account_recorded_when_listed(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         p = {"id": "p", "path": "/repo"}
         row = {
             "id": "abc",
@@ -269,11 +269,11 @@ class AccountSettingsTests(unittest.TestCase):
             self.assertEqual(launch.call_args.args[2], "original")
 
     def test_default_assistant_change_keeps_account_selections(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             tempfile.TemporaryDirectory() as temp,
             patch.dict(
-                os.environ, {"SIVERTEH_AI_SETTINGS": str(Path(temp) / "settings.json")}
+                os.environ, {"NACRE_AI_SETTINGS": str(Path(temp) / "settings.json")}
             ),
         ):
             self.assertEqual(ai.default_assistant(), "codex")
@@ -285,7 +285,7 @@ class AccountSettingsTests(unittest.TestCase):
             self.assertEqual(ai.default_assistant(), "claude")
 
     def test_setup_status_never_displays_auth_command_output(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         with (
             patch.object(ai.shutil, "which", return_value="/tool"),
             patch.object(ai, "effective_account", return_value=""),
@@ -305,7 +305,7 @@ class AccountSettingsTests(unittest.TestCase):
 
 class PartialHistoryTests(unittest.TestCase):
     def test_provider_failure_keeps_available_chats(self):
-        ai = module("siverteh-ai")
+        ai = module("nacre-ai")
         errors = []
         with (
             patch.object(ai, "source_chats", return_value=[{"id": "local"}]),
@@ -319,7 +319,7 @@ class PartialHistoryTests(unittest.TestCase):
 
 class ClaudeAccessPolicyTests(unittest.TestCase):
     def test_new_and_resumed_workers_keep_full_access_and_account_identity(self):
-        c = module("siverteh-ai-claude")
+        c = module("nacre-ai-claude")
         for command in ("new", "resume"):
             with self.subTest(command=command), tempfile.TemporaryDirectory() as temp:
                 directory = Path(temp) / "chat"
@@ -350,7 +350,7 @@ class ClaudeAccessPolicyTests(unittest.TestCase):
                 self.assertIn("--dangerously-skip-permissions", argv)
                 self.assertEqual(
                     env["CLAUDE_CONFIG_DIR"],
-                    str(Path(temp) / ".local/share/siverteh-ai/claude-accounts/work"),
+                    str(Path(temp) / ".local/share/nacre/ai/claude-accounts/work"),
                 )
                 if command == "resume":
                     self.assertEqual(argv[argv.index("--resume") + 1], args.thread_id)

@@ -83,7 +83,7 @@ The combined history uses Codex's supported thread API and Anthropic's
 sorting. Titles come from each assistant's native history; Claude's `/rename`
 updates the displayed title. This does not parse or rewrite private transcript
 formats. `--account NAME` keeps Claude data in a separate
-`~/.local/share/siverteh-ai/claude-accounts/NAME`; it never copies Codex credentials.
+`~/.local/share/nacre/ai/claude-accounts/NAME`; it never copies Codex credentials.
 No Claude login or SDK is needed to list a host/account with no Claude history.
 
 ## Accounts in Settings
@@ -99,7 +99,7 @@ in a separate terminal/browser. Successful sign-in activates only that assistant
 new profile; cancellation leaves the previous selection in place. Sign in to
 selected account reauthenticates that profile. Every submenu has Back.
 
-Account selection is stored privately in `~/.config/siverteh-ai/settings.json`.
+Account selection is stored privately in `~/.config/nacre/ai/settings.json`.
 Default uses the existing native account; named profiles use separate provider
 homes. Switching never logs out or changes running chats. History is combined
 across the two selected accounts, not across every account's private history.
@@ -150,7 +150,7 @@ creates the private vault. The terminal `codex` wrapper uses the complete offici
 CLI package pinned to 0.159.2, including its daemon manifest and companion tools.
 It does not replace or upgrade the ChatGPT app or an older system Codex install.
 
-Configure projects in `~/.config/siverteh-ai/projects.json` using
+Configure projects in `~/.config/nacre/ai/projects.json` using
 [projects.example.json](projects.example.json). Keep real hosts, paths, account
 details, and project registries outside this public repository.
 
@@ -170,7 +170,7 @@ Local sessions use `codex agents` and `codex --worktree`. Remote workers use SSH
 tmux, and an explicit Git worktree. New Codex workers explicitly select danger-full-access with approval prompts
 disabled. Sidebar and worker Claude sessions run with `--dangerously-skip-permissions`, matching Codex full access.
 SSH children advertise the widely available `xterm-256color` terminal type;
-the desktop retains its own terminal setting. Copy the `siverteh-ai-remote` and
+the desktop retains its own terminal setting. Copy the `nacre-ai-remote` and
 `nacre-brain` helpers and personal guidance to a trusted development host;
 its own Codex credentials stay on that host. Run the installer with `--remote`
 when installing a copy of this tooling there. It leaves the host's Codex binary
@@ -178,7 +178,7 @@ unchanged. Detach tmux with `Ctrl+B`, then `D`; the worker continues. Reopen it
 through Resume task. Clean up only finished, clean task worktrees.
 
 Each `--account NAME` uses a separate directory under
-`~/.local/share/siverteh-ai/accounts/`. Authentication and conversations are
+`~/.local/share/nacre/ai/accounts/`. Authentication and conversations are
 separate; the private vault and user skills are shared. The default profile
 continues to use the configured host account. A configuration profile is not
 an account. Do not copy credentials between different accounts. Remote account
@@ -275,7 +275,7 @@ CLI and its state remain intact.
 ## Validation
 
 Run `python3 -m unittest discover -s ai/tests -v` and shell syntax checks for
-`bin/codex`, `bin/siverteh-ai-remote`, and `hypr/scripts/ai-workspace.sh`. Desktop
+`bin/codex`, `bin/nacre-ai-remote`, and `hypr/scripts/ai-workspace.sh`. Desktop
 verification should launch the workspace twice, confirm one controller and one
 ChatGPT app, open a local worker, detach/reopen a remote worker, and confirm the
 private vault is available. Never include private evidence in the public diff.
@@ -290,7 +290,7 @@ new tasks use the primary path and resumed chats retain their original host.
 
 ## Shared specialist skills
 
-Run `python3 ai/install.py`, then `siverteh-ai-skills --install` to fetch the
+Run `python3 ai/install.py`, then `nacre-ai-skills --install` to fetch the
 revision-pinned sources in `ai/skill-sources.json`. Ten selected skills cover
 Obsidian Markdown/Bases/Canvas, webpage extraction, frontend design, document
 coauthoring and PDF/Word/PowerPoint/Excel. Source licenses are retained. No
@@ -307,9 +307,9 @@ skills. Agents save evidence-based milestones, superseding links and concise
 handoffs through the private brain helper. This is agent-driven, not a background
 summarizer; it never copies entire chat histories or requires Obsidian to be open.
 
-Use `siverteh-ai-tools python`, `siverteh-ai-tools node`, or
-`siverteh-ai-tools defuddle` for installed isolated document/extraction tools.
-Their environment is `~/.local/share/siverteh-ai/skill-tools`; it does not replace
+Use `nacre-ai-tools python`, `nacre-ai-tools node`, or
+`nacre-ai-tools defuddle` for installed isolated document/extraction tools.
+Their environment is `~/.local/share/nacre/ai/skill-tools`; it does not replace
 project Python/Node environments. Some upstream document skills assume hosted
 preinstalled tools: use this wrapper here. LibreOffice/Pandoc must be checked
 separately before conversions; never claim rendering or formula recalculation
@@ -318,9 +318,9 @@ was verified if those tools were unavailable.
 Tool dependencies can be rebuilt without changing project environments:
 
 ```sh
-python3 -m venv ~/.local/share/siverteh-ai/skill-tools/python
-~/.local/share/siverteh-ai/skill-tools/python/bin/pip install pypdf pdfplumber reportlab python-docx openpyxl pandas 'markitdown[docx,pptx,xlsx]' Pillow defusedxml lxml pyyaml
-npm install --prefix ~/.local/share/siverteh-ai/skill-tools defuddle docx pptxgenjs react-icons react react-dom sharp
+python3 -m venv ~/.local/share/nacre/ai/skill-tools/python
+~/.local/share/nacre/ai/skill-tools/python/bin/pip install pypdf pdfplumber reportlab python-docx openpyxl pandas 'markitdown[docx,pptx,xlsx]' Pillow defusedxml lxml pyyaml
+npm install --prefix ~/.local/share/nacre/ai/skill-tools defuddle docx pptxgenjs react-icons react react-dom sharp
 ```
 
 A host needs Node available in PATH or at `skill-tools/node/bin`. The personal
@@ -385,8 +385,8 @@ For an existing recognized private conversation runtime, review and apply only
 the controller that changed:
 
 ```sh
-python3 ai/install.py --helper-only siverteh-ai-claude
-python3 ai/install.py --helper-only siverteh-ai-claude --apply
+python3 ai/install.py --helper-only nacre-ai-claude
+python3 ai/install.py --helper-only nacre-ai-claude --apply
 ```
 
 The code-only path accepts the launcher, Codex chat transport or Claude adapter.
@@ -396,5 +396,5 @@ restart existing workers. `--launcher-only` remains the launcher compatibility
 option. Apply new-session behavior by opening a new session normally; current
 workers continue with their original process state.
 
-The public workspace command is `nacre-ai`; `siverteh-ai` remains a compatibility
+The public workspace command is `nacre-ai`; `nacre-ai` remains a compatibility
 entry point. Private account directories and worker identifiers are unchanged.

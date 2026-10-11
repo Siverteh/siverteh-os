@@ -29,7 +29,7 @@ def account_env(account):
         if not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_-]{0,47}", account):
             raise ValueError("Invalid account name")
         env["CODEX_HOME"] = str(
-            Path.home() / ".local/share/siverteh-ai/accounts" / account
+            Path.home() / ".local/share/nacre/ai/accounts" / account
         )
     return env
 
@@ -59,7 +59,7 @@ class Codex:
                 "initialize",
                 {
                     "clientInfo": {
-                        "name": "siverteh_workflow",
+                        "name": "nacre_workflow",
                         "version": "1.0",
                         "title": "Nacre AI",
                     }
@@ -183,7 +183,7 @@ def cache_title(thread_id, title):
         raise ValueError("Invalid title cache ID")
     import tempfile
 
-    root = Path.home() / ".local/state/siverteh-ai/chat-titles"
+    root = Path.home() / ".local/state/nacre/ai/chat-titles"
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
     fd, temp = tempfile.mkstemp(dir=root, prefix=".title-")
     with os.fdopen(fd, "w") as output:
@@ -267,14 +267,14 @@ def knowledge_call(name, args):
         raise ValueError("Title, source, body and confidence are required")
     folder = Path(__file__).resolve().parent
     if name == "resolve_context":
-        command = [str(folder / "siverteh-ai-context"), args["query"]]
+        command = [str(folder / "nacre-ai-context"), args["query"]]
         body = None
     elif name == "find_knowledge":
         command = [str(folder / "nacre-brain"), "search", args["query"]]
         body = None
     else:
         command = [
-            str(folder / "siverteh-ai-memory"),
+            str(folder / "nacre-ai-memory"),
             "--title",
             args["title"],
             "--source",
@@ -309,7 +309,7 @@ def serve(env):
                 result = {
                     "protocolVersion": params.get("protocolVersion", "2024-11-05"),
                     "capabilities": {"tools": {}},
-                    "serverInfo": {"name": "siverteh-workflow", "version": "1.0"},
+                    "serverInfo": {"name": "nacre-workflow", "version": "1.0"},
                 }
             elif method == "ping":
                 result = {}
@@ -432,32 +432,30 @@ def configure(env):
     text = updated
     servers = tomllib.loads(text).get("mcp_servers", {})
     expected = {
-        "command": str(Path.home() / ".local/bin/siverteh-ai-chat"),
+        "command": str(Path.home() / ".local/bin/nacre-ai-chat"),
         "args": ["serve"],
     }
-    if "siverteh_workflow" in servers:
-        if any(servers["siverteh_workflow"].get(k) != v for k, v in expected.items()):
-            raise ValueError("Existing siverteh_workflow config differs; preserving it")
+    if "nacre_workflow" in servers:
+        if any(servers["nacre_workflow"].get(k) != v for k, v in expected.items()):
+            raise ValueError("Existing nacre_workflow config differs; preserving it")
     else:
         with config.open("a") as output:
             output.write(
-                "\n[mcp_servers.siverteh_workflow]\ncommand = "
+                "\n[mcp_servers.nacre_workflow]\ncommand = "
                 + json.dumps(expected["command"])
                 + '\nargs = ["serve"]\n'
             )
-    settings = (
-        servers.get("siverteh_workflow", {}).get("tools", {}).get("set_chat_title")
-    )
+    settings = servers.get("nacre_workflow", {}).get("tools", {}).get("set_chat_title")
     if settings is None:
         with config.open("a") as output:
             output.write(
-                '\n[mcp_servers.siverteh_workflow.tools.set_chat_title]\napproval_mode = "approve"\n'
+                '\n[mcp_servers.nacre_workflow.tools.set_chat_title]\napproval_mode = "approve"\n'
             )
-    server_env = servers.get("siverteh_workflow", {}).get("env", {})
+    server_env = servers.get("nacre_workflow", {}).get("env", {})
     if not server_env:
         with config.open("a") as output:
             output.write(
-                "\n[mcp_servers.siverteh_workflow.env]\nCODEX_HOME = "
+                "\n[mcp_servers.nacre_workflow.env]\nCODEX_HOME = "
                 + json.dumps(str(home.resolve()))
                 + "\n"
             )
@@ -583,5 +581,5 @@ if __name__ == "__main__":
     try:
         main()
     except (ValueError, OSError, subprocess.SubprocessError) as error:
-        print(f"siverteh-ai-chat: {error}", file=sys.stderr)
+        print(f"nacre-ai-chat: {error}", file=sys.stderr)
         raise SystemExit(1)

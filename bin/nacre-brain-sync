@@ -297,7 +297,7 @@ def main():
                 "-o",
                 "ConnectTimeout=10",
                 host,
-                'if [ -d "$HOME/Documents/Nacre-Brain" ] && [ -x "$HOME/.local/bin/nacre-brain-sync" ]; then exec "$HOME/.local/bin/nacre-brain-sync" --exchange; else exec "$HOME/.local/bin/siverteh-brain-sync" --exchange; fi',
+                'exec "$HOME/.local/bin/nacre-brain-sync" --exchange',
             ],
             input=json.dumps({"version": 2, "notes": before, "base": base}),
             capture_output=True,

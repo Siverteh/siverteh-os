@@ -1,6 +1,6 @@
 ---
 name: nacre-brain
-description: Retrieve or save durable personal knowledge, host/device facts, project context, and operational lessons in Siverteh's private local Markdown vault.
+description: Retrieve or save durable personal knowledge, host/device facts, project context, and operational lessons in the user's private local Markdown vault.
 ---
 
 # Nacre Brain
@@ -47,17 +47,17 @@ private brain. The app does not need to be open for file-based maintenance.
 ## Conversation-first context and memory
 
 New chats are general conversations, not assigned projects. Resolve the relevant
-repositories only when the user requests work, using `siverteh-ai-context QUERY`
-(or MCP `siverteh_workflow.resolve_context`). Keep the same chat across subjects.
+repositories only when the user requests work, using `nacre-ai-context QUERY`
+(or MCP `nacre_workflow.resolve_context`). Keep the same chat across subjects.
 Resolve ambiguity from the conversation and registry before asking; do not guess
 which repository to modify. Registry build_host/build_path remain authoritative.
 
 The brain includes personal life, ideas, research, devices and skills as well as
 projects. At meaningful milestones, search existing evidence first, then use
-`siverteh-ai-memory --title TITLE --source SOURCE --confidence reported|verified|unverified
+`nacre-ai-memory --title TITLE --source SOURCE --confidence reported|verified|unverified
 --world SUBJECT --topic TOPIC` with a concise Markdown body on stdin. Repeat
 --world to connect several subjects, and --topic for shared subtopics. Codex also
-exposes find_knowledge and remember in siverteh_workflow; Claude uses the same CLI.
+exposes find_knowledge and remember in nacre_workflow; Claude uses the same CLI.
 Keep entity names stable; reuse canonical wiki names/aliases. New subjects create
 missing wiki descriptors automatically; this does not register a coding project.
 Preserve existing curated pages and reconcile them through expected-hash updates.

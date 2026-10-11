@@ -53,8 +53,6 @@ def paths(repo):
             ".local/share/nacre/dolphin-style",
             ".local/share/nacre/control",
             ".local/share/nacre/brain",
-            ".local/share/siverteh-ai/observatory",
-            ".local/share/siverteh-ai/thunar-runtime",
         )
     ]
     result += [
@@ -62,38 +60,25 @@ def paths(repo):
         for p in (
             "nacre",
             "nacre-shell",
-            "siverteh-os-shell",
-            "siverteh-os",
             "nacre-app",
             "xdg-open",
             "nacre-brain-ui",
-            "siverteh-brain-ui",
-            "siverteh-observatory",
             "nacre-brain",
             "nacre-brain-maintain",
-            "siverteh-brain",
-            "siverteh-brain-maintain",
-            "siverteh-brain-sync",
             "nacre-brain-sync",
-            "nacre-brain-ui",
         )
     ]
     result += [
         HOME / ".config/systemd/user" / p
         for p in (
             "nacre-shell.service",
-            "siverteh-os-shell.service",
-            "siverteh-session-watch.service",
-            "siverteh-manual-power.service",
-            "siverteh-sidebar-ai.service",
-            "nacre-brain.service",
-            "siverteh-observatory-brain.service",
-            "siverteh-brain-sync.service",
-            "siverteh-brain-sync.timer",
-            "siverteh-brain-check.service",
-            "siverteh-brain-check.timer",
             "nacre-session-watch.service",
+            "nacre-sidebar-ai.service",
+            "nacre-brain.service",
             "nacre-brain-sync.service",
+            "nacre-brain-sync.timer",
+            "nacre-brain-check.service",
+            "nacre-brain-check.timer",
             "nacre-power-key.service",
         )
     ]
@@ -209,32 +194,6 @@ def restore(release, record=None, force=False):
             shutil.copytree(e["backup"], path, symlinks=True)
         elif e["kind"] == "file":
             shutil.copy2(e["backup"], path)
-    for old, new in [
-        ("siverteh-os-shell.service", "nacre-shell.service"),
-        ("siverteh-session-watch.service", "nacre-session-watch.service"),
-        ("siverteh-manual-power.service", "nacre-power-key.service"),
-    ]:
-        legacy = HOME / ".config/systemd/user" / old
-        canonical = legacy.with_name(new)
-        if not canonical.exists() and legacy.exists():
-            canonical.unlink(missing_ok=True)
-            canonical.symlink_to(legacy.name)
-            subprocess.run(
-                ["systemctl", "--user", "enable", legacy.name],
-                check=True,
-                capture_output=True,
-            )
-    # Old release snapshots may contain only the legacy Brain code/unit.
-    old_brain = HOME / ".local/share/siverteh-ai/observatory"
-    new_brain = HOME / ".local/share/nacre/brain"
-    if old_brain.is_dir() and not new_brain.exists() and not old_brain.is_symlink():
-        new_brain.parent.mkdir(parents=True, exist_ok=True)
-        new_brain.symlink_to(old_brain)
-    old_unit = HOME / ".config/systemd/user/siverteh-observatory-brain.service"
-    new_unit = HOME / ".config/systemd/user/nacre-brain.service"
-    if old_unit.exists() and not new_unit.exists():
-        new_unit.unlink(missing_ok=True)
-        new_unit.symlink_to(old_unit.name)
     subprocess.run(["systemctl", "--user", "daemon-reload"], check=True)
     subprocess.run(["hyprctl", "reload"], check=True, capture_output=True)
     subprocess.run(
@@ -270,9 +229,6 @@ def install_controller(repo):
         '#!/bin/sh\nexec python3 "$HOME/.local/share/nacre/control/releases.py" "$@"\n'
     )
     wrapper.chmod(0o755)
-    legacy = HOME / ".local/bin/siverteh-os"
-    legacy.write_text('#!/bin/sh\nexec "$HOME/.local/bin/nacre" "$@"\n')
-    legacy.chmod(0o755)
 
 
 def prune_releases(keep=10):
@@ -327,11 +283,7 @@ def release_disk_usage():
 
 def retire_native_runtimes(release):
     """Move recognized obsolete package trees out of active paths after live gates."""
-    candidates = (
-        (HOME / ".local/share/siverteh-ai/shell-runtime/usr", "bin/quickshell"),
-        (HOME / ".local/share/nacre/palette-runtime/usr", "bin/quickshell"),
-        (HOME / ".local/share/siverteh-ai/thunar-runtime", "usr/bin/thunar"),
-    )
+    candidates = ((HOME / ".local/share/nacre/palette-runtime/usr", "bin/quickshell"),)
     retired = []
     for path, executable in candidates:
         if not (path / executable).is_file():
@@ -357,7 +309,7 @@ def retire_native_runtimes(release):
 
 DESKTOP_SERVICES = (
     "nacre-shell.service",
-    "siverteh-sidebar-ai.service",
+    "nacre-sidebar-ai.service",
     "nacre-brain.service",
 )
 

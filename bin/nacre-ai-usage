@@ -38,7 +38,7 @@ def cache(account):
         raise ValueError("Invalid account")
     return (
         Path.home()
-        / ".local/state/siverteh-ai/usage"
+        / ".local/state/nacre/ai/usage"
         / ("claude-" + (account or "default") + ".json")
     )
 
@@ -81,7 +81,7 @@ def read(agent, account):
         )
         return {"rows": rows}
     loader = importlib.machinery.SourceFileLoader(
-        "usage_chat", str(Path(__file__).resolve().with_name("siverteh-ai-chat"))
+        "usage_chat", str(Path(__file__).resolve().with_name("nacre-ai-chat"))
     )
     spec = importlib.util.spec_from_loader(loader.name, loader)
     mod = importlib.util.module_from_spec(spec)
@@ -89,7 +89,7 @@ def read(agent, account):
     env = dict(
         os.environ,
         CODEX_HOME=str(
-            Path.home() / ".local/share/siverteh-ai/accounts" / account
+            Path.home() / ".local/share/nacre/ai/accounts" / account
             if account
             else Path.home() / ".codex"
         ),
@@ -156,7 +156,7 @@ def main():
             for key, w in result.items()
             if isinstance(w, dict) and number(w.get("used_percentage"))
         ]
-        print("Siverteh · " + (" · ".join(windows) or "Claude"))
+        print("Nacre · " + (" · ".join(windows) or "Claude"))
 
 
 if __name__ == "__main__":

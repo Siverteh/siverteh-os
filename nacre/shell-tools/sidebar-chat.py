@@ -9,9 +9,9 @@ HOME = Path.home()
 STATE = HOME / ".local/state/nacre/shell/sidebar"
 SOCKET = (
     Path(os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}"))
-    / "siverteh-sidebar-chat.sock"
+    / "nacre-sidebar-chat.sock"
 )
-INSTRUCTIONS = """You are Nacre AI in an ongoing desktop sidebar conversation. It is a full assistant workspace, not a short-answer mode. The user can change desktop workspaces without changing this conversation. Read ~/.codex/AGENTS.md and the shared personal workflow at ~/.local/share/siverteh-ai/conversation-runtime/20261003T052426Z/ai/AGENTS.md. Use the private shared brain and project registry to resolve context; inspect each project's own instructions before work. Preserve other chats, accounts and active sessions. Use isolated worktrees and the registered build host for heavy tests. Never copy authentication or log secrets. Record useful verified knowledge using the existing brain workflow. Name this conversation with a concise title once its subject is clear."""
+INSTRUCTIONS = """You are Nacre AI in an ongoing desktop sidebar conversation. It is a full assistant workspace, not a short-answer mode. The user can change desktop workspaces without changing this conversation. Read ~/.codex/AGENTS.md and the shared personal workflow at ~/.agents/skills/nacre-project-work/SKILL.md. Use the private shared brain and project registry to resolve context; inspect each project's own instructions before work. Preserve other chats, accounts and active sessions. Use isolated worktrees and the registered build host for heavy tests. Never copy authentication or log secrets. Record useful verified knowledge using the existing brain workflow. Name this conversation with a concise title once its subject is clear."""
 
 
 def emit(value):
@@ -28,17 +28,17 @@ def atomic(path, value):
 
 
 def preferences():
-    w = runpy.run_path(str((HOME / ".local/bin/siverteh-ai").resolve()))
+    w = runpy.run_path(str((HOME / ".local/bin/nacre-ai").resolve()))
     agent = w["default_assistant"]()
     return agent, w["effective_account"](agent)
 
 
 def env_for(agent, account):
     if agent == "codex":
-        return runpy.run_path(str((HOME / ".local/bin/siverteh-ai").resolve()))[
+        return runpy.run_path(str((HOME / ".local/bin/nacre-ai").resolve()))[
             "local_environment"
         ](account)
-    return runpy.run_path(str((HOME / ".local/bin/siverteh-ai-claude").resolve()))[
+    return runpy.run_path(str((HOME / ".local/bin/nacre-ai-claude").resolve()))[
         "environment"
     ](account)
 
@@ -97,7 +97,7 @@ class CodexPeer:
                 "initialize",
                 {
                     "clientInfo": {
-                        "name": "siverteh_sidebar",
+                        "name": "nacre_sidebar",
                         "title": "Nacre AI Sidebar",
                         "version": "1.0",
                     },
@@ -329,7 +329,7 @@ class ClaudePeer:
             metadata["id"] = str(uuid.uuid4())
             metadata["started"] = False
         if metadata.get("started"):
-            sdk = HOME / ".local/share/siverteh-ai/claude-sdk/bin/python"
+            sdk = HOME / ".local/share/nacre/ai/claude-sdk/bin/python"
             if sdk.exists():
                 script = """import json,sys
 from claude_agent_sdk import get_session_messages
@@ -471,7 +471,7 @@ class Manager:
                 started=True,
             )
         if not meta:
-            cwd = HOME / ".local/share/siverteh-ai/chats" / uuid.uuid4().hex
+            cwd = HOME / ".local/share/nacre/ai/chats" / uuid.uuid4().hex
             cwd.mkdir(mode=0o700, parents=True)
             guidance = HOME / ".codex/AGENTS.md"
             if guidance.exists():
@@ -764,7 +764,7 @@ class Manager:
             agent = command.get("provider")
             if agent not in ("codex", "claude"):
                 return
-            workflow = runpy.run_path(str((HOME / ".local/bin/siverteh-ai").resolve()))
+            workflow = runpy.run_path(str((HOME / ".local/bin/nacre-ai").resolve()))
             workflow["set_default_assistant"](agent)
             self.update()
         elif action == "workspace":
@@ -860,7 +860,7 @@ def server():
 
 def client():
     subprocess.run(
-        ["systemctl", "--user", "start", "siverteh-sidebar-ai.service"],
+        ["systemctl", "--user", "start", "nacre-sidebar-ai.service"],
         check=True,
         stdout=subprocess.DEVNULL,
     )

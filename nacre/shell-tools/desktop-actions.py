@@ -60,7 +60,7 @@ def action(name, value=""):
         "tasks": [
             "kitty",
             "--class",
-            "siverteh-ai-dashboard",
+            "nacre-ai-dashboard",
             "--title",
             "Nacre AI",
             "--",
@@ -70,7 +70,7 @@ def action(name, value=""):
         "new": [
             "kitty",
             "--class",
-            "siverteh-ai-task",
+            "nacre-ai-task",
             "--title",
             "New chat",
             "--",
@@ -82,7 +82,7 @@ def action(name, value=""):
         "resume": [
             "kitty",
             "--class",
-            "siverteh-ai-task",
+            "nacre-ai-task",
             "--title",
             "Resume task",
             "--",
@@ -95,9 +95,7 @@ def action(name, value=""):
     if name in actions:
         if name == "tasks":
             clients = json.loads(run(["hyprctl", "clients", "-j"], "[]"))
-            old = next(
-                (c for c in clients if c["class"] == "siverteh-ai-dashboard"), None
-            )
+            old = next((c for c in clients if c["class"] == "nacre-ai-dashboard"), None)
             if old:
                 return action("focus", old["address"])
         launch_app(actions[name])

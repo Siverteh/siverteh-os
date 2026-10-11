@@ -12,12 +12,12 @@ import subprocess
 import tempfile
 
 
-def install_launcher(repo, home, apply=False, name="siverteh-ai"):
+def install_launcher(repo, home, apply=False, name="nacre-ai"):
     """Update one recognized controller copy without reinstalling AI setup."""
-    if name not in ("siverteh-ai", "siverteh-ai-chat", "siverteh-ai-claude"):
+    if name not in ("nacre-ai", "nacre-ai-chat", "nacre-ai-claude"):
         raise RuntimeError("Unrecognized AI controller; existing files left unchanged")
     target = (home / ".local/bin" / name).resolve()
-    runtime = home / ".local/share/siverteh-ai/conversation-runtime"
+    runtime = home / ".local/share/nacre/ai/conversation-runtime"
     if (
         not target.is_relative_to(runtime)
         or target.name != name
@@ -34,7 +34,7 @@ def install_launcher(repo, home, apply=False, name="siverteh-ai"):
         )
         return
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-    backup = home / ".local/state/siverteh-ai/backups" / stamp
+    backup = home / ".local/state/nacre/ai/backups" / stamp
     backup.mkdir(parents=True, mode=0o700)
     shutil.copy2(target, backup / name)
     old = target.read_bytes()
@@ -73,7 +73,7 @@ def main():
     )
     parser.add_argument(
         "--helper-only",
-        choices=("siverteh-ai", "siverteh-ai-chat", "siverteh-ai-claude"),
+        choices=("nacre-ai", "nacre-ai-chat", "nacre-ai-claude"),
         help="Plan a code-only update of one recognized private controller",
     )
     parser.add_argument(
@@ -85,12 +85,12 @@ def main():
     if args.launcher_only and args.helper_only:
         parser.error("Choose either --launcher-only or --helper-only")
     if args.launcher_only or args.helper_only:
-        install_launcher(repo, home, args.apply, args.helper_only or "siverteh-ai")
+        install_launcher(repo, home, args.apply, args.helper_only or "nacre-ai")
         return
     if args.apply:
         parser.error("--apply requires --launcher-only or --helper-only")
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-    backup = home / ".local/state/siverteh-ai/backups" / stamp
+    backup = home / ".local/state/nacre/ai/backups" / stamp
 
     def save(path):
         backup.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -115,37 +115,34 @@ def main():
         target.symlink_to(source)
 
     binaries = (
-        ["nacre-brain", "siverteh-ai-remote"]
+        ["nacre-ai", "nacre-brain", "nacre-ai-remote"]
         if args.remote
         else [
             "codex",
             "nacre-ai",
-            "siverteh-ai",
             "nacre-brain",
-            "siverteh-ai-remote",
+            "nacre-ai-remote",
         ]
     )
     binaries.extend(
         [
-            "siverteh-brain",
-            "siverteh-brain-maintain",
-            "siverteh-brain-sync",
+            "nacre-brain",
             "nacre-brain-maintain",
-            "siverteh-ai-tools",
-            "siverteh-ai-skills",
-            "siverteh-ai-account",
             "nacre-brain-sync",
-            "siverteh-ai-chat",
-            "siverteh-ai-claude",
-            "siverteh-ai-context",
-            "siverteh-ai-memory",
-            "siverteh-ai-usage",
+            "nacre-ai-tools",
+            "nacre-ai-skills",
+            "nacre-ai-account",
+            "nacre-ai-chat",
+            "nacre-ai-claude",
+            "nacre-ai-context",
+            "nacre-ai-memory",
+            "nacre-ai-usage",
         ]
     )
     if (
         not args.remote
         and (
-            home / ".local/share/siverteh-ai/obsidian/1.13.7/squashfs-root/AppRun"
+            home / ".local/share/nacre/ai/obsidian/1.13.7/squashfs-root/AppRun"
         ).exists()
     ):
         binaries.append("obsidian")
@@ -168,7 +165,7 @@ def main():
             and not secret_service.exists()
         ):
             link(repo / "ai/dbus/org.freedesktop.secrets.service", secret_service)
-    for name in binaries:
+    for name in dict.fromkeys(binaries):
         link(repo / "bin" / name, home / ".local/bin" / name)
     for skill in (repo / "ai/skills").iterdir():
         if skill.is_dir():
@@ -179,14 +176,12 @@ def main():
             if previous and previous != shared.resolve():
                 profiles = [home / ".codex", home / ".claude"]
                 for group in ("accounts", "claude-accounts"):
-                    profiles.extend(
-                        (home / ".local/share/siverteh-ai" / group).glob("*")
-                    )
+                    profiles.extend((home / ".local/share/nacre/ai" / group).glob("*"))
                 for profile in profiles:
                     alias = profile / "skills" / skill.name
                     if alias.is_symlink() and alias.resolve() == previous:
                         link(shared, alias)
-    subprocess.run([str(home / ".local/bin/siverteh-ai-skills")], check=True)
+    subprocess.run([str(home / ".local/bin/nacre-ai-skills")], check=True)
     guidance = home / ".codex/AGENTS.md"
     guidance.parent.mkdir(parents=True, exist_ok=True)
     if not guidance.exists():
@@ -197,18 +192,18 @@ def main():
     ):
         pass
     else:
-        marker = "<!-- siverteh-ai-guidance -->"
+        marker = "<!-- nacre-ai-guidance -->"
         current = guidance.read_text()
         block = (
             marker
             + "\nFor personal knowledge and cross-project context, read `"
             + str(repo / "ai/AGENTS.md")
-            + "`.\n<!-- /siverteh-ai-guidance -->"
+            + "`.\n<!-- /nacre-ai-guidance -->"
         )
         if marker in current:
             updated, count = re.subn(
                 re.escape(marker)
-                + r"\nFor personal knowledge and cross-project context, read `[^\n]+`\.\n(?:<!-- /siverteh-ai-guidance -->)?",
+                + r"\nFor personal knowledge and cross-project context, read `[^\n]+`\.\n(?:<!-- /nacre-ai-guidance -->)?",
                 lambda _: block,
                 current,
                 count=1,
@@ -238,11 +233,11 @@ def main():
     if args.codex_home:
         title_env["CODEX_HOME"] = str(args.codex_home.expanduser().resolve())
     subprocess.run(
-        [str(home / ".local/bin/siverteh-ai-chat"), "configure"],
+        [str(home / ".local/bin/nacre-ai-chat"), "configure"],
         env=title_env,
         check=True,
     )
-    config = home / ".config/siverteh-ai/projects.json"
+    config = home / ".config/nacre/ai/projects.json"
     if not config.exists():
         config.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
         config.write_text(

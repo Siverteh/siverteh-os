@@ -194,13 +194,13 @@ class TerminalBrandingTests(unittest.TestCase):
             home = Path(folder) / "home"
             proc = Path(folder) / "proc"
             proc.mkdir()
-            menu = str(home / ".local/bin/siverteh-ai")
+            menu = str(home / ".local/bin/nacre-ai")
             for pid, argv in [
                 (111, ["python3", menu, "dashboard"]),
                 (112, ["python3", menu]),
                 (222, ["kitty", menu, "dashboard"]),
                 (333, ["python3", menu, "new"]),
-                (444, ["python3", "/other/siverteh-ai", "dashboard"]),
+                (444, ["python3", "/other/nacre-ai", "dashboard"]),
             ]:
                 path = proc / str(pid)
                 path.mkdir()
@@ -250,7 +250,7 @@ menu.select(['First','Second'],'Workspace')
                 struct.pack("HHHH", 30, 90, 0, 0),
             )
             process = subprocess.Popen(
-                [sys.executable, "-c", code, str(ROOT / "bin/siverteh-ai"), str(home)],
+                [sys.executable, "-c", code, str(ROOT / "bin/nacre-ai"), str(home)],
                 stdin=slave,
                 stdout=slave,
                 stderr=slave,

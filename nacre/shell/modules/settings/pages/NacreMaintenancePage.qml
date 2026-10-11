@@ -8,7 +8,7 @@ NacreSettingsPage {
     readonly property var state: Maintenance.data
     readonly property var serviceNames: ({
             "nacre-shell.service": "Desktop",
-            "siverteh-sidebar-ai.service": "AI chat",
+            "nacre-sidebar-ai.service": "AI chat",
             "nacre-brain.service": "Brain",
             "nacre-session-watch.service": "Session monitor",
             "hypridle.service": "Sleep locking",

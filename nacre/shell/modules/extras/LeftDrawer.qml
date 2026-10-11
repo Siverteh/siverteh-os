@@ -356,7 +356,7 @@ Item {
                     color: NacreColours.palette.m3primary
                 }
                 Repeater {
-                    model: NacreHyprland.clients.filter(c => c.wmClass === "siverteh-ai-task")
+                    model: NacreHyprland.clients.filter(c => c.wmClass === "nacre-ai-task")
                     ChatCard {
                         required property var modelData
                         label: ChatWindowTitle.titles[modelData.pid] || modelData.title

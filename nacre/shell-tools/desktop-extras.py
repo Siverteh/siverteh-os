@@ -55,7 +55,7 @@ def launch(command):
             "-u",
             "QT_PLUGIN_PATH",
             "-u",
-            "SIVERTEH_LIB_DIR",
+            "NACRE_LIB_DIR",
             *command,
         ],
         start_new_session=True,
@@ -65,7 +65,7 @@ def launch(command):
 
 
 def ai():
-    return runpy.run_path(str((HOME / ".local/bin/siverteh-ai").resolve()))
+    return runpy.run_path(str((HOME / ".local/bin/nacre-ai").resolve()))
 
 
 def chat_list():
@@ -115,7 +115,7 @@ def resume(key, terminal=False):
         helper = runpy.run_path(str(Path(__file__).with_name("window-chat-title.py")))
         for client in json.loads(run(["hyprctl", "clients", "-j"], text=True).stdout):
             if (
-                client["class"] == "siverteh-ai-task"
+                client["class"] == "nacre-ai-task"
                 and helper["resolve_info"](client["pid"]).get("threadId") == item["id"]
             ):
                 run(
@@ -132,7 +132,7 @@ def resume(key, terminal=False):
             [
                 "kitty",
                 "--class",
-                "siverteh-ai-task",
+                "nacre-ai-task",
                 "--title",
                 clean(item["title"]),
                 "--",
@@ -172,10 +172,7 @@ def resume(key, terminal=False):
 
 def brain_search(query):
     vault = Path(
-        os.environ.get(
-            "NACRE_BRAIN",
-            os.environ.get("SIVERTEH_BRAIN", str(HOME / "Documents/Nacre-Brain")),
-        )
+        os.environ.get("NACRE_BRAIN", str(HOME / "Documents/Nacre-Brain"))
     ).resolve()
     words = [w.casefold() for w in query.split() if w]
     if not words:
@@ -217,10 +214,7 @@ def brain_search(query):
 
 def open_note(path):
     vault = Path(
-        os.environ.get(
-            "NACRE_BRAIN",
-            os.environ.get("SIVERTEH_BRAIN", str(HOME / "Documents/Nacre-Brain")),
-        )
+        os.environ.get("NACRE_BRAIN", str(HOME / "Documents/Nacre-Brain"))
     ).resolve()
     file = (vault / path).resolve()
     if not file.is_relative_to(vault) or file.suffix != ".md" or not file.is_file():
@@ -476,12 +470,7 @@ def main():
             result = True
         elif args.action == "explore":
             vault = Path(
-                os.environ.get(
-                    "NACRE_BRAIN",
-                    os.environ.get(
-                        "SIVERTEH_BRAIN", str(HOME / "Documents/Nacre-Brain")
-                    ),
-                )
+                os.environ.get("NACRE_BRAIN", str(HOME / "Documents/Nacre-Brain"))
             ).resolve()
             file = (vault / payload["path"]).resolve()
             if (
@@ -512,7 +501,7 @@ def main():
             title = clean(text.splitlines()[0])[:80]
             run(
                 [
-                    "siverteh-ai-memory",
+                    "nacre-ai-memory",
                     "--title",
                     title,
                     "--source",
@@ -520,7 +509,7 @@ def main():
                     "--confidence",
                     "reported",
                     "--world",
-                    "Siverteh",
+                    "Personal",
                     "--topic",
                     "Quick captures",
                 ],

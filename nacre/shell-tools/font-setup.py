@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Provision pinned upstream fonts; migrate only hash-verified legacy assets."""
+"""Provision pinned upstream fonts with verified ownership and rollback."""
 
 import argparse
 import fcntl
@@ -38,14 +38,13 @@ def write(path, data):
 def roots(home):
     return (
         home / ".local/share/fonts/nacre",
-        home / ".local/share/fonts/caelestia",
         home / ".local/state/nacre/fonts/installed.json",
     )
 
 
 def entries(home, manifest):
-    canonical, legacy, registry = roots(home)
-    for directory in (canonical, legacy):
+    canonical, registry = roots(home)
+    for directory in (canonical,):
         if directory.is_symlink():
             raise ValueError(
                 "Font directory is a symlink; reconcile it before provisioning"
@@ -57,7 +56,7 @@ def entries(home, manifest):
             group["default"]
             or any(
                 (root / row["name"]).exists()
-                for root in (canonical, legacy)
+                for root in (canonical,)
                 for row in group["files"]
             )
             or group["id"] in known.get("groups", [])
@@ -67,29 +66,23 @@ def entries(home, manifest):
             name = row["name"]
             if Path(name).name != name or name in (".", ".."):
                 raise ValueError("Invalid font asset filename")
-            target, old = canonical / name, legacy / name
-            if target.is_symlink() or old.is_symlink():
+            target = canonical / name
+            if target.is_symlink():
                 raise ValueError(f"Font asset is a symlink: {name}")
-            current, previous = digest(target), digest(old)
+            current = digest(target)
             if target.exists() and not target.is_file():
                 raise ValueError(f"Font asset is not a file: {name}")
-            if old.exists() and not old.is_file():
-                raise ValueError(f"Legacy font asset is not a file: {name}")
             owned = known.get("files", {}).get(name)
             if current not in (None, row["sha256"], owned) or (
                 current is not None and owned is None and current != row["sha256"]
             ):
                 raise ValueError(f"Local font edit preserved: {name}")
-            if previous not in (None, row["sha256"]):
-                raise ValueError(f"Legacy font edit preserved: {name}")
             selected.append(
                 dict(
                     row,
                     group=group["id"],
                     target=target,
-                    legacy=old,
                     current=current,
-                    previous=previous,
                 )
             )
     return selected
@@ -99,7 +92,6 @@ def plan(home, manifest):
     selected = entries(home, manifest)
     return {
         "install": [row["name"] for row in selected if row["current"] != row["sha256"]],
-        "migrate": [row["name"] for row in selected if row["previous"] is not None],
         "groups": sorted({row["group"] for row in selected}),
     }
 
@@ -135,8 +127,7 @@ def restore_locked(home, transaction, refresh=True):
     for operation in record["operations"]:
         relative = Path(operation["path"])
         allowed = relative == Path(".local/state/nacre/fonts/installed.json") or (
-            relative.parent
-            in (Path(".local/share/fonts/nacre"), Path(".local/share/fonts/caelestia"))
+            relative.parent == Path(".local/share/fonts/nacre")
         )
         if relative.is_absolute() or ".." in relative.parts or not allowed:
             raise ValueError("Invalid font rollback path")
@@ -158,7 +149,7 @@ def restore_locked(home, transaction, refresh=True):
         else:
             write(path, payloads[operation["path"]])
             path.chmod(operation["mode"])
-    for directory in (roots(home)[0], roots(home)[1]):
+    for directory in (roots(home)[0],):
         if directory.is_dir() and not any(directory.iterdir()):
             directory.rmdir()
     if refresh:
@@ -172,7 +163,7 @@ def apply(home, manifest, fetch=download, refresh=True):
         fcntl.flock(lock, fcntl.LOCK_EX)
         selected = entries(home, manifest)
         expected = {row["name"]: row["sha256"] for row in selected}
-        registry = roots(home)[2]
+        registry = roots(home)[1]
         registry_data = json.dumps(
             {
                 "version": 1,
@@ -182,10 +173,7 @@ def apply(home, manifest, fetch=download, refresh=True):
             sort_keys=True,
         ).encode()
         if (
-            not any(
-                row["current"] != row["sha256"] or row["previous"] is not None
-                for row in selected
-            )
+            not any(row["current"] != row["sha256"] for row in selected)
             and registry.exists()
             and registry.read_bytes() == registry_data
         ):
@@ -195,8 +183,6 @@ def apply(home, manifest, fetch=download, refresh=True):
         for row in selected:
             if row["current"] == row["sha256"]:
                 raw = row["target"].read_bytes()
-            elif row["previous"] == row["sha256"]:
-                raw = row["legacy"].read_bytes()
             else:
                 raw = fetch(row)
             if (
@@ -206,10 +192,7 @@ def apply(home, manifest, fetch=download, refresh=True):
                 raise ValueError(f"Font asset checksum mismatch: {row['name']}")
             payloads[row["name"]] = raw
         for row in selected:
-            if (
-                digest(row["target"]) != row["current"]
-                or digest(row["legacy"]) != row["previous"]
-            ):
+            if digest(row["target"]) != row["current"]:
                 raise ValueError(f"Font changed during staging: {row['name']}")
         transaction = state / "backups" / uuid.uuid4().hex
         transaction.mkdir(parents=True, mode=0o700)
@@ -243,12 +226,7 @@ def apply(home, manifest, fetch=download, refresh=True):
             for row in selected:
                 if row["current"] != row["sha256"]:
                     change(row["target"], payloads[row["name"]], 0o644)
-                if row["previous"] is not None:
-                    change(row["legacy"], None, 0o644)
             change(registry, registry_data, 0o600)
-            legacy = roots(home)[1]
-            if legacy.is_dir() and not any(legacy.iterdir()):
-                legacy.rmdir()
             if refresh:
                 cache_refresh(home)
         except Exception:

@@ -35,7 +35,7 @@ class StartupTests(unittest.TestCase):
             {"class": name, "title": ""}
             for name in [
                 "Google-chrome",
-                "siverteh-ai-dashboard",
+                "nacre-ai-dashboard",
                 "discord",
                 "Spotify",
                 "org.gnome.Evolution",

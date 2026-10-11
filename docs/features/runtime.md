@@ -33,11 +33,10 @@ snapshots can restore code/configuration; pacman owns package-version recovery.
 ## Canonical paths and compatibility
 
 Desktop preferences use `~/.config/nacre`, durable state uses
-`~/.local/state/nacre`, and caches use `~/.cache/nacre`. Recognized old desktop
-names remain compatibility links through the implemented
-[name migration](nacre-rename.md), with collision checks and a private rollback
-manifest. Personal AI accounts, chats, vault and credentials retain their own
-roots and are outside that desktop migration. Do not move them to tidy names.
+`~/.local/state/nacre`, and caches use `~/.cache/nacre`. AI accounts/chats/tools use
+`~/.local/share/nacre/ai`, with config and state under the corresponding
+`nacre/ai` roots. The [location guide](nacre-rename.md) lists canonical paths.
+Private data and existing-host aliases remain outside public source/release snapshots.
 The unused `shell.json` is retired; `cli.json` remains the palette configuration.
 
 ## Distribution Qt mismatch recovery
