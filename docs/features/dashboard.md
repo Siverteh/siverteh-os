@@ -79,8 +79,12 @@ Review real Wayland screenshots and hover/Escape/header retention after deploy.
 ## Dashboard home layout
 
 The first tab is labelled Dashboard; its private `today` identifier preserves
-existing preferences. The wallpaper banner has a wider Wallpapers button above
-Next and Colors. Next calls the current `advanceRotation(true)` interface, so it
+existing preferences. The wallpaper banner has Wallpapers and Colors side by side above a fixed-width
+previous/pause/next control. Static wallpapers leave the pause slot empty, so the
+arrows stay in the same place. Pause stops video/GIF motion through the existing
+persisted playback preference; the separate scheduled rotation setting is unchanged.
+Previous retraces up to100successful visits in this shell session, including shuffle.
+With no history, it uses the previous catalogue entry in the selected rotation pool. Next calls the current `advanceRotation(true)` interface, so it
 works with automatic rotation off while respecting an in-progress change.
 
 Below the banner, a shorter calendar fills the left column. The middle column

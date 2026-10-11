@@ -44,3 +44,14 @@ Busy buttons release focus; a separate pointer hover handler avoids MouseArea's
 stale hover after disable/re-enable, while keyboard focus remains visible. Native
 tests cover two actual generated video files, busy/hover/focus states, card
 baselines and both system actions.
+
+## Wallpaper transport refinement
+
+Use Wallpapers and Colors side by side above a132px pill with44px fixed slots:
+chevron-left, pause/play, chevron-right. Static images have an empty center; never
+move arrows when changing media type. Give controls themed tooltips and accessible
+labels. Pause uses the single existing wallpaper preference owner, not a new player
+or timer. Previous follows a bounded100entry successful-visit history, with previous
+catalogue entry as the initial fallback. Do not consume history on a failed change.
+Native tests exercise shuffled/sequential history, busy guards, pause persistence
+command, source restart and fixed positions across static/dynamic changes.

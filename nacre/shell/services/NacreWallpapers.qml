@@ -70,6 +70,8 @@ Singleton {
     readonly property bool dynamic: currentEntry?.dynamic === true
     readonly property bool animated: currentEntry?.animated === true
 
+    property var wallpaperHistory: []
+    property string historyTraversalPath: ""
     property var rotationRemaining: []
     readonly property var rotationPool: Rotation.pool(list, preferences.rotationKind || "all")
     readonly property string rotationKey: (preferences.rotationKind || "all") + ":" + (preferences.rotationShuffle ?? true) + ":" + rotationPool.join("|")
@@ -180,6 +182,8 @@ Singleton {
     function startCommit() {
         if (demoRestore.running || commit.running || prefWorker.running || !queuedPath)
             return;
+        if (historyTraversalPath !== queuedPath)
+            historyTraversalPath = "";
         commit.requestPath = queuedPath;
         queuedPath = "";
         commitReceived = false;
@@ -202,6 +206,14 @@ Singleton {
             const data = result(text);
             if (!validEntry(data) || data.path !== commit.requestPath)
                 throw new Error("Invalid wallpaper selection response");
+            const previous = actualCurrent;
+            if (previous && previous !== data.path) {
+                if (historyTraversalPath === data.path)
+                    wallpaperHistory = wallpaperHistory.slice(0, wallpaperHistory.lastIndexOf(data.path));
+                else
+                    wallpaperHistory = [...wallpaperHistory, previous].slice(-100);
+            }
+            historyTraversalPath = "";
             media = data;
             lastImage = data.poster;
             if (selectedPath === commit.requestPath)
@@ -272,6 +284,25 @@ Singleton {
             queuedPath = choice.path;
             startCommit();
         }
+    }
+    function previousWallpaper() {
+        if (!rotationReady)
+            return;
+        const valid = wallpaperHistory.filter(path => rotationPool.includes(path));
+        while (valid.length && valid[valid.length - 1] === actualCurrent)
+            valid.pop();
+        wallpaperHistory = valid;
+        const index = rotationPool.indexOf(actualCurrent);
+        const choice = valid.length ? valid[valid.length - 1] : rotationPool[(index - 1 + rotationPool.length) % rotationPool.length];
+        historyTraversalPath = valid.length ? choice : "";
+        queuedPath = choice;
+        startCommit();
+    }
+    function toggleMotion() {
+        if (displayDynamic && !themeBusy)
+            preference({
+                paused: !WallpaperPlayback.paused
+            });
     }
     onRotationAllowedChanged: scheduleRotation()
     onRotationDueMsChanged: scheduleRotation()
@@ -389,6 +420,7 @@ Singleton {
                 if (root.selectedPath === requestPath)
                     root.selectedPath = "";
                 root.rotationRetryMs = Date.now() + 60000;
+                root.historyTraversalPath = "";
             }
             followup.start();
         }
@@ -503,6 +535,12 @@ Singleton {
         }
         function next(): void {
             root.advanceRotation(true);
+        }
+        function previous(): void {
+            root.previousWallpaper();
+        }
+        function toggleMotion(): void {
+            root.toggleMotion();
         }
         function list(): string {
             return root.list.map(entry => entry.path).join("\n");

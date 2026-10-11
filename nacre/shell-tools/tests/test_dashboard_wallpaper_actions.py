@@ -22,7 +22,7 @@ class DashboardWallpaperActionsTests(unittest.TestCase):
             prepare_overview(target)
             fixtures = target / "fixtures"
             definitions = {
-                "NacreWallpapers": 'property string poster:"";property string displayPreview:"";property string displayPath:"";property bool displayDynamic:false;property bool displayAnimated:false;property bool rotationReady:true;property var preferences:({palettePersonality:"natural"});property int nextCalls:0;function advanceRotation(manual){if(manual)nextCalls++;}',
+                "NacreWallpapers": 'property string poster:"";property string displayPreview:"";property string displayPath:"";property bool displayDynamic:false;property bool displayAnimated:false;property bool rotationReady:true;property bool themeBusy:false;property int previousCalls:0;property int pauseCalls:0;function previousWallpaper(){previousCalls++;}function toggleMotion(){pauseCalls++;WallpaperPlayback.paused=!WallpaperPlayback.paused;}property var preferences:({palettePersonality:"natural"});property int nextCalls:0;function advanceRotation(manual){if(manual)nextCalls++;}',
                 "WallpaperPlayback": "property bool batteryPaused:false;property bool paused:false;property bool sleeping:false;property bool locked:false",
                 "NacreDashboardState": "property var home:({})",
                 "NacreColorsApp": "property int opens:0;function open(){opens++;}",
@@ -99,8 +99,20 @@ TestCase {
   keyClick(Qt.Key_Return);compare(NacreWallpapers.nextCalls,2);
   mouseClick(colors,15,15);compare(NacreColorsApp.opens,1);
   mouseClick(picker,15,15);compare(NacrePanelState.mode,"wallpaper");
-  verify(picker.width>next.width);verify(picker.y+picker.height<next.parent.y);
+  verify(picker.width>next.width);verify(picker.mapToItem(view,0,0).y+picker.height<next.mapToItem(view,0,0).y);
   findChild(view,"dashboardSummary").systemRequested();compare(view.visibilities.dashboardTab,3);
+ }
+ function test_transport_keeps_positions_and_hides_static_pause(){
+  const view=createTemporaryObject(page,this);wait(40);
+  const previous=findChild(view,"dashboardPreviousWallpaper"),next=findChild(view,"dashboardNextWallpaper"),pause=findChild(view,"dashboardPauseWallpaper"),pill=findChild(view,"dashboardWallpaperTransport");
+  const point=next.mapToItem(view,0,0);compare(pill.width,132);
+  NacreWallpapers.displayDynamic=false;verify(!pause.visible);
+  const count=NacreWallpapers.previousCalls;mouseClick(previous,22,17);compare(NacreWallpapers.previousCalls,count+1);
+  NacreWallpapers.displayPath="";view.shouldUpdate=false;NacreWallpapers.displayDynamic=true;wait(20);
+  verify(pause.visible);compare(next.mapToItem(view,0,0).x,point.x);compare(pill.width,132);
+  WallpaperPlayback.paused=false;mouseClick(pause,22,17);verify(WallpaperPlayback.paused);compare(pause.icon,"play_arrow");
+  mouseClick(pause,22,17);verify(!WallpaperPlayback.paused);compare(pause.icon,"pause");
+  NacreWallpapers.displayDynamic=false;
  }
  function test_changed_video_starts_without_reopening(){
   if(!__HAS_FFMPEG__){skip('ffmpeg unavailable');return;}

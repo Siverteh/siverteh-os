@@ -235,6 +235,91 @@ TestCase {
         NacrePresentation.active = ({});
     }
 
+    function test_previous_tracks_successful_visits_and_failure_keeps_history() {
+        const view = createTemporaryObject(walls, test);
+        view.list = ["/a", "/b", "/c"].map(path => ({
+                    path,
+                    poster: path,
+                    name: path,
+                    dynamic: true,
+                    animated: false
+                }));
+        view.preferences = {
+            rotationShuffle: false,
+            rotationEnabled: false
+        };
+        view.media = view.list[0];
+        view.lastImage = "/a";
+        function complete(index) {
+            verify(view.publishSelection(JSON.stringify(view.list[index])));
+            view.commit.running = false;
+        }
+        view.advanceRotation(true);
+        compare(view.commit.requestPath, "/b");
+        complete(1);
+        view.advanceRotation(true);
+        compare(view.commit.requestPath, "/c");
+        complete(2);
+        compare(view.wallpaperHistory.join(","), "/a,/b");
+        view.previousWallpaper();
+        compare(view.commit.requestPath, "/b");
+        verify(!view.publishSelection('{}'));
+        compare(view.wallpaperHistory.join(","), "/a,/b");
+        complete(1);
+        compare(view.wallpaperHistory.join(","), "/a");
+        view.previousWallpaper();
+        compare(view.commit.requestPath, "/a");
+        complete(0);
+        compare(view.wallpaperHistory.length, 0);
+        view.previousWallpaper();
+        compare(view.commit.requestPath, "/c");
+        const request = view.commit.requestPath;
+        view.previousWallpaper();
+        compare(view.commit.requestPath, request);
+    }
+    function test_previous_preserves_repeated_nonadjacent_visits() {
+        const view = createTemporaryObject(walls, test);
+        view.list = ["/a", "/b", "/c"].map(path => ({
+                    path,
+                    poster: path,
+                    name: path,
+                    dynamic: true,
+                    animated: false
+                }));
+        view.media = view.list[1];
+        view.lastImage = "/b";
+        view.wallpaperHistory = ["/a", "/b", "/a"];
+        view.previousWallpaper();
+        compare(view.commit.requestPath, "/a");
+        verify(view.publishSelection(JSON.stringify(view.list[0])));
+        view.commit.running = false;
+        compare(view.wallpaperHistory.join(","), "/a,/b");
+        view.previousWallpaper();
+        compare(view.commit.requestPath, "/b");
+        verify(view.publishSelection(JSON.stringify(view.list[1])));
+        view.commit.running = false;
+        compare(view.wallpaperHistory.join(","), "/a");
+    }
+    function test_motion_toggle_uses_existing_preference_owner() {
+        const view = createTemporaryObject(walls, test);
+        view.media = {
+            path: "/a",
+            poster: "/a",
+            dynamic: true,
+            animated: false
+        };
+        view.lastImage = "/a";
+        NacrePresentation.active = {
+            poster: "/a"
+        };
+        WallpaperPlayback.paused = false;
+        view.toggleMotion();
+        compare(view.prefWorker.value.paused, true);
+        view.prefWorker.running = false;
+        view.media.dynamic = false;
+        NacrePresentation.active = {};
+    }
+
     name: "WallpaperRotation"
     when: windowShown
 
