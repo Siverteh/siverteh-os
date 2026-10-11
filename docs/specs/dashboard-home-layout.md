@@ -62,3 +62,10 @@ The last-poster file can update before the worker response; reading current stat
 at completion can otherwise remember a cache image instead of the real wallpaper.
 A native regression covers that order, and real Next/Previous checks verify the
 original wallpaper is restored.
+
+The wallpaper action group uses equal-width Wallpapers/Colors buttons above a
+matching transport row. Softer rectangular corners and restrained palette-tinted
+surfaces keep it legible over moving wallpaper; the center glyph has a small tint
+badge. Static glyphs retain full contrast and an accessible indicator label.
+Existing finite hover/focus feedback and reduced-motion guards remain; no new
+idle animation, wallpaper worker or preference owner is introduced.

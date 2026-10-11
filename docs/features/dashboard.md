@@ -80,8 +80,9 @@ Review real Wayland screenshots and hover/Escape/header retention after deploy.
 
 The first tab is labelled Dashboard; its private `today` identifier preserves
 existing preferences. The wallpaper banner has Wallpapers and Colors side by side above a fixed-width
-previous/pause/next control matching the top row’s width. Static wallpapers leave the pause slot empty, so the
-arrows stay in the same place. Pause stops video/GIF motion through the existing
+previous/pause/next control matching the top row’s width. Static wallpapers show a picture icon in the center with a Static wallpaper
+tooltip; it is an indicator, and clicking it does not change playback. The arrows
+stay in the same place. Pause stops video/GIF motion through the existing
 persisted playback preference; the separate scheduled rotation setting is unchanged.
 Previous retraces up to100successful visits in this shell session, including shuffle.
 With no history, it uses the previous catalogue entry in the selected rotation pool. Next calls the current `advanceRotation(true)` interface, so it

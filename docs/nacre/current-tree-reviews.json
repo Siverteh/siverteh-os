@@ -9656,9 +9656,10 @@
         "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
         "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
-        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted."
+        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted.",
+        "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted."
       ],
-      "sha256": "c2089be969f6c0014d4828e954ff0c9c12f354013e2c2d1fc5332dd948ebabd1"
+      "sha256": "4437c108be2c801c7fc7e0a4acc61e91814a30e58a330374e94bd5aa88f31f40"
     },
     "docs/specs/pearl-dashboard.md": {
       "disposition": "independent",
@@ -9755,9 +9756,10 @@
         "Current body reviewed for user-directed shared system surface, kernel and uptime actions, iridescent media ring, video source restart and busy-button hover/focus lifecycle. Authored from own behavior spec; Qt MediaPlayer public API documentation consulted. Native video-to-video and keyboard/pointer regression tests retained; no inherited implementation consulted.",
         "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
-        "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted."
+        "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
+        "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted."
       ],
-      "sha256": "29e82637d68c27c8c74a0cfa3f1f50d0d32f2bfa4144e7c4571f682acc2c3e78"
+      "sha256": "c7967770f475c5ee64cc53b52f5c4c789ebd0896a10c719b004f566c3b27643b"
     },
     "nacre/shell/modules/dashboard/NacreWeatherPage.qml": {
       "disposition": "independent",
@@ -9837,9 +9839,10 @@
         "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
         "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
-        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted."
+        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted.",
+        "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted."
       ],
-      "sha256": "fc01b27f16363a9fb64554bd3f1552750c382ec9025723ecb28d2130fc608376"
+      "sha256": "ded038fef58f577d5bf0512708dc5d32fdd6eca7251171b6d547bc67fa7f3192"
     },
     "nacre/shell/modules/dashboard/NacreDashboardSummary.qml": {
       "disposition": "independent",
@@ -9884,9 +9887,10 @@
         "Current body reviewed for user-directed shared system surface, kernel and uptime actions, iridescent media ring, video source restart and busy-button hover/focus lifecycle. Authored from own behavior spec; Qt MediaPlayer public API documentation consulted. Native video-to-video and keyboard/pointer regression tests retained; no inherited implementation consulted.",
         "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
-        "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted."
+        "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
+        "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted."
       ],
-      "sha256": "e87e24f358fa569f6faaa7e5a7ae23bd1d300f26b7dcc4b91d40995bf07f10e5"
+      "sha256": "de92a22f9d29a237d2c1e1cb2cdfb75e2258b299bac72367fb3cd898827ad142"
     },
     "nacre/shell/modules/dashboard/NacreAlbumHalo.qml": {
       "disposition": "independent",
