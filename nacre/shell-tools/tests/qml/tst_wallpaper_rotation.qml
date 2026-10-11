@@ -300,6 +300,32 @@ TestCase {
         view.commit.running = false;
         compare(view.wallpaperHistory.join(","), "/a");
     }
+    function test_history_keeps_original_when_poster_file_arrives_first() {
+        const view = createTemporaryObject(walls, test);
+        view.list = ["/a", "/b"].map(path => ({
+                    path,
+                    poster: path,
+                    name: path,
+                    dynamic: true,
+                    animated: false
+                }));
+        view.preferences = {
+            rotationShuffle: false,
+            rotationEnabled: false
+        };
+        view.media = view.list[0];
+        view.lastImage = "/a";
+        view.advanceRotation(true);
+        compare(view.commit.requestPath, "/b");
+        // FileView can receive the new poster before the worker's final selection response.
+        view.lastImage = "/new-poster.png";
+        verify(view.publishSelection(JSON.stringify(view.list[1])));
+        view.commit.running = false;
+        compare(view.wallpaperHistory.join(","), "/a");
+        view.previousWallpaper();
+        compare(view.commit.requestPath, "/a");
+    }
+
     function test_motion_toggle_uses_existing_preference_owner() {
         const view = createTemporaryObject(walls, test);
         view.media = {

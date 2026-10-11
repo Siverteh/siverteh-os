@@ -184,6 +184,7 @@ Singleton {
             return;
         if (historyTraversalPath !== queuedPath)
             historyTraversalPath = "";
+        commit.previousPath = actualCurrent;
         commit.requestPath = queuedPath;
         queuedPath = "";
         commitReceived = false;
@@ -206,7 +207,7 @@ Singleton {
             const data = result(text);
             if (!validEntry(data) || data.path !== commit.requestPath)
                 throw new Error("Invalid wallpaper selection response");
-            const previous = actualCurrent;
+            const previous = commit.previousPath;
             if (previous && previous !== data.path) {
                 if (historyTraversalPath === data.path)
                     wallpaperHistory = wallpaperHistory.slice(0, wallpaperHistory.lastIndexOf(data.path));
@@ -405,6 +406,7 @@ Singleton {
         id: commit
         objectName: "wallpaperCommit"
         property string requestPath: ""
+        property string previousPath: ""
         command: ["python3", root.tool, "select", requestPath, "--stream-presentation"]
         readonly property Connections output: Connections {
             target: commit.stdout

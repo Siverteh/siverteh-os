@@ -111,3 +111,9 @@ Busy buttons release focus; a separate pointer hover handler avoids MouseArea's
 stale hover after disable/re-enable, while keyboard focus remains visible. Native
 tests cover two actual generated video files, busy/hover/focus states, card
 baselines and both system actions.
+
+Wallpaper history captures the outgoing path when the selection transaction starts.
+The last-poster file can update before the worker response; reading current state
+at completion can otherwise remember a cache image instead of the real wallpaper.
+A native regression covers that order, and real Next/Previous checks verify the
+original wallpaper is restored.

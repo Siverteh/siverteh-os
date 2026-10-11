@@ -46,7 +46,7 @@ class RotationTests(unittest.TestCase):
             )
             source = source.replace('Quickshell.env("HOME")', '"/tmp"')
             stubs = """
-                property QtObject commit: QtObject {property bool running:false;property string requestPath:""}
+                property QtObject commit: QtObject {property bool running:false;property string requestPath:"";property string previousPath:""}
                 property QtObject demoRestore: QtObject {property bool running:false;property string token:"";property bool received:false}
                 property QtObject prefWorker: QtObject {property bool running:false;property var value:({})}
                 property QtObject catalog: QtObject {property bool running:false}

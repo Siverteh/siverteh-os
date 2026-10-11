@@ -56,3 +56,9 @@ or timer. Previous follows a bounded100entry successful-visit history, with prev
 catalogue entry as the initial fallback. Do not consume history on a failed change.
 Native tests exercise shuffled/sequential history, busy guards, pause persistence
 command, source restart and fixed positions across static/dynamic changes.
+
+Wallpaper history captures the outgoing path when the selection transaction starts.
+The last-poster file can update before the worker response; reading current state
+at completion can otherwise remember a cache image instead of the real wallpaper.
+A native regression covers that order, and real Next/Previous checks verify the
+original wallpaper is restored.
