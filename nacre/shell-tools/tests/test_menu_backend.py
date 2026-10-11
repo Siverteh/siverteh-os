@@ -104,6 +104,22 @@ class MenuBackendTests(unittest.TestCase):
                 ["pkexec", "pacman", "-S", "--needed", "--", "btop"],
             )
 
+    def test_package_commit_invalidates_capabilities_without_waiting_for_cache(self):
+        with (
+            patch.object(menu, "package_stamp", side_effect=[1, 2]),
+            patch.object(menu, "installed", return_value=[]),
+            patch.object(menu, "fonts", return_value=[]),
+            patch.object(menu, "active", return_value=False),
+            patch.object(menu, "shutil") as utils,
+        ):
+            utils.which.return_value = None
+            first = menu.snapshot(True)
+            self.assertFalse(first["capabilities"]["record"])
+            utils.which.return_value = "/usr/bin/tool"
+            second = menu.snapshot()
+            self.assertTrue(second["capabilities"]["record"])
+            self.assertEqual(second["packageStamp"], 2)
+
     def test_snapshot_cache_avoids_discovery_on_repeated_queries(self):
         with tempfile.TemporaryDirectory() as folder:
             base = Path(folder)

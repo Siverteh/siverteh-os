@@ -133,12 +133,21 @@ def reminders():
     ][:100]
 
 
+def package_stamp():
+    try:
+        return Path("/var/lib/pacman/local").stat().st_mtime_ns
+    except OSError:
+        return 0
+
+
 def snapshot(force=False):
+    stamp = package_stamp()
     cached = read(CACHE / "state.json", {})
     if (
         not force
         and isinstance(cached, dict)
         and cached.get("version") == 1
+        and cached.get("packageStamp") == stamp
         and isinstance(cached.get("created"), (int, float))
         and isinstance(cached.get("capabilities"), dict)
         and isinstance(cached.get("packages"), list)
@@ -177,6 +186,7 @@ def snapshot(force=False):
     }
     value = dict(
         version=1,
+        packageStamp=stamp,
         created=time.time(),
         capabilities=caps,
         packages=installed(),
@@ -396,6 +406,10 @@ def set_reminder(minutes, message):
             "--on-active=" + str(minutes * 60) + "s",
             "--timer-property=AccuracySec=1s",
             "notify-send",
+            "-a",
+            "Nacre Reminders",
+            "-i",
+            "nacre",
             "Reminder",
             message.strip(),
         ],
@@ -862,7 +876,21 @@ def main():
                 return message
             result = {"message": message}
             if message and args.value not in ("logs", "updates"):
-                subprocess.run(["notify-send", "Nacre", message], check=False)
+                subprocess.run(
+                    [
+                        "notify-send",
+                        "-a",
+                        "Nacre Capture"
+                        if args.value.startswith(("capture-", "record-"))
+                        or args.value == "color-picker"
+                        else "Nacre",
+                        "-i",
+                        "nacre",
+                        "Nacre",
+                        message,
+                    ],
+                    check=False,
+                )
         elif args.action in ("webapp-create", "reminder"):
             data = json.loads(sys.stdin.readline(65537))
             result = (

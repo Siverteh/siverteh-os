@@ -6,6 +6,8 @@ import json
 import os
 from pathlib import Path
 import shutil
+import socket
+import time
 import subprocess
 import tempfile
 
@@ -72,11 +74,32 @@ def configured_elsewhere(home=None):
 def unmanaged_socket(active):
     signature = os.environ.get("HYPRLAND_INSTANCE_SIGNATURE", "")
     runtime = os.environ.get("XDG_RUNTIME_DIR", "")
-    return (
-        not active
-        and bool(signature and runtime)
-        and (Path(runtime) / "hypr" / signature / ".hyprsunset.sock").exists()
-    )
+    if active or not signature or not runtime:
+        return False
+    path = Path(runtime) / "hypr" / signature / ".hyprsunset.sock"
+    if not path.exists():
+        return False
+    try:
+        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as connection:
+            connection.settimeout(0.15)
+            connection.connect(str(path))
+        return True
+    except (ConnectionRefusedError, FileNotFoundError):
+        return False
+    except OSError:
+        # Ambiguous or inaccessible listeners retain external ownership.
+        return True
+
+
+def apply_temperature(command, owner, starting):
+    for attempt in range(12 if starting else 1):
+        try:
+            subprocess.run(command, check=True, capture_output=True, timeout=1)
+            return
+        except subprocess.SubprocessError:
+            if not starting or attempt == 11 or service()[1] != owner:
+                raise
+            time.sleep(0.05)
 
 
 def state(home=None):
@@ -85,7 +108,7 @@ def state(home=None):
     data = load(home)
     owned = active and bool(owner) and data.get("owner") == owner
     return {
-        "screenshot": bool(shutil.which("grimblast")),
+        "screenshot": bool(shutil.which("grim") and shutil.which("slurp")),
         "colorPicker": bool(shutil.which("hyprpicker")),
         "powerProfilesSupported": bool(shutil.which("powerprofilesctl")),
         "nightLightSupported": available,
@@ -130,7 +153,7 @@ def night_light(enabled, home=None):
             else ["hyprctl", "hyprsunset", "identity"]
         )
         try:
-            subprocess.run(command, check=True, capture_output=True, timeout=5)
+            apply_temperature(command, owner, started)
         except subprocess.SubprocessError:
             # Undo a partial startup, but only while the invocation still belongs to us.
             if started and service()[1] == owner:
@@ -161,7 +184,7 @@ def main():
             print(json.dumps(night_light(args.value == "on")))
         else:
             command = (
-                ["grimblast", "--notify", "copysave", "area"]
+                ["python3", str(Path(__file__).with_name("screenshot.py")), "region"]
                 if args.action == "screenshot"
                 else ["hyprpicker", "-a"]
             )

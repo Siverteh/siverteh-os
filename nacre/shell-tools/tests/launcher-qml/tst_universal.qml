@@ -113,6 +113,31 @@ TestCase {
         verify(popup.y >= 8);
         verify(popup.y + popup.height <= value.height - 86);
     }
+    function test_controls_can_be_restored_and_show_authoritative_state() {
+        const value = view();
+        value.hoveredEntry = NacreMenu.apps[0];
+        verify(!!value.previewEntry);
+        value.showQuickControls();
+        wait(30);
+        compare(value.previewEntry, null);
+        const dnd = findChild(value, "launcherToggle_dnd");
+        verify(dnd.visible);
+        verify(dnd.toggle);
+        DesktopSettings.set("dnd", false);
+        dnd.clicked();
+        compare(dnd.selected, true);
+        dnd.clicked();
+        compare(dnd.selected, false);
+        compare(value.previewEntry, null);
+        const night = findChild(value, "launcherToggle_night-light");
+        night.clicked();
+        compare(night.selected, true);
+        night.clicked();
+        compare(night.selected, false);
+        LauncherPreferences.recent = ["nacre-menu:actions.controls.night-light", "editor"];
+        compare(NacreMenu.recent().length, 1);
+        compare(NacreMenu.recent()[0].id, "editor");
+    }
     function test_sections_and_five_row_apps() {
         const value = view();
         compare(NacreMenu.navigation.length, 9);
