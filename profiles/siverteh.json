@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "id": "siverteh",
+  "components": [
+    "configs",
+    "shell",
+    "ai",
+    "brain"
+  ],
+  "workspaceNames": [
+    "Browse",
+    "Work",
+    "Chat",
+    "Music",
+    "Mail",
+    "Brain",
+    "Other"
+  ],
+  "workspaceIcons": [
+    "language",
+    "terminal",
+    "forum",
+    "music_note",
+    "mail",
+    "neurology",
+    "apps"
+  ],
+  "workspaceCount": 7,
+  "brainWorkspace": 6,
+  "aiWorkspace": 2,
+  "startup": [
+    {
+      "label": "Browser",
+      "workspace": 1,
+      "argv": [
+        "google-chrome-stable"
+      ],
+      "classes": [
+        "google-chrome",
+        "chromium",
+        "firefox"
+      ]
+    },
+    {
+      "label": "Nacre AI",
+      "workspace": 2,
+      "argv": [
+        "nacre-shell",
+        "tasks"
+      ],
+      "classes": [
+        "nacre-ai-dashboard"
+      ]
+    },
+    {
+      "label": "Discord",
+      "workspace": 3,
+      "argv": [
+        "discord"
+      ],
+      "classes": [
+        "discord"
+      ]
+    },
+    {
+      "label": "Spotify",
+      "workspace": 4,
+      "argv": [
+        "spotify"
+      ],
+      "classes": [
+        "spotify"
+      ]
+    },
+    {
+      "label": "Mail",
+      "workspace": 5,
+      "argv": [
+        "nacre-app",
+        "mail"
+      ],
+      "classes": [
+        "evolution",
+        "org.gnome.evolution",
+        "thunderbird",
+        "chrome-mail.google.com__-default"
+      ]
+    },
+    {
+      "label": "Brain",
+      "workspace": 6,
+      "argv": [
+        "systemctl",
+        "--user",
+        "start",
+        "nacre-brain.service"
+      ],
+      "classes": [
+        "nacre-brain"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "name": "browser-chrome",
+      "match": "^([Gg]oogle-chrome)$",
+      "workspace": 1
+    },
+    {
+      "name": "browser-chromium",
+      "match": "^([Cc]hromium)$",
+      "workspace": 1
+    },
+    {
+      "name": "browser-firefox",
+      "match": "^([Ff]irefox)$",
+      "workspace": 1
+    },
+    {
+      "name": "ai-workers",
+      "match": "^(nacre-ai-task|nacre-ai-dashboard)$",
+      "workspace": 2
+    },
+    {
+      "name": "discord",
+      "match": "^([Dd]iscord)$",
+      "workspace": 3
+    },
+    {
+      "name": "spotify",
+      "match": "^([Ss]potify)$",
+      "workspace": 4
+    },
+    {
+      "name": "mail-evolution",
+      "match": "^(evolution|org[.]gnome[.]Evolution)$",
+      "workspace": 5
+    },
+    {
+      "name": "editor-code",
+      "match": "^([Cc]ode|com[.]microsoft[.]VSCode)$",
+      "workspace": 7
+    },
+    {
+      "name": "editor-codium",
+      "match": "^([Vv][Ss][Cc]odium)$",
+      "workspace": 7
+    },
+    {
+      "name": "editor-cursor",
+      "match": "^([Cc]ursor)$",
+      "workspace": 7
+    }
+  ],
+  "aiFullAccess": true
+}

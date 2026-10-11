@@ -1,26 +1,15 @@
-name: Source checks
-on:
-  push:
-    branches: [main]
-  pull_request:
+name: Personal consumer checks
+on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  desktop:
-    runs-on: ubuntu-24.04
-    container: ghcr.io/archlinux/archlinux:latest
+  consumer:
+    runs-on: ubuntu-latest
     steps:
-      - name: Install target-platform checks
-        run: pacman -Syu --noconfirm --needed git python python-pip python-pillow ruff lua fish qt6-declarative qt6-wayland quickshell qt6-multimedia qt6-multimedia-ffmpeg qt6-imageformats gcc pkgconf gtk3 librsvg kconfig kcolorscheme breeze nodejs npm xorg-server-xvfb xorg-xauth mesa dbus ttf-dejavu
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - name: Install the pinned palette engine in an isolated environment
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Validate personal profile and pin
+        run: python3 tools/check.py
+      - name: Verify pinned core and both prepared profiles
         run: |
-          python -m venv /tmp/check-env
-          /tmp/check-env/bin/pip install ./nacre/shell-cli ruff==0.16.10
-      - name: Install development-only JavaScript formatter
-        run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Source and native UI regression checks
-        run: |
-          # Container root reads a runner-owned checkout; trust only this workspace.
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          dbus-run-session -- xvfb-run -a /tmp/check-env/bin/python tools/check.py
+          ./install.sh --prepare /tmp/personal-preview
+          ./install.sh --profile default --prepare /tmp/general-preview

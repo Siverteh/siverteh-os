@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-# Desktop-provided wrapper; the Orient library and CLI contain no desktop owner.
-exec "$HOME/.local/share/nacre/palette-runtime/venv/bin/orient" "$@"

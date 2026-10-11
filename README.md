@@ -1,48 +1,39 @@
-# Nacre
+# Siverteh OS
 
-Nacre is mother-of-pearl: the layered, iridescent lining inside a shell. This
-Quickshell desktop takes its colors from your wallpaper and coordinates the
-whole desktop around them. Previously maintained as Siverteh OS.
+My personal edition of [Nacre](https://github.com/nacre-desktop/nacre), using the
+independent [Orient](https://github.com/nacre-desktop/orient) color engine.
 
-Personal CachyOS/Hyprland desktop with a wallpaper-driven horizontal Quickshell bar, curved desktop frame, native dashboard and persistent AI sidebar. Nacre AI supports conversation-first Codex/Claude chats; the private Brain organizes saved knowledge into subjects and topics without a coding-project registry.
-
-[System overview](docs/overview.md) explains the components, startup order and where to make changes.
-
-## Current components
-
-- [Desktop shell](nacre/shell/README.md) and [deployment helpers](nacre/shell-tools/README.md): settings, audio/microphone/display/keyboard sliders, notification history, clipboard, app launcher and wallpaper chooser.
-- [Nacre AI](ai/README.md): provider/account settings, new/resume/load chats, isolated project work and shared memory.
-- [Brain](brain/README.md): overview, connections, full-text notes and inline reading. [Discovery design](brain/DISCOVERY.md) explains local semantic grouping, evidence-led growth and limitations.
-- [Login theme](nacre/login/README.md): wallpaper-matched SDDM with manual authentication.
-
-## Deployment
-
-This repository contains the current desktop, rather than historical dotfile profiles. Waybar, SwayNC, Waypaper, Wlogout, the old dock/welcome app, old wallpaper assets and shader presets have been removed. Host-generated color files stay private; reproducible fixed palette presets are retained and checked against the pinned engine. The shell and palette library retain their applicable licenses.
-
-Start with [component ownership](docs/architecture.md) and [maintenance](docs/maintenance.md).
+This repository contains my workspace labels/icons, app routing, startup choices,
+explicit AI permission preference and a tested upstream revision. Desktop/app code
+lives in Nacre; palette code lives in Orient. There is one implementation of each.
+My accounts, conversations, memory vault, wallpaper collection and host overrides
+stay on my devices, outside Git. The repository does not distribute my memories.
 
 ```sh
-python3 tools/check.py       # syntax and regression checks
-./install.sh                # review the deployment plan
-./install.sh --apply        # apply reviewed components
+./install.sh                         # inspect the personal deployment plan
+./install.sh --prepare /tmp/personal # prepare an empty-home installation
+./install.sh --apply                 # managed personal deployment
+./install.sh --profile default --prepare /tmp/general
+python3 tools/upstream.py status
 ```
 
-Installed configurations are copies with hash-based drift protection and private backups. Wallpaper colors, display preferences, accounts, chats and images stay outside the source tree. Desktop deployment parses QML and checks the running shell before marking a revision good. CI runs native Arch/Qt/Lua source and UI checks. Compositor verification, live input/focus and physical-device acceptance run on the target host.
+The wrapper retrieves an immutable Nacre commit with its pinned Orient submodule.
+Cached checkouts are read-only consumers; modified caches are refused, not reset.
+Installation uses upstream's validated managed-copy/rollback workflow. A default
+profile preview does not replace my running desktop. Test a full generic login in
+a separate user/accelerated VM; simultaneous shared-user shell owners are unsupported.
 
-The semantic model is optional: `nacre-ai-tools python brain/provision-semantic.py` prepares its isolated CPU environment and downloads public weights once. Normal note inference is offline. Private notes, chat/account state, the personal wallpaper library and credentials remain outside public Git. The
-small [Welcome demo collection](nacre/shell-tools/demo-wallpapers/NOTICE.md) ships
-explicitly licensed artist wallpapers with attribution and full license texts. Older commits retain previously published artwork removed from the current tree; see [repository boundaries](docs/repository-boundaries.md).
+Generic fixes/features are developed upstream first. After upstream tests/CI:
 
-## Useful shortcuts
+```sh
+python3 tools/upstream.py pin v0.1.0-dev.1
+python3 tools/check.py
+```
 
-| Shortcut | Action |
-|---|---|
-| Super+A | App launcher |
-| Super+W | Wallpaper chooser |
-| Super+X | Native power menu |
-| Super+Z | Fade bar and frame |
-| Super+B | Brain on workspace 6 |
+Review and commit the new pin, then deploy it. Tag/branch inputs are resolved to
+an exact commit; installations never silently follow a floating branch. Initial
+versions are development previews in the0.x series, not a1.0 public release.
 
-Startup targets browser 1, AI 2, Discord 3, Spotify 4, mail 5 and Brain 6; editors route to 7. Plain terminals can open on any workspace. The native shell is maintained under nacre/; current source/dependency evidence is mapped in the [final comparison](docs/nacre/FINAL-COMPARISON.md). Third-party and historical credits remain properly scoped, including the [Orient NOTICE](nacre/shell-cli/NOTICE).
-
-Contributor checks and the completed audit archive are documented in [Contributing to Nacre](docs/contributing.md).
+Your existing accounts, memories and wallpapers remain in their current local
+locations. This repository contains configuration and an upstream pin, not those
+private data. Profile/installer source is GPL-3.0-only; see LICENSE.

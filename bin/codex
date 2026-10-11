@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-exec "$HOME/.local/share/nacre/ai/codex/packages/0.159.2/bin/codex" "$@"

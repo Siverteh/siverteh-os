@@ -1,9 +1,0 @@
-Native Quickshell recovery dependency
-
-This compatibility notice points to NOTICE in this directory for the exact
-upstream release, author credits and scope of quickshell-qt612.patch. The source
-backport retains fifteen implementation changes; the upstream changelog entry is
-omitted. It remains upstream GNU LGPL v3 material, not original Nacre code.
-
-quickshell-LICENSE and licenses/Quickshell-LGPL-3.0.txt retain the upstream LGPL
-text; quickshell-LICENSE-GPL retains its incorporated GNU GPL v3 text.
