@@ -247,16 +247,18 @@ Flickable {
         Accessible.name: informational ? label : ""
         Accessible.ignored: !informational
         NacreSurface {
+            id: centerBadge
+            objectName: "wallpaperCenterBadge"
             anchors.centerIn: parent
             width: Math.min(38, parent.width)
             height: parent.height
             radius: 9
-            color: Qt.tint(NacreTokens.body, Qt.alpha(NacreTokens.accent, .18))
+            color: Qt.tint(NacreTokens.raised, Qt.alpha(NacreTokens.accent, .14))
             visible: control.emphasized
-        }
-        HoverHandler {
-            id: infoHover
-            enabled: control.informational
+            HoverHandler {
+                id: infoHover
+                enabled: control.informational
+            }
         }
         NacreIcon {
             anchors.centerIn: parent
@@ -267,6 +269,7 @@ Flickable {
         }
         NacreInteraction {
             id: interaction
+            anchors.fill: control.emphasized ? centerBadge : parent
             radius: 9
             visible: !control.informational
             disabled: !parent.available

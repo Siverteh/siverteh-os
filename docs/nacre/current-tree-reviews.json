@@ -9660,9 +9660,10 @@
         "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
         "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted.",
         "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted.",
-        "Own responsive wallpaper actions: native test reproduces 360px pearl/control overlap; adaptive accent strip and bounded action width fix 580/360/240px layouts while normal desktop layout remains unchanged. No inherited implementation consulted."
+        "Own responsive wallpaper actions: native test reproduces 360px pearl/control overlap; adaptive accent strip and bounded action width fix 580/360/240px layouts while normal desktop layout remains unchanged. No inherited implementation consulted.",
+        "Own user-directed center-badge refinement: raised palette surface lightens center, hover/focus/hit bounds match visible badge, static hover matches the same bounds. Native actual-component geometry/pointer regression passed; no inherited implementation consulted."
       ],
-      "sha256": "344fe222d023132fbbc174340cceb1a0c58b99dae651fabc2d43bd6835078c89"
+      "sha256": "b1ce1e1b5f0f2912a887c2412e814f6dcf61e7fd7099f0469b64f2bf73ea8405"
     },
     "docs/specs/pearl-dashboard.md": {
       "disposition": "independent",
@@ -9758,9 +9759,10 @@
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
         "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
         "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted.",
-        "Own responsive wallpaper actions: native test reproduces 360px pearl/control overlap; adaptive accent strip and bounded action width fix 580/360/240px layouts while normal desktop layout remains unchanged. No inherited implementation consulted."
+        "Own responsive wallpaper actions: native test reproduces 360px pearl/control overlap; adaptive accent strip and bounded action width fix 580/360/240px layouts while normal desktop layout remains unchanged. No inherited implementation consulted.",
+        "Own user-directed center-badge refinement: raised palette surface lightens center, hover/focus/hit bounds match visible badge, static hover matches the same bounds. Native actual-component geometry/pointer regression passed; no inherited implementation consulted."
       ],
-      "sha256": "049e2ba4954d27955c124e3ab8b626ace5fb67b2327ebf22d95d68cb09a17772"
+      "sha256": "04beba36116e74ed04dc70020e906cfedbe44913502740c52166737d6f1c31e9"
     },
     "nacre/shell/modules/dashboard/NacreWeatherPage.qml": {
       "disposition": "independent",
@@ -9840,9 +9842,10 @@
         "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted.",
         "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted.",
         "Unit night-light fixtures isolate session runtime environment; external ownership assertions remain intact. Current wallpaper spec now explicitly describes the static picture indicator, superseding empty-center design. No runtime night-light behavior altered.",
-        "Own responsive wallpaper actions: native test reproduces 360px pearl/control overlap; adaptive accent strip and bounded action width fix 580/360/240px layouts while normal desktop layout remains unchanged. No inherited implementation consulted."
+        "Own responsive wallpaper actions: native test reproduces 360px pearl/control overlap; adaptive accent strip and bounded action width fix 580/360/240px layouts while normal desktop layout remains unchanged. No inherited implementation consulted.",
+        "Own user-directed center-badge refinement: raised palette surface lightens center, hover/focus/hit bounds match visible badge, static hover matches the same bounds. Native actual-component geometry/pointer regression passed; no inherited implementation consulted."
       ],
-      "sha256": "84a0ec19a89f6d5386ed2d0f7dad17bc9d36a6f96bea5e09918c7afc18a9376e"
+      "sha256": "41d277074ad2ea912ed2a199ff088fd3d924445e510f3f0f97eb761ffd6faf85"
     },
     "nacre/shell/modules/dashboard/NacreDashboardSummary.qml": {
       "disposition": "independent",
@@ -9882,9 +9885,10 @@
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
         "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
         "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted.",
-        "Own responsive wallpaper actions: native test reproduces 360px pearl/control overlap; adaptive accent strip and bounded action width fix 580/360/240px layouts while normal desktop layout remains unchanged. No inherited implementation consulted."
+        "Own responsive wallpaper actions: native test reproduces 360px pearl/control overlap; adaptive accent strip and bounded action width fix 580/360/240px layouts while normal desktop layout remains unchanged. No inherited implementation consulted.",
+        "Own user-directed center-badge refinement: raised palette surface lightens center, hover/focus/hit bounds match visible badge, static hover matches the same bounds. Native actual-component geometry/pointer regression passed; no inherited implementation consulted."
       ],
-      "sha256": "4b21aacff0551fa4090123aec30ba1d2c5afca3e10a9fd1dcce6cd8c3cebd054"
+      "sha256": "1fc95f268ba241dbb512a5df6c2139c147c0a0a283c552d72c01d4e7730ddca1"
     },
     "nacre/shell/modules/dashboard/NacreAlbumHalo.qml": {
       "disposition": "independent",

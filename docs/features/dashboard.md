@@ -122,3 +122,8 @@ original wallpaper is restored.
 At narrow widths, the wallpaper buttons stay inside the banner. The pearl strip
 shows the three accents below440px and yields space to the controls below360px;
 Colors remains available. Native layout checks cover580px,360px and240px views.
+
+The center badge uses the raised surface tone with a gentle accent tint. Its hover,
+focus and hit region match the badge itself; the surrounding reserved slot stays
+quiet. Static tooltip hover follows the same badge bounds. Native geometry and
+pointer checks cover the original larger-highlight mismatch.

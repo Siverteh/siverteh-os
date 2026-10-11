@@ -113,6 +113,11 @@ TestCase {
   const count=NacreWallpapers.previousCalls;mouseClick(previous,22,17);compare(NacreWallpapers.previousCalls,count+1);
   NacreWallpapers.displayPath="";view.shouldUpdate=false;NacreWallpapers.displayDynamic=true;wait(20);
   verify(pause.visible);verify(!pause.informational);compare(next.mapToItem(view,0,0).x,point.x);compare(pill.width,findChild(view,"dashboardWallpapers").parent.width);
+  const feedback=findChild(pause,"nacreInteractionFeedback"),badge=findChild(pause,"wallpaperCenterBadge"),interaction=feedback.parent;
+  compare(feedback.width,badge.width);compare(feedback.height,badge.height);compare(feedback.mapToItem(pause,0,0).x,badge.x);
+  mouseMove(pause,2,16);tryCompare(interaction,"hovered",false);
+  mouseMove(pause,pause.width/2,16);tryCompare(interaction,"hovered",true);
+  const calls=NacreWallpapers.pauseCalls;mouseClick(pause,2,16);compare(NacreWallpapers.pauseCalls,calls);
   WallpaperPlayback.paused=false;mouseClick(pause,22,17);verify(WallpaperPlayback.paused);compare(pause.icon,"play_arrow");
   mouseClick(pause,22,17);verify(!WallpaperPlayback.paused);compare(pause.icon,"pause");
   NacreWallpapers.displayDynamic=false;
