@@ -375,6 +375,7 @@ DESCRIPTIONS = {
 
 def bindings():
     source = {}
+    source_routes = {}
     capture = runpy.run_path(str(Path(__file__).with_name("binding-contracts.py")))[
         "capture"
     ]
@@ -420,6 +421,7 @@ def bindings():
                     + command.split()[-1]
                 )
             source[(record["submap"], key)] = desc
+            source_routes[(record["submap"], key)] = menu_route(command)
     result = []
     for b in json.loads(run(["hyprctl", "binds", "-j"], text=True).stdout):
         parts = [
@@ -447,7 +449,12 @@ def bindings():
                 key=combo,
                 description=desc,
                 submap=b.get("submap", ""),
-                menu=menu_route(b.get("arg", "")),
+                menu=menu_route(b.get("arg", ""))
+                or (
+                    source_routes.get((b.get("submap", ""), combo), "")
+                    if b.get("dispatcher") == "__lua"
+                    else ""
+                ),
             )
         )
     return sorted(result, key=lambda r: (not r["key"].startswith("SUPER"), r["key"]))

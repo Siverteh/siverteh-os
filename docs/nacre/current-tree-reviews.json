@@ -4568,7 +4568,7 @@
     },
     "nacre/shell-tools/desktop-extras.py": {
       "disposition": "independent",
-      "sha256": "99f429ebcb6d8d54c626b759db465f3a924dae97e3afa01b75df67b6262e02f8",
+      "sha256": "e5d25639b758fe406641b955989ce0502d5a58b0786cd061d6a9ed347ab0114a",
       "evidence": [
         "docs/specs/persistence-helpers-source-audit.md",
         "docs/nacre/PERSISTENCE-SOURCE-AUDIT.md",
@@ -4576,7 +4576,8 @@
         "docs/specs/nacre-brain.md: current naming/path migration, compatibility aliases, Brain-specific own glyph and shared brand integration explicitly reviewed. Existing independently authored behavior preserved; no upstream source copied. Migration/collision/rollback/profile guard, CLI, publisher/native launcher tests cover the changes. User-supplied shell artwork provenance remains qualified.",
         "docs/specs/public-brand-cleanup.md: reviewed canonical naming, compatibility retirement and updated regression coverage; earlier evidence describes the original implementation.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
-        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
+        "docs/specs/universal-launcher.md; live Lua callback IDs require a source-contract route map; native present binding matched to bounded captured configured command, fixture and live helper verified"
       ]
     },
     "nacre/shell-tools/desktop-settings.py": {
@@ -4692,12 +4693,13 @@
     },
     "nacre/shell-tools/tests/test_desktop_extras.py": {
       "disposition": "independent",
-      "sha256": "f09c53c308f77376751e91d08acc3c8082d59cc67fe37ec051a739fd961cd23b",
+      "sha256": "c9c363e88020ea3403b73c6dcb812d79a621a5d3490130d9f2f18c9135e09592",
       "evidence": [
         "docs/specs/persistence-helpers-source-audit.md",
         "docs/nacre/PERSISTENCE-SOURCE-AUDIT.md",
         "Complete current source/data body reviewed. Basis 007d020: own temp vault/clipboard/shortcut guide fixtures, later native bind capture regression9a435c3. Later path changes: 9a435c3, 548f0b4, 83b3531. Actual local source history/body/public native producer and caller contracts plus first-source peer comparison support origin, not creation dates/metrics alone. Prior exposure acknowledged; no upstream/old Caelestia/ML4W body consulted for current own correction or legal clean-room/final-license claim. Framework and other callee/fixture origins remain separate.",
-        "docs/specs/nacre-brain.md: current naming/path migration, compatibility aliases, Brain-specific own glyph and shared brand integration explicitly reviewed. Existing independently authored behavior preserved; no upstream source copied. Migration/collision/rollback/profile guard, CLI, publisher/native launcher tests cover the changes. User-supplied shell artwork provenance remains qualified."
+        "docs/specs/nacre-brain.md: current naming/path migration, compatibility aliases, Brain-specific own glyph and shared brand integration explicitly reviewed. Existing independently authored behavior preserved; no upstream source copied. Migration/collision/rollback/profile guard, CLI, publisher/native launcher tests cover the changes. User-supplied shell artwork provenance remains qualified.",
+        "docs/specs/universal-launcher.md; live Lua callback IDs require a source-contract route map; native present binding matched to bounded captured configured command, fixture and live helper verified"
       ]
     },
     "nacre/shell-tools/tests/test_desktop_settings.py": {

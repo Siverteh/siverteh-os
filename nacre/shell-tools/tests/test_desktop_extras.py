@@ -105,11 +105,13 @@ class DesktopExtrasTests(unittest.TestCase):
             folder.mkdir(parents=True)
             (folder / "map.lua").write_text("""
 for n=1,2 do hl.bind("SUPER + "..n,hl.dsp.focus({workspace=n})) end
+hl.bind("SUPER + K",hl.dsp.exec_cmd("~/.local/bin/nacre-menu learn.shortcuts"))
 hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("~/.local/bin/nacre-shell brightness down"))
 hl.define_submap("resize",function() hl.bind("SUPER + R",hl.dsp.submap("reset")) end)
 """)
             native = [
                 dict(key="1", modmask=64, submap="", dispatcher="__lua"),
+                dict(key="K", modmask=64, submap="", dispatcher="__lua", arg="17"),
                 dict(
                     key="XF86MonBrightnessDown",
                     modmask=0,
@@ -127,6 +129,10 @@ hl.define_submap("resize",function() hl.bind("SUPER + R",hl.dsp.submap("reset"))
                 ),
             ):
                 result = extras.bindings()
+            self.assertEqual(
+                next(r["menu"] for r in result if r["key"] == "SUPER+K"),
+                "learn.shortcuts",
+            )
             descriptions = {(r["submap"], r["key"]): r["description"] for r in result}
             self.assertEqual(descriptions[("", "SUPER+1")], "Go to workspace 1")
             self.assertEqual(
