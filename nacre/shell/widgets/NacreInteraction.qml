@@ -13,7 +13,7 @@ Item {
     property bool disabled: false
     property bool focusByPointer: false
     property bool keyboardPressed: false
-    readonly property bool hovered: pointer.containsMouse && visible && enabled && !disabled
+    readonly property bool hovered: hover.hovered && visible && enabled && !disabled
     readonly property bool pressed: (pointer.pressed && pointer.containsMouse || keyboardPressed) && visible && enabled && !disabled
     readonly property bool keyboardFocusVisible: activeFocus && !focusByPointer && visible && enabled && !disabled
     readonly property real stateOpacity: !enabled || disabled ? 0 : pressed ? 0.12 : hovered ? 0.08 : keyboardFocusVisible ? 0.06 : 0
@@ -61,8 +61,11 @@ Item {
         clearKeys();
         focus = false;
     }
-    onEnabledChanged: if (!enabled)
-        clearKeys()
+    // Busy controls must release focus rather than restore a stale focus ring.
+    onEnabledChanged: if (!enabled) {
+        clearKeys();
+        focus = false;
+    }
     onVisibleChanged: if (!visible) {
         clearKeys();
         Qt.callLater(() => {
@@ -108,12 +111,16 @@ Item {
         border.color: NacreTokens.focusInk(root.parent?.color)
         visible: root.keyboardFocusVisible
     }
+    HoverHandler {
+        id: hover
+        enabled: root.enabled && !root.disabled
+    }
     MouseArea {
         id: pointer
         anchors.fill: parent
         containmentMask: root.containmentMask
         enabled: root.enabled && !root.disabled
-        hoverEnabled: true
+        hoverEnabled: root.enabled && !root.disabled
         acceptedButtons: Qt.LeftButton
         cursorShape: Qt.PointingHandCursor
         onPressed: {

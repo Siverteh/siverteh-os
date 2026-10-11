@@ -24,7 +24,7 @@ class DashboardSummaryTests(unittest.TestCase):
             definitions = {
                 "Updates": "property int count:8",
                 "NacreMediaDetails": "property var spectrum:[]",
-                "Environment": 'function env(name){return "fixture-user";}function execDetached(args){}',
+                "Environment": 'function env(name){return "fixture-user";}property var launched:[];function execDetached(args){launched=args;}',
             }
             for name, body in definitions.items():
                 (fixtures / (name + ".qml")).write_text(
@@ -52,6 +52,7 @@ import "fixtures"
 TestCase {
  name:"DashboardSummary";width:1100;height:1200;visible:true;when:windowShown
  Component {id:summary;NacreDashboardSummary {width:940;height:300;active:true}}
+ SignalSpy {id:systemSpy;signalName:"systemRequested"}
  Component {id:meter;NacreAlbumHalo {width:176;height:176;coverSize:120;active:true}}
  function init(){DesktopSettings.data={animations:false};NacreMediaDetails.spectrum=[];NacrePlayers.active=null;}
  function test_bottom_alignment_and_compact_controls_fit(){
@@ -61,6 +62,14 @@ TestCase {
   verify(host.y+host.height<metrics.y);verify(!findChild(scene,"dashboardSpectrum"));
   verify(host.x>=calendar.x+calendar.width);verify(media.x>=host.x+host.width);
   compare(findChild(host,"hostLine4").text,"8 updates");
+  compare(findChild(host,"hostLine5").text,"7.2-fixture");
+  const background=findChild(scene,"dashboardSystemSurface");
+  compare(background.x,host.x);compare(background.y,host.y);
+  compare(background.y+background.height,metrics.y+metrics.height);compare(host.color.a,0);
+  verify(!findChild(media,"mediaDuration"));
+  systemSpy.target=scene;systemSpy.clear();
+  mouseClick(findChild(host,"hostAction_system"),10,10);compare(systemSpy.count,1);
+  mouseClick(findChild(host,"hostAction_updates"),10,10);compare(Environment.launched[1],"updates");
   const play=findChild(media,"mediaToggle");const point=play.mapToItem(media,0,0);verify(point.y+play.height<=media.height);
   scene.width=580;scene.height=scene.implicitHeight;wait(30);
   verify(host.y>=calendar.y+calendar.height);verify(metrics.y>=host.y+host.height);

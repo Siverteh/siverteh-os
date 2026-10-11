@@ -7,6 +7,7 @@ import "overview" as Cards
 Item {
     id: root
     property bool active: false
+    signal systemRequested
     readonly property bool narrow: width < 650
     readonly property real gap: 16
     readonly property real calendarWidth: width * .31
@@ -21,6 +22,15 @@ Item {
         height: root.narrow ? 320 : root.height
         color: NacreTokens.raised
     }
+    NacreSurface {
+        objectName: "dashboardSystemSurface"
+        x: host.x
+        y: host.y
+        width: host.width
+        height: host.height + 12 + metrics.height
+        radius: 18
+        color: NacreTokens.raised
+    }
     Cards.NacreHostCard {
         id: host
         objectName: "dashboardHost"
@@ -30,7 +40,9 @@ Item {
         height: root.narrow ? 210 : Math.max(176, root.height - root.gaugeHeight - 12)
         active: root.active
         updateCount: Updates.count
-        color: NacreTokens.raised
+        kernel: NacreSystemUsage.kernel
+        color: "transparent"
+        onSystemRequested: root.systemRequested()
         onUpdateRequested: Quickshell.execDetached([Quickshell.env("HOME") + "/.local/share/nacre/shell/tools/control.sh", "updates"])
     }
     Row {

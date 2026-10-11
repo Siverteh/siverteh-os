@@ -43,10 +43,13 @@ Flickable {
                 sourceComponent: Item {
                     MediaPlayer {
                         id: video
+                        objectName: "dashboardWallpaperVideo"
+                        autoPlay: true
+                        onMediaStatusChanged: if (mediaStatus === MediaPlayer.LoadedMedia)
+                            play()
                         source: "file://" + root.heroVideoPath
                         loops: MediaPlayer.Infinite
                         videoOutput: videoSurface
-                        Component.onCompleted: play()
                     }
                     VideoOutput {
                         id: videoSurface
@@ -189,6 +192,7 @@ Flickable {
             width: parent.width
             height: root.narrow ? implicitHeight : Math.max(288, root.height - hero.height - sections.spacing)
             active: root.shouldUpdate
+            onSystemRequested: root.visibilities.dashboardTab = 3
         }
     }
 }

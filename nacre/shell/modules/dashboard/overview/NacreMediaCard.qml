@@ -3,7 +3,6 @@ import QtQuick.Shapes
 import qs.widgets
 import qs.services
 import "overview.js" as Overview
-import "../media/media.js" as Media
 import ".." as Dashboard
 
 NacreOverviewCard {
@@ -14,7 +13,6 @@ NacreOverviewCard {
     property var spectrum: []
     readonly property var player: NacrePlayers.active
     property real positionSeconds: 0
-    property real durationSeconds: 0
     property bool artReady: false
     property string artUrl: ""
     readonly property bool sampling: sample.running
@@ -22,7 +20,6 @@ NacreOverviewCard {
     readonly property real artSize: Math.max(40, Math.min(width - 48, compact ? 132 : 174, height - (audioHalo ? 180 : compact ? 136 : 190)))
     function refresh() {
         positionSeconds = player?.positionSupported ? player.position : 0;
-        durationSeconds = player?.lengthSupported ? player.length : 0;
     }
     function refreshArt() {
         if (active)
@@ -125,7 +122,24 @@ NacreOverviewCard {
             height: width
             preferredRendererType: Shape.CurveRenderer
             ShapePath {
-                strokeColor: NacreColours.palette.m3primary
+                strokeGradient: LinearGradient {
+                    x1: 0
+                    y1: progressRing.height
+                    x2: progressRing.width
+                    y2: 0
+                    GradientStop {
+                        position: 0
+                        color: NacreTokens.accent
+                    }
+                    GradientStop {
+                        position: .5
+                        color: NacreTokens.orientSecondary
+                    }
+                    GradientStop {
+                        position: 1
+                        color: NacreColours.palette.m3tertiary
+                    }
+                }
                 strokeWidth: 5
                 fillColor: "transparent"
                 capStyle: ShapePath.RoundCap
@@ -205,17 +219,6 @@ NacreOverviewCard {
             available: !!(root.active && root.player?.canControl && root.player?.canGoNext)
             onActivated: root.perform("next")
         }
-    }
-    NacreText {
-        objectName: "mediaDuration"
-        visible: root.audioHalo && root.player?.positionSupported === true && root.player?.lengthSupported === true
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
-        width: parent.width
-        text: visible ? Media.duration(root.positionSeconds) + " / " + Media.duration(root.durationSeconds) : ""
-        horizontalAlignment: Text.AlignHCenter
-        color: NacreTokens.mutedInk
-        font.pointSize: 9
     }
     Rectangle {
         visible: !root.compact

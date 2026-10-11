@@ -35,7 +35,7 @@ QtObject {
         "NacreWeather": 'property real temperature:22;property string displayTemperature:"22°C";property string description:"Clear";property string icon:"sunny";property string location:"Fixture city";property bool stale:false',
         "NacreTime": "property date date:new Date(2026,9,9,12,34);function format(value){return Qt.formatDateTime(date,value)}",
         "NacrePlayers": "property var active:null",
-        "NacreSystemUsage": "property real cpuPerc:.15;property real memPerc:.63;property real storagePerc:.37",
+        "NacreSystemUsage": 'property real cpuPerc:.15;property real memPerc:.63;property real storagePerc:.37;property string kernel:"7.2-fixture"',
     }
     with (fixtures / "qmldir").open("a") as manifest:
         for name in ("NacreIcon", "NacreClip", "BrandLogo", "FileView"):

@@ -9,6 +9,8 @@ NacreOverviewCard {
     property bool active: false
     property int updateCount: -1
     signal updateRequested
+    signal systemRequested
+    property string kernel: ""
     property string username: Quickshell.env("USER") || "User"
     property string operatingSystem: "Linux"
     property real uptimeSeconds: NaN
@@ -28,12 +30,19 @@ NacreOverviewCard {
         },
         {
             icon: "timer",
-            text: Overview.uptime(uptimeSeconds)
+            text: Overview.uptime(uptimeSeconds),
+            action: "system"
         }
     ].concat(updateCount >= 0 ? [
         {
             icon: "system_update",
-            text: updateCount + " updates"
+            text: updateCount + " updates",
+            action: "updates"
+        }
+    ] : []).concat(kernel ? [
+        {
+            icon: "memory",
+            text: kernel
         }
     ] : [])
     FileView {
@@ -75,14 +84,14 @@ NacreOverviewCard {
         x: logo.x + logo.width + 16
         anchors.verticalCenter: parent.verticalCenter
         width: Math.max(0, root.width - x - 14)
-        spacing: 6
+        spacing: root.rows.length > 5 ? 4 : 6
         Repeater {
             model: root.rows
             Item {
                 required property var modelData
                 required property int index
                 width: parent.width
-                height: 27
+                height: root.rows.length > 5 ? 24 : 27
                 NacreIcon {
                     text: parent.modelData.icon
                     color: parent.index % 2 ? NacreTokens.mutedInk : NacreTokens.accent
@@ -97,11 +106,15 @@ NacreOverviewCard {
                     elide: Text.ElideRight
                 }
                 NacreInteraction {
-                    visible: parent.index === 4
-                    disabled: parent.index !== 4
-                    accessibleName: "Open package updates"
+                    objectName: parent.modelData.action ? "hostAction_" + parent.modelData.action : ""
+                    visible: !!parent.modelData.action
+                    disabled: !parent.modelData.action
+                    accessibleName: parent.modelData.action === "system" ? "Open System tab" : "Open package updates"
                     function onClicked() {
-                        root.updateRequested();
+                        if (parent.modelData.action === "system")
+                            root.systemRequested();
+                        else
+                            root.updateRequested();
                     }
                 }
             }

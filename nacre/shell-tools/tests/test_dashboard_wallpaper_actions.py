@@ -2,6 +2,7 @@
 
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -54,10 +55,33 @@ class DashboardWallpaperActionsTests(unittest.TestCase):
                 )
                 (target / (name + ".qml")).write_text(source)
             (target / "NacreDashboardSummary.qml").write_text(
-                "import QtQuick\nItem {property bool active:false;implicitHeight:300}"
+                "import QtQuick\nItem {property bool active:false;implicitHeight:300;signal systemRequested}"
             )
-            (target / "tst_hero.qml").write_text("""import QtQuick
+            ffmpeg = shutil.which("ffmpeg")
+            if ffmpeg:
+                for name, color in (("first", "red"), ("second", "blue")):
+                    subprocess.run(
+                        [
+                            ffmpeg,
+                            "-v",
+                            "error",
+                            "-f",
+                            "lavfi",
+                            "-i",
+                            f"color=c={color}:s=64x64:r=10",
+                            "-t",
+                            "3",
+                            "-c:v",
+                            "mpeg4",
+                            str(target / (name + ".mp4")),
+                        ],
+                        check=True,
+                        timeout=15,
+                    )
+            (target / "tst_hero.qml").write_text(
+                """import QtQuick
 import QtTest
+import QtMultimedia
 import "fixtures"
 TestCase {
  name:"DashboardWallpaperActions";width:1000;height:650;visible:true;when:windowShown
@@ -66,19 +90,50 @@ TestCase {
   const view=createTemporaryObject(page,this);wait(40);
   const next=findChild(view,"dashboardNextWallpaper"),colors=findChild(view,"dashboardColors"),picker=findChild(view,"dashboardWallpapers");
   mouseClick(next,15,15);compare(NacreWallpapers.nextCalls,1);
+  const feedback=findChild(next,"nacreInteractionFeedback");
+  const interaction=feedback.parent;
   NacreWallpapers.rotationReady=false;mouseClick(next,15,15);compare(NacreWallpapers.nextCalls,1);
+  NacreWallpapers.rotationReady=true;mouseMove(this,990,600);wait(200);
+  verify(!interaction.pressed);verify(!interaction.keyboardFocusVisible);compare(interaction.stateOpacity,0);
+  interaction.forceActiveFocus(Qt.TabFocusReason);verify(interaction.keyboardFocusVisible);
+  keyClick(Qt.Key_Return);compare(NacreWallpapers.nextCalls,2);
   mouseClick(colors,15,15);compare(NacreColorsApp.opens,1);
   mouseClick(picker,15,15);compare(NacrePanelState.mode,"wallpaper");
   verify(picker.width>next.width);verify(picker.y+picker.height<next.parent.y);
+  findChild(view,"dashboardSummary").systemRequested();compare(view.visibilities.dashboardTab,3);
+ }
+ function test_changed_video_starts_without_reopening(){
+  if(!__HAS_FFMPEG__){skip('ffmpeg unavailable');return;}
+  NacreWallpapers.displayDynamic=true;
+  NacreWallpapers.displayPath=Qt.resolvedUrl("first.mp4").toString().replace("file://","");
+  const view=createTemporaryObject(page,this);
+  const video=findChild(view,"dashboardWallpaperVideo");verify(video);
+  tryCompare(video,"playbackState",MediaPlayer.PlayingState,5000);
+  tryVerify(()=>video.position>0,5000);
+  NacreWallpapers.displayPath=Qt.resolvedUrl("second.mp4").toString().replace("file://","");
+  tryCompare(video,"playbackState",MediaPlayer.PlayingState,5000);
+  tryVerify(()=>video.position>0,5000);
+  wait(100);tryVerify(()=>video.position>0,5000);
+  compare(findChild(view,"dashboardWallpaperVideo"),video);
+  view.shouldUpdate=false;wait(30);verify(!findChild(view,"dashboardWallpaperVideo"));
+  NacreWallpapers.displayDynamic=false;
  }
 }
-""")
+""".replace(
+                    "__HAS_FFMPEG__",
+                    str(bool(ffmpeg)).lower(),
+                )
+            )
             result = subprocess.run(
                 [str(runner), "-input", str(target), "-o", "-,txt"],
                 capture_output=True,
                 text=True,
                 timeout=20,
-                env={**os.environ, "QT_QPA_PLATFORM": "offscreen"},
+                env={
+                    **os.environ,
+                    "QT_QPA_PLATFORM": "offscreen",
+                    "QT_FFMPEG_DECODING_HW_DEVICE_TYPES": ",",
+                },
             )
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertNotIn("QWARN", result.stdout + result.stderr)

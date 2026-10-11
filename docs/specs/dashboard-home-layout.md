@@ -30,3 +30,17 @@ to650pixels. Use an owned radial audio halo outside the cover's seek ring, hidde
 for pause/silence/reduced motion. Preserve guarded transport/clock behavior.
 Next was wired to an absent rotate method; call advanceRotation(true) and prove
 actual button behavior. Add a wide Wallpapers button above Next/Colors.
+
+## Shared system card and responsive wallpaper preview
+
+The OS details and three performance circles share one continuous raised surface.
+Kernel version adds a practical sixth row; uptime opens System and updates starts
+the existing update terminal. The media card omits the timer beneath transport;
+its seek ring flows primary through secondary to tertiary.
+
+Video previews start each newly loaded source, including video-to-video Next
+changes while Dashboard remains open. Closing/pausing still releases playback.
+Busy buttons release focus; a separate pointer hover handler avoids MouseArea's
+stale hover after disable/re-enable, while keyboard focus remains visible. Native
+tests cover two actual generated video files, busy/hover/focus states, card
+baselines and both system actions.

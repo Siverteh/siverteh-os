@@ -93,3 +93,17 @@ remains beneath it. Paused, silent, hidden and reduced-motion states hide the
 halo. One existing Cava process serves Dashboard and Media; album/lyrics work
 remains Media-only. All pages fit the original650logical-pixel frame when space
 permits; narrow views stack the blocks and scroll.
+
+## Shared system card and responsive wallpaper preview
+
+The OS details and three performance circles share one continuous raised surface.
+Kernel version adds a practical sixth row; uptime opens System and updates starts
+the existing update terminal. The media card omits the timer beneath transport;
+its seek ring flows primary through secondary to tertiary.
+
+Video previews start each newly loaded source, including video-to-video Next
+changes while Dashboard remains open. Closing/pausing still releases playback.
+Busy buttons release focus; a separate pointer hover handler avoids MouseArea's
+stale hover after disable/re-enable, while keyboard focus remains visible. Native
+tests cover two actual generated video files, busy/hover/focus states, card
+baselines and both system actions.
