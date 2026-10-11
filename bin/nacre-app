@@ -8,7 +8,7 @@ DEFAULTS = {
     "browser": ["google-chrome-stable"],
     "files": ["nacre-shell", "dolphin"],
     "mail": ["google-chrome-stable", "--app=https://mail.google.com/"],
-    "emoji": ["rofimoji", "--action", "copy"],
+    "emoji": ["nacre-menu", "actions.emoji"],
 }
 
 

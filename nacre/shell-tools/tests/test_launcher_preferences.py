@@ -21,7 +21,12 @@ class LauncherPreferencesTests(unittest.TestCase):
             prefs.change("favorite", {"id": "one.desktop", "enabled": True})
             self.assertEqual(
                 prefs.load(),
-                {"favorites": ["one.desktop"], "hidden": ["two.desktop"], "recent": []},
+                {
+                    "favorites": ["one.desktop"],
+                    "hidden": ["two.desktop"],
+                    "recent": [],
+                    "usage": {},
+                },
             )
             self.assertEqual(os.stat(prefs.PATH).st_mode & 0o777, 0o600)
             prefs.change("hide", {"id": "two.desktop", "enabled": False})
@@ -82,3 +87,5 @@ class LauncherPreferencesTests(unittest.TestCase):
             self.assertEqual(len(data["recent"]), 12)
             self.assertEqual(data["recent"][0], "nacre-menu:actions.item-10")
             self.assertEqual(len(set(data["recent"])), 12)
+            self.assertEqual(data["usage"]["nacre-menu:actions.item-10"]["count"], 2)
+            self.assertGreater(data["usage"]["nacre-menu:actions.item-10"]["last"], 0)

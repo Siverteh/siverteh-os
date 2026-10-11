@@ -15,6 +15,48 @@ spec.loader.exec_module(menu)
 
 
 class MenuBackendTests(unittest.TestCase):
+    def test_files_are_scoped_and_query_is_literal(self):
+        import subprocess
+
+        (menu.HOME / "Documents").mkdir()
+        target = menu.HOME / "Documents/report.pdf"
+        target.touch()
+        with (
+            patch.object(menu.shutil, "which", return_value="fd"),
+            patch.object(
+                menu,
+                "run",
+                return_value=subprocess.CompletedProcess(
+                    [], 0, str(target) + "\0/etc/passwd\0", ""
+                ),
+            ) as run,
+        ):
+            result = menu.search_files("report")
+            self.assertEqual([row["path"] for row in result["rows"]], [str(target)])
+            self.assertIn("--fixed-strings", run.call_args.args[0])
+        with patch.object(menu, "run") as run:
+            with self.assertRaises(ValueError):
+                menu.search_files("bad\nname")
+            run.assert_not_called()
+
+    def test_conversions_are_bounded_and_never_update_rates_implicitly(self):
+        import subprocess
+
+        with (
+            patch.object(menu.shutil, "which", return_value="qalc"),
+            patch.object(
+                menu.subprocess,
+                "run",
+                return_value=subprocess.CompletedProcess([], 0, "6.2137 mi", ""),
+            ) as run,
+        ):
+            self.assertTrue(menu.convert_units("10 km to miles")["ok"])
+            self.assertIn("update exchange rates 0", run.call_args.args[0])
+            self.assertEqual(run.call_args.kwargs["stdin"], subprocess.DEVNULL)
+        with patch.object(menu.subprocess, "run") as run:
+            self.assertFalse(menu.convert_units("10 km to miles; injected")["ok"])
+            run.assert_not_called()
+
     def setUp(self):
         directory = tempfile.TemporaryDirectory()
         self.addCleanup(directory.cleanup)

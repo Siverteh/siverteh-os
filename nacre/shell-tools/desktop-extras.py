@@ -442,8 +442,40 @@ def bindings():
             desc = "Go to workspace " + key
         if key.isdigit() and b["modmask"] == 65:
             desc = "Move window to workspace " + key
-        result.append(dict(key=combo, description=desc, submap=b.get("submap", "")))
+        result.append(
+            dict(
+                key=combo,
+                description=desc,
+                submap=b.get("submap", ""),
+                menu=menu_route(b.get("arg", "")),
+            )
+        )
     return sorted(result, key=lambda r: (not r["key"].startswith("SUPER"), r["key"]))
+
+
+def menu_route(command):
+    if not isinstance(command, str):
+        return ""
+    if command.startswith("grim -g "):
+        return "actions.capture.area"
+    if command.startswith("grim ~/Pictures/Screenshots/"):
+        return "actions.capture.screen"
+    direct = re.search(r"(?:^|/)nacre-menu\s+([a-z][a-z0-9.-]*)\s*$", command)
+    if direct:
+        return direct.group(1)
+    routes = {
+        "nacre-shell wallpaper": "style.picker",
+        "nacre-shell clipboard": "actions.clipboard",
+        "nacre-shell overview": "actions.windows",
+        "nacre-shell keys": "learn.shortcuts",
+        "nacre-settings": "setup.settings",
+        "nacre-app emoji": "actions.emoji",
+        "loginctl lock-session": "power.lock",
+        "nacre-app terminal": "actions.terminal",
+    }
+    return next(
+        (route for suffix, route in routes.items() if command.endswith(suffix)), ""
+    )
 
 
 def main():

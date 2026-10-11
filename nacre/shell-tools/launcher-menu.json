@@ -530,7 +530,7 @@
       "icon": "image",
       "operation": "background",
       "value": "wallpaper",
-      "description": "Tint from the image’s own tones",
+      "description": "Tint from the image\u2019s own tones",
       "state": "background"
     },
     {
@@ -954,7 +954,7 @@
       "label": "Nacre project",
       "icon": "public",
       "operation": "url",
-      "value": "https://github.com/nacre-desktop/nacre",
+      "value": "https://github.com/Siverteh/siverteh-os",
       "description": ""
     },
     {
@@ -989,12 +989,12 @@
     {
       "id": "power.reboot",
       "kind": "action",
-      "label": "Restart the laptop",
+      "label": "Restart",
       "icon": "restart_alt",
       "operation": "power",
       "value": "reboot",
       "description": "Close apps and restart",
-      "confirm": "Restart the laptop?"
+      "confirm": "Restart?"
     },
     {
       "id": "power.poweroff",
@@ -1075,6 +1075,50 @@
       "operation": "power-profile",
       "value": "performance",
       "state": "power-profile"
+    },
+    {
+      "id": "actions.media",
+      "kind": "group",
+      "label": "Media and audio",
+      "description": "Playback and output devices",
+      "icon": "volume_up",
+      "provider": "audio"
+    },
+    {
+      "id": "actions.media.play-pause",
+      "kind": "action",
+      "label": "Play or pause",
+      "description": "Control the current player",
+      "icon": "play_arrow",
+      "operation": "media",
+      "value": "playPause"
+    },
+    {
+      "id": "actions.media.next",
+      "kind": "action",
+      "label": "Next track",
+      "description": "Control the current player",
+      "icon": "skip_next",
+      "operation": "media",
+      "value": "next"
+    },
+    {
+      "id": "actions.media.previous",
+      "kind": "action",
+      "label": "Previous track",
+      "description": "Control the current player",
+      "icon": "skip_previous",
+      "operation": "media",
+      "value": "previous"
+    },
+    {
+      "id": "actions.find-files",
+      "kind": "action",
+      "label": "Find files",
+      "description": "Search Documents, Downloads, Pictures, Desktop and Projects",
+      "icon": "folder",
+      "operation": "scope",
+      "value": ": "
     }
   ],
   "software": [

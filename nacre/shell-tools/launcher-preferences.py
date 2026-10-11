@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Private launcher favorites/hidden IDs; atomic updates preserve concurrent edits."""
 
-import argparse, fcntl, json, os, tempfile, sys
+import argparse, fcntl, json, os, tempfile, sys, time
 from pathlib import Path
 
 PATH = Path.home() / ".config/nacre/launcher.json"
@@ -17,10 +17,24 @@ def load():
         for key in ("favorites", "hidden", "recent")
     ):
         raise ValueError("Invalid launcher preferences; original file preserved")
-    return {
+    result = {
         key: list(dict.fromkeys(x for x in data.get(key, []) if isinstance(x, str)))
         for key in ("favorites", "hidden", "recent")
     }
+
+    usage = data.get("usage", {})
+    result["usage"] = {
+        ident: {"count": min(1000000, entry["count"]), "last": entry["last"]}
+        for ident, entry in (usage.items() if isinstance(usage, dict) else [])
+        if isinstance(ident, str)
+        and len(ident) <= 256
+        and isinstance(entry, dict)
+        and type(entry.get("count")) is int
+        and entry["count"] > 0
+        and type(entry.get("last")) in (int, float)
+        and 0 <= entry["last"] <= time.time() + 60
+    }
+    return result
 
 
 def change(action, value):
@@ -44,6 +58,18 @@ def change(action, value):
         if enabled:
             if action == "record":
                 data[key] = [ident, *data[key]][:12]
+                old = data["usage"].get(ident, {})
+                data["usage"][ident] = {
+                    "count": min(1000000, old.get("count", 0) + 1),
+                    "last": time.time(),
+                }
+                data["usage"] = dict(
+                    sorted(
+                        data["usage"].items(),
+                        key=lambda item: item[1]["last"],
+                        reverse=True,
+                    )[:512]
+                )
             else:
                 data[key].append(ident)
         fd, name = tempfile.mkstemp(dir=PATH.parent)

@@ -10,6 +10,15 @@ state. The detail pane explains the selected item, previews wallpapers/fonts and
 provides secondary actions. Smaller outputs collapse the pane and adapt the grid
 without losing its five rows.
 
+The panel joins the bottom frame and shares its iridescent rim. Favorites omit
+redundant heart markers; elsewhere hearts appear on hover/selection. Headings
+align with the compact Back control. The stable detail pane shows recent items,
+three stateful quick toggles and update count when nothing is selected.
+
+Search supports initials and small typos. A bounded frequency/recency boost breaks
+close matches; exact names and aliases retain priority. Private history contains
+only IDs, counts and last-launch times (up to512items), never query text.
+
 Typing selects the best available result; blank browsing selects nothing until
 arrow navigation. Enter opens or runs the selected item. Right enters a group or
 opens its actions; Tab opens item actions when selected. Backspace with an empty
@@ -27,6 +36,7 @@ remain compatible. Recent history stores destination IDs, not questions or searc
 | `#` | Private Nacre Brain search |
 | `?` | Explicit Nacre AI question |
 | `/` | Show scope help |
+| `:` | Find files in Documents, Downloads, Pictures, Desktop and Projects |
 
 Unmatched normal text never silently becomes an AI request. The assistant action
 protects active work and unsent drafts. Arithmetic accepts the existing operators,
@@ -108,3 +118,25 @@ Research informed capability/routing choices through
 [Omarchy's official menu documentation](https://github.com/basecamp/omarchy/blob/quattro/docs/menu.md)
 and public menu data. Its implementation bodies/catalog were not transplanted.
 Nacre keeps its own QML, operations, palette language and brand assets.
+
+## Routed tools and optional search
+
+Super+K opens learn.shortcuts; Super+Ctrl+C opens actions.capture; Super+X opens
+Power. Super+Esc still locks. Super+. uses the Nacre emoji list. Window/Wi-Fi
+selectors use nacre-menu pick, and the clipboard fallback uses the launcher.
+Custom nacre-app choices remain explicit user overrides. Rofi theme exports remain
+available for external tools; no package is removed from an existing host.
+
+Global search ends with a clearly labeled web-search row; choosing it opens the
+configured browser. File search is literal, read-only, bounded to50results and
+requires fd. It does not index hidden files or preview contents. Obsolete responses
+are discarded. Media controls reuse NacrePlayers; output choices reuse NacreAudio.
+Shortcut chips derive from current bindings and disappear when no matching binding
+exists. The Learn project link points to the existing source repository, whose
+historical GitHub address is not the public desktop/runtime name.
+
+Basic arithmetic retains its small local grammar. Unit expressions such as
+`= 10 km to miles` use optional qalc in result-only mode with a calculation/timeout
+limit, no saved definitions/history and no automatic rate download. Currency
+results use Qalculate's stored rates; refresh those explicitly in Qalculate before
+relying on a current conversion. Qalculate is not installed automatically.

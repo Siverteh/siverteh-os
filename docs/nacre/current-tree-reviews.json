@@ -1436,10 +1436,12 @@
     },
     "hypr/conf/keybinding.lua": {
       "disposition": "independent",
-      "sha256": "46e541deee8eb4c95ccfa5c77043e9d839c0aa4846afeaa150638e5836d0824d",
+      "sha256": "ff8b04bee88075e6cc77945a22ee4aaaf2b51a97fb1b80c3b8de40bfcd9ead6c",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "nacre/shell-tools/binding-contracts.lua": {
@@ -1506,12 +1508,14 @@
     },
     "nacre/shell-tools/shortcuts.lua": {
       "disposition": "independent",
-      "sha256": "0603b3c0df287d47d8ea4c441b9ded80d99c8d092fc487e19bfd77e60c49e97e",
+      "sha256": "87fc9f03c4f71246b8d34d3c09cf994ba577c601f4b3b4d3179daa3de6be826e",
       "evidence": [
         "docs/specs/compositor-entrypoint.md",
         "docs/nacre/PROVENANCE.md#compositor-entry-point-and-local-extension-review",
         "Local native-tool extension introduced 007d020 under siverteh/shell-tools/shortcuts.lua; passive dismissal added 63162dc; Thunar rule removed to managed rule owner85f31ab; namespace changed548f0b4. Current four bindings are own feature declarations, not a rename-based certificate.",
-        "2026-10-10 Welcome live-demo refinements reviewed: independent cached four-scene component, existing NacreWallpapers publication/queue and rotation pause integration, active binding descriptions/introspection without static keys or raw commands, missing optional-component guide and distinct fallback readiness, compact plain-language intro. No other shell implementation consulted/copied. Own actual-logo/light-dark/native controls fixtures and live-remap/Lua-registration tests reviewed; normal full/live deployment still required. No new palette algorithm/account/installation owner or idle polling. docs/specs/welcome-live-demo.md; docs/features/welcome.md."
+        "2026-10-10 Welcome live-demo refinements reviewed: independent cached four-scene component, existing NacreWallpapers publication/queue and rotation pause integration, active binding descriptions/introspection without static keys or raw commands, missing optional-component guide and distinct fallback readiness, compact plain-language intro. No other shell implementation consulted/copied. Own actual-logo/light-dark/native controls fixtures and live-remap/Lua-registration tests reviewed; normal full/live deployment still required. No new palette algorithm/account/installation owner or idle polling. docs/specs/welcome-live-demo.md; docs/features/welcome.md.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "nacre/shell/services/Updates.qml": {
@@ -2550,12 +2554,14 @@
     },
     "nacre/shell/services/LauncherPreferences.qml": {
       "disposition": "independent",
-      "sha256": "6e64531064aa73597dcf3dd83ca8cf4da2c1d06064cc648a5705d228ab97371e",
+      "sha256": "138cfc5ba5196340bb98ada3d0e1068b32bd2e74aa291a0a048dd236f4c78dc0",
       "evidence": [
         "docs/specs/services-source-audit.md",
         "docs/nacre/SERVICES-SOURCE-AUDIT.md",
         "Full current body reviewed; authoring/replacement a3e2420: Locally introduced desktop/workflow helper service; actual current body/caller schemas reviewed, meaningful owner integrations traced separately. Later changes: 548f0b4, 2c1d2ca, 83b3531, e044859, 7ed920d. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited.",
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "nacre/shell/services/LockWidgets.qml": {
@@ -2589,11 +2595,13 @@
     },
     "nacre/shell/services/NacreAudio.qml": {
       "disposition": "independent",
-      "sha256": "f1074dea487408c1a928f12aeae85680e941f1f8eae167de8f5ecff1e1ed89a6",
+      "sha256": "7bffcbb91018ae0a1ff33cd99d49acaa4e38d45f166747973b5ffde787c3fad9",
       "evidence": [
         "docs/specs/services-source-audit.md",
         "docs/nacre/SERVICES-SOURCE-AUDIT.md",
-        "Full current body reviewed; authoring/replacement 2f9300f: Independent native owner/replacement and own compatibility adapter; completed matching provider spec/behavior boundary retained. Later changes: none. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited."
+        "Full current body reviewed; authoring/replacement 2f9300f: Independent native owner/replacement and own compatibility adapter; completed matching provider spec/behavior boundary retained. Later changes: none. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "nacre/shell/services/NacreBacklight.qml": {
@@ -3848,7 +3856,7 @@
     },
     "nacre/shell/modules/launcher/NacreAppBrowser.qml": {
       "disposition": "independent",
-      "sha256": "749147f08474ff3edbff7fe19f0376a3f3a298a0faf3aee51177fa240e7bc457",
+      "sha256": "fadb550ff2ca9a40df5ea1aba8921eb54ff4673d09c4f31b2f0e871d78d4844d",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
@@ -3862,7 +3870,9 @@
         "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied.",
         "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied.",
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
-        "2026-10-11: initial leaf-route resolution selects its parent and row without execution; native Qt regression added; safe debug geometry exposed for layout inspection."
+        "2026-10-11: initial leaf-route resolution selects its parent and row without execution; native Qt regression added; safe debug geometry exposed for layout inspection.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "nacre/shell/modules/launcher/NacreLauncherPanel.qml": {
@@ -3966,7 +3976,7 @@
     },
     "nacre/shell-tools/control.sh": {
       "disposition": "independent",
-      "sha256": "77703adf108175c22bb6c255c20d6763984fb4517c8ad87609bf9d9c2170e6eb",
+      "sha256": "442fa2f20f18b07e457284e91b04159b52b913473939fa5f65fa85fdb341ac12",
       "evidence": [
         "docs/specs/desktop-startup-source-audit.md",
         "docs/nacre/DESKTOP-STARTUP-SOURCE-AUDIT.md",
@@ -3974,7 +3984,9 @@
         "docs/specs/frame-control-center.md",
         "docs/specs/dolphin-files.md: independently authored Dolphin route/setup and public-Qt/KDE style adapter; retains shared publisher/native Breeze, no upstream implementation copied; native palette, scope and archive behavior verified.",
         "docs/specs/nacre-brain.md: current naming/path migration, compatibility aliases, Brain-specific own glyph and shared brand integration explicitly reviewed. Existing independently authored behavior preserved; no upstream source copied. Migration/collision/rollback/profile guard, CLI, publisher/native launcher tests cover the changes. User-supplied shell artwork provenance remains qualified.",
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
       "notes": "Own approved frame/control-center slice reviewed against current Nacre spec and public APIs, without inherited source consultation. Marked geometry and passive feedback remain shared-state owned; no writes on opening or idle polling. Current notification history clock observes actual visibility and reduced-motion feedback settles immediately. New native/ownership/routing/geometry regressions complement existing full checks and live acceptance."
     },
@@ -4283,11 +4295,13 @@
     },
     "nacre/shell-tools/desktop-actions.py": {
       "disposition": "independent",
-      "sha256": "09bc2e595064e71817b027102e0ad98d058d9f59a55695708d005b2787c48650",
+      "sha256": "8a0ec2588d9136a5b7491b9b169a0cd1a534222b94a4357871ce1d00c1e6fb95",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
         "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
-        "docs/specs/public-brand-cleanup.md: reviewed canonical naming, compatibility retirement and updated regression coverage; earlier evidence describes the original implementation."
+        "docs/specs/public-brand-cleanup.md: reviewed canonical naming, compatibility retirement and updated regression coverage; earlier evidence describes the original implementation.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "nacre/shell-tools/device-actions.py": {
@@ -4554,13 +4568,15 @@
     },
     "nacre/shell-tools/desktop-extras.py": {
       "disposition": "independent",
-      "sha256": "bf45146fe98683c88f210355f44a1376421745593e604f7d11b995161f5147c8",
+      "sha256": "99f429ebcb6d8d54c626b759db465f3a924dae97e3afa01b75df67b6262e02f8",
       "evidence": [
         "docs/specs/persistence-helpers-source-audit.md",
         "docs/nacre/PERSISTENCE-SOURCE-AUDIT.md",
         "Complete current source/data body reviewed. Basis 007d020: local on-demand chat/vault/clipboard/shortcut adapters; later independent binding-contract capture9a435c3 traced. Later path changes: 9a435c3, 548f0b4, 83b3531, 7a05033. Actual local source history/body/public native producer and caller contracts plus first-source peer comparison support origin, not creation dates/metrics alone. Prior exposure acknowledged; no upstream/old Caelestia/ML4W body consulted for current own correction or legal clean-room/final-license claim. Framework and other callee/fixture origins remain separate.",
         "docs/specs/nacre-brain.md: current naming/path migration, compatibility aliases, Brain-specific own glyph and shared brand integration explicitly reviewed. Existing independently authored behavior preserved; no upstream source copied. Migration/collision/rollback/profile guard, CLI, publisher/native launcher tests cover the changes. User-supplied shell artwork provenance remains qualified.",
-        "docs/specs/public-brand-cleanup.md: reviewed canonical naming, compatibility retirement and updated regression coverage; earlier evidence describes the original implementation."
+        "docs/specs/public-brand-cleanup.md: reviewed canonical naming, compatibility retirement and updated regression coverage; earlier evidence describes the original implementation.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "nacre/shell-tools/desktop-settings.py": {
@@ -4597,12 +4613,14 @@
     },
     "nacre/shell-tools/launcher-preferences.py": {
       "disposition": "independent",
-      "sha256": "349c2d29d58f25dfc867644e51422c479643183316fcb3640b91bbb669f751b5",
+      "sha256": "462653024668a45408e8eee5080c6a20fbae2199fa8dd1190ced26b13e5b19e9",
       "evidence": [
         "docs/specs/persistence-helpers-source-audit.md",
         "docs/nacre/PERSISTENCE-SOURCE-AUDIT.md",
         "Complete current source/data body reviewed. Basis a3e2420: local locked atomic favorites/hidden state, malformed preference refusal and user-only mutations. Later path changes: 548f0b4, 83b3531. Actual local source history/body/public native producer and caller contracts plus first-source peer comparison support origin, not creation dates/metrics alone. Prior exposure acknowledged; no upstream/old Caelestia/ML4W body consulted for current own correction or legal clean-room/final-license claim. Framework and other callee/fixture origins remain separate.",
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "nacre/shell-tools/maintenance.py": {
@@ -4695,13 +4713,15 @@
     },
     "nacre/shell-tools/tests/test_launcher_preferences.py": {
       "disposition": "independent",
-      "sha256": "1fe779da7abb274baad0a71b40b257387a16b39650f24fda48c6746b34ad9d45",
+      "sha256": "a5a6dec38306d8c8d0ea1a08838092e795c67b20d62553c954d3c062697e996c",
       "evidence": [
         "docs/specs/persistence-helpers-source-audit.md",
         "docs/nacre/PERSISTENCE-SOURCE-AUDIT.md",
         "Complete current source/data body reviewed. Basis a3e2420: own temp private preference mutations/permissions/malformed-file preservation fixtures. Later path changes: 548f0b4, bb46dd6, 83b3531, e044859. Actual local source history/body/public native producer and caller contracts plus first-source peer comparison support origin, not creation dates/metrics alone. Prior exposure acknowledged; no upstream/old Caelestia/ML4W body consulted for current own correction or legal clean-room/final-license claim. Framework and other callee/fixture origins remain separate.",
         "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied.",
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "nacre/shell-tools/tests/test_notification_history.py": {
@@ -5223,12 +5243,14 @@
     },
     "bin/nacre-app": {
       "disposition": "independent",
-      "sha256": "ff7b12c424c35c61dc1d8397589391d44e778ca202ac2d0f3bee0817c255917a",
+      "sha256": "b67fda82b302081733fb8c3ef2735455b8b1cd76e3949b8e23a5d6f7466167e3",
       "evidence": [
         "docs/specs/ai-bootstrap-source-audit.md",
         "docs/nacre/AI-BOOTSTRAP-SOURCE-AUDIT.md",
         "Full current body and local creation/change history reviewed. Basis 2fa3a95; subsequent changes: 548f0b4, a046f7b, 86bebe6, 83b3531. Native/provider public interfaces and custom account/project/backup contracts; no claim to external dependency implementation. Whole-tree comparison/licensing remains open.",
-        "docs/specs/dolphin-files.md: independently authored Dolphin route/setup and public-Qt/KDE style adapter; retains shared publisher/native Breeze, no upstream implementation copied; native palette, scope and archive behavior verified."
+        "docs/specs/dolphin-files.md: independently authored Dolphin route/setup and public-Qt/KDE style adapter; retains shared publisher/native Breeze, no upstream implementation copied; native palette, scope and archive behavior verified.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "bin/obsidian": {
@@ -6050,10 +6072,11 @@
     },
     "tools/tests/fixtures/keybindings-contract.json": {
       "disposition": "non-implementation",
-      "sha256": "75a8e60ae4b358c4c0a6e011b41d572a00d96bcbd437bad6120c7e46f4e49d11",
+      "sha256": "c29acab76281a56b777ec5532dd592c273e30aedfbe1e54ae1666c417293d90b",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "tools/tests/fixtures/window-routing-contract.json": {
@@ -6402,9 +6425,10 @@
     },
     "tools/tests/test_bindings.py": {
       "disposition": "independent",
-      "sha256": "166e69701e6ef7e175ea3575177430b279f6b4d5e9d00d7eab0d4c0502e03d53",
+      "sha256": "3740b7c27b2ef5b9cd6dd120e09684d8c1d14d137621c293c9c1cdc37f1765f4",
       "evidence": [
-        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "tools/tests/test_compositor_entrypoint.py": {
@@ -6581,14 +6605,16 @@
     },
     "docs/features/launcher.md": {
       "disposition": "non-implementation",
-      "sha256": "496afde416a0611dbca233c54a635f14560e7640216d9d09c3c2bc1415787ced",
+      "sha256": "9f8eb68252b6ec2cecdbbea0f97e1b5bcc72734cc67830435635a1680557a91f",
       "evidence": [
         "docs/nacre/DOCUMENTATION-GUIDE-AUDIT.md",
         "docs/specs/documentation-source-audit.md",
         "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied.",
         "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied.",
         "2026-10-11 live ordering correction: actual Qt JS sort reordered large equal-score arrays. Empty actions now bypass sorting; ranked ties use original index explicitly. Native test asserts full real catalog starts Wallpaper/Calculator and preserves tied Open order. Visual verification repeated; no external implementation copied.",
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
       "notes": "Locally maintained current project behavior/deployment prose reviewed in full with history and reader/source checks; no implementation-origin or license conclusion."
     },
@@ -9783,9 +9809,11 @@
     },
     "tools/tests/test_public_names.py": {
       "disposition": "independent",
-      "sha256": "70d99c17f990b2cac6da2f8f46dee49d7445c0bb60c7e633eae07aba9705c137",
+      "sha256": "ad1604190b4ddb2aa7acd2e827f81fc2b30f3dd73169e0752269d7116faa7bc8",
       "evidence": [
-        "docs/specs/public-brand-cleanup.md: authored here for canonical installation and previous-name regression checks."
+        "docs/specs/public-brand-cleanup.md: authored here for canonical installation and previous-name regression checks.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ]
     },
     "docs/specs/public-brand-cleanup.md": {
@@ -9877,9 +9905,11 @@
       "disposition": "independent",
       "evidence": [
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
-        "2026-10-11: initial leaf-route resolution selects its parent and row without execution; native Qt regression added; safe debug geometry exposed for layout inspection."
+        "2026-10-11: initial leaf-route resolution selects its parent and row without execution; native Qt regression added; safe debug geometry exposed for layout inspection.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
-      "sha256": "cf1c61cebfbb9466c107c852193d5304482cdbd603e5b8245774ef3424126237"
+      "sha256": "74e5051edb003e79f78328163d463f7e08a4b3858f706695311700f45a175581"
     },
     "nacre/shell-tools/tests/test_screenshot.py": {
       "disposition": "independent",
@@ -9898,16 +9928,20 @@
     "nacre/shell-tools/tests/test_universal_menu_ui.py": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
-      "sha256": "23134d7380f2c05e8b54b162fda0f0a5fd837b3ed85b6f07d810e74ffdd98c4e"
+      "sha256": "40a779cacc4f32edd50102603d9c33567e24c651f28b2081a92c614e692bb026"
     },
     "nacre/shell-tools/tests/test_menu_backend.py": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
-      "sha256": "3d3821ddd762c747b48789ec8e2af842b76c8af49c27a4492bfdb0d36c290960"
+      "sha256": "4353af1fb104911ca88f77677de04be8292adfaee2e44c171f0fa39d956d4c41"
     },
     "nacre/shell-tools/menu.sh": {
       "disposition": "independent",
@@ -9919,9 +9953,11 @@
     "nacre/shell/modules/launcher/NacreMenuButton.qml": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
-      "sha256": "7a9de9abcf654dbd0204a4ceebb6b81df5be102301d31c29773e95fb83d3f44a"
+      "sha256": "462ed8a0098b9294a3d30b923d65028dd28bc6c2b8a45e0de4f4f82728b66222"
     },
     "nacre/shell-tools/tests/test_menu_model.py": {
       "disposition": "independent",
@@ -9933,16 +9969,20 @@
     "nacre/shell/services/NacreMenu.qml": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
-      "sha256": "a0e96b7b7a7c42a9cf30f33de3e98fb4944064063b72509ab6963f9464a99f0e"
+      "sha256": "f26daed112dd6d910a106e28dd908a31560ad0c5592b64c1dd77758ce29ef784"
     },
     "nacre/shell-tools/launcher-menu.json": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
-      "sha256": "775bc3741150de2492d9396c8e4e3fbd3b20041637cbc5c0185b38eb7bf26156"
+      "sha256": "0137633e7a311a4c79404d121ad6529c8836c47a32039d94198a150ced1f75bf"
     },
     "nacre/shell/modules/launcher/NacreMenuForm.qml": {
       "disposition": "independent",
@@ -9954,23 +9994,29 @@
     "docs/specs/universal-launcher.md": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
-      "sha256": "53ee587fcc92a29540342e9cd5343e799dbec6cbbf9c0420ee8be8c8fd2e7a8a"
+      "sha256": "914dca5d43f4f2193fb0f3f92d4e59300ebf165432221a272074b8a32d98b62d"
     },
     "nacre/shell/modules/launcher/menu-model.js": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
-      "sha256": "c92bcce94b036627c3d8b3a33b68a5f259f7f1f09e796ac636cd66b336bef079"
+      "sha256": "fd8b0f6df9cd5cbec0abe2109be45dc42cfaacbe9ee97d37fae950a6d9ea80b2"
     },
     "nacre/shell-tools/menu-backend.py": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
-      "sha256": "3c7283c04992abcad18130d5fb212e397a7c93bef58267d9aa60521f1c18f67d"
+      "sha256": "1d17e1a36880d5e6425a198c420ea6e5156c2a5e87276c152c9a9e66c26e8875"
     },
     "nacre/shell/modules/launcher/NacreMenuIcon.qml": {
       "disposition": "independent",
@@ -9989,9 +10035,11 @@
     "nacre/shell-tools/tests/test_menu_model.mjs": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
       ],
-      "sha256": "fef8d3f63a4092ada022a73aa2cba20c575b8e4fdbeb327f95e5e6fd391f1831"
+      "sha256": "67ca85c93a0d4dc6d866e8024438f1acfa5cecec8978d1572c0cff029653cb22"
     },
     "nacre/shell/services/NacreMenuPrompt.qml": {
       "disposition": "independent",

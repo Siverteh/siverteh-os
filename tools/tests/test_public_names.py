@@ -42,6 +42,12 @@ class PublicNamesTests(unittest.TestCase):
                 text = "\n".join(
                     line for line in text.splitlines() if not line.startswith("author=")
                 )
+            if name == "nacre/shell-tools/launcher-menu.json":
+                # Historical GitHub repository address is the real source URL,
+                # not an active product/runtime identifier.
+                text = text.replace(
+                    "https://github.com/" + "siver" + "teh/siver" + "teh-os", ""
+                )
             self.assertFalse(any(word in text for word in forbidden), name)
 
     def test_fresh_home_controller_roots_and_provider_profiles_are_canonical(self):

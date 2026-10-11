@@ -83,3 +83,15 @@ MenuModel.js or inherited Caelestia/ML4W implementation was consulted or copied.
 Implement Nacre's catalog/model independently; do not transplant its menu/catalog.
 References: https://github.com/basecamp/omarchy/blob/quattro/docs/menu.md and
 https://github.com/basecamp/omarchy/blob/quattro/default/omarchy/omarchy-menu.jsonc.
+
+## Refinement after live review
+
+Keep the drawer joined to the shell's bottom contour/rim, no separate rounded card.
+Compact vertically aligned breadcrumb/Back control; redundant hearts hidden in
+Favorites, hover/selection markers elsewhere; larger adaptive icons, dim prefix
+chips and stateful idle detail controls. Add bounded private usage ranking,
+initials/typo matching and explicit web/file search. Route window/Wi-Fi/emoji and
+clipboard fallback through Nacre. Section bindings retain lock ownership, media
+and output selection retain existing service owners, conversions use optional
+bounded qalc without implicit rate downloads. Historical GitHub source URLs are
+valid provenance/navigation pointers, not active product identities.

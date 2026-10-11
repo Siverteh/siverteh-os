@@ -2,6 +2,7 @@
 """Bounded menu discovery and explicit user-selected tools; no search-text execution."""
 
 import argparse
+import hashlib
 import fcntl
 from functools import wraps
 from datetime import datetime
@@ -706,12 +707,118 @@ def edit_config(value):
     return subprocess.call([*command, str(path)])
 
 
+def search_files(query):
+    if (
+        not isinstance(query, str)
+        or len(query) > 160
+        or any(ord(c) < 32 for c in query)
+    ):
+        raise ValueError("Invalid file search")
+    if len(query.strip()) < 2:
+        return {"rows": [], "message": "Type two or more characters to find files"}
+    roots = [
+        str(HOME / name)
+        for name in ("Documents", "Downloads", "Pictures", "Desktop", "Projects")
+        if (HOME / name).is_dir()
+    ]
+    if not roots:
+        return {"rows": []}
+    if not shutil.which("fd"):
+        return {"rows": [], "message": "Install fd to search files"}
+    result = run(
+        [
+            "fd",
+            "--type",
+            "f",
+            "--fixed-strings",
+            "--ignore-case",
+            "--max-results",
+            "50",
+            "--print0",
+            "--",
+            query,
+            *roots,
+        ],
+        timeout=2,
+    )
+    rows = []
+    for value in result.stdout.split("\0"):
+        if not value or any(ord(c) < 32 for c in value):
+            continue
+        path = Path(value)
+        if not any(path.is_relative_to(Path(root)) for root in roots):
+            continue
+        rows.append(
+            {
+                "path": str(path),
+                "name": path.name,
+                "id": hashlib.sha256(value.encode()).hexdigest()[:20],
+            }
+        )
+    return {"rows": rows[:50]}
+
+
+def convert_units(expression):
+    if (
+        not isinstance(expression, str)
+        or len(expression) > 256
+        or not re.fullmatch(r"[+\-]?[0-9][A-Za-z0-9µ°% .+*/^()\-]*", expression)
+        or not re.search(r"\b(to|in)\b", expression)
+    ):
+        return {"ok": False, "error": "Try a conversion such as 10 km to miles"}
+    if not shutil.which("qalc"):
+        return {
+            "ok": False,
+            "error": "Install libqalculate for unit and currency conversions",
+        }
+    result = subprocess.run(
+        [
+            "qalc",
+            "--terse",
+            "--defaults",
+            "--nodatasets",
+            "--time",
+            "400",
+            "--set",
+            "update exchange rates 0",
+            "--set",
+            "save config 0",
+            "--set",
+            "save definitions 0",
+            "--set",
+            "save mode 0",
+            "--set",
+            "clear history 1",
+            expression,
+        ],
+        stdin=subprocess.DEVNULL,
+        capture_output=True,
+        text=True,
+        timeout=2,
+    )
+    value = result.stdout.strip()
+    if (
+        result.returncode
+        or not value
+        or len(value) > 2048
+        or "error" in result.stderr.lower()
+    ):
+        return {"ok": False, "error": "Could not convert these units"}
+    return {
+        "ok": True,
+        "value": value,
+        "description": "Enter to copy · currencies use stored Qalculate rates",
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "action",
         choices=[
             "state",
+            "files",
+            "convert",
             "packages",
             "installed",
             "fonts",
@@ -735,7 +842,11 @@ def main():
             return edit_config(args.value)
         if args.action in ("install", "remove"):
             return subprocess.call(package_command(args.action, args.value))
-        if args.action == "state":
+        if args.action == "files":
+            result = search_files(args.value)
+        elif args.action == "convert":
+            result = convert_units(args.value)
+        elif args.action == "state":
             result = snapshot(args.force)
         elif args.action == "packages":
             result = search_packages(args.value)

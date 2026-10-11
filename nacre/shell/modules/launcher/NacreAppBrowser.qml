@@ -24,9 +24,19 @@ NacreSurface {
     readonly property string query: search?.text || ""
     readonly property var scope: Menu.scope(query)
     readonly property bool calculation: scope.kind === "calculator"
-    readonly property var calculationResult: calculation ? Calculator.evaluate(scope.text) : ({
-            ok: false
-        })
+    readonly property var calculationResult: {
+        if (!calculation)
+            return {
+                ok: false
+            };
+        const basic = Calculator.evaluate(scope.text);
+        if (basic.ok || !/\b(to|in)\b/.test(scope.text))
+            return basic;
+        return NacreMenu.conversionQuery === scope.text ? NacreMenu.conversion : {
+            ok: false,
+            error: "Converting…"
+        };
+    }
     readonly property bool picker: !!activePrompt
     readonly property bool inputPicker: picker && root.activePrompt.kind === "input"
     readonly property bool appLayout: !picker && !scope.text && scope.kind === "all" && ["home", "apps", "hidden"].includes(route)
@@ -47,7 +57,7 @@ NacreSurface {
                     kind: "calculation",
                     name: calculationResult.value,
                     label: calculationResult.value,
-                    description: "Enter to copy the result",
+                    description: calculationResult.description || "Enter to copy the result",
                     icon: "calculate",
                     operation: "calculation",
                     value: calculationResult.value
@@ -64,10 +74,9 @@ NacreSurface {
     readonly property real bodyHeight: height - 184
     implicitWidth: Math.min(1100, Math.max(540, viewportWidth - 80))
     implicitHeight: Math.min(590, Math.max(340, viewportHeight - 150))
-    radius: 22
-    color: NacreColours.palette.m3surface
-    border.width: 1
-    border.color: NacreColours.palette.m3outlineVariant
+    radius: 0
+    color: "transparent"
+    border.width: 0
 
     function navigate(value, remember = true) {
         const resolved = value === "hidden" ? value : NacreMenu.resolve(value);
@@ -152,7 +161,7 @@ NacreSurface {
         navigate(previous, false);
     }
     function favorite(entry) {
-        if (entry && !["calculation", "choice"].includes(entry.kind)) {
+        if (entry && !["calculation", "choice"].includes(entry.kind) && !["open-file", "search-web"].includes(entry.operation)) {
             const ident = Menu.stable(entry);
             LauncherPreferences.update("favorite", ident, !LauncherPreferences.favorites.includes(ident));
         }
@@ -439,7 +448,9 @@ NacreSurface {
                 width: rail.width
                 height: Math.min(37, Math.max(28, (rail.height - (NacreMenu.navigation.length - 1) * 3) / Math.max(1, NacreMenu.navigation.length)))
                 radius: 9
-                color: root.route.split(".")[0] === modelData.id ? Qt.tint(NacreColours.palette.m3surface, Qt.alpha(NacreColours.palette.m3onSurface, .075)) : "transparent"
+                color: root.route.split(".")[0] === modelData.id ? Qt.tint(NacreColours.palette.m3surface, Qt.alpha(NacreColours.palette.m3onSurface, .12)) : "transparent"
+                border.width: root.route.split(".")[0] === modelData.id ? 1 : 0
+                border.color: Qt.alpha(NacreColours.palette.m3onSurface, .16)
                 Rectangle {
                     x: 0
                     y: 8
@@ -448,6 +459,20 @@ NacreSurface {
                     radius: 1.5
                     color: NacreColours.palette.m3primary
                     visible: root.route.split(".")[0] === parent.modelData.id
+                    gradient: Gradient {
+                        GradientStop {
+                            position: 0
+                            color: NacreColours.palette.m3primary
+                        }
+                        GradientStop {
+                            position: .5
+                            color: NacreColours.palette.m3secondary
+                        }
+                        GradientStop {
+                            position: 1
+                            color: NacreColours.palette.m3tertiary
+                        }
+                    }
                 }
                 Row {
                     x: 11
@@ -502,9 +527,12 @@ NacreSurface {
         id: path
         x: root.contentX
         y: 17
-        spacing: 5
+        height: 32
+        spacing: 8
         visible: !root.picker
         NacreMenuButton {
+            objectName: "launcherBack"
+            anchors.verticalCenter: parent.verticalCenter
             compact: true
             icon: "chevron_left"
             visible: root.route !== "home" || !!root.query
@@ -515,6 +543,8 @@ NacreSurface {
             delegate: Row {
                 required property var modelData
                 required property int index
+                objectName: "launcherHeading"
+                anchors.verticalCenter: parent.verticalCenter
                 spacing: 5
                 NacreText {
                     text: "›"
@@ -588,7 +618,7 @@ NacreSurface {
             }
             NacreMenuIcon {
                 entry: tile.modelData
-                size: Math.min(38, Math.max(24, grid.cellHeight - 48))
+                size: tile.compactTile ? 28 : Math.min(44, Math.max(28, grid.cellHeight - 32))
                 width: size
                 height: size
                 x: tile.compactTile ? 8 : (parent.width - width) / 2
@@ -596,7 +626,7 @@ NacreSurface {
             }
             NacreText {
                 x: tile.compactTile ? 42 : 7
-                y: tile.compactTile ? (parent.height - 20) / 2 : Math.min(49, grid.cellHeight - 32)
+                y: tile.compactTile ? (parent.height - 20) / 2 : Math.min(55, grid.cellHeight - 23)
                 width: parent.width - x - 7
                 height: tile.compactTile ? 20 : parent.height - y - 4
                 text: tile.modelData.name
@@ -617,13 +647,14 @@ NacreSurface {
                 }
             }
             NacreSurface {
+                objectName: "launcherFavorite_" + tile.index
                 x: parent.width - 24
                 y: 3
                 width: 23
                 height: 23
                 radius: 7
                 color: "transparent"
-                visible: !tile.compactTile && (tileHover.hovered || LauncherPreferences.favorites.includes(Menu.stable(tile.modelData)))
+                visible: root.route !== "home" && !tile.compactTile && (tileHover.hovered || tile.selected)
                 NacreIcon {
                     anchors.centerIn: parent
                     text: "favorite"
@@ -715,7 +746,7 @@ NacreSurface {
                 anchors.right: parent.right
                 anchors.rightMargin: 11
                 y: 10
-                text: row.modelData.kind === "group" ? "›" : row.modelData.checked ? "✓ " + (row.modelData.status || "") : row.modelData.status || ""
+                text: row.modelData.shortcut || (row.modelData.kind === "group" ? "›" : row.modelData.checked ? "✓ " + (row.modelData.status || "") : row.modelData.status || "")
                 font.pointSize: 9
                 color: NacreColours.palette.m3onSurfaceVariant
                 textFormat: Text.PlainText
@@ -742,7 +773,7 @@ NacreSurface {
         y: root.picker ? 80 : 120
         width: root.contentWidth - 28
         visible: !root.entries.length && !root.form
-        text: root.calculation ? root.calculationResult.error || "Type an expression after =" : root.scope.kind === "brain" ? (root.scope.text ? "Looking in your private notes…" : "Type # and a few words to search Nacre Brain") : root.scope.kind === "ai" ? "Type ? and your question" : root.route === "home" && !root.query ? "Add apps and menu items to Favorites with Ctrl+D or their item actions." : root.route === "software.packages" ? NacreMenu.packageMessage || "Type two or more characters to search packages" : "No matches. Try a different word, > for actions, or / for search scopes."
+        text: root.calculation ? root.calculationResult.error || "Type an expression after =" : root.scope.kind === "files" ? NacreMenu.fileMessage || "Type : and a filename to search your folders" : root.scope.kind === "brain" ? (root.scope.text ? "Looking in your private notes…" : "Type # and a few words to search Nacre Brain") : root.scope.kind === "ai" ? "Type ? and your question" : root.route === "home" && !root.query ? "Add apps and menu items to Favorites with Ctrl+D or their item actions." : root.route === "software.packages" ? NacreMenu.packageMessage || "Type two or more characters to search packages" : "No matches. Try a different word, > for actions, or / for search scopes."
         wrapMode: Text.Wrap
         textFormat: Text.PlainText
         color: NacreColours.palette.m3onSurfaceVariant
@@ -769,16 +800,15 @@ NacreSurface {
                 width: parent.width
                 spacing: 12
                 NacreMenuIcon {
-                    entry: root.previewEntry || {
-                        brand: "welcome"
-                    }
+                    visible: !!root.previewEntry
+                    entry: root.previewEntry || {}
                     size: 48
                     width: 48
                     height: 48
                 }
                 NacreText {
                     width: parent.width
-                    text: root.previewEntry?.name || "Your desktop"
+                    text: root.previewEntry?.name || "Quick controls"
                     textFormat: Text.PlainText
                     font.pointSize: 14
                     wrapMode: Text.Wrap
@@ -797,7 +827,8 @@ NacreSurface {
                 }
                 NacreText {
                     width: parent.width
-                    text: root.previewEntry?.reason || root.previewEntry?.description || "Search apps and desktop controls, or choose a section."
+                    visible: !!root.previewEntry
+                    text: root.previewEntry?.reason || root.previewEntry?.description || ""
                     textFormat: Text.PlainText
                     font.pointSize: 10.5
                     color: NacreColours.palette.m3onSurfaceVariant
@@ -850,16 +881,23 @@ NacreSurface {
                     }
                 }
                 NacreText {
-                    text: "Quick controls"
+                    text: "Desktop"
                     font.pointSize: 10
                     visible: !root.previewEntry
                 }
-                NacreMenuButton {
-                    width: parent.width
-                    visible: !root.previewEntry
-                    compact: true
-                    text: "Do not disturb: " + (DesktopSettings.data.dnd ? "On" : "Off")
-                    onClicked: NacreMenu.execute(NacreMenu.node("actions.controls.dnd"))
+                Repeater {
+                    model: root.previewEntry ? [] : ["actions.controls.dnd", "actions.controls.night-light", "actions.controls.stay-awake"]
+                    delegate: NacreMenuButton {
+                        required property string modelData
+                        readonly property var item: NacreMenu.node(modelData)
+                        width: detailColumn.width
+                        compact: true
+                        selected: !!item && NacreMenu.stateFor(item)
+                        enabled: !!item && !NacreMenu.decorate(item).disabled
+                        icon: selected ? "check" : item?.icon || ""
+                        text: item?.label || ""
+                        onClicked: NacreMenu.execute(item)
+                    }
                 }
                 NacreMenuButton {
                     width: parent.width
@@ -884,7 +922,7 @@ NacreSurface {
         font.pointSize: 9
         color: NacreColours.palette.m3onSurfaceVariant
         elide: Text.ElideRight
-        visible: !root.form && !root.confirmation
+        visible: !root.form && !root.confirmation && (!!root.selectedEntry || root.picker || !!NacreMenu.catalog.error || !!NacreMenu.message)
     }
     NacreTextField {
         id: search
@@ -895,7 +933,8 @@ NacreSurface {
         height: 49
         padding: 15
         visible: !root.form && !root.confirmation
-        placeholderText: root.picker ? "Filter choices" : root.calculation ? "= (12 + 8) / 5" : parent.width < 900 ? "Search apps and controls…" : "Search everything…    > actions    = calculator    # Brain    ? AI"
+        placeholderText: root.picker ? "Filter choices" : root.calculation ? "= (12 + 8) / 5" : "Search everything…"
+        rightPadding: prefixHints.visible ? prefixHints.width + 28 : 15
         onAccepted: root.activate(root.selection)
         Keys.onDownPressed: root.focusResults()
         Keys.onEscapePressed: root.dismiss()
@@ -909,6 +948,31 @@ NacreSurface {
             } else if (event.key === Qt.Key_Backspace && !text) {
                 root.back();
                 event.accepted = true;
+            }
+        }
+    }
+    Row {
+        id: prefixHints
+        anchors.right: search.right
+        anchors.rightMargin: 14
+        anchors.verticalCenter: search.verticalCenter
+        spacing: 6
+        visible: search.visible && !root.picker && !root.query && root.width >= 940
+        Repeater {
+            model: ["> Actions", "= Calculate", "# Brain", ": Files", "? AI"]
+            delegate: NacreSurface {
+                required property string modelData
+                width: hint.implicitWidth + 14
+                height: 24
+                radius: 6
+                color: Qt.alpha(NacreColours.palette.m3onSurface, .045)
+                NacreText {
+                    id: hint
+                    anchors.centerIn: parent
+                    text: parent.modelData
+                    font.pointSize: 8.5
+                    color: NacreColours.palette.m3onSurfaceVariant
+                }
             }
         }
     }
@@ -929,7 +993,7 @@ NacreSurface {
         anchors.fill: parent
         visible: !!root.confirmation
         color: NacreColours.palette.m3surface
-        radius: 22
+        radius: 0
         MouseArea {
             anchors.fill: parent
         }
@@ -1014,6 +1078,7 @@ NacreSurface {
             NacreMenuButton {
                 width: parent.width
                 compact: true
+                visible: !!root.contextEntry && !["open-file", "search-web"].includes(root.contextEntry.operation)
                 text: root.contextEntry && LauncherPreferences.favorites.includes(Menu.stable(root.contextEntry)) ? "Remove favorite" : "Add favorite"
                 onClicked: {
                     root.favorite(root.contextEntry);

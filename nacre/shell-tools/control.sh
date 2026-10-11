@@ -22,11 +22,12 @@ case "${1:-start}" in
  controls) exec "$HOME/.local/share/nacre/shell/bin/qs" -c nacre ipc call nacre controls "${2:-home}" ;;
  settings) exec "$HOME/.local/share/nacre/shell/bin/qs" -c nacre ipc call nacre settings ;;
  left) exec "$HOME/.local/share/nacre/shell/bin/qs" -c nacre ipc call nacre left ;;
- palette|overview|keys) exec "$HOME/.local/share/nacre/shell/bin/qs" -c nacre ipc call nacre mode "$1" ;;
+ keys) exec "$HOME/.local/bin/nacre-menu" learn.shortcuts ;;
+ palette|overview) exec "$HOME/.local/share/nacre/shell/bin/qs" -c nacre ipc call nacre mode "$1" ;;
  clipboard)
   if python3 -c 'import json,pathlib,sys;p=pathlib.Path.home()/".config/nacre/desktop.json";sys.exit(0 if not p.exists() or json.loads(p.read_text()).get("nativeClipboard",True) else 1)';then
    exec "$HOME/.local/share/nacre/shell/bin/qs" -c nacre ipc call nacre mode clipboard
-  else cliphist list | rofi -dmenu | cliphist decode | wl-copy;fi ;;
+  else exec "$HOME/.local/bin/nacre-menu" actions.clipboard;fi ;;
  session) exec "$HOME/.local/share/nacre/shell/bin/qs" -c nacre ipc call nacre session ;;
  hide) exec "$HOME/.local/share/nacre/shell/bin/qs" -c nacre ipc call nacre hide ;;
  launcher) exec "$HOME/.local/share/nacre/shell/bin/qs" -c nacre ipc call nacre launcher "" ;;

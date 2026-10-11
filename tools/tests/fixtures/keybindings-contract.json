@@ -20,8 +20,8 @@
       "method": "exec_cmd"
     },
     "flags": {
-      "locked": true,
-      "description": "Nacre:mute"
+      "description": "Nacre:mute",
+      "locked": true
     },
     "keys": "XF86AudioMute",
     "submap": ""
@@ -34,9 +34,9 @@
       "method": "exec_cmd"
     },
     "flags": {
+      "description": "Nacre:volume-down",
       "locked": true,
-      "repeating": true,
-      "description": "Nacre:volume-down"
+      "repeating": true
     },
     "keys": "XF86AudioLowerVolume",
     "submap": ""
@@ -49,9 +49,9 @@
       "method": "exec_cmd"
     },
     "flags": {
+      "description": "Nacre:volume-up",
       "locked": true,
-      "repeating": true,
-      "description": "Nacre:volume-up"
+      "repeating": true
     },
     "keys": "XF86AudioRaiseVolume",
     "submap": ""
@@ -64,8 +64,8 @@
       "method": "exec_cmd"
     },
     "flags": {
-      "locked": true,
-      "description": "Nacre:lock"
+      "description": "Nacre:lock",
+      "locked": true
     },
     "keys": "XF86PowerOff",
     "submap": ""
@@ -125,7 +125,7 @@
   {
     "action": {
       "args": [
-        "~/.local/bin/nacre-app emoji"
+        "~/.local/bin/nacre-menu actions.emoji"
       ],
       "method": "exec_cmd"
     },
@@ -1145,7 +1145,7 @@
   {
     "action": {
       "args": [
-        "~/.local/bin/nacre-shell session"
+        "~/.local/bin/nacre-menu power"
       ],
       "method": "exec_cmd"
     },
@@ -1262,6 +1262,17 @@
     },
     "flags": {},
     "keys": "SUPER + ALT + C",
+    "submap": ""
+  },
+  {
+    "action": {
+      "args": [
+        "~/.local/bin/nacre-menu actions.capture"
+      ],
+      "method": "exec_cmd"
+    },
+    "flags": {},
+    "keys": "SUPER + CTRL + C",
     "submap": ""
   }
 ]

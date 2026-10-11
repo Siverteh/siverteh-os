@@ -170,8 +170,13 @@ def action(name, value=""):
         ]
         try:
             choice = subprocess.check_output(
-                ["rofi", "-dmenu", "-i", "-p", "Choose window", "-format", "i"],
-                input="\n".join(labels),
+                ["nacre-menu", "pick", "--json", "--title", "Choose window"],
+                input=json.dumps(
+                    [
+                        dict(label=label, value=str(index))
+                        for index, label in enumerate(labels)
+                    ]
+                ),
                 text=True,
                 timeout=300,
             ).strip()
@@ -230,8 +235,13 @@ def action(name, value=""):
             return
         try:
             choice = subprocess.check_output(
-                ["rofi", "-dmenu", "-i", "-p", "Wi-Fi", "-format", "i"],
-                input="\n".join(label for _, label in rows),
+                ["nacre-menu", "pick", "--json", "--title", "Wi-Fi"],
+                input=json.dumps(
+                    [
+                        dict(label=label, value=str(index))
+                        for index, (_, label) in enumerate(rows)
+                    ]
+                ),
                 text=True,
                 timeout=300,
             ).strip()

@@ -23,6 +23,15 @@ Singleton {
             reminders: [],
             webapps: []
         })
+    property string fileWanted: ""
+    property string fileQuery: ""
+    property var fileRows: []
+    property string fileMessage: ""
+    property string conversionWanted: ""
+    property string conversionQuery: ""
+    property var conversion: ({
+            ok: false
+        })
     property string message: ""
     property string packageQuery: ""
     property var packageRows: []
@@ -59,8 +68,10 @@ Singleton {
         }
     }
     function prepare(route, query = "", opened = false) {
-        if (opened)
+        if (opened) {
             refresh();
+            DesktopExtras.request("keys", {});
+        }
         const node = rows.find(item => item.id === route);
         if (node?.provider === "clipboard")
             DesktopExtras.request("clips", {});
@@ -71,6 +82,14 @@ Singleton {
         if (opened)
             NacreControlTools.refresh();
         const scope = Model.scope(query);
+        if (scope.kind === "files") {
+            fileWanted = scope.text;
+            fileDelay.restart();
+        }
+        if (scope.kind === "calculator" && /\b(to|in)\b/.test(scope.text)) {
+            conversionWanted = scope.text;
+            conversionDelay.restart();
+        }
         if (scope.kind === "brain") {
             DesktopExtras.brainQuery = scope.text;
             DesktopExtras.request("brain", {
@@ -113,6 +132,7 @@ Singleton {
     }
     function decorate(row) {
         const result = Model.entry(row, rows);
+        result.shortcut = DesktopExtras.keys.find(item => item.menu === row.id)?.key || "";
         const checked = stateFor(row);
         result.checked = checked === true;
         result.status = row.state === "updates" ? (Updates.count ? Updates.count + " available" : "Up to date") : typeof checked === "boolean" ? (["setting", "dnd", "night-light", "stay-awake", "mute", "mic-mute", "wifi", "bluetooth"].includes(row.state) ? (checked ? "On" : "Off") : checked ? "In use" : "") : "";
@@ -167,6 +187,11 @@ Singleton {
         }, extra);
     }
     function provider(route, query = "") {
+        if (root.node(route)?.provider === "audio")
+            return (NacreAudio.outputs || []).map(item => valueRow(route, "output-" + item.id, item.description || item.nickname || item.name, "audio-output", String(item.id), "speaker", "Audio output", {
+                    checked: NacreAudio.sink === item,
+                    disabled: !item.ready
+                }));
         const node = rows.find(row => row.id === route);
         if (!node?.provider)
             return [];
@@ -429,8 +454,13 @@ Singleton {
     function globalRows() {
         return apps.concat(allStatic(), provider("style.wallpapers"), provider("software.discover"));
     }
+    function ranked(items, query) {
+        return Model.ranked(items, query, LauncherPreferences.usage || {}, LauncherPreferences.recent);
+    }
     function content(route, query) {
         const scope = Model.scope(query);
+        if (scope.kind === "files")
+            return fileQuery === scope.text ? fileRows.map(item => valueRow("actions.files", item.id, item.name, "open-file", item.path, "description", item.path)) : [];
         if (scope.kind === "calculator")
             return [];
         if (scope.kind === "brain")
@@ -474,6 +504,16 @@ Singleton {
                     icon: "neurology"
                 },
                 {
+                    id: "scope-files",
+                    kind: "action",
+                    name: ": Files",
+                    label: ": Files",
+                    description: "Search your usual folders",
+                    operation: "scope",
+                    value: ": ",
+                    icon: "folder"
+                },
+                {
                     id: "scope-ai",
                     kind: "action",
                     name: "? Nacre AI",
@@ -485,16 +525,16 @@ Singleton {
                 }
             ];
         if (scope.kind === "actions")
-            return Model.ranked(allStatic().filter(row => row.kind !== "group"), scope.text);
+            return ranked(allStatic().filter(row => row.kind !== "group"), scope.text);
         if (route === "software.packages")
             return provider(route, scope.text);
         if (scope.text) {
             if (!["home", "apps", "hidden"].includes(route)) {
                 const local = allStatic().filter(row => row.id.startsWith(route + "."));
                 const groups = rows.filter(row => row.provider && (row.id === route || row.id.startsWith(route + ".")));
-                return Model.ranked(local.concat(...groups.map(row => provider(row.id, scope.text))), scope.text);
+                return ranked(local.concat(...groups.map(row => provider(row.id, scope.text))), scope.text);
             }
-            return Model.ranked(globalRows(), scope.text);
+            return ranked(globalRows(), scope.text).concat([valueRow("actions", "search-web", "Search the web for “" + scope.text.slice(0, 100) + "”", "search-web", scope.text, "public", "Opens your browser only when selected")]);
         }
         if (route === "home")
             return favorites();
@@ -511,13 +551,25 @@ Singleton {
             LauncherPreferences.update("record", Model.stable(row), true);
     }
     function keepOpen(row) {
-        return ["toggle", "setting-toggle", "personality", "background", "palette-mode", "accent", "wallpaper", "next-wallpaper", "font", "info", "scope", "form", "timer-cancel", "webapp-remove", "power-profile"].includes(row.operation);
+        return ["toggle", "setting-toggle", "personality", "background", "palette-mode", "accent", "wallpaper", "next-wallpaper", "font", "info", "scope", "form", "timer-cancel", "webapp-remove", "power-profile", "media", "audio-output"].includes(row.operation);
     }
     function execute(row, confirmed = false) {
         if (!row || row.disabled || row.kind === "group")
             return false;
         if ((row.confirm || row.operation === "power" && row.value !== "lock" || row.operation === "maintenance" && row.value === "restart") && !confirmed)
             return false;
+        if (row.operation === "media")
+            return NacrePlayers.control(row.value);
+        if (row.operation === "audio-output")
+            return NacreAudio.chooseOutput(row.value);
+        if (row.operation === "open-file") {
+            AppLaunch.run(["xdg-open", row.value]);
+            return true;
+        }
+        if (row.operation === "search-web") {
+            AppLaunch.run(["nacre-app", "browser", "https://www.google.com/search?q=" + encodeURIComponent(row.value)]);
+            return true;
+        }
         record(row);
         const operation = row.operation, value = row.value;
         if (operation === "app")
@@ -717,6 +769,71 @@ Singleton {
                 "color-picker": "hyprpicker",
                 capture: "grim"
             })[entry?.capability] || (entry?.value === "night-light" ? "hyprsunset" : "");
+    }
+    Process {
+        id: fileWorker
+        property string query: ""
+        command: ["python3", root.tools + "/menu-backend.py", "files", query]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                if (fileWorker.query !== root.fileWanted)
+                    return;
+                try {
+                    const data = JSON.parse(text);
+                    root.fileQuery = fileWorker.query;
+                    root.fileRows = data.rows || [];
+                    root.fileMessage = data.error || data.message || "";
+                } catch (failure) {
+                    root.message = "Could not read files result";
+                }
+            }
+        }
+        onExited: if (query !== root.fileWanted)
+            fileDelay.restart()
+    }
+    Timer {
+        id: fileDelay
+        interval: 160
+        onTriggered: {
+            if (fileWorker.running)
+                return;
+            fileWorker.query = root.fileWanted;
+            if (!fileWorker.query.trim())
+                return;
+            fileWorker.running = true;
+        }
+    }
+    Process {
+        id: conversionWorker
+        property string query: ""
+        command: ["python3", root.tools + "/menu-backend.py", "convert", query]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                if (conversionWorker.query !== root.conversionWanted)
+                    return;
+                try {
+                    const data = JSON.parse(text);
+                    root.conversionQuery = conversionWorker.query;
+                    root.conversion = data;
+                } catch (failure) {
+                    root.message = "Could not read convert result";
+                }
+            }
+        }
+        onExited: if (query !== root.conversionWanted)
+            conversionDelay.restart()
+    }
+    Timer {
+        id: conversionDelay
+        interval: 160
+        onTriggered: {
+            if (conversionWorker.running)
+                return;
+            conversionWorker.query = root.conversionWanted;
+            if (!conversionWorker.query.trim())
+                return;
+            conversionWorker.running = true;
+        }
     }
     Process {
         id: ownershipWorker

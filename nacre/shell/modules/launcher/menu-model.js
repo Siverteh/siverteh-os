@@ -1,7 +1,7 @@
 .pragma library
 
-const operations = ["tool", "route", "calculator", "legacy", "scope", "toggle", "next-wallpaper", "personality", "background", "palette-mode", "setting-toggle", "settings", "config", "form", "maintenance", "info", "url", "power", "power-profile", "command"];
-const providers = ["apps", "wallpapers", "accents", "fonts", "software", "packages", "installed", "windows", "wifi", "bluetooth", "clipboard", "keys", "emoji", "timers", "webapps"];
+const operations = ["tool", "route", "calculator", "legacy", "scope", "toggle", "next-wallpaper", "personality", "background", "palette-mode", "setting-toggle", "settings", "config", "form", "maintenance", "info", "url", "power", "power-profile", "command", "media"];
+const providers = ["apps", "wallpapers", "accents", "fonts", "software", "packages", "installed", "windows", "wifi", "bluetooth", "clipboard", "keys", "emoji", "timers", "webapps", "audio"];
 const fields = ["id", "kind", "label", "description", "icon", "operation", "value", "provider", "capability", "state", "confirm", "brand", "aliases", "hidden", "arguments"];
 const aliases = {favorites:"home",all:"apps",actions:"actions",settings:"setup",system:"power",clipboard:"actions.clipboard",keys:"learn.shortcuts",overview:"actions.windows",palette:"style",wallpaper:"style.wallpapers"};
 const railOrder = ["home", "apps", "actions", "style", "setup", "software", "health", "learn", "power"];
@@ -95,22 +95,49 @@ function trail(id, rows) {
 function children(route, rows) { return rows.filter(row => parentOf(row.id) === route); }
 function scope(query) {
     const trimmed = String(query || "").replace(/^\s+/, ""), prefix = trimmed.charAt(0);
-    const kind = ({">":"actions", "=":"calculator", "#":"brain", "?":"ai", "/":"help"})[prefix] || "all";
+    const kind = ({">":"actions", "=":"calculator", "#":"brain", "?":"ai", "/":"help", ":":"files"})[prefix] || "all";
     return {kind:kind, text:kind === "all" ? trimmed.trim() : trimmed.slice(1).trim(), prefix:kind === "all" ? "" : prefix};
 }
 function normalized(value) { return String(value || "").toLowerCase().replace(/[-_:]/g," ").replace(/\s+/g," ").trim(); }
-function ranked(rows, query) {
-    const term = normalized(query), words = term.split(" ").filter(Boolean);
-    if (!term) return rows.slice();
-    const result = [];
-    rows.forEach((row,index) => {
-        const name = normalized(row.name || row.label), alternate = (row.aliases || []).map(normalized);
-        const haystack = normalized([name,row.description,row.breadcrumb,row.id,...alternate].join(" "));
-        if (!words.every(word => haystack.includes(word))) return;
-        const score = name === term ? 120 : alternate.includes(term) ? 115 : name.startsWith(term) ? 100 : words.every(word => name.includes(word)) ? 85 : 55;
-        result.push({row:row,index:index,score:score + (row.kind === "app" ? 3 : 0)});
+function distance(a, b, limit) {
+    if (Math.abs(a.length-b.length) > limit) return limit+1;
+    let prior = Array.from({length:b.length+1}, (_,i) => i);
+    for (let i=1;i<=a.length;i++) {
+        const next=[i];
+        for(let j=1;j<=b.length;j++) next[j]=Math.min(next[j-1]+1,prior[j]+1,prior[j-1]+(a[i-1]===b[j-1]?0:1));
+        if(Math.min(...next)>limit) return limit+1;
+        prior=next;
+    }
+    return prior[b.length];
+}
+function matchScore(row, term) {
+    const words=term.split(" ").filter(Boolean), name=normalized(row.name || row.label), alternate=(row.aliases || []).map(normalized);
+    const haystack=normalized([name,row.description,row.breadcrumb,row.id,...alternate].join(" "));
+    if(name===term) return 120;
+    if(alternate.includes(term)) return 115;
+    if(name.startsWith(term)) return 100;
+    if(words.every(word=>name.includes(word))) return 85;
+    const initials=name.split(/[^a-z0-9]+/).filter(Boolean).map(word=>word[0]).join("");
+    if(term.length>=2 && initials.startsWith(term)) return 80;
+    if(words.every(word=>haystack.includes(word))) return 55;
+    const tokens=[name,...alternate].join(" ").split(/[^a-z0-9]+/).filter(Boolean);
+    if(words.every(word=>tokens.some(token=>token.includes(word) || word.length>=4 && distance(word,token,word.length>=7?2:1)<=(word.length>=7?2:1)))) return 48;
+    return -1;
+}
+function ranked(rows, query, usage = {}, recent = [], now = Date.now()/1000) {
+    const term=normalized(query);
+    if(!term) return rows.slice();
+    const result=[];
+    rows.forEach((row,index)=>{
+        const score=matchScore(row,term);
+        if(score<0) return;
+        const id=stable(row), history=usage[id] || {}, position=recent.indexOf(id);
+        const count=Number.isFinite(history.count)?Math.max(0,history.count):0;
+        const age=Number.isFinite(history.last)?Math.max(0,now-history.last):Infinity;
+        const boost=Math.min(6,Math.log2(count+1))+Math.max(position<0?0:4*(1-position/12),4*Math.exp(-age/(7*86400)));
+        result.push({row:row,index:index,score:score+boost+(row.kind==="app"?3:0)});
     });
-    return result.sort((left,right) => right.score-left.score || left.index-right.index).slice(0,100).map(hit => hit.row);
+    return result.sort((a,b)=>b.score-a.score || a.index-b.index).slice(0,100).map(hit=>hit.row);
 }
 function firstEnabled(rows) { return rows.findIndex(row => !row.disabled); }
 function step(rows,index,delta) {

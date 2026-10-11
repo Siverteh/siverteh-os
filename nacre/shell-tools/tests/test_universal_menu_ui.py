@@ -73,6 +73,8 @@ def stage(target):
     property QtObject actionWorker: QtObject { property bool running:false;property string action:"";property string value:"";property var payload:({}) }
     property QtObject ownershipWorker: QtObject { property bool running:false;property string ident:"" }
     property QtObject packageDelay: QtObject { function restart(){} }
+    property QtObject fileDelay: QtObject { function restart(){} }
+    property QtObject conversionDelay: QtObject { function restart(){} }
     property QtObject captureDelay: QtObject { property string value:"";function restart(){} }
 """,
         1,
@@ -81,13 +83,14 @@ def stage(target):
     (fixtures / "NacreMenu.qml").write_text(source)
     definitions = {
         "NacreApps": """property var all:[{id:"editor",name:"Editor",icon:"",comment:"Code"},{id:"google-chrome",name:"Google Chrome",icon:"",comment:"Web browser"},{id:"nacre-ai",name:"Nacre AI",icon:"",comment:"Assistant"},{id:"music",name:"Music",icon:"",comment:"Player"}];readonly property var list:all.filter(row=>!LauncherPreferences.hidden.includes(row.id));property string launched:"";function launch(entry){launched=entry.id;return true}""",
-        "LauncherPreferences": """property var favorites:[];property var hidden:[];property var recent:[];property string error:"";property bool ready:true;function update(action,id,enabled){const key=action==="favorite"?"favorites":action==="hide"?"hidden":"recent";let result=this[key].filter(value=>value!==id);if(enabled)result.push(id);this[key]=result;}""",
+        "LauncherPreferences": """property var favorites:[];property var hidden:[];property var recent:[];property var usage:({});property string error:"";property bool ready:true;function update(action,id,enabled){const key=action==="favorite"?"favorites":action==="hide"?"hidden":"recent";let result=this[key].filter(value=>value!==id);if(enabled)result.push(id);this[key]=result;}""",
         "DesktopActions": """property var list:[{name:"Open terminal",action:"terminal",icon:"terminal",description:"Terminal"},{name:"Disable blur",action:"toggle-setting",value:"blur",icon:"blur_on",launcher:false}];property var calls:[];function execute(action,value){calls=[...calls,[action,value]];}""",
         "AppLaunch": """property var commands:[];function run(command){commands=[...commands,command];}""",
         "DesktopSettings": """property var data:({animations:true,blur:true,shadow:true,dnd:false,interfaceFont:""});property var changes:[];function set(key,value){data=Object.assign({},data,{[key]:value});changes=[...changes,[key,value]];}""",
         "NacreWallpapers": """property var list:[{path:"/fixture/blue.png",name:"Blue garden",dynamic:false,thumbnail:""}];property string current:"/fixture/blue.png";property var appearancePreferences:({palettePersonality:"natural",paletteMode:"dark",paletteBackgroundFromWallpaper:false});property var paletteOptions:[{name:"Blue",accent:"blue",colors:[]}];property string selectedAccent:"blue";property var preferences:[];function preference(value){preferences=[...preferences,value];appearancePreferences=Object.assign({},appearancePreferences,value);}function setWallpaper(value){current=value;}""",
         "NacreControlTools": """property var data:({nightLightSupported:true,nightLightEnabled:false,nightLightExternal:false});function refresh(){}function toggleNightLight(){data=Object.assign({},data,{nightLightEnabled:!data.nightLightEnabled});}""",
-        "NacreAudio": """property bool available:true;property bool micAvailable:true;property bool muted:false;property bool micMuted:false;function toggleMute(){muted=!muted;}function toggleMic(){micMuted=!micMuted;}""",
+        "NacreAudio": """property var outputs:[];property var sink:null;function chooseOutput(id){return true;}property bool available:true;property bool micAvailable:true;property bool muted:false;property bool micMuted:false;function toggleMute(){muted=!muted;}function toggleMic(){micMuted=!micMuted;}""",
+        "NacrePlayers": """property var actions:[];function control(value){actions=[...actions,value];return true;}""",
         "NacreNetwork": """property bool wifiEnabled:true;property var visibleNetworks:[]""",
         "NacreBluetooth": """property bool available:true;property QtObject adapter:QtObject{property bool enabled:true};readonly property bool powered:adapter.enabled;property var devices:[]""",
         "NacreHyprland": """property var clients:[];property var calls:[];function dispatch(value){calls=[...calls,value]}""",
