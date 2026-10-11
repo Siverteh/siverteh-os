@@ -38,6 +38,19 @@ class LauncherUITests(unittest.TestCase):
                 target / "app-browser.js",
             )
             shutil.copy2(
+                ROOT.parent / "shell/modules/launcher/calculator.js",
+                target / "calculator.js",
+            )
+            actual = (
+                (ROOT.parent / "shell/services/DesktopActions.qml")
+                .read_text()
+                .replace("import Quickshell.Io", "")
+                .replace("import Quickshell", "")
+                .replace("Singleton {", "QtObject {", 1)
+            )
+            actual = remove_objects(actual, r"\bIpcHandler\s*\{")
+            (target / "fixtures/ActualDesktopActions.qml").write_text(actual)
+            shutil.copy2(
                 ROOT.parent / "shell/widgets/FastScroll.qml",
                 target / "fixtures/FastScroll.qml",
             )
@@ -45,6 +58,11 @@ class LauncherUITests(unittest.TestCase):
                 "NacreApps": 'property var all:[{id:"editor",name:"Editor",categories:["Development"],icon:""},{id:"music",name:"Music",categories:["AudioVideo"],icon:""},{id:"browser",name:"Browser",categories:["Network"],icon:""}];readonly property var list:all.filter(a=>!LauncherPreferences.hidden.includes(a.id));function fuzzyQuery(q){return list.filter(a=>a.name.toLowerCase().includes(q.toLowerCase()))} property string launched:""; function launch(app){launched=app.id;}',
                 "LauncherPreferences": 'property var favorites:[];property var hidden:[];property string error:"";property bool ready:true;function update(action,id,enabled){const key=action==="favorite"?"favorites":"hidden";let rows=this[key].filter(x=>x!==id);if(enabled)rows.push(id);this[key]=rows;}',
                 "DesktopActions": 'property var list:[{name:"Settings",description:"Desktop settings",action:"settings",icon:"settings"},{name:"Power menu",description:"Power controls",action:"power",icon:"power"},{name:"Disable blur",description:"Background blur",action:"toggle-setting",value:"blur",icon:"blur_on"},{name:"Disable animations",description:"Motion",action:"toggle-setting",value:"animations",icon:"animation"}];property var executed:[];function execute(action,value){executed=[action,value || ""];}',
+                "AppLaunch": "property var commands:[];function run(command){commands=[...commands,command]}",
+                "DesktopSettings": "property var data:({animations:true,blur:true,shadow:true,dnd:false});function set(k,v){}function request(args){}",
+                "NacrePanelState": 'property QtObject view:QtObject{property bool previewOnly:false;property bool launcher:true;property bool left:false;property bool leftPinned:false;property bool session:false};property var calls:[];function getForActive(){return view}function openMode(mode,query){calls=[...calls,[mode,query||""]]}function openSettings(page){calls=[...calls,["settings",page]]}',
+                "NacreColorsApp": "property bool opened:false;function open(){opened=true}",
+                "NacreWelcomeApp": 'property string page:"";function open(value){page=value}',
             }
             for name, body in fixtures.items():
                 (target / "fixtures" / (name + ".qml")).write_text(
@@ -62,6 +80,9 @@ class LauncherUITests(unittest.TestCase):
             with (target / "fixtures/qmldir").open("a") as manifest:
                 for name in fixtures:
                     manifest.write("\nsingleton " + name + " 1.0 " + name + ".qml")
+                manifest.write(
+                    "\nsingleton ActualDesktopActions 1.0 ActualDesktopActions.qml\n"
+                )
                 manifest.write(
                     "\nScriptModel 1.0 ScriptModel.qml\nNacreIcon 1.0 NacreIcon.qml\nBrandLogo 1.0 BrandLogo.qml\n"
                 )

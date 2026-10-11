@@ -2499,11 +2499,12 @@
     },
     "nacre/shell/services/DesktopActions.qml": {
       "disposition": "independent",
-      "sha256": "dc3cc52ecca647acfea9e0cb6f746cdf6f9380e2a8c8ddb96bf4e58e648c024d",
+      "sha256": "796270d5da270377b1e2f893fe585e8a7fc254a5d2eb55e61001a58386b676b8",
       "evidence": [
         "docs/specs/services-source-audit.md",
         "docs/nacre/SERVICES-SOURCE-AUDIT.md",
-        "Full current body reviewed; authoring/replacement 007d020: Locally introduced desktop/workflow helper service; actual current body/caller schemas reviewed, meaningful owner integrations traced separately. Later changes: 5da1132, 02b2bda, 548f0b4, 83b3531, e83d56f, 3121dad. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited."
+        "Full current body reviewed; authoring/replacement 007d020: Locally introduced desktop/workflow helper service; actual current body/caller schemas reviewed, meaningful owner integrations traced separately. Later changes: 5da1132, 02b2bda, 548f0b4, 83b3531, e83d56f, 3121dad. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited.",
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ]
     },
     "nacre/shell/services/DesktopExtras.qml": {
@@ -3807,11 +3808,12 @@
     },
     "nacre/shell/modules/extras/Palette.qml": {
       "disposition": "independent",
-      "sha256": "0b1c6d05742b812c9658d36899c27bd0fa5bf30c09afbd737523bfd18016d696",
+      "sha256": "1aa5895f1d20089dd8662dfdfcd4cd9d71229c3872b31de47d032db2499f482c",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
-        "Full current body individually reviewed. Basis 007d020: locally authored extra view; current native provider/foundation/routing migrations traced. Later current-file changes: 02b2bda, ea5653e, 3d93b32, 9a3b9a7, 548f0b4, 83b3531, 5d0028f, e3d0298. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped."
+        "Full current body individually reviewed. Basis 007d020: locally authored extra view; current native provider/foundation/routing migrations traced. Later current-file changes: 02b2bda, ea5653e, 3d93b32, 9a3b9a7, 548f0b4, 83b3531, 5d0028f, e3d0298. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ]
     },
     "nacre/shell/modules/extras/SearchSurface.qml": {
@@ -3825,7 +3827,7 @@
     },
     "nacre/shell/modules/launcher/NacreAppBrowser.qml": {
       "disposition": "independent",
-      "sha256": "17c83e93ef317dc43721f7bcd10f04e376c7c2d10240e254e35c3e8ae8b063da",
+      "sha256": "b933723edc0c42d3fb1169588db7ba237e917b55276c2e5d85dbe991c9a65605",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
@@ -3836,7 +3838,8 @@
         "docs/specs/orient-colors.md",
         "docs/features/orient.md",
         "Current full body/data reviewed: independent Orient 3 portable core, its desktop compatibility adapters, original read-only studio, source attribution/audits/export templates and explicit single-publisher integration. Existing audited own engine moved with module aliases; no Caelestia/ML4W source consulted. Scientific OKLab/CVD coefficients credited to their published definitions, not claimed novel. Gallery artwork generated locally and CC0; private artwork remains outside Git. Current mode/contrast/backend/native checks and visual gallery inspection recorded; full/live release gate still required.",
-        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied.",
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ]
     },
     "nacre/shell/modules/launcher/NacreLauncherPanel.qml": {
@@ -3853,11 +3856,12 @@
     },
     "nacre/shell/modules/launcher/NacreSearchPanel.qml": {
       "disposition": "independent",
-      "sha256": "d8dec7fd7e03b83d4a7201b5dac55bb364a495e606839ddaaf6b68ed726081dd",
+      "sha256": "3f76a8e12df92b077dd57f1e8e4ac4cdebdff27e5eb2b657158e38e5aeb3fc0a",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
-        "Full current body individually reviewed. Basis 7b53c65: fresh launcher/app/wallpaper presentation from behavior specification. Later current-file changes: 02b2bda, 3d93b32. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped."
+        "Full current body individually reviewed. Basis 7b53c65: fresh launcher/app/wallpaper presentation from behavior specification. Later current-file changes: 02b2bda, 3d93b32. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ]
     },
     "nacre/shell/modules/launcher/NacreWallpaperBackdrop.qml": {
@@ -3904,12 +3908,13 @@
     },
     "nacre/shell/modules/launcher/app-browser.js": {
       "disposition": "independent",
-      "sha256": "04ca975a19b2338607566b3451c96d36581923521290f64f6125de78bc8febaf",
+      "sha256": "99d58da45683cd913fcf5e3c7e04a182b562f4b9a40970a12fbd3afc3842449d",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
         "Full current body individually reviewed. Basis bc7c7e2: fresh launcher/app/wallpaper presentation from behavior specification. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
-        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied.",
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ]
     },
     "nacre/shell/modules/notifications/NacreNotice.qml": {
@@ -5848,7 +5853,7 @@
     },
     "nacre/shell-tools/tests/launcher-qml/tst_launcher.qml": {
       "disposition": "independent",
-      "sha256": "0f40691c8c161e3c8b6351a473d5623a9c2a6eb090a463bb780f8bfd48ea8b75",
+      "sha256": "e1542a6a4ad3e928dc631d8245b733ff7f697fb95babae27166fe6e924d1cc56",
       "evidence": [
         "docs/specs/native-fixture-source-audit.md",
         "docs/nacre/NATIVE-FIXTURE-SOURCE-AUDIT.md",
@@ -5856,7 +5861,8 @@
         "docs/specs/nacre-logo.md: additive AI-specific lettering under the right lip, primary A/secondary I with text contrast protection; shared SVG/publisher/live QML binding and terminal consumer reviewed. Own paths/integration; no upstream implementation copied. Native raster, role, launcher and menu tests cover the change.",
         "docs/specs/nacre-brain.md: current naming/path migration, compatibility aliases, Brain-specific own glyph and shared brand integration explicitly reviewed. Existing independently authored behavior preserved; no upstream source copied. Migration/collision/rollback/profile guard, CLI, publisher/native launcher tests cover the changes. User-supplied shell artwork provenance remains qualified.",
         "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
-        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied.",
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ]
     },
     "nacre/shell-tools/tests/launcher-qml/tst_panel.qml": {
@@ -6264,7 +6270,7 @@
     },
     "nacre/shell-tools/tests/test_launcher_ui.py": {
       "disposition": "independent",
-      "sha256": "0ee354c2457ef05d6d96ebaea305a92f27fb6c029c3bfb2660fcd5a51118fb2f",
+      "sha256": "92f7293bc99a91953e60f07a6707902d3037e7c6f104f546a87eaa732555fd28",
       "evidence": [
         "docs/specs/python-fixture-source-audit.md",
         "docs/nacre/PYTHON-FIXTURE-SOURCE-AUDIT.md",
@@ -6275,7 +6281,8 @@
         "docs/specs/orient-colors.md",
         "docs/features/orient.md",
         "Current full body/data reviewed: independent Orient 3 portable core, its desktop compatibility adapters, original read-only studio, source attribution/audits/export templates and explicit single-publisher integration. Existing audited own engine moved with module aliases; no Caelestia/ML4W source consulted. Scientific OKLab/CVD coefficients credited to their published definitions, not claimed novel. Gallery artwork generated locally and CC0; private artwork remains outside Git. Current mode/contrast/backend/native checks and visual gallery inspection recorded; full/live release gate still required.",
-        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied.",
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ]
     },
     "nacre/shell-tools/tests/test_media_performance_ui.py": {
@@ -6513,9 +6520,10 @@
     },
     "docs/architecture.md": {
       "disposition": "non-implementation",
-      "sha256": "e68317204cfe382ea44e8587f7f261fab012db754fba8bc181d01b63c0edda38",
+      "sha256": "1364cd2b2438397452d7dc3b7d009bba023ee3fe804d50f639b761347173ae24",
       "evidence": [
-        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ]
     },
     "docs/features/appearance.md": {
@@ -6600,11 +6608,12 @@
     },
     "docs/features/launcher.md": {
       "disposition": "non-implementation",
-      "sha256": "be8f96e31af491857451040bfaeae87c02fd113298a2cd0f78c0340bcdfce027",
+      "sha256": "cc15dfe090fc5525e73ff29765125dfea7ed844fdcce6efec9a2615766abda0f",
       "evidence": [
         "docs/nacre/DOCUMENTATION-GUIDE-AUDIT.md",
         "docs/specs/documentation-source-audit.md",
-        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied.",
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ],
       "notes": "Locally maintained current project behavior/deployment prose reviewed in full with history and reader/source checks; no implementation-origin or license conclusion."
     },
@@ -6717,9 +6726,10 @@
     },
     "docs/overview.md": {
       "disposition": "non-implementation",
-      "sha256": "595ea67771b46de26cc23ee7d05950a21235caf0f13aa66d430d57a82766608e",
+      "sha256": "42159817d7783cce466c2bc5ef8953b4cbb0fad7b45dc295ea12ed4af4ece88d",
       "evidence": [
-        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ]
     },
     "nacre/login/README.md": {
@@ -7522,11 +7532,12 @@
     },
     "docs/specs/launcher.md": {
       "disposition": "non-implementation",
-      "sha256": "0e15d7c3d2817f89576ae495b139bdbac60ae92c4605cab075928cc466af8b09",
+      "sha256": "9c33748646f79aaa5e92ae124413f6666a65e122459efb601b75253c5d61c423",
       "evidence": [
         "docs/nacre/FINAL-COMPARISON.md",
         "docs/specs/final-provenance-comparison.md",
-        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied."
+        "2026-10-11 launcher refinement: fixed five-row geometry across categories/search, adaptive row/icon sizing, visible selected result while typing, native Enter launch, Actions rail below Favorites, registered operation/value IDs resolve mixed ordered favorites through existing locked0600 storage, no arbitrary command execution. Heart/right-click/CtrlD handle actions; hide remains app-only; dynamic toggle names retain IDs and unknown favorites skip. Native tests cover search focus/color/Enter, dispatch, mixed favorites, renamed toggles, fixed/smaller geometry, navigation retention and persistence. No external implementation copied.",
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
       ],
       "notes": "Full prose read by fresh read-only reader; no fenced executable implementation. Root reviewed complete creation/change history, registry structure and whole-index upstream matches. Own historical behavior/source-audit prose, public contracts, hashes and tables; earlier status is dated, not current source certification. Initial history: 47ce57299a62f696c9c51b62da8acb606d5bf5a3 Specify the independent Nacre launcher and wallpaper presentation rewrite"
     },
@@ -9625,6 +9636,13 @@
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
       ]
+    },
+    "nacre/shell/modules/launcher/calculator.js": {
+      "disposition": "independent",
+      "evidence": [
+        "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied."
+      ],
+      "sha256": "787f9c9e62ad5249b22caacea952d71e0802e63c928574316d7df8d8aeae213b"
     }
   }
 }

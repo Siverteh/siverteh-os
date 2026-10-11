@@ -20,7 +20,7 @@ SearchSurface {
                 }
             ];
         const words = q.split(/\s+/).filter(Boolean), matches = e => words.every(w => (e.name + " " + e.description).toLowerCase().includes(w));
-        const actions = DesktopActions.list.filter(matches);
+        const actions = DesktopActions.list.filter(item => item.launcher !== false && matches(item));
         if (!q)
             return actions;
         const windows = NacreHyprland.clients.map(c => ({

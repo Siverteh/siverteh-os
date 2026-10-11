@@ -32,6 +32,11 @@ contained errors. Binds are declared in `hypr/conf/keybinding.lua` and
 `nacre/shell-tools/shortcuts.lua`; named app rules live in `windowrule.lua`.
 Startup app selection is private and idempotent; it does not rewrite those rules.
 
+The launcher owns app/command presentation and a bounded arithmetic grammar
+(`modules/launcher/calculator.js`). It uses the existing private favorites owner,
+registered DesktopActions and AppLaunch for clipboard copying; no calculator
+daemon or arbitrary code evaluation is introduced.
+
 ## UI and data owners
 
 The shell composes shared providers once. `NacrePanelState` owns per-output view

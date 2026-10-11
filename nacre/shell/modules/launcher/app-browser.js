@@ -20,8 +20,24 @@ function belongs(app, group) {
 function available(apps) {
     return groups.filter(group => !group.categories || apps.some(app => belongs(app, group.id)));
 }
+function words(value) {
+    return String(value || "").toLowerCase().replace(/[-_:]/g, " ").trim().split(/\s+/).filter(Boolean);
+}
 function matches(item, query) {
-    return (item.name + " " + (item.description || "")).toLowerCase().includes(query.toLowerCase());
+    const haystack = words([item.name, item.description, item.action, item.value, ...(item.aliases || [])].join(" ")).join(" ");
+    return words(query).every(word => haystack.includes(word));
+}
+function alphabetical(items) {
+    return items.slice().sort((left, right) => left.name.toLowerCase().localeCompare(right.name.toLowerCase()) || left.id.localeCompare(right.id));
+}
+function rankedActions(items, query) {
+    const term = words(query).join(" ");
+    function score(item) {
+        if (words(item.action).join(" ") === term) return 100;
+        if ((item.aliases || []).some(alias => words(alias).join(" ") === term)) return 80;
+        return words(item.name).join(" ").startsWith(term) ? 60 : 40;
+    }
+    return items.filter(item => matches(item, query)).sort((left, right) => term ? score(right) - score(left) : 0);
 }
 
 function actions(items) {

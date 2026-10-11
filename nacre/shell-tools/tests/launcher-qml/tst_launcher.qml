@@ -1,6 +1,7 @@
 import QtQuick
 import QtTest
 import "fixtures"
+import "calculator.js" as Arithmetic
 
 TestCase {
     id: test
@@ -10,6 +11,8 @@ TestCase {
         LauncherPreferences.hidden = [];
         NacreApps.launched = "";
         DesktopActions.executed = [];
+        AppLaunch.commands = [];
+        NacrePanelState.calls = [];
     }
 
     function test_category_browsing_and_global_search() {
@@ -18,6 +21,7 @@ TestCase {
         compare(view.category, "favorites");
         compare(view.entries.length, 0);
         view.select("all");
+        verify(!findChild(view, "launcherApps").currentItem || !findChild(view, "launcherApps").currentItem.selected);
         compare(view.entries.length, 3);
         verify(!view.categories.some(c => {
             return c.id === "games";
@@ -139,6 +143,7 @@ TestCase {
         view.height = 550;
         wait(30);
         compare(grid.height, 5 * grid.cellHeight);
+        view.focusResults();
         const tile = grid.currentItem;
         verify(tile.height < 119);
         for (const child of tile.children) {
@@ -228,6 +233,100 @@ TestCase {
         compare(view.entries[0].id, "music");
     }
 
+    function test_alphabetical_and_no_browse_selection() {
+        LauncherPreferences.favorites = ["music", "editor", "browser"];
+        const view = createTemporaryObject(launcher, test);
+        wait(30);
+        compare(view.entries.map(item => item.name).join(","), "Browser,Editor,Music");
+        const grid = findChild(view, "launcherApps");
+        compare(grid.currentIndex, -1);
+        const input = findChild(view, "launcherSearch");
+        input.forceActiveFocus();
+        keyClick(Qt.Key_Return);
+        compare(NacreApps.launched, "");
+        input.text = "Music";
+        compare(grid.currentIndex, 0);
+        verify(grid.currentItem.selected);
+        input.text = "";
+        verify(!grid.currentItem || !grid.currentItem.selected);
+        keyClick(Qt.Key_Down);
+        compare(grid.currentIndex, 0);
+        verify(grid.currentItem.selected);
+        view.select("all");
+        verify(!grid.currentItem || !grid.currentItem.selected);
+    }
+    function test_prefix_mode_restores_prior_tab_and_action_ranking() {
+        const view = createTemporaryObject(launcher, test);
+        wait(30);
+        view.select("development");
+        const input = findChild(view, "launcherSearch");
+        input.text = ">";
+        compare(view.activeCategory, "actions");
+        compare(view.category, "development");
+        verify(!findChild(view, "launcherApps").currentItem || !findChild(view, "launcherApps").currentItem.selected);
+        input.text = ">settings";
+        compare(view.entries[0].action, "settings");
+        compare(findChild(view, "launcherApps").currentIndex, 0);
+        input.text = "";
+        compare(view.activeCategory, "development");
+        verify(!findChild(view, "launcherApps").currentItem || !findChild(view, "launcherApps").currentItem.selected);
+    }
+    function test_curated_catalog_routes_and_legacy_favorites() {
+        const view = createTemporaryObject(launcher, test);
+        wait(30);
+        const original = DesktopActions.list;
+        try {
+            DesktopActions.list = ActualDesktopActions.list;
+            view.select("actions");
+            compare(view.entries.length, 21);
+            verify(!view.entries.some(item => ["preset", "toggle-setting", "light", "dark", "power", "left"].includes(item.action)));
+            const input = findChild(view, "launcherSearch");
+            input.text = ">ai";
+            compare(view.entries[0].action, "tasks");
+            input.text = ">brain";
+            compare(view.entries[0].action, "brain");
+            input.text = ">wifi";
+            compare(view.entries[0].action, "wifi");
+            LauncherPreferences.favorites = ["nacre-action:toggle-setting:blur"];
+            view.select("favorites");
+            compare(view.entries.length, 1);
+            ActualDesktopActions.execute("colors");
+            verify(NacreColorsApp.opened);
+            ActualDesktopActions.execute("welcome");
+            compare(NacreWelcomeApp.page, "home");
+            ActualDesktopActions.execute("sound");
+            compare(NacrePanelState.calls[NacrePanelState.calls.length - 1][1], "sound");
+            ActualDesktopActions.execute("calculator");
+            compare(NacrePanelState.calls[NacrePanelState.calls.length - 1].join(","), "apps,= ");
+            ActualDesktopActions.execute("files");
+            compare(AppLaunch.commands[0].join(","), "nacre-app,files");
+        } finally {
+            DesktopActions.list = original;
+        }
+    }
+    function test_calculator_grammar_and_copy() {
+        for (const pair of [["(12+8)/5", "4"], ["2+3*4", "14"], ["-2^2", "-4"], ["2^3^2", "512"], ["sqrt(81)+abs(-2)", "11"], ["0.1+0.2", "0.3"], ["1e3/4", "250"], ["log10(100)", "2"]]) {
+            const result = Arithmetic.evaluate(pair[0]);
+            verify(result.ok, result.error);
+            compare(result.value, pair[1]);
+        }
+        for (const input of ["1/0", "sqrt(-1)", "1+", "(()=>7)()", "Math.random()", "constructor(1)", "(".repeat(40) + "1" + ")".repeat(40)])
+            verify(!Arithmetic.evaluate(input).ok, input);
+        const view = createTemporaryObject(launcher, test);
+        wait(30);
+        view.visibilities.launcherQuery = "= ";
+        view.reset();
+        verify(view.calculation);
+        compare(view.entries.length, 0);
+        const input = findChild(view, "launcherSearch");
+        input.text = "= (12+8)/5";
+        compare(view.entries[0].name, "4");
+        input.forceActiveFocus();
+        keyClick(Qt.Key_Return);
+        compare(AppLaunch.commands[0].join(","), "wl-copy,--,4");
+        compare(view.visibilities.launcher, false);
+    }
+
     name: "CategorizedLauncher"
     width: 980
     height: 740
@@ -243,6 +342,7 @@ TestCase {
 
             visibilities: QtObject {
                 property bool launcher: true
+                property string launcherQuery: ""
             }
         }
     }

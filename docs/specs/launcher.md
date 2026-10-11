@@ -45,13 +45,19 @@ search and empty results retain that height. Smaller outputs scale the row/icon
 height to fit five rows. Search stays anchored at the bottom. Categories reflect
 installed desktop entries; omit empty app categories and honor hidden apps.
 
-Search ranks visible apps, visibly selects the best result while typing and
+Favorites sort alphabetically by displayed name without altering stored choices.
+No visual selection or Enter activation on a blank browser; arrows establish
+a selection. Search ranks visible apps, visibly selects the best result while typing and
 Enter launches it without a click. Keep arrows, Tab, Escape and fast scrolling.
-Actions follows Favorites in the rail and exposes the registered `>` actions;
-its ordinary text search filters those actions. Power controls stay separate.
+Actions follows Favorites; `>` highlights that mode without losing the prior
+category. Clearing the prefix returns there. Two-column rows show names, product
+logos and descriptions for curated everyday/Nacre destinations. AI/Brain actions
+name their product. Match aliases and prioritize exact operation aliases. Advanced
+visual/preset operations remain compatible with saved favorites but are omitted
+from the main action list; Settings owns those controls. Power controls stay separate.
 Heart/context-menu/Ctrl+D support both apps and actions, including from search.
 Use stable namespaced operation/argument IDs in the existing private favorites
-array; mixed favorites retain order, dynamic labels update, unknown IDs cannot
+array; mixed favorites display alphabetically, dynamic labels update, unknown IDs cannot
 execute. Hide/restore applies only to apps. Category/search changes select the
 first result; favorite changes must not reset unrelated All-app navigation.
 Maintain existing preference locking/permissions and systemd/UWSM launch owner.
@@ -90,3 +96,15 @@ current native layouts in multiple modes/scales where available. Preserve busy
 workers/accounts, cached private art and all other task worktrees. Record exact
 replacement paths, commits, references, dependencies, origin evidence and limits;
 then promote/push to existing main. Public extraction/visual redesign remain later.
+
+## Arithmetic query
+
+Calculator opens the same launcher with `= `. Explicit expressions show a result
+tile; Enter copies the finite answer. Parse a bounded independent grammar with
+operator precedence/right-associative power, unary signs, parentheses, constants
+and whitelisted unary math functions. Never evaluate source as JavaScript/shell.
+Reject incomplete input, unsupported names, non-finite output, length over256 and
+nesting over32. Use double precision/14 significant digit display, no network.
+Test grammar, errors/injection-like strings, mode routing, copy behavior, idle
+selection, alphabetic mixed favorites, prefix return, alias ranking and existing
+legacy favorite routes. Inspect default/search/actions/calculator live layouts.

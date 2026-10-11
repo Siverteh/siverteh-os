@@ -29,9 +29,12 @@ authenticated local server and dedicated browser profile.
 
 Nacre Settings, Colors and Welcome are launcher applications using the same shell
 providers. Colors previews palettes without changing the desktop until Apply.
-Welcome is a small five-page tour with live demo choices and Undo; automatic
+Welcome is a small five-page tour with live demo choices; automatic
 startup runs once after successful activation, with manual reopening always
 available. See [Welcome](features/welcome.md).
+
+The five-row launcher combines alphabetical favorites, app search, explicit
+`>` actions and a bounded `=` calculator. See [Launcher](features/launcher.md).
 
 ## From wallpaper to desktop colors
 
