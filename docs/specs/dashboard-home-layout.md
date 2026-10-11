@@ -69,3 +69,7 @@ surfaces keep it legible over moving wallpaper; the center glyph has a small tin
 badge. Static glyphs retain full contrast and an accessible indicator label.
 Existing finite hover/focus feedback and reduced-motion guards remain; no new
 idle animation, wallpaper worker or preference owner is introduced.
+
+At narrow widths, the wallpaper buttons stay inside the banner. The pearl strip
+shows the three accents below440px and yields space to the controls below360px;
+Colors remains available. Native layout checks cover580px,360px and240px views.

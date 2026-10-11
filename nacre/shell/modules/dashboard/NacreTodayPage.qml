@@ -122,12 +122,14 @@ Flickable {
                 visible: !root.narrow
             }
             Row {
+                objectName: "dashboardPaletteStrip"
+                visible: root.width >= 360
                 x: 24
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 18
                 spacing: 10
                 Repeater {
-                    model: [NacreColours.palette.m3primary, NacreColours.palette.m3secondary, NacreColours.palette.m3tertiary, NacreColours.palette.m3surfaceContainerHigh, NacreColours.palette.m3onSurface]
+                    model: [NacreColours.palette.m3primary, NacreColours.palette.m3secondary, NacreColours.palette.m3tertiary, NacreColours.palette.m3surfaceContainerHigh, NacreColours.palette.m3onSurface].slice(0, root.width < 440 ? 3 : 5)
                     Rectangle {
                         required property var modelData
                         width: 19
@@ -157,7 +159,7 @@ Flickable {
                 anchors.rightMargin: 18
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 12
-                width: 228
+                width: Math.max(0, Math.min(228, parent.width - 36))
                 spacing: 6
                 Row {
                     id: options
@@ -246,7 +248,7 @@ Flickable {
         Accessible.ignored: !informational
         NacreSurface {
             anchors.centerIn: parent
-            width: 38
+            width: Math.min(38, parent.width)
             height: parent.height
             radius: 9
             color: Qt.tint(NacreTokens.body, Qt.alpha(NacreTokens.accent, .18))

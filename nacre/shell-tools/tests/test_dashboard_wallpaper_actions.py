@@ -117,6 +117,20 @@ TestCase {
   mouseClick(pause,22,17);verify(!WallpaperPlayback.paused);compare(pause.icon,"pause");
   NacreWallpapers.displayDynamic=false;
  }
+ function test_narrow_action_group_and_palette_do_not_overlap(){
+  const view=createTemporaryObject(page,this);wait(40);
+  const pill=findChild(view,"dashboardWallpaperTransport"),palette=findChild(view,"dashboardPaletteStrip");
+  const widths=[580,360,240];
+  for(const width of widths){
+   view.width=width;wait(20);
+   const p=pill.mapToItem(view,0,0);
+   verify(p.x>=0);verify(p.x+pill.width<=width);
+   if(palette.visible){
+    const c=palette.mapToItem(view,0,0);
+    verify(c.x+palette.width<=p.x,"Palette overlaps wallpaper controls at "+width);
+   }
+  }
+ }
  function test_changed_video_starts_without_reopening(){
   if(!__HAS_FFMPEG__){skip('ffmpeg unavailable');return;}
   NacreWallpapers.displayDynamic=true;

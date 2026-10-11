@@ -118,3 +118,7 @@ The last-poster file can update before the worker response; reading current stat
 at completion can otherwise remember a cache image instead of the real wallpaper.
 A native regression covers that order, and real Next/Previous checks verify the
 original wallpaper is restored.
+
+At narrow widths, the wallpaper buttons stay inside the banner. The pearl strip
+shows the three accents below440px and yields space to the controls below360px;
+Colors remains available. Native layout checks cover580px,360px and240px views.
