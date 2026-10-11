@@ -18,6 +18,7 @@ NacreSurface {
     property int selection: -1
     property var hoveredEntry: null
     property var contextEntry: null
+    property rect contextAnchor: Qt.rect(20, 84, 0, 0)
     property var confirmation: null
     property var form: null
     property var activePrompt: null
@@ -264,13 +265,14 @@ NacreSurface {
         if (hasSelection)
             run(entries[index]);
     }
-    function actionsFor(entry) {
+    function actionsFor(entry, anchor = null) {
         if (!entry || ["calculation", "choice"].includes(entry.kind))
             return;
+        const target = anchor || (appLayout ? grid.currentItem : results.currentItem) || search;
+        const point = target.mapToItem(root, 0, 0);
+        contextAnchor = Qt.rect(point.x, point.y, target.width, target.height);
         contextEntry = entry;
         NacreMenu.inspectApp(entry);
-        context.x = Math.max(8, width - context.width - 16);
-        context.y = Math.max(8, height - context.height - 86);
         context.open();
     }
     function focusResults(delta = 1) {
@@ -627,7 +629,7 @@ NacreSurface {
             NacreText {
                 x: tile.compactTile ? 42 : 7
                 y: tile.compactTile ? (parent.height - 20) / 2 : Math.min(55, grid.cellHeight - 23)
-                width: parent.width - x - 7
+                width: parent.width - x - (tile.compactTile && tileHover.hovered ? 30 : 7)
                 height: tile.compactTile ? 20 : parent.height - y - 4
                 text: tile.modelData.name
                 textFormat: Text.PlainText
@@ -643,18 +645,18 @@ NacreSurface {
                 onClicked: event => {
                     root.keyboardSelection = true;
                     root.selection = tile.index;
-                    event.button === Qt.RightButton ? root.actionsFor(tile.modelData) : root.run(tile.modelData);
+                    event.button === Qt.RightButton ? root.actionsFor(tile.modelData, tile) : root.run(tile.modelData);
                 }
             }
             NacreSurface {
                 objectName: "launcherFavorite_" + tile.index
                 x: parent.width - 24
-                y: 3
+                y: tile.compactTile ? (parent.height - height) / 2 : 3
                 width: 23
                 height: 23
                 radius: 7
                 color: "transparent"
-                visible: root.route !== "home" && !tile.compactTile && (tileHover.hovered || tile.selected)
+                visible: tileHover.hovered || (root.route !== "home" && tile.selected)
                 NacreIcon {
                     anchors.centerIn: parent
                     text: "favorite"
@@ -757,7 +759,7 @@ NacreSurface {
                 onClicked: event => {
                     root.keyboardSelection = true;
                     root.selection = row.index;
-                    event.button === Qt.RightButton ? root.actionsFor(row.modelData) : root.run(row.modelData);
+                    event.button === Qt.RightButton ? root.actionsFor(row.modelData, row) : root.run(row.modelData);
                 }
             }
         }
@@ -860,10 +862,12 @@ NacreSurface {
                     onClicked: root.run(root.previewEntry)
                 }
                 NacreMenuButton {
+                    id: detailActions
+                    objectName: "launcherDetailActions"
                     width: parent.width
                     visible: !!root.previewEntry
                     text: root.previewEntry?.kind === "group" ? "Open section" : "Item actions"
-                    onClicked: root.previewEntry.kind === "group" ? root.navigate(root.previewEntry.id) : root.actionsFor(root.previewEntry)
+                    onClicked: root.previewEntry.kind === "group" ? root.navigate(root.previewEntry.id) : root.actionsFor(root.previewEntry, detailActions)
                 }
                 NacreText {
                     text: "Recent"
@@ -1044,7 +1048,11 @@ NacreSurface {
     }
     Popup {
         id: context
-        width: 240
+        objectName: "launcherItemActions"
+        parent: root
+        width: Math.min(240, root.width - 16)
+        x: Math.max(8, Math.min(root.width - width - 8, root.contextAnchor.x + root.contextAnchor.width + width + 14 <= root.width ? root.contextAnchor.x + root.contextAnchor.width + 6 : root.contextAnchor.x - width - 6))
+        y: Math.max(8, Math.min(root.height - height - 86, root.contextAnchor.y))
         padding: 12
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
         background: NacreSurface {
@@ -1053,104 +1061,120 @@ NacreSurface {
             border.width: 1
             border.color: NacreColours.palette.m3outlineVariant
         }
-        contentItem: Column {
-            spacing: 7
-            NacreText {
+        contentItem: Flickable {
+            id: contextScroll
+            implicitHeight: Math.min(actionColumn.implicitHeight, Math.max(80, root.height - 118))
+            contentWidth: width
+            contentHeight: actionColumn.implicitHeight
+            boundsBehavior: Flickable.StopAtBounds
+            clip: true
+            Column {
+                id: actionColumn
                 width: parent.width
-                text: root.contextEntry?.name || "Item actions"
-                font.pointSize: 11
-                wrapMode: Text.Wrap
-                maximumLineCount: 2
-                elide: Text.ElideRight
-                textFormat: Text.PlainText
-            }
-            NacreMenuButton {
-                width: parent.width
-                compact: true
-                text: "Open"
-                visible: !!root.contextEntry && !root.contextEntry.disabled
-                onClicked: {
-                    const entry = root.contextEntry;
-                    context.close();
-                    root.run(entry);
+                spacing: 7
+                NacreText {
+                    width: parent.width
+                    text: root.contextEntry?.name || "Item actions"
+                    font.pointSize: 11
+                    wrapMode: Text.Wrap
+                    maximumLineCount: 2
+                    elide: Text.ElideRight
+                    textFormat: Text.PlainText
+                }
+                NacreMenuButton {
+                    width: parent.width
+                    compact: true
+                    text: "Open"
+                    visible: !!root.contextEntry && !root.contextEntry.disabled
+                    onClicked: {
+                        const entry = root.contextEntry;
+                        context.close();
+                        root.run(entry);
+                    }
+                }
+                NacreMenuButton {
+                    width: parent.width
+                    compact: true
+                    visible: !!root.contextEntry && !["open-file", "search-web"].includes(root.contextEntry.operation)
+                    text: root.contextEntry && LauncherPreferences.favorites.includes(Menu.stable(root.contextEntry)) ? "Remove favorite" : "Add favorite"
+                    onClicked: {
+                        root.favorite(root.contextEntry);
+                        context.close();
+                    }
+                }
+                NacreMenuButton {
+                    width: parent.width
+                    compact: true
+                    visible: root.contextEntry?.kind === "app"
+                    text: root.contextEntry?.hidden ? "Show application" : "Hide application"
+                    onClicked: {
+                        LauncherPreferences.update("hide", root.contextEntry.id, !root.contextEntry.hidden);
+                        context.close();
+                    }
+                }
+                NacreMenuButton {
+                    width: parent.width
+                    compact: true
+                    visible: (!!root.contextEntry?.package && root.contextEntry?.checked) || (!!root.contextEntry && !!NacreMenu.ownership[root.contextEntry.id])
+                    text: "Remove package"
+                    onClicked: {
+                        const entry = Object.assign({}, root.contextEntry, {
+                            disabled: false,
+                            operation: "remove-package",
+                            value: root.contextEntry.package || NacreMenu.ownership[root.contextEntry.id]
+                        });
+                        context.close();
+                        root.run(entry);
+                    }
+                }
+                NacreMenuButton {
+                    width: parent.width
+                    compact: true
+                    visible: root.contextEntry?.webapp === true
+                    text: "Remove web app"
+                    onClicked: {
+                        NacreMenu.execute(Object.assign({}, root.contextEntry, {
+                            operation: "webapp-remove"
+                        }));
+                        context.close();
+                    }
+                }
+                NacreMenuButton {
+                    width: parent.width
+                    compact: true
+                    visible: !!NacreMenu.supportPackage(root.contextEntry) && !!root.contextEntry?.disabled
+                    text: "Install support"
+                    onClicked: {
+                        const pkg = NacreMenu.supportPackage(root.contextEntry);
+                        context.close();
+                        root.run({
+                            id: "software.support",
+                            kind: "action",
+                            name: pkg,
+                            operation: "install-package",
+                            value: pkg
+                        });
+                    }
+                }
+                NacreText {
+                    width: parent.width
+                    text: root.contextEntry?.reason || ""
+                    textFormat: Text.PlainText
+                    visible: !!text
+                    wrapMode: Text.Wrap
+                    color: NacreColours.palette.m3onSurfaceVariant
+                    font.pointSize: 9
                 }
             }
-            NacreMenuButton {
-                width: parent.width
-                compact: true
-                visible: !!root.contextEntry && !["open-file", "search-web"].includes(root.contextEntry.operation)
-                text: root.contextEntry && LauncherPreferences.favorites.includes(Menu.stable(root.contextEntry)) ? "Remove favorite" : "Add favorite"
-                onClicked: {
-                    root.favorite(root.contextEntry);
-                    context.close();
-                }
-            }
-            NacreMenuButton {
-                width: parent.width
-                compact: true
-                visible: root.contextEntry?.kind === "app"
-                text: root.contextEntry?.hidden ? "Show application" : "Hide application"
-                onClicked: {
-                    LauncherPreferences.update("hide", root.contextEntry.id, !root.contextEntry.hidden);
-                    context.close();
-                }
-            }
-            NacreMenuButton {
-                width: parent.width
-                compact: true
-                visible: (!!root.contextEntry?.package && root.contextEntry?.checked) || (!!root.contextEntry && !!NacreMenu.ownership[root.contextEntry.id])
-                text: "Remove package"
-                onClicked: {
-                    const entry = Object.assign({}, root.contextEntry, {
-                        disabled: false,
-                        operation: "remove-package",
-                        value: root.contextEntry.package || NacreMenu.ownership[root.contextEntry.id]
-                    });
-                    context.close();
-                    root.run(entry);
-                }
-            }
-            NacreMenuButton {
-                width: parent.width
-                compact: true
-                visible: root.contextEntry?.webapp === true
-                text: "Remove web app"
-                onClicked: {
-                    NacreMenu.execute(Object.assign({}, root.contextEntry, {
-                        operation: "webapp-remove"
-                    }));
-                    context.close();
-                }
-            }
-            NacreMenuButton {
-                width: parent.width
-                compact: true
-                visible: !!NacreMenu.supportPackage(root.contextEntry) && !!root.contextEntry?.disabled
-                text: "Install support"
-                onClicked: {
-                    const pkg = NacreMenu.supportPackage(root.contextEntry);
-                    context.close();
-                    root.run({
-                        id: "software.support",
-                        kind: "action",
-                        name: pkg,
-                        operation: "install-package",
-                        value: pkg
-                    });
-                }
-            }
-            NacreText {
-                width: parent.width
-                text: root.contextEntry?.reason || ""
-                textFormat: Text.PlainText
-                visible: !!text
-                wrapMode: Text.Wrap
-                color: NacreColours.palette.m3onSurfaceVariant
-                font.pointSize: 9
+            FastScroll {
+                view: contextScroll
+                step: 160
             }
         }
+        onOpened: contextScroll.contentY = 0
         onClosed: search.forceActiveFocus()
     }
+
     IpcHandler {
         target: "appBrowser"
         function selectCategory(id: string): void {

@@ -7,6 +7,7 @@ TestCase {
     id: test
 
     function init() {
+        mouseMove(test, width - 2, height - 2);
         LauncherPreferences.favorites = [];
         LauncherPreferences.hidden = [];
         LauncherPreferences.recent = [];
@@ -78,6 +79,40 @@ TestCase {
         compare(value.entries[0].value, "6.2137 mi");
     }
 
+    function test_hover_heart_and_action_anchor_stay_inside_drawer() {
+        LauncherPreferences.favorites = ["editor"];
+        const value = view();
+        const tile = findChild(value, "launcherTile_0"), heart = findChild(value, "launcherFavorite_0");
+        mouseMove(value, 5, 5);
+        wait(20);
+        verify(!heart.visible);
+        mouseMove(tile, tile.width / 2, tile.height / 2);
+        tryCompare(heart, "visible", true);
+        mouseClick(heart, heart.width / 2, heart.height / 2);
+        tryCompare(value, "entries", []);
+        value.navigate("apps");
+        value.keyboardSelection = true;
+        value.selection = 0;
+        wait(20);
+        const trigger = findChild(value, "launcherDetailActions");
+        value.actionsFor(value.selectedEntry, trigger);
+        const popup = findChild(value, "launcherItemActions");
+        tryCompare(popup, "opened", true);
+        wait(30);
+        verify(popup.height > 50, "popup height " + popup.height + " content " + popup.contentItem.implicitHeight);
+        verify(popup.x + popup.width <= value.width - 8);
+        verify(popup.y + popup.height <= value.height - 86);
+        verify(popup.x < value.contextAnchor.x);
+        compare(Math.round(popup.y), Math.round(value.contextAnchor.y));
+        value.height = 340;
+        value.contextEntry = Object.assign({}, value.selectedEntry, {
+            reason: "Additional details ".repeat(50),
+            disabled: true
+        });
+        wait(30);
+        verify(popup.y >= 8);
+        verify(popup.y + popup.height <= value.height - 86);
+    }
     function test_sections_and_five_row_apps() {
         const value = view();
         compare(NacreMenu.navigation.length, 9);

@@ -3856,7 +3856,7 @@
     },
     "nacre/shell/modules/launcher/NacreAppBrowser.qml": {
       "disposition": "independent",
-      "sha256": "fadb550ff2ca9a40df5ea1aba8921eb54ff4673d09c4f31b2f0e871d78d4844d",
+      "sha256": "927d65ad9945d61b74c38b9112609528a831b5fc9642e63dabd4b439b4937cfd",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
@@ -3872,7 +3872,8 @@
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
         "2026-10-11: initial leaf-route resolution selects its parent and row without execution; native Qt regression added; safe debug geometry exposed for layout inspection.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
-        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
+        "docs/features/launcher.md; independent popup anchor/dynamic clamp/scroll and hover-only Home hearts; production Qt hover-click and small/tall popup geometry regression"
       ]
     },
     "nacre/shell/modules/launcher/NacreLauncherPanel.qml": {
@@ -6607,7 +6608,7 @@
     },
     "docs/features/launcher.md": {
       "disposition": "non-implementation",
-      "sha256": "9f8eb68252b6ec2cecdbbea0f97e1b5bcc72734cc67830435635a1680557a91f",
+      "sha256": "deeb37c7fd74a4027c2e160d23c4de8cdb9c469683baa2765b7dc188a4edcdb8",
       "evidence": [
         "docs/nacre/DOCUMENTATION-GUIDE-AUDIT.md",
         "docs/specs/documentation-source-audit.md",
@@ -6616,7 +6617,8 @@
         "2026-10-11 live ordering correction: actual Qt JS sort reordered large equal-score arrays. Empty actions now bypass sorting; ranked ties use original index explicitly. Native test asserts full real catalog starts Wallpaper/Calculator and preserves tied Open order. Visual verification repeated; no external implementation copied.",
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
-        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
+        "docs/features/launcher.md; independent popup anchor/dynamic clamp/scroll and hover-only Home hearts; production Qt hover-click and small/tall popup geometry regression"
       ],
       "notes": "Locally maintained current project behavior/deployment prose reviewed in full with history and reader/source checks; no implementation-origin or license conclusion."
     },
@@ -9909,9 +9911,10 @@
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
         "2026-10-11: initial leaf-route resolution selects its parent and row without execution; native Qt regression added; safe debug geometry exposed for layout inspection.",
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
-        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95"
+        "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
+        "docs/features/launcher.md; independent popup anchor/dynamic clamp/scroll and hover-only Home hearts; production Qt hover-click and small/tall popup geometry regression"
       ],
-      "sha256": "74e5051edb003e79f78328163d463f7e08a4b3858f706695311700f45a175581"
+      "sha256": "c11aedb6a3f757578b355aa88e9a414992f9480befcb6f7d241735ea3c23a7b2"
     },
     "nacre/shell-tools/tests/test_screenshot.py": {
       "disposition": "independent",

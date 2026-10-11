@@ -10,8 +10,9 @@ state. The detail pane explains the selected item, previews wallpapers/fonts and
 provides secondary actions. Smaller outputs collapse the pane and adapt the grid
 without losing its five rows.
 
-The panel joins the bottom frame and shares its iridescent rim. Favorites omit
-redundant heart markers; elsewhere hearts appear on hover/selection. Headings
+The panel joins the bottom frame and shares its iridescent rim. Favorites show heart markers only on hover for direct removal; elsewhere
+hearts appear on hover/selection. Item actions anchor beside their trigger, remain
+within the drawer and scroll when longer than the available height. Headings
 align with the compact Back control. The stable detail pane shows recent items,
 three stateful quick toggles and update count when nothing is selected.
 
