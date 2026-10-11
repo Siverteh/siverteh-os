@@ -253,7 +253,7 @@ Flickable {
             width: Math.min(38, parent.width)
             height: parent.height
             radius: 9
-            color: Qt.tint(NacreTokens.raised, Qt.alpha(NacreTokens.accent, .14))
+            color: "transparent"
             visible: control.emphasized
             HoverHandler {
                 id: infoHover
@@ -264,7 +264,7 @@ Flickable {
             anchors.centerIn: parent
             text: parent.icon
             font.pointSize: 16
-            color: control.emphasized ? NacreTokens.accent : NacreTokens.ink
+            color: NacreTokens.ink
             opacity: control.informational || control.available ? 1 : .4
         }
         NacreInteraction {

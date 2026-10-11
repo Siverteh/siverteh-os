@@ -65,8 +65,7 @@ original wallpaper is restored.
 
 The wallpaper action group uses equal-width Wallpapers/Colors buttons above a
 matching transport row. Softer rectangular corners and restrained palette-tinted
-surfaces keep it legible over moving wallpaper; the center glyph has a small tint
-badge. Static glyphs retain full contrast and an accessible indicator label.
+surfaces keep it legible over moving wallpaper; the center glyph shares its color and background with the arrows. Static glyphs retain full contrast and an accessible indicator label.
 Existing finite hover/focus feedback and reduced-motion guards remain; no new
 idle animation, wallpaper worker or preference owner is introduced.
 
@@ -74,7 +73,8 @@ At narrow widths, the wallpaper buttons stay inside the banner. The pearl strip
 shows the three accents below440px and yields space to the controls below360px;
 Colors remains available. Native layout checks cover580px,360px and240px views.
 
-The center badge uses the raised surface tone with a gentle accent tint. Its hover,
+The center badge blends into the shared transport background and uses the same
+ink color as the arrows. Its hover,
 focus and hit region match the badge itself; the surrounding reserved slot stays
 quiet. Static tooltip hover follows the same badge bounds. Native geometry and
 pointer checks cover the original larger-highlight mismatch.
