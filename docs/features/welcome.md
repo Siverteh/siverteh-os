@@ -62,8 +62,8 @@ committed selection or return to it on failure; previews show committed colors.
 
 Super+M uses the ordinary Hyprland maximized toggle for every app; Super+T
 toggles floating when desired. There is no special Nacre size state.
-Super+S is the sole managed Settings shortcut. Welcome uses380px wheel steps
-with110ms easing, 1.5× touchpad pixels and no added release momentum;
+Super+S is the sole managed Settings shortcut. Welcome uses900px wheel steps
+with80ms easing, 3× touchpad pixels and no added release momentum;
 scrollbar dragging and page navigation stop prior motion. App descriptions wrap
 and their Open button moves below the text on narrower windows.
 
@@ -85,3 +85,8 @@ Personal cards omit collection captions; licensed bundled scenes retain attribut
 The preview height shares a finite viewport budget with cards and controls, while
 small windows remain scrollable. Enlarging the window grows the hero and preview;
 standard compositor maximize/restore retains the original floating geometry.
+
+The normal-sized desktop preview keeps terminal build/readiness/warning lines and
+notification visible. Below260px it uses a shorter file window and terminal,
+rather than hiding those examples; Welcome reserves at least210px. Explicit
+compact previews remain supported for other callers.

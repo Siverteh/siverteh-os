@@ -75,7 +75,7 @@ Rectangle {
         x: 14
         y: root.condensed ? 40 : 50
         width: parent.width - 28
-        height: root.condensed ? Math.min(100, root.height - 50) : Math.min(160, root.height - 160)
+        height: root.compact ? Math.min(100, root.height - 50) : root.condensed ? 80 : Math.min(160, root.height - 160)
         radius: 9
         color: root.c("surfaceContainer")
         Rectangle {
@@ -123,15 +123,16 @@ Rectangle {
     }
     Rectangle {
         x: 14
-        visible: !root.condensed
-        y: root.height - height - 15
+        visible: !root.compact
+        y: root.height - height - 10
         width: (parent.width - 34) * .52
-        height: 82
+        height: root.condensed ? 68 : 82
         radius: 7
+        objectName: "previewTerminal"
         color: root.c("surfaceContainerLowest")
         Text {
             x: 9
-            y: 9
+            y: root.condensed ? 7 : 9
             text: "$ build"
             font.family: "JetBrains Mono NF"
             font.pointSize: 8
@@ -139,14 +140,14 @@ Rectangle {
         }
         Text {
             x: 9
-            y: 31
+            y: root.condensed ? 27 : 31
             text: "✓ Ready"
             font.pointSize: 8
             color: root.c("green")
         }
         Text {
             x: 9
-            y: 53
+            y: root.condensed ? 45 : 53
             text: "! Warning"
             font.pointSize: 8
             color: root.c("yellow")
@@ -154,11 +155,12 @@ Rectangle {
     }
     Rectangle {
         x: parent.width * .57
-        visible: !root.condensed
-        y: root.height - height - 23
+        visible: !root.compact
+        y: root.height - height - 10
         width: parent.width * .43 - 14
         height: 67
         radius: 8
+        objectName: "previewNotification"
         color: root.c("primaryContainer")
         Text {
             x: 9

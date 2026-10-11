@@ -167,7 +167,7 @@ Column {
     NacreThemePreview {
         objectName: "welcomeDesktopPreview"
         width: parent.width
-        height: Math.max(160, Math.min(420, root.availableHeight - scenes.implicitHeight - styleControls.height - styleDescription.implicitHeight - paletteRoles.height - root.spacing * 4))
+        height: Math.max(210, Math.min(420, root.availableHeight - scenes.implicitHeight - styleControls.height - styleDescription.implicitHeight - paletteRoles.height - root.spacing * 4))
         palette: NacrePresentation.active.colours || {}
         wallpaper: NacreWallpapers.displayPreview || ""
     }

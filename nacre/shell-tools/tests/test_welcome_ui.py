@@ -219,7 +219,7 @@ TestCase {id:test;name:"Welcome";width:1200;height:900;visible:true;when:windowS
   compare(findChild(view,"welcomeColors"),null);
   findChild(view,"welcomeStep_shortcuts").children[0];
   NacreWelcomeApp.jump("shortcuts");wait(180);compare(NacreWelcomeApp.page,"shortcuts");
-  const wheel=findChild(view,"welcomeWheel");compare(wheel.pixelMultiplier,1.5);compare(wheel.step,380);compare(wheel.kinetic,false);
+  const wheel=findChild(view,"welcomeWheel");compare(wheel.pixelMultiplier,3);compare(wheel.step,900);compare(wheel.kinetic,false);
   wheel.scrollBy(100000,true);wait(180);verify(Math.abs(canvas.contentY-wheel.maximum())<1);
   const bottom=canvas.contentY;for(let i=0;i<20;i++)wheel.scrollBy(200,true);wait(140);compare(canvas.contentY,bottom);
   wheel.scrollBy(-100000,true);wait(150);verify(canvas.contentY<1);

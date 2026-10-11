@@ -11,8 +11,8 @@ public fresh installs retain credited licensed scenes. Cache posters and all
 styles/modes through the existing read-only preparation owner. Missing personal
 files fall back as a complete collection, with no invented licenses.
 Colors has search/Open image and direct Export; no library/color dropdowns.
-App rows wrap without overlap. Welcome scroll uses faster380px wheel steps,
-1.5× pixel movement, no added momentum, cancellation and stable edge stops.
+App rows wrap without overlap. Welcome scroll uses faster900px wheel steps,
+3× pixel movement, no added momentum, cancellation and stable edge stops.
 
 Keep palette ownership and matched image activation. Ready blocking-stdin
 transports reuse interpreter/module initialization without idle polling. Serial
@@ -26,3 +26,8 @@ publication. Full checks, real app sizing/palette timing/visual/keyboard gates.
 Welcome uses a responsive hero and full-width preview above four labeled color
 roles. Private collection captions and Colors Favorite heart are omitted; public
 license credits remain. Check small, normal floating and maximized sizes.
+
+The normal-sized desktop preview keeps terminal build/readiness/warning lines and
+notification visible. Below260px it uses a shorter file window and terminal,
+rather than hiding those examples; Welcome reserves at least210px. Explicit
+compact previews remain supported for other callers.

@@ -74,7 +74,7 @@ import QtTest
 import "fixtures"
 TestCase {id:test;name:"ColorsStudio";width:1300;height:1000;visible:true;when:windowShown
  Component{id:mini;NacreThemePreview{width:400;height:280;palette:NacreColorsApp.preview.palette.colours}}
- function test_mini_desktop_children_stay_inside(){const preview=createTemporaryObject(mini,test);for(const h of [200,260,280,350]){preview.height=h;wait(10);for(const child of preview.children){if(child.visible && child.width>0 && child.height>0)verify(child.y+child.height<=h+.1)}}}
+ function test_mini_desktop_children_stay_inside(){const preview=createTemporaryObject(mini,test);for(const h of [200,260,280,350]){preview.height=h;wait(10);verify(findChild(preview,"previewTerminal").visible);verify(findChild(preview,"previewNotification").visible);for(const child of preview.children){if(child.visible && child.width>0 && child.height>0)verify(child.y+child.height<=h+.1)}}}
  Component{id:studio;NacreColorsView{width:1180;height:780}}
  function test_resize_and_preview_controls_are_read_only(){
   const view=createTemporaryObject(studio,test);wait(30);

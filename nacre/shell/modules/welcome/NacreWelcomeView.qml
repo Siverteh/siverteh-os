@@ -47,15 +47,15 @@ Item {
         contentHeight: body.implicitHeight
         clip: true
         boundsBehavior: Flickable.StopAtBounds
-        maximumFlickVelocity: 3400
+        maximumFlickVelocity: 6000
         FastScroll {
             id: wheel
             objectName: "welcomeWheel"
             view: canvas
-            step: 380
-            pixelMultiplier: 1.5
+            step: 900
+            pixelMultiplier: 3
             kinetic: false
-            smoothDuration: 110
+            smoothDuration: 80
         }
         ScrollBar.vertical: NacreScrollBar {
             id: scrollBar
