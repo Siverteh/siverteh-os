@@ -257,3 +257,18 @@ wallpaper uses three ready-image slots and paired palette activation. One-shot
 warmer precomputes selected scene modes/styles and never publishes. See feature
 [Orient](features/orient.md), [Welcome](features/welcome.md) and
 [specification](specs/colors-welcome-performance.md).
+
+## Colors and first-run tour
+
+`NacreColorsApp` owns private staged previews; only explicit Apply calls the
+existing wallpaper/palette publisher. Its observed swatches combine disjoint
+color families and major neutrals, independently of generated accent selection.
+Colors uses normal tiled Hyprland geometry; Welcome remains a smaller floating
+window. Neither has a separate shell service or palette publication owner.
+
+`NacreWelcomeApp` owns the tour and per-opening Undo baseline. `welcome.py` owns
+the locked first-run claim/acknowledgement; successful activation or explicit tour
+completion suppresses future automatic login opens. Live described compositor
+bindings supply the grouped scrolling guide, without displaying command arguments.
+The finite read-only wallpaper warm-up includes all licensed demo styles/modes;
+unchanged validated originals use stat receipts and changed files revalidate.

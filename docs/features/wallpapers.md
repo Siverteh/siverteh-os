@@ -161,3 +161,10 @@ Picker opening centers the active wallpaper immediately. Initial selection and
 catalogue refresh do not use the travel animation; deliberate browsing retains
 smooth motion. Reopening completes an old transition before selecting the current
 wallpaper, and late current-path data cannot override an active browsing gesture.
+
+Colors displays observed color families alongside major neutral/shadow shades.
+Family coverage sums disjoint source bins, so smaller blue/teal/skin details
+remain visible instead of being crowded out by repeated dark bins. Other contains
+unlisted area. This summary does not alter Natural or the actual generated roles.
+The wallpaper rail uses the active main accent for selection. Colors follows
+normal tiled application sizing and Super+M workspace maximization.

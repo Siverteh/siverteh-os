@@ -20,7 +20,8 @@
       "method": "exec_cmd"
     },
     "flags": {
-      "locked": true
+      "locked": true,
+      "description": "Nacre:mute"
     },
     "keys": "XF86AudioMute",
     "submap": ""
@@ -34,7 +35,8 @@
     },
     "flags": {
       "locked": true,
-      "repeating": true
+      "repeating": true,
+      "description": "Nacre:volume-down"
     },
     "keys": "XF86AudioLowerVolume",
     "submap": ""
@@ -48,7 +50,8 @@
     },
     "flags": {
       "locked": true,
-      "repeating": true
+      "repeating": true,
+      "description": "Nacre:volume-up"
     },
     "keys": "XF86AudioRaiseVolume",
     "submap": ""
@@ -74,7 +77,9 @@
       ],
       "method": "exec_cmd"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:brightness-down"
+    },
     "keys": "XF86MonBrightnessDown",
     "submap": ""
   },
@@ -85,7 +90,9 @@
       ],
       "method": "exec_cmd"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:brightness-up"
+    },
     "keys": "XF86MonBrightnessUp",
     "submap": ""
   },
@@ -96,7 +103,9 @@
       ],
       "method": "exec_cmd"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:keyboard-up"
+    },
     "keys": "XF86KbdBrightnessUp",
     "submap": ""
   },
@@ -107,7 +116,9 @@
       ],
       "method": "exec_cmd"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:keyboard-down"
+    },
     "keys": "XF86KbdBrightnessDown",
     "submap": ""
   },
@@ -118,7 +129,9 @@
       ],
       "method": "exec_cmd"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:emoji"
+    },
     "keys": "SUPER + period",
     "submap": ""
   },
@@ -129,7 +142,9 @@
       ],
       "method": "exec_cmd"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:mic-mute"
+    },
     "keys": "XF86AudioMicMute",
     "submap": ""
   },
@@ -513,7 +528,9 @@
       ],
       "method": "exec_cmd"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:restore-all"
+    },
     "keys": "SUPER + ALT + Q",
     "submap": ""
   },
@@ -537,7 +554,9 @@
       ],
       "method": "exec_cmd"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:force-close"
+    },
     "keys": "SUPER + CTRL + SHIFT + Q",
     "submap": ""
   },
@@ -550,7 +569,9 @@
       ],
       "method": "window.fullscreen"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:fullscreen"
+    },
     "keys": "SUPER + F",
     "submap": ""
   },
@@ -563,7 +584,9 @@
       ],
       "method": "window.fullscreen"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:maximize"
+    },
     "keys": "SUPER + M",
     "submap": ""
   },
@@ -574,7 +597,9 @@
       ],
       "method": "exec_cmd"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:hide"
+    },
     "keys": "SUPER + H",
     "submap": ""
   },
@@ -585,7 +610,9 @@
       ],
       "method": "exec_cmd"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:unhide"
+    },
     "keys": "SUPER + SHIFT + H",
     "submap": ""
   },
@@ -622,7 +649,9 @@
       ],
       "method": "window.float"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:float"
+    },
     "keys": "SUPER + T",
     "submap": ""
   },
@@ -631,7 +660,9 @@
       "args": {},
       "method": "window.pin"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:pin"
+    },
     "keys": "SUPER + P",
     "submap": ""
   },
@@ -649,7 +680,9 @@
       "args": {},
       "method": "group.toggle"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:group"
+    },
     "keys": "SUPER + G",
     "submap": ""
   },
@@ -658,7 +691,9 @@
       "args": {},
       "method": "group.prev"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:group-cycle"
+    },
     "keys": "SUPER + bracketleft",
     "submap": ""
   },
@@ -667,7 +702,9 @@
       "args": {},
       "method": "group.next"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:group-cycle"
+    },
     "keys": "SUPER + bracketright",
     "submap": ""
   },
@@ -678,7 +715,9 @@
       ],
       "method": "layout"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:split"
+    },
     "keys": "SUPER + J",
     "submap": ""
   },
@@ -1219,7 +1258,9 @@
       ],
       "method": "window.cycle_next"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:cycle-window"
+    },
     "keys": "ALT + TAB",
     "submap": ""
   },
@@ -1232,7 +1273,9 @@
       ],
       "method": "window.cycle_next"
     },
-    "flags": {},
+    "flags": {
+      "description": "Nacre:cycle-window"
+    },
     "keys": "ALT + SHIFT + TAB",
     "submap": ""
   },

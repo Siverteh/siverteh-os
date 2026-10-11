@@ -142,7 +142,9 @@ QtObject { property string page:"welcome";property var steps:["welcome","colors"
                         "move",
                         "capture",
                     ][i],
-                    "key": "Super + " + str(i),
+                    "key": "Super + S\nSuper + Shift + O\nSuper + Alt + K"
+                    if i == 5
+                    else "Super + " + str(i),
                     "title": "Current action " + str(i),
                     "detail": "A described binding from the current compositor.",
                 }
@@ -201,6 +203,9 @@ TestCase {id:test;name:"Welcome";width:1200;height:900;visible:true;when:windowS
   compare(NacreWelcomeApp.page,"welcome");
   findChild(view,"welcomeDone").clicked();compare(NacreWelcomeApp.page,"colors");wait(200);
   compare(findChild(view,"welcomeScenes").children.length>0,true);
+  const styles=["natural","pigment","harmony","pop","mist","vivid","pearl","tide"].map(style=>findChild(view,"welcomePersonality_"+style));
+  for(const button of styles){verify(button!==null);verify(button.x+button.width<=button.parent.width)}
+  for(let i=1;i<styles.length;i++){verify(styles[i].y>styles[i-1].y || styles[i].x>=styles[i-1].x+styles[i-1].width)}
   const scene=findChild(view,"welcomeScene_1");verify(scene!==null);
   const hit=findChild(scene,"nacreInteractionFeedback").parent;mouseClick(hit,20,20);
   compare(NacreWelcomeApp.actions[0],"scene:"+NacreWelcomeApp.demoEntries[1].path);
@@ -212,6 +217,9 @@ TestCase {id:test;name:"Welcome";width:1200;height:900;visible:true;when:windowS
   findChild(view,"welcomeColors").clicked();compare(NacreWelcomeApp.actions[5],"colors");
   findChild(view,"welcomeStep_shortcuts").children[0];
   NacreWelcomeApp.jump("shortcuts");wait(180);compare(NacreWelcomeApp.page,"shortcuts");
+  const settingsRow=findChild(view,"welcomeShortcut_settings");verify(settingsRow.height>=80);
+  for(const child of settingsRow.children){verify(child.y+child.height<=settingsRow.height)}
+  verify(canvas.contentHeight>canvas.height);
   NacreWelcomeApp.jump("apps");wait(180);
   findChild(view,"welcomeAppRow_ai").clicked();compare(NacreWelcomeApp.optionalApp,"ai");
   compare(findChild(view,"welcomeAppRow_ai").icon,"chat_bubble");
@@ -221,8 +229,7 @@ TestCase {id:test;name:"Welcome";width:1200;height:900;visible:true;when:windowS
   verify(footer.y+footer.height<=view.height);verify(findChild(view,"welcomeDone").x>=0);
   if(prefix){NacreWelcomeApp.page="colors";wait(100);let saved=false;verify(preview.grabToImage(result=>{saved=result.saveToFile(prefix.slice(16)+"-narrow.png")}));tryVerify(()=>saved,3000)}
   NacreWelcomeApp.page="ready";wait(200);
-  const startup=findChild(view,"welcomeStartupToggle");mouseClick(startup,15,startup.height/2);
-  compare(NacreWelcomeApp.data.preferences.showAtLogin,false);
+  compare(findChild(view,"welcomeStartupToggle"),null);
   view.forceActiveFocus();keyClick(Qt.Key_Escape);compare(NacreWelcomeApp.actions[NacreWelcomeApp.actions.length-1],"close");
  }
 }""")

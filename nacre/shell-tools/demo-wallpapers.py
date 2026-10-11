@@ -51,17 +51,40 @@ def collection():
     return entries
 
 
-def ensure(home):
+def ensure(home, fast=False):
     """Copy original bytes once by content hash, with no network or library writes.
 
     Immutable cached originals keep an active wallpaper valid across software
     upgrades. A missing/corrupt cache copy is repaired from the licensed bundle.
     Only the separate thumbnail owner resizes viewing previews.
     """
-    entries = collection()
-    identity = hashlib.sha256((ASSETS / "manifest.json").read_bytes()).hexdigest()[:16]
+    manifest = (ASSETS / "manifest.json").read_bytes()
+    identity = hashlib.sha256(manifest).hexdigest()[:16]
     folder = Path(home) / ".cache/nacre/demo-wallpapers" / identity
     folder.mkdir(parents=True, exist_ok=True)
+    receipt = folder / "verified.json"
+    entries = json.loads(manifest)["wallpapers"]
+
+    def stamps():
+        return {
+            str(path): [
+                path.stat().st_dev,
+                path.stat().st_ino,
+                path.stat().st_size,
+                path.stat().st_mtime_ns,
+                path.stat().st_ctime_ns,
+            ]
+            for item in entries
+            for path in (ASSETS / item["file"], folder / item["file"])
+        }
+
+    if fast:
+        try:
+            if json.loads(receipt.read_text()) == stamps():
+                return [dict(item, path=str(folder / item["file"])) for item in entries]
+        except (OSError, ValueError):
+            pass
+    entries = collection()
     result = []
     for item in entries:
         source = ASSETS / item["file"]
@@ -78,6 +101,13 @@ def ensure(home):
             finally:
                 Path(name).unlink(missing_ok=True)
         result.append(dict(item, path=str(path)))
+    fd, name = tempfile.mkstemp(dir=folder)
+    try:
+        with os.fdopen(fd, "w") as stream:
+            json.dump(stamps(), stream)
+        os.replace(name, receipt)
+    finally:
+        Path(name).unlink(missing_ok=True)
     return result
 
 

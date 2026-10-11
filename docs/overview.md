@@ -27,6 +27,12 @@ those authentication boundaries. Nacre AI manages Codex/Claude conversations and
 project work. Brain indexes the separate private Markdown vault through an
 authenticated local server and dedicated browser profile.
 
+Nacre Settings, Colors and Welcome are launcher applications using the same shell
+providers. Colors previews palettes without changing the desktop until Apply.
+Welcome is a small five-page tour with live demo choices and Undo; automatic
+startup runs once after successful activation, with manual reopening always
+available. See [Welcome](features/welcome.md).
+
 ## From wallpaper to desktop colors
 
 1. The wallpaper helper caches thumbnails, previews and still posters for moving
@@ -54,7 +60,7 @@ video playback follows lock, sleep, battery and visibility policy. See
    reported without preventing later files from loading.
 3. Enabled services own the shell, Brain, Hypridle and power-key handling.
    Hyprland's startup hook submits wallet initialization, polkit, clipboard
-   watching, selected startup apps and optional Welcome activation through UWSM.
+   watching, selected startup apps and a one-time first-run Welcome through UWSM.
 4. Startup reuses existing windows: browser 1, AI 2, Discord 3, Spotify 4, mail 5,
    Brain 6. Editors route to 7; plain terminals are unrestricted.
 

@@ -198,7 +198,11 @@ Item {
                 required property var modelData
                 width: entries.width
                 height: root.libraryTab === "wallpapers" ? 88 : 72
-                color: root.libraryTab === "wallpapers" && NacreColorsApp.options.image === modelData.path ? NacreColours.palette.m3secondaryContainer : "transparent"
+                readonly property bool selected: root.libraryTab === "wallpapers" && NacreColorsApp.options.image === modelData.path
+                radius: 10
+                color: selected ? Qt.alpha(NacreTokens.accent, .14) : "transparent"
+                border.width: selected ? 1 : 0
+                border.color: Qt.alpha(NacreTokens.accent, .65)
                 Image {
                     x: 8
                     y: 8
@@ -338,7 +342,7 @@ Item {
                     }
 
                     NacreText {
-                        text: "Colors found in the image"
+                        text: "Color families in the image"
                         font.pointSize: 11
                     }
                     Flow {
@@ -370,7 +374,7 @@ Item {
                         wrapMode: Text.Wrap
                         font.pointSize: 9
                         color: NacreTokens.mutedInk
-                        text: "Image area, including grays and shadows; remaining shades are grouped as Other."
+                        text: "Similar shades are grouped. Percentages show image area; unlisted colors are Other."
                     }
                     NacreText {
                         text: "Color style"

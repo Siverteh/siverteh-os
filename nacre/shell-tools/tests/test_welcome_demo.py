@@ -66,6 +66,12 @@ class WelcomeDemoTests(unittest.TestCase):
             self.assertEqual(
                 stamps, [Path(item["path"]).stat().st_mtime_ns for item in entries]
             )
+            with patch.object(
+                art,
+                "collection",
+                side_effect=AssertionError("unchanged bytes were rehashed"),
+            ):
+                self.assertEqual(entries, art.ensure(home, fast=True))
             self.assertFalse((home / "Pictures").exists())
             self.assertEqual(len(entries), 4)
             for item in entries:
@@ -82,13 +88,13 @@ class WelcomeDemoTests(unittest.TestCase):
                     self.assertGreaterEqual(image.width, 3840)
                     self.assertGreaterEqual(image.height, 2000)
             Path(entries[0]["path"]).write_bytes(b"broken cache")
-            art.ensure(home)
+            art.ensure(home, fast=True)
             self.assertEqual(
                 Path(entries[0]["path"]).read_bytes(),
                 (art.ASSETS / entries[0]["file"]).read_bytes(),
             )
             Path(entries[1]["path"]).unlink()
-            art.ensure(home)
+            art.ensure(home, fast=True)
             self.assertTrue(Path(entries[1]["path"]).is_file())
 
     def test_snapshot_and_restore_exact_palette_keep_unrelated_preferences(self):

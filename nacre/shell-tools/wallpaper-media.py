@@ -399,6 +399,12 @@ def palette_marker(
             "backgroundFromWallpaper": settings().get(
                 "paletteBackgroundFromWallpaper", False
             ),
+            "clockHour": time.localtime().tm_hour
+            if read(HOME / ".config/nacre/colors.json", {})
+            .get("wallpapers", {})
+            .get(str(poster.resolve()), {})
+            .get("tideAutomatic")
+            else None,
             "choices": read(HOME / ".config/nacre/colors.json", {})
             .get("wallpapers", {})
             .get(str(poster.resolve()), {}),
@@ -461,7 +467,7 @@ def prepared_theme(poster, live=True):
         return False
 
 
-def warm():
+def warm(include_demo=True):
     # Read-only preparation never publishes a wallpaper, palette or login theme.
     # One low-priority worker survives overlapping startup requests via a lock.
     CACHE.mkdir(parents=True, exist_ok=True)
@@ -479,18 +485,23 @@ def warm():
         )
         login = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(login)
-        # The selected wallpaper gets both supporting-color treatments first.
-        # These query calls only fill private caches; no palette is published.
+        brand = demo_module("branding")
         current_media = media_state()
-        current_poster = current_media.get("poster")
-        if current_poster and cli.exists() and Path(current_poster).is_file():
-            brand_spec = importlib.util.spec_from_file_location(
-                "branding", Path(__file__).with_name("branding.py")
+        scenes = [current_media] if current_media.get("poster") else []
+        # Welcome's immutable demo collection is not part of the personal library.
+        # Prepare it too, once per engine/preferences revision, never on a timer.
+        if include_demo and Path(__file__).with_name("demo-wallpapers").is_dir():
+            scenes.extend(
+                describe(item["path"])
+                for item in demo_module("demo-wallpapers").ensure(HOME, fast=True)
             )
-            brand = importlib.util.module_from_spec(brand_spec)
-            brand_spec.loader.exec_module(brand)
-            # Prewarm the selected scene's style/mode choices once, read-only.
-            # A bounded cache keeps these rasters instead of evicting other scenes.
+        flavour = read(HOME / ".local/state/nacre/scheme.json", {}).get(
+            "flavour", "default"
+        )
+        for scene in scenes:
+            poster = scene.get("poster")
+            if not poster or not cli.exists() or not Path(poster).is_file():
+                continue
             for mode in ("dark", "light"):
                 for personality in (
                     "natural",
@@ -500,16 +511,27 @@ def warm():
                     "mist",
                     "vivid",
                     "pearl",
+                    "tide",
                 ):
+                    marker = palette_marker(
+                        poster,
+                        flavour,
+                        source=scene.get("path", poster),
+                        harmony=personality == "harmony",
+                        mode=mode,
+                        personality=personality,
+                    )
+                    if marker.exists():
+                        continue
                     try:
                         result = subprocess.run(
                             [
                                 str(cli),
                                 "wallpaper",
                                 "-p",
-                                current_poster,
+                                poster,
                                 "--source",
-                                current_media.get("path", current_poster),
+                                scene.get("path", poster),
                                 "--mode",
                                 mode,
                                 "--personality",
@@ -521,15 +543,20 @@ def warm():
                             timeout=30,
                         )
                         candidate = json.loads(result.stdout)
-                        marker = palette_marker(
-                            current_poster,
-                            candidate.get("flavour", "default"),
-                            harmony=personality == "harmony",
-                            mode=mode,
-                            personality=personality,
-                        )
                         atomic(marker, candidate)
                         brand.prepare(candidate["colours"], HOME)
+                        digest = candidate.get("source", {}).get("digest", "")
+                        if re.fullmatch(r"[0-9a-f]{64}", digest):
+                            thumbnail = (
+                                HOME
+                                / ".cache/nacre/wallpapers"
+                                / digest
+                                / "thumbnail.jpg"
+                            )
+                            if not thumbnail.exists():
+                                thumbnail.parent.mkdir(parents=True, exist_ok=True)
+                                with Image.open(scene.get("preview", poster)) as image:
+                                    image.convert("RGB").save(thumbnail, quality=85)
                     except (OSError, ValueError, KeyError, subprocess.SubprocessError):
                         continue
         prepared = 0
@@ -711,7 +738,7 @@ def demo_start():
             reverse=True,
         )[10:]:
             old.unlink()
-        scenes = demo_module("demo-wallpapers").ensure(HOME)
+        scenes = demo_module("demo-wallpapers").ensure(HOME, fast=True)
     entries = [
         dict(
             describe(item["path"]),

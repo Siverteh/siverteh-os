@@ -22,6 +22,19 @@ local descriptions = {
     ["~/.config/hypr/scripts/window-close.sh"] = "close",
     ["~/.local/bin/nacre-shell clipboard"] = "clipboard",
     ["loginctl lock-session"] = "lock",
+    ["~/.config/hypr/scripts/window-trash.sh restore-all"] = "restore-all",
+    ["~/.config/hypr/scripts/window-close.sh force"] = "force-close",
+    ["~/.config/hypr/scripts/window-minimize.sh hide"] = "hide",
+    ["~/.config/hypr/scripts/window-minimize.sh restore-last"] = "unhide",
+    ["~/.local/bin/nacre-app emoji"] = "emoji",
+    ["wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"] = "mute",
+    ["wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"] = "mic-mute",
+    ["wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"] = "volume-down",
+    ["wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"] = "volume-up",
+    ["~/.local/bin/nacre-shell brightness down"] = "brightness-down",
+    ["~/.local/bin/nacre-shell brightness up"] = "brightness-up",
+    ["~/.local/bin/nacre-shell keyboard-light down"] = "keyboard-down",
+    ["~/.local/bin/nacre-shell keyboard-light up"] = "keyboard-up",
 }
 local function install(rows)
     for _, row in ipairs(rows) do
@@ -38,6 +51,14 @@ local function install(rows)
         elseif row[2] == "exec_cmd" and row[3]:match("^grim ~/") then
             label = "save-screenshot"
         end
+        if row[2] == "window.fullscreen" then
+            label = row[3].mode == "maximized" and "maximize" or "fullscreen"
+        elseif row[2] == "window.float" then label = "float"
+        elseif row[2] == "window.pin" then label = "pin"
+        elseif row[2] == "window.cycle_next" then label = "cycle-window"
+        elseif row[2] == "group.toggle" then label = "group"
+        elseif row[2] == "group.prev" or row[2] == "group.next" then label = "group-cycle"
+        elseif row[2] == "layout" and row[3] == "togglesplit" then label = "split" end
         if label and not options.description then options.description = "Nacre:" .. label end
         hl.bind(row[1], construct(row), options)
     end

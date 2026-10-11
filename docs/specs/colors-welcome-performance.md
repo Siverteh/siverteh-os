@@ -16,15 +16,19 @@ not just accent candidates. Studio has a Readable badge; full contrast/CVD and
 salience diagnostics belong to Accessibility. Collapse adjustments: themed
 sliders, Background tint Accent/Wallpaper, time tint, workspace colors. Favorites
 and Share are secondary footer actions; Apply is right-aligned and explicit.
-Bound content/image previews when maximized; retain compositor actions.
+Colors follows normal tiled-app geometry, including maximization and workspace gaps.
+Use the available width rather than centering a capped body inside a giant window.
+Use a main-accent outline/tint for library selection, independent of secondary hue.
+Display distinct observed color families plus major neutrals, avoiding member
+double-counting; retain real area percentages and Other. Palette generation is unchanged.
 
 Welcome: five stable-size pages, Welcome/Colors/Shortcuts/Apps/Ready, with
 Back/Next, click targets for progress, Enter and Escape. No page tabs. First page
-has logo/tagline; colors has small credited scenes, Natural/Pop/Pearl and sun/moon,
+has logo/tagline; colors has small credited scenes, all eight styles and sun/moon,
 live mini desktop/role swatches, conditional Undo and two secondary links. Actual
-bind metadata supplies six essentials; full list remains available. Preserve
-optional guides and private startup owner. Show login toggle on final page,
-record completion only explicitly, no auto account/model installs. Rotate pauses
+bind metadata supplies grouped scrollable rows, with dynamic alias heights. Preserve
+optional guides and private startup owner. Automatic first-run login opens once after successful activation; failed claims retry,
+manual reopens remain available. No login toggle on final page, no auto account/model installs. Rotate pauses
 while the tour is active; per-opening baseline is preserved through navigation.
 Native imagery spans warm, green, purple and red; credits/licenses remain explicit.
 Lossless WebP derivatives retain native dimensions and verified identical RGB.
@@ -37,7 +41,7 @@ Expose read-only timing diagnostics. Do not erase personal history as a fix.
 
 Responsiveness: retain one palette publisher and ready-image/palette activation.
 Bound raster cache to1024 entries so a20-scene/treatment set does not churn64
-entries. Read-only warm selected styles/modes; no recurring idle rendering.
+entries. Read-only warm selected and bundled demo styles/modes, skip existing valid entries; no recurring idle rendering.
 Selection debounce35ms; three poster slots preload latest incoming while210ms
 fade finishes, preserve old frame on load errors, latest selection wins. Pause
 background decoder creation while picker is active; selected preview remains

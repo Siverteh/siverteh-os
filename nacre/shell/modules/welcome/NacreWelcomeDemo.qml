@@ -97,18 +97,20 @@ Column {
     }
     Item {
         width: parent.width
-        height: 38
-        Row {
+        height: Math.max(styleFlow.implicitHeight, 38)
+        Flow {
+            id: styleFlow
+            width: parent.width - 90
             spacing: 6
-            anchors.verticalCenter: parent.verticalCenter
             NacreText {
                 text: "Style"
                 font.pointSize: 11
-                anchors.verticalCenter: parent.verticalCenter
+                height: 34
+                verticalAlignment: Text.AlignVCenter
                 rightPadding: 8
             }
             Repeater {
-                model: ["natural", "pop", "pearl"]
+                model: ["natural", "pigment", "harmony", "pop", "mist", "vivid", "pearl", "tide"]
                 ActionButton {
                     required property string modelData
                     objectName: "welcomePersonality_" + modelData
@@ -145,6 +147,11 @@ Column {
         wrapMode: Text.Wrap
         text: ({
                 natural: "The original balance of the wallpaper's own colors",
+                pigment: "Colors balanced by image coverage and detail",
+                harmony: "Related accents for a calm, unified desktop",
+                mist: "Soft, nearly neutral colors for focus",
+                vivid: "Stronger colors, with readable text",
+                tide: "Colors gently warmed or cooled with the time of day",
                 pop: "A bold contrasting detail becomes the accent",
                 pearl: "Neutral surfaces and Nacre's mother-of-pearl tones"
             })[NacreWelcomeApp.appearance.palettePersonality] || "Your chosen color style"
@@ -154,16 +161,12 @@ Column {
     Row {
         width: parent.width
         spacing: 18
-        Item {
+        NacreThemePreview {
             width: Math.min(440, parent.width * .58)
-            height: 140
-            clip: true
-            NacreThemePreview {
-                width: parent.width
-                height: 280
-                palette: NacrePresentation.active.colours || {}
-                wallpaper: NacreWallpapers.displayPreview || ""
-            }
+            height: 150
+            compact: true
+            palette: NacrePresentation.active.colours || {}
+            wallpaper: NacreWallpapers.displayPreview || ""
         }
         Column {
             width: Math.max(0, parent.width - parent.children[0].width - 18)

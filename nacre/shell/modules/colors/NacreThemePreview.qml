@@ -6,6 +6,7 @@ Rectangle {
     required property var palette
     property string wallpaper: ""
     property bool workspaceColors: false
+    property bool compact: false
     width: 400
     height: 280
     radius: 14
@@ -17,9 +18,9 @@ Rectangle {
     }
     Image {
         x: 5
-        y: 35
+        y: root.compact ? 30 : 35
         width: parent.width - 10
-        height: parent.height - 40
+        height: parent.height - (root.compact ? 35 : 40)
         source: root.wallpaper ? "file://" + root.wallpaper : ""
         fillMode: Image.PreserveAspectCrop
         asynchronous: true
@@ -69,9 +70,9 @@ Rectangle {
     }
     Rectangle {
         x: 14
-        y: 50
+        y: root.compact ? 40 : 50
         width: parent.width - 28
-        height: 120
+        height: root.compact ? 100 : 120
         radius: 9
         color: root.c("surfaceContainer")
         Rectangle {
@@ -90,7 +91,7 @@ Rectangle {
         Text {
             x: 12
             y: 40
-            text: "Documents\nPictures\nProjects"
+            text: root.compact ? "Documents\nPictures" : "Documents\nPictures\nProjects"
             font.pointSize: 9
             color: root.c("onSurface")
             lineHeight: 1.3
@@ -111,7 +112,7 @@ Rectangle {
         }
         Rectangle {
             x: parent.width - 105
-            y: 84
+            y: root.compact ? 82 : 84
             width: 90
             height: 3
             color: root.c("secondary")
@@ -119,6 +120,7 @@ Rectangle {
     }
     Rectangle {
         x: 14
+        visible: !root.compact
         y: 183
         width: (parent.width - 34) * .52
         height: 82
@@ -149,6 +151,7 @@ Rectangle {
     }
     Rectangle {
         x: parent.width * .57
+        visible: !root.compact
         y: 190
         width: parent.width * .43 - 14
         height: 67

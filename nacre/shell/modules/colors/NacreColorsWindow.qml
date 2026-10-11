@@ -58,9 +58,9 @@ FloatingWindow {
     }
     NacreColorsView {
         id: view
-        x: Math.max(16, (parent.width - 1360) / 2 + 16)
+        x: 16
         y: 80
-        width: Math.min(parent.width, 1360) - 32
+        width: parent.width - 32
         height: parent.height - 96
     }
     Shortcut {

@@ -87,6 +87,80 @@ SHORTCUTS = (
 )
 
 
+SHORTCUTS += (
+    ("restore", "Restore the last window", "Bring back a window you put away."),
+    ("restore-all", "Restore all windows", "Bring back all windows put away."),
+    ("close", "Close a window", "Ask the application to close normally."),
+    (
+        "force-close",
+        "Force close a window",
+        "Use only if an application is unresponsive.",
+    ),
+    ("hide", "Minimize a window", "Hide it without closing the application."),
+    ("unhide", "Restore a minimized window", "Bring the last minimized window back."),
+    ("move-workspace", "Move a window to a workspace", "Move the focused window."),
+    (
+        "maximize",
+        "Maximize a window",
+        "Use the workspace area; press again to restore.",
+    ),
+    ("fullscreen", "Full screen", "Fill the display; press again to restore."),
+    ("float", "Toggle floating", "Switch between a tiled and floating window."),
+    ("pin", "Pin a window", "Keep a floating window on every workspace."),
+    ("cycle-window", "Cycle windows", "Focus the next or previous window."),
+    ("group", "Group windows", "Toggle a group of windows."),
+    (
+        "group-cycle",
+        "Cycle grouped windows",
+        "Choose the previous or next window in a group.",
+    ),
+    ("split", "Switch split direction", "Change the tiling split."),
+    (
+        "save-screenshot",
+        "Save a screenshot",
+        "Save the whole screen in Pictures/Screenshots.",
+    ),
+    ("emoji", "Choose an emoji", "Search and insert an emoji."),
+    ("volume-up", "Volume up", "Raise speaker volume."),
+    ("volume-down", "Volume down", "Lower speaker volume."),
+    ("mute", "Mute speakers", "Toggle speaker sound."),
+    ("mic-mute", "Mute microphone", "Toggle microphone capture."),
+    ("brightness-up", "Brightness up", "Raise display brightness."),
+    ("brightness-down", "Brightness down", "Lower display brightness."),
+    ("keyboard-up", "Keyboard light up", "Raise keyboard backlight brightness."),
+    ("keyboard-down", "Keyboard light down", "Lower keyboard backlight brightness."),
+)
+
+
+def shortcut_group(action):
+    if action in {"workspace", "move-workspace", "focus"}:
+        return "Workspaces and focus"
+    if action in {"screenshot", "save-screenshot", "clipboard", "emoji"}:
+        return "Capture and clipboard"
+    if action in {
+        "lock",
+        "volume-up",
+        "volume-down",
+        "mute",
+        "mic-mute",
+        "brightness-up",
+        "brightness-down",
+        "keyboard-up",
+        "keyboard-down",
+    }:
+        return "Sound, display and locking"
+    if action in {
+        "launcher",
+        "wallpaper",
+        "settings",
+        "files",
+        "terminal",
+        "ai-sidebar",
+    }:
+        return "Apps and panels"
+    return "Windows"
+
+
 def friendly_key(key):
     if key == "XF86PowerOff":
         return "Power button"
@@ -172,7 +246,13 @@ def shortcut_rows(bindings):
                 + "."
             )
         result.append(
-            {"id": action, "key": labels[action], "title": title, "detail": detail}
+            {
+                "id": action,
+                "key": labels[action],
+                "title": title,
+                "detail": detail,
+                "group": shortcut_group(action),
+            }
         )
     return result
 
@@ -227,7 +307,12 @@ def claim_login(home, instance):
     if not instance:
         return {"show": False, "claim": ""}
     with locked(home):
-        if not preferences(home)["showAtLogin"]:
+        prefs = preferences(home)
+        if (
+            not prefs["showAtLogin"]
+            or prefs.get("firstRunShown")
+            or prefs.get("tourCompleted")
+        ):
             return {"show": False, "claim": ""}
         _, path = paths(home)
         try:
@@ -239,6 +324,19 @@ def claim_login(home, instance):
         claim = uuid.uuid4().hex
         atomic(path, {"instance": instance, "claim": claim})
         return {"show": True, "claim": claim}
+
+
+def acknowledge_login(home, instance, claim):
+    """Only a successful first-run activation consumes automatic startup."""
+    with locked(home):
+        _, path = paths(home)
+        previous = json.loads(path.read_text()) if path.exists() else {}
+        if previous != {"instance": instance, "claim": claim}:
+            raise ValueError("Welcome activation claim is no longer current")
+        data = preferences(home)
+        data["firstRunShown"] = True
+        atomic(paths(home)[0], data)
+    return {"acknowledged": True}
 
 
 def release_login(home, instance, claim):
@@ -256,7 +354,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "action",
-        choices=("state", "set-startup", "finish-tour", "claim-login", "release-login"),
+        choices=(
+            "state",
+            "set-startup",
+            "finish-tour",
+            "claim-login",
+            "release-login",
+            "acknowledge-login",
+        ),
     )
     parser.add_argument("value", nargs="?", default="")
     args = parser.parse_args()
@@ -275,6 +380,10 @@ def main():
         elif args.action == "claim-login":
             result = claim_login(
                 home, os.environ.get("HYPRLAND_INSTANCE_SIGNATURE", "")
+            )
+        elif args.action == "acknowledge-login":
+            result = acknowledge_login(
+                home, os.environ.get("HYPRLAND_INSTANCE_SIGNATURE", ""), args.value
             )
         else:
             release_login(

@@ -4,19 +4,21 @@ Run `nacre-welcome` or open Welcome in the launcher. Five fixed-size pages use
 Back/Next and clickable progress dots, with Enter to continue and Escape to close:
 
 1. Welcome: logo and “Mother-of-pearl. Colors shaped by your wallpaper.”
-2. Your colors: four small credited scenes, Style Natural/Pop/Pearl, dark/light
+2. Your colors: four small credited scenes, all eight color styles, dark/light
    icons and a live desktop/role strip. Choosing changes the real desktop through
    its existing publisher. Undo appears after changes and restores the opening
    wallpaper/palette; Open Colors and More wallpapers are the secondary actions.
-3. Getting around: six essential keys read live from described Hyprland binds,
-   with See all shortcuts. Missing bindings are not guessed.
+3. Getting around: scrollable shortcut groups read live from described Hyprland binds.
+   Alternative keys share a flexible-height row. Missing bindings are not guessed.
 4. Apps: Settings/Colors plus optional AI/Brain with honest setup guides.
-5. Ready: selection recap, Show at login, Help/Maintenance and Start using Nacre.
+5. Ready: centered selection recap, Help/Maintenance and Start using Nacre.
 
 The launcher can reopen the same tour. `nacre-welcome colors`, `shortcuts`, `apps`,
 `ready` or `help` jumps directly to a section; legacy `home` starts Welcome.
-Show at login uses the same version1 private preference and genuine per-session
-claim owner; completion is an additional optional field, written only on Finish.
+Automatic login startup happens once per installation. The locked claim owner
+records `firstRunShown` only after successful activation; failed activation releases
+the claim and can retry. Finishing a manual tour also suppresses automatic startup.
+Legacy `showAtLogin: false` remains an opt-out, and manual launcher opens always work.
 Closing/skipping does not auto-install anything or reset chosen colors. Existing
 snapshot/publisher error protection and original animated-source restoration stay.
 Rotation pauses throughout an active tour. Panels remain normal captionless windows.
@@ -39,3 +41,9 @@ An initially flat desktop is captured without publishing. Missing originals fail
 before writes. Reopening a visible app retains its baseline. Native tests cover
 navigation, source/mode controls, optional guides, keyboard/geometry/startup and
 exact restoration. See [spec](../specs/colors-welcome-performance.md).
+
+Welcome starts at no more than 920×680 logical pixels. Its compact live preview
+fits its own contents rather than cropping a larger desktop. The read-only cache
+prepares every bundled scene in both modes and all styles once, skips current
+entries, and verifies unchanged immutable image copies by file identity after
+full checksum validation. Changed/missing files still require validation/repair.

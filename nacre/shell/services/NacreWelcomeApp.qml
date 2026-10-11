@@ -64,7 +64,7 @@ Singleton {
         };
         if (["dark", "light"].includes(mode))
             value.paletteMode = mode;
-        if (["natural", "pop", "pearl"].includes(personality))
+        if (["natural", "pigment", "harmony", "pop", "mist", "vivid", "pearl", "tide"].includes(personality))
             value.palettePersonality = personality;
         if (Object.keys(value).length > 1) {
             demoChanged = true;

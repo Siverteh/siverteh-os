@@ -23,6 +23,7 @@ from orient import ENGINE_ID, FORMAT_VERSION
 from orient.engine import from_image
 from orient.accessibility import audit
 from orient.extract import sample_color
+from orient.colour import lch
 from orient.export import export as export_templates
 from orient.palette import PERSONALITIES, background_policy, validate
 from PIL import Image, ImageDraw, ImageFont
@@ -145,6 +146,42 @@ def palette_args(request):
     }
 
 
+def image_colors(data, limit=8):
+    """Show distinct observed families alongside major shadows, without double counting.
+
+    Family members identify the underlying bins; their coverage and regions are
+    already summed by Orient. Tiny contrasting details get room before repeated
+    neutral shades, while the percentages remain actual sampled image area.
+    """
+    source = data.get("source", {})
+    families = source.get("families", [])
+    chosen = []
+    for family in sorted(families, key=lambda item: -item.get("score", 0)):
+        if family["coverage"] < 0.003:
+            continue
+        hue = lch(family["hex"])[2]
+        if all(
+            abs((hue - lch(item["hex"])[2] + 180) % 360 - 180) >= 35 for item in chosen
+        ):
+            chosen.append(family)
+        if len(chosen) == 5:
+            break
+    # All family members are disjoint from the remaining raw neutral/shadow bins.
+    members = {value for item in families for value in item.get("members", [])}
+    leftovers = [
+        item for item in source.get("clusters", []) if item["hex"] not in members
+    ]
+    neutrals = []
+    for item in sorted(leftovers, key=lambda item: -item["coverage"]):
+        light = lch(item["hex"])[0]
+        if all(abs(light - lch(other["hex"])[0]) >= 0.10 for other in neutrals):
+            neutrals.append(item)
+        if len(neutrals) == limit - len(chosen):
+            break
+    selected = sorted(chosen + neutrals, key=lambda item: -item["coverage"])
+    return selected[:limit]
+
+
 def stage(request):
     request = validate_request(request)
     if request.get("pick"):
@@ -221,14 +258,10 @@ def stage(request):
         "request": request,
         "palette": data,
         "comparisons": comparisons,
-        "imageColors": data.get("source", {}).get("clusters", [])[:8],
+        "imageColors": image_colors(data),
         "otherCoverage": max(
             0,
-            1
-            - sum(
-                item["coverage"]
-                for item in data.get("source", {}).get("clusters", [])[:8]
-            ),
+            1 - sum(item["coverage"] for item in image_colors(data)),
         ),
         "thumbnail": item["preview"],
         "image": item["path"],

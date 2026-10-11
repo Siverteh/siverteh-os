@@ -55,6 +55,26 @@ class WelcomeTests(unittest.TestCase):
             self.assertTrue(welcome.claim_login(home, "two")["show"])
             self.assertFalse(welcome.claim_login(home, "")["show"])
 
+    def test_first_run_is_consumed_only_after_success_and_stale_claim_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            first = welcome.claim_login(home, "one")
+            with self.assertRaises(ValueError):
+                welcome.acknowledge_login(home, "one", "not-ours")
+            self.assertNotIn("firstRunShown", welcome.preferences(home))
+            welcome.acknowledge_login(home, "one", first["claim"])
+            self.assertTrue(welcome.preferences(home)["firstRunShown"])
+            self.assertFalse(welcome.claim_login(home, "two")["show"])
+            self.assertFalse(welcome.claim_login(home, "one")["show"])
+
+    def test_completed_manual_tour_also_suppresses_automatic_startup(self):
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            welcome.atomic(
+                welcome.paths(home)[0], {"version": 1, "tourCompleted": True}
+            )
+            self.assertFalse(welcome.claim_login(home, "next-login")["show"])
+
     def test_unknown_fields_preserved_and_bad_configuration_is_not_overwritten(self):
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)
@@ -112,6 +132,26 @@ class WelcomeTests(unittest.TestCase):
         ):
             self.assertEqual(launcher.main(), 0)
             opener.assert_not_called()
+
+    def test_successful_first_login_acknowledges_after_opening(self):
+        events = []
+        with (
+            patch("sys.argv", ["nacre-welcome", "--login"]),
+            patch.object(
+                launcher,
+                "helper",
+                side_effect=lambda action, *args: (
+                    events.append(action) or {"show": True, "claim": "ours"}
+                ),
+            ),
+            patch.object(
+                launcher,
+                "open_welcome",
+                side_effect=lambda *args: events.append("open"),
+            ),
+        ):
+            self.assertEqual(launcher.main(), 0)
+        self.assertEqual(events, ["claim-login", "open", "acknowledge-login"])
 
     def test_failed_login_cli_releases_its_claim(self):
         with (

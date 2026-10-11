@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Open the single Nacre Welcome window; login startup can be disabled separately."""
+"""Open the single Nacre Welcome window; automatically shown once on first login."""
 
 import argparse
 import json
@@ -75,6 +75,8 @@ def main():
                 return 0
             claim = decision["claim"]
         open_welcome(args.page)
+        if claim:
+            helper("acknowledge-login", claim)
         return 0
     except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
         if claim:

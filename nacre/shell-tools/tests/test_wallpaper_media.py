@@ -266,16 +266,26 @@ class OrientPreparedCacheTests(unittest.TestCase):
                     media.subprocess, "run", wraps=media.subprocess.run
                 ) as run,
             ):
-                media.warm()
+                media.warm(include_demo=False)
+                media.warm(include_demo=False)
             queries = [
                 call.args[0]
                 for call in run.call_args_list
                 if call.args[0][0] == str(cli)
             ]
-            self.assertEqual(len(queries), 14)
+            self.assertEqual(len(queries), 16)
             self.assertEqual(
                 set(q[-1] for q in queries),
-                {"natural", "pigment", "harmony", "pop", "mist", "vivid", "pearl"},
+                {
+                    "natural",
+                    "pigment",
+                    "harmony",
+                    "pop",
+                    "mist",
+                    "vivid",
+                    "pearl",
+                    "tide",
+                },
             )
             self.assertEqual(
                 set(q[q.index("--mode") + 1] for q in queries), {"dark", "light"}

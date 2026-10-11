@@ -78,6 +78,36 @@ class ColorsBackendTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "changed"):
             colors.record(data["id"])
 
+    def test_swatches_keep_small_blue_detail_and_skin_among_dominant_shadows(self):
+        image = Image.new("RGB", (120, 80), "#101114")
+        image.paste("#292a2d", (0, 0, 100, 35))
+        image.paste("#c39978", (35, 40, 65, 75))
+        image.paste("#269bc8", (65, 40, 75, 75))
+        image.save(self.image)
+        data = self.preview()
+        from orient.colour import lch
+
+        hues = [
+            lch(item["hex"])[2]
+            for item in data["imageColors"]
+            if lch(item["hex"])[1] > 0.04
+        ]
+        self.assertTrue(any(200 < hue < 270 for hue in hues), hues)
+        self.assertTrue(any(40 < hue < 90 for hue in hues), hues)
+        self.assertAlmostEqual(
+            sum(item["coverage"] for item in data["imageColors"])
+            + data["otherCoverage"],
+            1,
+            places=5,
+        )
+        self.assertGreater(data["otherCoverage"], -0.00001)
+        members = [
+            value
+            for item in data["imageColors"]
+            for value in item.get("members", [item["hex"]])
+        ]
+        self.assertEqual(len(members), len(set(members)))
+
     def test_source_migrates_to_read_only_background_switch(self):
         old = self.preview(personality="source")
         current = self.preview(personality="natural", backgroundFromWallpaper=True)

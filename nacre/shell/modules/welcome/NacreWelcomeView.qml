@@ -147,49 +147,55 @@ Item {
                     font.pointSize: 25
                 }
                 NacreText {
-                    text: "The keys you need first, read from your current bindings."
+                    text: "Your current shortcuts, grouped by what they do. Scroll to explore."
                     font.pointSize: 11
                     color: NacreTokens.mutedInk
                 }
-                Flow {
-                    id: keyFlow
-                    width: parent.width
-                    spacing: 12
-                    Repeater {
-                        model: (NacreWelcomeApp.data.shortcuts || []).filter(item => root.allShortcuts || ["launcher", "terminal", "put-away", "workspace", "lock", "settings"].includes(item.id))
-                        NacreSurface {
-                            required property var modelData
-                            width: (keyFlow.width - 12) / 2
-                            height: 90
-                            radius: 10
-                            color: NacreTokens.raised
-                            Column {
-                                x: 14
-                                y: 12
-                                width: parent.width - 28
-                                spacing: 8
+                Repeater {
+                    model: ["Apps and panels", "Windows", "Workspaces and focus", "Capture and clipboard", "Sound, display and locking"]
+                    Column {
+                        required property string modelData
+                        readonly property var rows: (NacreWelcomeApp.data.shortcuts || []).filter(item => (item.group || "Apps and panels") === modelData)
+                        width: body.width
+                        spacing: 8
+                        visible: rows.length > 0
+                        NacreText {
+                            text: parent.modelData
+                            font.pointSize: 13
+                            topPadding: 8
+                        }
+                        Repeater {
+                            model: parent.rows
+                            NacreSurface {
+                                required property var modelData
+                                objectName: "welcomeShortcut_" + modelData.id
+                                width: body.width
+                                height: Math.max(58, Math.max(keyLabel.implicitHeight, shortcutTitle.implicitHeight) + 24)
+                                radius: 10
+                                color: NacreTokens.raised
                                 NacreText {
-                                    width: parent.width
-                                    text: modelData.key
-                                    font.family: NacreTokens.monoFamily
-                                    font.pointSize: 13
-                                    color: NacreTokens.accent
+                                    id: shortcutTitle
+                                    x: 14
+                                    y: 12
+                                    width: parent.width * .43 - 20
+                                    text: modelData.title
+                                    font.pointSize: 10.5
                                     wrapMode: Text.Wrap
                                 }
                                 NacreText {
-                                    width: parent.width
-                                    text: modelData.title
-                                    font.pointSize: 10
+                                    id: keyLabel
+                                    x: parent.width * .43
+                                    y: 12
+                                    width: parent.width - x - 14
+                                    text: modelData.key
+                                    font.family: NacreTokens.monoFamily
+                                    font.pointSize: 10.5
+                                    color: NacreTokens.accent
                                     wrapMode: Text.Wrap
                                 }
                             }
                         }
                     }
-                }
-                ActionButton {
-                    text: root.allShortcuts ? "Show essentials" : "See all shortcuts"
-                    compact: true
-                    onClicked: root.allShortcuts = !root.allShortcuts
                 }
                 NacreText {
                     width: parent.width
@@ -308,6 +314,11 @@ Item {
                 }
             }
 
+            Item {
+                visible: NacreWelcomeApp.page === "ready"
+                width: parent.width
+                height: Math.max(0, (canvas.height - 340) / 2)
+            }
             Column {
                 visible: NacreWelcomeApp.page === "ready"
                 width: parent.width
@@ -326,18 +337,19 @@ Item {
                 }
                 NacreText {
                     width: parent.width
-                    text: (NacreWallpapers.currentEntry?.name || "Your wallpaper") + " · " + (NacreWelcomeApp.appearance.palettePersonality || "natural").replace(/^./, s => s.toUpperCase()) + " · " + (NacreWelcomeApp.appearance.paletteMode || "dark").replace(/^./, s => s.toUpperCase())
+                    text: (NacreWelcomeApp.demoEntries.find(item => item.path === NacreWallpapers.displayPath)?.name || NacreWallpapers.currentEntry?.name || "Your wallpaper") + " · " + (NacreWelcomeApp.appearance.palettePersonality || "natural").replace(/^./, s => s.toUpperCase()) + " · " + (NacreWelcomeApp.appearance.paletteMode || "dark").replace(/^./, s => s.toUpperCase())
                     font.pointSize: 12
                     color: NacreTokens.mutedInk
                     wrapMode: Text.Wrap
                     horizontalAlignment: Text.AlignHCenter
                 }
-                NacreSwitch {
-                    objectName: "welcomeStartupToggle"
+                NacreText {
                     width: parent.width
-                    label: "Show at login"
-                    checked: NacreWelcomeApp.data.preferences?.showAtLogin !== false
-                    onToggled: value => NacreWelcomeApp.setStartup(value)
+                    text: "Your choices are saved. Reopen Welcome from the launcher whenever you like."
+                    color: NacreTokens.mutedInk
+                    font.pointSize: 10.5
+                    wrapMode: Text.Wrap
+                    horizontalAlignment: Text.AlignHCenter
                 }
                 Row {
                     anchors.horizontalCenter: parent.horizontalCenter
