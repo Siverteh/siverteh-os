@@ -37,7 +37,12 @@ function rankedActions(items, query) {
         if ((item.aliases || []).some(alias => words(alias).join(" ") === term)) return 80;
         return words(item.name).join(" ").startsWith(term) ? 60 : 40;
     }
-    return items.filter(item => matches(item, query)).sort((left, right) => term ? score(right) - score(left) : 0);
+    const hits = items.filter(item => matches(item, query));
+    if (!term) return hits;
+    // Qt's JavaScript sort need not retain input order for equal scores.
+    return hits.map((item, index) => ({item: item, index: index, score: score(item)}))
+        .sort((left, right) => right.score - left.score || left.index - right.index)
+        .map(hit => hit.item);
 }
 
 function actions(items) {

@@ -79,3 +79,7 @@ explains explicit prefix scopes and descriptive rows for mixed results;
 options attached to results. Nacre keeps its five-row frame, app grid and stable
 favorite IDs, with descriptive command rows and an explicit `=` calculator.
 Only documentation was consulted; no external implementation was copied.
+
+Command ordering is explicit: blank Actions retains the curated catalog order;
+search ties retain that order through an index tie-breaker rather than relying
+on the Qt JavaScript engine to implement stable sort.

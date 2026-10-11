@@ -279,6 +279,12 @@ TestCase {
             DesktopActions.list = ActualDesktopActions.list;
             view.select("actions");
             compare(view.entries.length, 21);
+            compare(view.entries[0].action, "wallpaper");
+            compare(view.entries[1].action, "calculator");
+            findChild(view, "launcherSearch").text = ">open";
+            compare(view.entries[0].action, "wallpaper");
+            findChild(view, "launcherSearch").text = ">";
+            compare(view.entries[0].action, "wallpaper");
             verify(!view.entries.some(item => ["preset", "toggle-setting", "light", "dark", "power", "left"].includes(item.action)));
             const input = findChild(view, "launcherSearch");
             input.text = ">ai";
