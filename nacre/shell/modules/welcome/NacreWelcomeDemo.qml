@@ -72,6 +72,7 @@ Column {
                 NacreText {
                     width: parent.width
                     text: tile.modelData.name
+                    height: Math.max(34, implicitHeight)
                     font.pointSize: 10
                     maximumLineCount: 2
                     wrapMode: Text.Wrap

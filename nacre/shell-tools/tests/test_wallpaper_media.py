@@ -267,7 +267,12 @@ class OrientPreparedCacheTests(unittest.TestCase):
                 ) as run,
             ):
                 media.warm(include_demo=False)
+                art = list((home / ".cache/nacre/branding").glob("*.png"))
+                self.assertTrue(art)
+                for path in art:
+                    path.unlink()
                 media.warm(include_demo=False)
+                self.assertTrue(all(path.exists() for path in art))
             queries = [
                 call.args[0]
                 for call in run.call_args_list

@@ -4590,10 +4590,11 @@
     },
     "nacre/shell-tools/wallpaper-media.py": {
       "disposition": "independent",
-      "sha256": "b413357cd1b88331a2764bf69d374f0530c0ace985b1b3fc6eb1b150b163375e",
+      "sha256": "d7f91bb7ae47cc47514b8a0338d69ba196f0e492df00b463d13256bfbee72ba7",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "2026-10-11 follow-up: already-cached palettes also prepare/repair independent branding raster cache, proven by deleting raster files and rewarming without recomputing palettes or publishing. Welcome captions reserve two lines for aligned private-scene labels. Existing cache identities/publication ownership unchanged."
       ]
     },
     "nacre/shell-tools/wallpaper-watch.py": {
@@ -4664,9 +4665,10 @@
     },
     "nacre/shell-tools/tests/test_wallpaper_media.py": {
       "disposition": "independent",
-      "sha256": "07466c59730853f06d3bae032d956207848718af172ad2486bb40c03f60baeaa",
+      "sha256": "2515dc63f517428203c5186ac739123920b68df8eee6971a282c633490f9e11f",
       "evidence": [
-        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
+        "2026-10-11 follow-up: already-cached palettes also prepare/repair independent branding raster cache, proven by deleting raster files and rewarming without recomputing palettes or publishing. Welcome captions reserve two lines for aligned private-scene labels. Existing cache identities/publication ownership unchanged."
       ]
     },
     "nacre/shell-tools/tests/test_wallpaper_watch.py": {
@@ -9354,9 +9356,10 @@
       "disposition": "non-implementation",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "2026-10-11 follow-up: already-cached palettes also prepare/repair independent branding raster cache, proven by deleting raster files and rewarming without recomputing palettes or publishing. Welcome captions reserve two lines for aligned private-scene labels. Existing cache identities/publication ownership unchanged."
       ],
-      "sha256": "93ab5f4423c3e95f4a9f454c010d93dc76898c80259723785b9fee16b30191f4"
+      "sha256": "44df92336cad742df1b80fced2e95da1039efc479490a8afbd257623372ba289"
     },
     "docs/specs/welcome.md": {
       "disposition": "non-implementation",
@@ -9453,9 +9456,10 @@
       "disposition": "independent",
       "evidence": [
         "2026-10-11 live fit/feedback review: compact130px demo preview keeps secondary actions above the fixed footer; style/mode and scene selection acknowledge clicks immediately while actual palette publication remains with the existing publisher. Pending state resets after completion/error or a new opening. Duplicate valid presentations clear earlier diagnostics. Native click/highlight and ordering fixtures reviewed; no external implementation copied.",
-        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied."
+        "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
+        "2026-10-11 follow-up: already-cached palettes also prepare/repair independent branding raster cache, proven by deleting raster files and rewarming without recomputing palettes or publishing. Welcome captions reserve two lines for aligned private-scene labels. Existing cache identities/publication ownership unchanged."
       ],
-      "sha256": "36f011cd67086ea5505515d20307c1567e6781483e3495d0ffffa273bbdd7b9f"
+      "sha256": "ae27d37030191913e234bb0497050ef299a3ecb753aa01d5504a777c93ee4c75"
     },
     "nacre/shell-tools/demo-wallpapers.py": {
       "disposition": "independent",

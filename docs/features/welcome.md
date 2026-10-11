@@ -71,7 +71,8 @@ Four existing local paths can be selected privately with
 0600 `~/.config/nacre/welcome.json`; personal images never enter the repository.
 Unavailable choices fall back to the credited bundled collection. Video scenes
 use cached posters in the cards and preloader. Both modes and all styles are
-prepared read-only before use. The UI has no Undo button; the bounded internal
+prepared read-only before use. Warm-up repairs missing branding rasters even when palette JSON is
+already cached, since these caches have separate lifetimes. The UI has no Undo button; the bounded internal
 opening snapshot remains available for verification and recovery.
 
 Palette transports stay ready inside the shell: two serial request endpoints

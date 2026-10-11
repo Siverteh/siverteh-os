@@ -514,7 +514,18 @@ def warm(include_demo=True):
                         personality=personality,
                     )
                     if marker.exists():
-                        continue
+                        try:
+                            # Palette and raster caches have separate lifetimes.
+                            # Repair missing art even when color extraction is warm.
+                            brand.prepare(read(marker, {})["colours"], HOME)
+                            continue
+                        except (
+                            OSError,
+                            ValueError,
+                            KeyError,
+                            subprocess.SubprocessError,
+                        ):
+                            pass
                     try:
                         result = subprocess.run(
                             [
