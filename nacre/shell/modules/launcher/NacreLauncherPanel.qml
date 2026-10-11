@@ -45,6 +45,8 @@ Item {
     Component {
         id: applications
         NacreAppBrowser {
+            viewportWidth: root.viewportWidth
+            viewportHeight: root.viewportHeight
             visibilities: root.visibilities
         }
     }

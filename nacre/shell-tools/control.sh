@@ -4,6 +4,7 @@ shell_runtime="$HOME/.local/share/nacre/palette-runtime"
 unset LD_LIBRARY_PATH QT_PLUGIN_PATH QML_IMPORT_PATH QML2_IMPORT_PATH
 export PATH="$HOME/.local/share/nacre/shell/bin:$shell_runtime/venv/bin:$PATH"
 case "${1:-start}" in
+ menu) exec "$HOME/.local/bin/nacre-menu" "${2:-home}" "${3:-}" ;;
  brightness|keyboard-light)
   target=brightness; [[ "$1" != keyboard-light ]] || target=keyboardLight
   exec "$HOME/.local/share/nacre/shell/bin/qs" -c nacre ipc call "$target" step "${2:-up}" ;;

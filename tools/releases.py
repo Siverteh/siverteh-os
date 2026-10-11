@@ -60,6 +60,7 @@ def paths(repo):
         for p in (
             "nacre",
             "nacre-shell",
+            "nacre-menu",
             "nacre-app",
             "xdg-open",
             "nacre-brain-ui",

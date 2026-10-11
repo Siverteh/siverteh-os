@@ -13,17 +13,17 @@ def load():
     except FileNotFoundError:
         data = {}
     if not isinstance(data, dict) or any(
-        not isinstance(data.get(key, []), list) for key in ("favorites", "hidden")
+        not isinstance(data.get(key, []), list) for key in ("favorites", "hidden", "recent")
     ):
         raise ValueError("Invalid launcher preferences; original file preserved")
     return {
         key: list(dict.fromkeys(x for x in data.get(key, []) if isinstance(x, str)))
-        for key in ("favorites", "hidden")
+        for key in ("favorites", "hidden", "recent")
     }
 
 
 def change(action, value):
-    key = {"favorite": "favorites", "hide": "hidden"}[action]
+    key = {"favorite": "favorites", "hide": "hidden", "record": "recent"}[action]
     ident = value.get("id")
     enabled = value.get("enabled")
     if (
@@ -41,7 +41,10 @@ def change(action, value):
         data = load()
         data[key] = [x for x in data[key] if x != ident]
         if enabled:
-            data[key].append(ident)
+            if action == "record":
+                data[key] = [ident, *data[key]][:12]
+            else:
+                data[key].append(ident)
         fd, name = tempfile.mkstemp(dir=PATH.parent)
         try:
             with os.fdopen(fd, "w") as stream:
@@ -56,7 +59,7 @@ def change(action, value):
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
-    p.add_argument("action", choices=["load", "favorite", "hide"])
+    p.add_argument("action", choices=["load", "favorite", "hide", "record"])
     a = p.parse_args()
     try:
         if a.action == "load" and not PATH.exists():

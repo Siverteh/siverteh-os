@@ -159,6 +159,9 @@ Scope {
         function mode(name: string): void {
             NacrePanelState.openMode(name, "", false);
         }
+        function menu(route: string, query: string): void {
+            NacrePanelState.openMenu(route || "home", query || "", false);
+        }
         function settings(): void {
             NacrePanelState.openSettings();
         }

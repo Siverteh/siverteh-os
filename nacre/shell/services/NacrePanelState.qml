@@ -65,6 +65,22 @@ Singleton {
         panel.popouts.hasCurrent = true;
         return true;
     }
+    function openMenu(route = "home", query = "", toggle = false) {
+        const view = getForActive();
+        if (!view || typeof route !== "string" || typeof query !== "string")
+            return false;
+        const same = view.launcher && view.launcherMode === "apps" && view.launcherRoute === route && view.launcherQuery === query;
+        clearPopouts();
+        closeTransient(view);
+        view.previewOnly = false;
+        view.launcherMode = "apps";
+        view.launcherRoute = route;
+        view.launcherQuery = query;
+        view.launcherRequest = (view.launcherRequest || 0) + 1;
+        view.launcher = !(toggle && same);
+        hidden = false;
+        return true;
+    }
     function openMode(mode, query = "", preview = false) {
         const view = getForActive();
         if (!view || !modes.includes(mode) || typeof query !== "string")
@@ -74,6 +90,8 @@ Singleton {
         closeTransient(view);
         view.previewOnly = preview;
         view.launcherMode = mode;
+        if (mode === "apps")
+            view.launcherRoute = "home";
         view.launcherQuery = query;
         view.launcherRequest = (view.launcherRequest || 0) + 1;
         view.launcher = !same;
