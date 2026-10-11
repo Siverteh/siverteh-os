@@ -148,31 +148,46 @@ Flickable {
                     visible: !root.narrow
                 }
             }
-            Row {
+            Column {
                 anchors.right: parent.right
                 anchors.rightMargin: 18
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 12
+                width: actions.implicitWidth
                 spacing: 6
                 ActionButton {
-                    text: "Next"
-                    icon: "skip_next"
+                    objectName: "dashboardWallpapers"
+                    width: parent.width
+                    text: "Wallpapers"
+                    icon: "wallpaper"
                     compact: true
-                    enabled: NacreWallpapers.rotationReady
-                    onClicked: NacreWallpapers.rotate(true)
+                    onClicked: NacrePanelState.openMode("wallpaper")
                 }
-                ActionButton {
-                    text: "Colors"
-                    icon: "palette"
-                    compact: true
-                    onClicked: NacreColorsApp.open()
+                Row {
+                    id: actions
+                    spacing: 6
+                    ActionButton {
+                        objectName: "dashboardNextWallpaper"
+                        text: "Next"
+                        icon: "skip_next"
+                        compact: true
+                        enabled: NacreWallpapers.rotationReady
+                        onClicked: NacreWallpapers.advanceRotation(true)
+                    }
+                    ActionButton {
+                        objectName: "dashboardColors"
+                        text: "Colors"
+                        icon: "palette"
+                        compact: true
+                        onClicked: NacreColorsApp.open()
+                    }
                 }
             }
         }
         NacreDashboardSummary {
             objectName: "dashboardSummary"
             width: parent.width
-            height: root.narrow ? implicitHeight : Math.max(300, root.height - hero.height - sections.spacing)
+            height: root.narrow ? implicitHeight : Math.max(288, root.height - hero.height - sections.spacing)
             active: root.shouldUpdate
         }
     }

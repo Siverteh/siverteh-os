@@ -8,8 +8,8 @@ Item {
     property string label: ""
     readonly property bool available: Number.isFinite(value)
     readonly property real fraction: available ? Math.max(0, Math.min(1, value)) : 0
-    readonly property real diameter: Math.max(20, Math.min(width - 12, height - 28, 92))
-    implicitHeight: 120
+    readonly property real diameter: Math.max(20, Math.min(width - 12, height - 28, 64))
+    implicitHeight: 92
     Accessible.role: Accessible.Indicator
     Accessible.name: label + " " + (available ? Math.round(fraction * 100) + "%" : "Unavailable")
     Shape {

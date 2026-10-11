@@ -50,6 +50,14 @@ QtObject {
         (target / (name + ".qml")).write_text(
             source.replace("import qs.widgets", 'import "fixtures"')
         )
+    (target / "media").mkdir(exist_ok=True)
+    shutil.copy2(SHELL / "modules/dashboard/media/media.js", target / "media/media.js")
+    (target / "NacreAlbumHalo.qml").write_text(
+        (SHELL / "modules/dashboard/NacreAlbumHalo.qml")
+        .read_text()
+        .replace("import qs.widgets", 'import "fixtures"')
+        .replace("import qs.services", "")
+    )
     (target / "overview").mkdir()
     for path in (SHELL / "modules/dashboard/overview").iterdir():
         if path.suffix == ".js":

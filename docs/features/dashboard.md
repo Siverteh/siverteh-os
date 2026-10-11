@@ -78,13 +78,18 @@ Review real Wayland screenshots and hover/Escape/header retention after deploy.
 
 ## Dashboard home layout
 
-The first tab is labelled Dashboard. Its private `today` identifier is retained
-for existing tab preferences. Below the wallpaper banner, the calendar fills
-the left column. The middle column restores the Nacre logo, username, OS,
-compositor, uptime and update count, above CPU/memory/storage circles. Clicking
-updates opens the existing update terminal. The player occupies the right column,
-above bottom-aligned upward spectrum bars. Bars run primary at the bottom through
-secondary to tertiary at the top. The same Cava process serves Dashboard and
-Media; lyrics/artwork extraction still runs only for Media. Pausing, hiding or
-reducing motion quiets the bars. The first page grows to736logical pixels when
-space permits; narrow views stack the sections and scroll.
+The first tab is labelled Dashboard; its private `today` identifier preserves
+existing preferences. The wallpaper banner has a wider Wallpapers button above
+Next and Colors. Next calls the current `advanceRotation(true)` interface, so it
+works with automatic rotation off while respecting an in-progress change.
+
+Below the banner, a shorter calendar fills the left column. The middle column
+restores the Nacre logo, username, OS, compositor, uptime and updates above three
+compact CPU/memory/storage circles. Clicking updates opens the existing update
+terminal. The player fills the right column down to the same bottom edge. Its
+album progress ring is surrounded by a real32band audio halo, primary near the
+cover through secondary to tertiary at the outer edge. No empty spectrum strip
+remains beneath it. Paused, silent, hidden and reduced-motion states hide the
+halo. One existing Cava process serves Dashboard and Media; album/lyrics work
+remains Media-only. All pages fit the original650logical-pixel frame when space
+permits; narrow views stack the blocks and scroll.

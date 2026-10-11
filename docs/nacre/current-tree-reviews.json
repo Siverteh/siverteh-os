@@ -3580,7 +3580,7 @@
     },
     "nacre/shell/modules/dashboard/NacreDashboardPanel.qml": {
       "disposition": "independent",
-      "sha256": "7469b329d8cd020c0f5b113145cb930f8db2f1234dced241b8e073e79a73001e",
+      "sha256": "af7898598bbf8c3de3e86b87cd99661f05deb40fa83e1e35cd1b02057826c885",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
@@ -3590,7 +3590,9 @@
         "docs/specs/pearl-dashboard.md",
         "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
         "docs/specs/dashboard-home-layout.md",
-        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ],
       "notes": "Own post-rewrite visual cleanup changes re-reviewed against user requirements/current Nacre source: title/grid geometry, continuous measured picker travel and opaque image buffering, compact device/history presentation, finite motion, faster bounded axis-aware scrolling and cancel-before-settings-reset. Updated native fixtures keep real token/viewport contracts and assert new speed/timing, not retired values. No inherited implementation copied; actual synthetic RHI captures and native input/geometry tests inspected, device/provider/private state untouched. Full deployment/CI gates remain separate."
     },
@@ -3714,13 +3716,15 @@
     },
     "nacre/shell/modules/dashboard/overview/NacreMediaCard.qml": {
       "disposition": "independent",
-      "sha256": "d349e85d61b2516ae04d0193b3c689afb467a89a71acf0bba932df7421d71e02",
+      "sha256": "9bb7ad9096621fd174752a081f1f1e000f5f716576ee0ad65f5a6bb53482598c",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
         "Full current body individually reviewed. Basis 0a2b8a2: fresh civil calendar, responsive overview and card bodies. Later current-file changes: 02b2bda, 13701fc. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
         "docs/specs/dashboard-home-layout.md",
-        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ]
     },
     "nacre/shell/modules/dashboard/overview/NacreOverviewCard.qml": {
@@ -6238,13 +6242,15 @@
     },
     "nacre/shell-tools/tests/test_media_performance_ui.py": {
       "disposition": "independent",
-      "sha256": "a5663864ad023908b3c340cab0ebcc2180b0604436a2d9d7901891b960e34a45",
+      "sha256": "cafb81647ad5f5bf06d4005b686f50b8d318a91cd8ccb0c77e4822200257f9c9",
       "evidence": [
         "docs/specs/python-fixture-source-audit.md",
         "docs/nacre/PYTHON-FIXTURE-SOURCE-AUDIT.md",
         "Full current Python/embedded fixture body and local history reviewed. Creation e82a4e6:nacre/shell-tools/tests/test_media_performance_ui.py; subsequent 18d8aab. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open.",
         "docs/specs/pearl-dashboard.md",
-        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed."
+        "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ]
     },
     "nacre/shell-tools/tests/test_notifications_ui.py": {
@@ -6279,22 +6285,26 @@
     },
     "nacre/shell-tools/tests/test_overview_native.py": {
       "disposition": "independent",
-      "sha256": "d5c9aba3b77cb443c0fe7f710b409406ef6218686d6adad1174e4657d88d9710",
+      "sha256": "ed6cf0604d0ab5f0f0e19bee65257db4258892540dde2e9b9a8229796bd17442",
       "evidence": [
         "docs/specs/python-fixture-source-audit.md",
         "docs/nacre/PYTHON-FIXTURE-SOURCE-AUDIT.md",
         "Full current Python/embedded fixture body and local history reviewed. Creation 0a2b8a2:nacre/shell-tools/tests/test_overview_native.py; subsequent 28707f7, 02b2bda, a492dc6, 18d8aab. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open.",
         "docs/specs/nacre-logo.md",
-        "Current fixture explicitly reassessed after concurrent audit: copy the generated branding JS module alongside the real BrandLogo.qml so native overview still tests its actual dependency. Existing rendering, geometry, fake providers and isolation retained; native test passed with the new shell logo."
+        "Current fixture explicitly reassessed after concurrent audit: copy the generated branding JS module alongside the real BrandLogo.qml so native overview still tests its actual dependency. Existing rendering, geometry, fake providers and isolation retained; native test passed with the new shell logo.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ]
     },
     "nacre/shell-tools/tests/test_overview_ui.py": {
       "disposition": "independent",
-      "sha256": "997b8eb1d83816ae87b1727b3fcb4269ef6d18a4d03eb950597f5f836e04f7cf",
+      "sha256": "8f3c6cab0a8437062cb18f3785a1cda47dcdf78084335ef38c94f11e3700dde2",
       "evidence": [
         "docs/specs/python-fixture-source-audit.md",
         "docs/nacre/PYTHON-FIXTURE-SOURCE-AUDIT.md",
-        "Full current Python/embedded fixture body and local history reviewed. Creation 0a2b8a2:nacre/shell-tools/tests/test_overview_ui.py; subsequent 28707f7, a492dc6, 18d8aab. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open."
+        "Full current Python/embedded fixture body and local history reviewed. Creation 0a2b8a2:nacre/shell-tools/tests/test_overview_ui.py; subsequent 28707f7, a492dc6, 18d8aab. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ]
     },
     "nacre/shell-tools/tests/test_settings_ui.py": {
@@ -9604,9 +9614,11 @@
         "docs/specs/pearl-dashboard.md",
         "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
         "docs/specs/dashboard-home-layout.md",
-        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ],
-      "sha256": "1e93bb6b5705714a1cf6d9f90ce522e5cd40ea1cd67ea4bbab47c7fda328e2fa"
+      "sha256": "0aa2fa3c55f791b09d96acec9ec52dccb2a86a0b932cfbefb00ad65ab145cacf"
     },
     "docs/specs/pearl-dashboard.md": {
       "disposition": "independent",
@@ -9696,9 +9708,11 @@
         "docs/specs/pearl-dashboard.md",
         "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
         "docs/specs/dashboard-home-layout.md",
-        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ],
-      "sha256": "29f9c1d18a09f2bba8057c9747706145ae7774a3bcdfa773abd9bf437c8aa81e"
+      "sha256": "ed452e9abda577566826df8747b0b84501e8a33e97a8b6f90349ca2ad52e54f1"
     },
     "nacre/shell/modules/dashboard/NacreWeatherPage.qml": {
       "disposition": "independent",
@@ -9768,41 +9782,57 @@
       "disposition": "independent",
       "evidence": [
         "docs/specs/dashboard-home-layout.md",
-        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ],
-      "sha256": "bb4e46a86712de83930227b8b6e8626fceee540f01cbdcc8f50186249ebcaec0"
+      "sha256": "6a2ee606ba0c2aa50c9318cc1d04e814da04fce2c0f8a135550ddc0f0ab3ecf3"
     },
     "nacre/shell/modules/dashboard/NacreDashboardSummary.qml": {
       "disposition": "independent",
       "evidence": [
         "docs/specs/dashboard-home-layout.md",
-        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ],
-      "sha256": "fefb21c8f1b7c501de7a93969aa0fdf3f286a71b647adb4a60b4900826a6f7ae"
+      "sha256": "02559822299594e88f944a42c3745f0a7c87646e9a9ff194c246c21308a725dc"
     },
     "nacre/shell-tools/tests/test_dashboard_summary.py": {
       "disposition": "independent",
       "evidence": [
         "docs/specs/dashboard-home-layout.md",
-        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ],
-      "sha256": "b90520c9c019e383e0b3c81e966234f7f65a2c4db7e6b0d2c1001baaf8480ea1"
+      "sha256": "c5274b4a6c167a32b0b1f42b9ef65b5413a3bb44da952d79b5bcf88af12646ae"
     },
     "nacre/shell/modules/dashboard/NacreCompactMetric.qml": {
       "disposition": "independent",
       "evidence": [
         "docs/specs/dashboard-home-layout.md",
-        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ],
-      "sha256": "e0be89167766288b6f22db812b362e173dccedb3433ae874a05e41eb3fd9e84e"
+      "sha256": "89ca7356aaf0ef76dd25d31ff4fb0dc9a5b5e38595669db9ae6eed748aa3c996"
     },
-    "nacre/shell/modules/dashboard/NacreAudioSpectrum.qml": {
+    "nacre/shell-tools/tests/test_dashboard_wallpaper_actions.py": {
       "disposition": "independent",
       "evidence": [
         "docs/specs/dashboard-home-layout.md",
-        "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted."
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ],
-      "sha256": "034c54ce87537b9526ffc4fb0b2995cda483f949aaf3771dc2d51c714ef7cf2c"
+      "sha256": "864b71aff01e96282da0deabc7912bcbde125a96404c582a7a3b0322d27f502f"
+    },
+    "nacre/shell/modules/dashboard/NacreAlbumHalo.qml": {
+      "disposition": "independent",
+      "evidence": [
+        "docs/specs/dashboard-home-layout.md",
+        "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
+      ],
+      "sha256": "cc82d33e75000a6beb29c64edb78b430a72dd094a722557d6d33e8348547ca5c"
     }
   }
 }

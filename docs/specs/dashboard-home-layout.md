@@ -21,3 +21,12 @@ Native proof: real Qt lower-section geometry shares one bottom baseline; compact
 media controls fit bounds, missing readings remain unknown, spectrum changes
 height from real supplied samples and respects inactivity/reduced motion. Full
 checks, Hyprland verification, plan/apply, source/live navigation and CI follow.
+
+## Follow-up refinement
+
+User approved the OS card, then requested a shorter calendar, smaller performance
+circles and a full-height player without an empty strip below. The frame returns
+to650pixels. Use an owned radial audio halo outside the cover's seek ring, hidden
+for pause/silence/reduced motion. Preserve guarded transport/clock behavior.
+Next was wired to an absent rotate method; call advanceRotation(true) and prove
+actual button behavior. Add a wide Wallpapers button above Next/Colors.

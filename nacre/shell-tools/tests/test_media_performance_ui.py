@@ -56,7 +56,7 @@ def prepare_pages(target):
         for enum_name, value in (("None", "0"), ("Track", "1"), ("Playlist", "2")):
             source = source.replace("MprisLoopState." + enum_name, value)
         (target / (name + ".qml")).write_text(source)
-    (target / "media").mkdir()
+    (target / "media").mkdir(exist_ok=True)
     for path in (SHELL / "modules/dashboard/media").iterdir():
         if path.suffix == ".js":
             shutil.copy2(path, target / "media" / path.name)

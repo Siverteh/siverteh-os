@@ -3,20 +3,26 @@ import QtQuick.Shapes
 import qs.widgets
 import qs.services
 import "overview.js" as Overview
+import "../media/media.js" as Media
+import ".." as Dashboard
 
 NacreOverviewCard {
     id: root
     property bool active: false
     property bool compact: false
+    property bool audioHalo: false
+    property var spectrum: []
     readonly property var player: NacrePlayers.active
     property real positionSeconds: 0
+    property real durationSeconds: 0
     property bool artReady: false
     property string artUrl: ""
     readonly property bool sampling: sample.running
     readonly property real progress: player?.positionSupported && player?.lengthSupported ? Overview.progress(positionSeconds, player.length) : 0
-    readonly property real artSize: Math.max(40, Math.min(width - 48, compact ? 132 : 174, height - (compact ? 136 : 190)))
+    readonly property real artSize: Math.max(40, Math.min(width - 48, compact ? 132 : 174, height - (audioHalo ? 180 : compact ? 136 : 190)))
     function refresh() {
         positionSeconds = player?.positionSupported ? player.position : 0;
+        durationSeconds = player?.lengthSupported ? player.length : 0;
     }
     function refreshArt() {
         if (active)
@@ -74,8 +80,8 @@ NacreOverviewCard {
     }
     Item {
         id: art
-        y: root.compact ? 12 : 20
-        width: root.artSize + 12
+        y: root.audioHalo ? 8 : root.compact ? 12 : 20
+        width: root.artSize + (root.audioHalo ? 56 : 12)
         height: width
         anchors.horizontalCenter: parent.horizontalCenter
         NacreClip {
@@ -113,7 +119,10 @@ NacreOverviewCard {
             }
         }
         Shape {
-            anchors.fill: parent
+            id: progressRing
+            anchors.centerIn: parent
+            width: root.artSize + 12
+            height: width
             preferredRendererType: Shape.CurveRenderer
             ShapePath {
                 strokeColor: NacreColours.palette.m3primary
@@ -121,15 +130,21 @@ NacreOverviewCard {
                 fillColor: "transparent"
                 capStyle: ShapePath.RoundCap
                 PathAngleArc {
-                    centerX: art.width / 2
-                    centerY: art.height / 2
-                    radiusX: art.width / 2 - 3
+                    centerX: progressRing.width / 2
+                    centerY: progressRing.height / 2
+                    radiusX: progressRing.width / 2 - 3
                     radiusY: radiusX
                     startAngle: -90
                     sweepAngle: root.progress * 360
                 }
             }
         }
+    }
+    Dashboard.NacreAlbumHalo {
+        anchors.fill: art
+        coverSize: root.artSize
+        samples: root.spectrum
+        active: root.audioHalo && root.active && root.player?.isPlaying === true && NacreTokens.motionEnabled
     }
     Column {
         id: metadata
@@ -190,6 +205,17 @@ NacreOverviewCard {
             available: !!(root.active && root.player?.canControl && root.player?.canGoNext)
             onActivated: root.perform("next")
         }
+    }
+    NacreText {
+        objectName: "mediaDuration"
+        visible: root.audioHalo && root.player?.positionSupported === true && root.player?.lengthSupported === true
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 5
+        width: parent.width
+        text: visible ? Media.duration(root.positionSeconds) + " / " + Media.duration(root.durationSeconds) : ""
+        horizontalAlignment: Text.AlignHCenter
+        color: NacreTokens.mutedInk
+        font.pointSize: 9
     }
     Rectangle {
         visible: !root.compact

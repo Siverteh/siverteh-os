@@ -12,9 +12,8 @@ Item {
     readonly property real calendarWidth: width * .31
     readonly property real hostWidth: width * .38 - gap
     readonly property real mediaWidth: width - calendarWidth - hostWidth - gap * 2
-    readonly property real gaugeHeight: 120
-    readonly property real spectrumHeight: 72
-    implicitHeight: narrow ? spectrum.y + spectrum.height : 376
+    readonly property real gaugeHeight: 92
+    implicitHeight: narrow ? media.y + media.height : 300
     Cards.NacreCalendarCard {
         id: calendar
         objectName: "dashboardCalendar"
@@ -71,18 +70,11 @@ Item {
         x: root.narrow ? 0 : host.x + host.width + root.gap
         y: root.narrow ? metrics.y + metrics.height + root.gap : 0
         width: root.narrow ? root.width : root.mediaWidth
-        height: root.narrow ? 240 : Math.max(212, root.height - root.spectrumHeight - 12)
+        height: root.narrow ? 300 : root.height
         active: root.active
         compact: true
+        audioHalo: true
+        spectrum: NacreMediaDetails.spectrum
         color: NacreTokens.raised
-    }
-    NacreAudioSpectrum {
-        id: spectrum
-        objectName: "dashboardSpectrum"
-        x: media.x
-        y: root.narrow ? media.y + media.height + 12 : root.height - height
-        width: media.width
-        height: root.spectrumHeight
-        active: root.active
     }
 }

@@ -35,7 +35,7 @@ class DashboardSummaryTests(unittest.TestCase):
             for name in (
                 "NacreDashboardSummary",
                 "NacreCompactMetric",
-                "NacreAudioSpectrum",
+                "NacreAlbumHalo",
             ):
                 source = (
                     (SHELL / "modules/dashboard" / (name + ".qml"))
@@ -51,34 +51,29 @@ import QtTest
 import "fixtures"
 TestCase {
  name:"DashboardSummary";width:1100;height:1200;visible:true;when:windowShown
- Component {id:summary;NacreDashboardSummary {width:940;height:376;active:true}}
- Component {id:meter;NacreAudioSpectrum {width:272;height:72;active:true;playing:true}}
+ Component {id:summary;NacreDashboardSummary {width:940;height:300;active:true}}
+ Component {id:meter;NacreAlbumHalo {width:176;height:176;coverSize:120;active:true}}
  function init(){DesktopSettings.data={animations:false};NacreMediaDetails.spectrum=[];NacrePlayers.active=null;}
  function test_bottom_alignment_and_compact_controls_fit(){
   const scene=createTemporaryObject(summary,this);wait(40);
-  const calendar=findChild(scene,"dashboardCalendar"),host=findChild(scene,"dashboardHost"),metrics=findChild(scene,"dashboardMetrics"),media=findChild(scene,"dashboardMedia"),spectrum=findChild(scene,"dashboardSpectrum");
-  compare(calendar.y+calendar.height,metrics.y+metrics.height);compare(calendar.y+calendar.height,spectrum.y+spectrum.height);
-  verify(host.y+host.height<metrics.y);verify(media.y+media.height<spectrum.y);
+  const calendar=findChild(scene,"dashboardCalendar"),host=findChild(scene,"dashboardHost"),metrics=findChild(scene,"dashboardMetrics"),media=findChild(scene,"dashboardMedia");
+  compare(calendar.y+calendar.height,metrics.y+metrics.height);compare(calendar.y+calendar.height,media.y+media.height);
+  verify(host.y+host.height<metrics.y);verify(!findChild(scene,"dashboardSpectrum"));
   verify(host.x>=calendar.x+calendar.width);verify(media.x>=host.x+host.width);
   compare(findChild(host,"hostLine4").text,"8 updates");
   const play=findChild(media,"mediaToggle");const point=play.mapToItem(media,0,0);verify(point.y+play.height<=media.height);
   scene.width=580;scene.height=scene.implicitHeight;wait(30);
   verify(host.y>=calendar.y+calendar.height);verify(metrics.y>=host.y+host.height);
-  verify(media.y>=metrics.y+metrics.height);compare(spectrum.y+spectrum.height,scene.height);
+  verify(media.y>=metrics.y+metrics.height);compare(media.y+media.height,scene.height);
  }
  function test_spectrum_samples_and_inactive_motion_are_honest(){
-  DesktopSettings.data={animations:true};
-  const bars=createTemporaryObject(meter,this);wait(30);
-  const values=Array(32).fill(.5);values[0]=1;bars.samples=values;
-  tryCompare(findChild(bars,"spectrumBar0"),"height",72);
-  tryCompare(findChild(bars,"spectrumBar1"),"height",37);
-  const first=findChild(bars,"spectrumBar0"),second=findChild(bars,"spectrumBar1");
-  compare(first.y+first.height,second.y+second.height);
-  bars.playing=false;tryCompare(first,"height",2);
-  bars.playing=true;DesktopSettings.data={animations:true,reduceMotion:true};tryCompare(first,"height",2);
-  DesktopSettings.data={animations:true};tryCompare(first,"height",72);
-  bars.active=false;tryCompare(first,"height",2);
+  const halo=createTemporaryObject(meter,this);wait(30);
+  halo.samples=Array(32).fill(0);verify(!halo.audible);verify(!halo.visible);
+  halo.samples=Array(32).fill(.5);verify(halo.audible);verify(halo.visible);
+  halo.active=false;verify(!halo.audible);verify(!halo.visible);
+  halo.active=true;halo.samples=[NaN,Infinity,-1];verify(!halo.audible);
  }
+
 }
 """)
             result = subprocess.run(

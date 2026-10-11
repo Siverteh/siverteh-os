@@ -52,6 +52,15 @@ class OverviewNativeTests(unittest.TestCase):
             shutil.copytree(
                 SHELL / "modules/dashboard/overview", target / "dashboard/overview"
             )
+            shutil.copy2(
+                SHELL / "modules/dashboard/NacreAlbumHalo.qml",
+                target / "dashboard/NacreAlbumHalo.qml",
+            )
+            (target / "dashboard/media").mkdir()
+            shutil.copy2(
+                SHELL / "modules/dashboard/media/media.js",
+                target / "dashboard/media/media.js",
+            )
             poster = target / "cover.png"
             Image.new("RGB", (160, 160), "#28794d").save(poster)
             palette = {
