@@ -43,9 +43,8 @@ Responsiveness: retain one palette publisher and ready-image/palette activation.
 Bound raster cache to1024 entries so a20-scene/treatment set does not churn64
 entries. Read-only warm selected and bundled demo styles/modes, skip existing valid entries; no recurring idle rendering.
 Selection debounce35ms; three poster slots preload latest incoming while210ms
-fade finishes, preserve old frame on load errors, latest selection wins. Pause
-background decoder creation while picker is active; selected preview remains
-available. Measure native cached commit and presentation, not just process exit.
+fade finishes, preserve old frame on load errors, latest selection wins. Keep the background decoder alive during picker browsing on that output;
+covered pausing resumes afterward. Manual pause, battery, lock and sleep remain. Measure native cached commit and presentation, not just process exit.
 Full checks, real expiry, matched-frame/media/theme, active-source/Escape checks
 and exact user baseline restoration before normal main publication.
 
@@ -57,3 +56,12 @@ monotonic publication millisecond token to reject delayed file reads. Keep the
 filesystem fallback, final transaction success/error checks and current CLI output
 when not opted in. Prewarm demo login posters too. Hold at most four full-screen
 static decodes while Welcome is active; destroy these items when closed.
+
+
+2026-10-11 cleanup: Colors uses a read-only sequence-correlated helper while open,
+validated staged cache hits and no delay for discrete choices. Apply can stream
+presentation records through the existing image-ready owner. Settings has
+revisioned desired values with backend-confirmed rollback and bounded pending
+writes; hidden Settings does not poll. Pending theme preferences coalesce by
+command class, and both palette task adapters share one serial helper. See
+`docs/audits/desktop-responsiveness.md`; color generation algorithms are unchanged.

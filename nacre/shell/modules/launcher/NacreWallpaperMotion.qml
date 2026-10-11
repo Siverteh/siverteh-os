@@ -6,6 +6,7 @@ Item {
     property var entry: null
     property bool running: false
     property bool active: false
+    readonly property string mediaIdentity: JSON.stringify([entry?.path || "", entry?.poster || "", !!entry?.animated])
     visible: active
     function refresh() {
         active = false;
@@ -14,7 +15,7 @@ Item {
             settle.start();
     }
     onRunningChanged: refresh()
-    onEntryChanged: refresh()
+    onMediaIdentityChanged: refresh()
     Component.onCompleted: refresh()
     Timer {
         id: settle
@@ -29,7 +30,7 @@ Item {
     Component {
         id: animation
         AnimatedImage {
-            source: "file://" + root.entry.path
+            source: "file://" + encodeURIComponent(root.entry.path).replace(/%2F/g, "/")
             asynchronous: true
             playing: root.active
             fillMode: Image.PreserveAspectCrop
@@ -44,12 +45,14 @@ Item {
                 fillMode: VideoOutput.PreserveAspectCrop
             }
             MediaPlayer {
-                source: "file://" + root.entry.path
+                source: "file://" + encodeURIComponent(root.entry.path).replace(/%2F/g, "/")
                 videoOutput: output
                 audioOutput: null
                 activeAudioTrack: -1
                 loops: MediaPlayer.Infinite
                 Component.onCompleted: play()
+                onMediaStatusChanged: if (mediaStatus === MediaPlayer.LoadedMedia && root.active)
+                    play()
             }
         }
     }

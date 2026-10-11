@@ -88,6 +88,13 @@ poster/palette record; matching image readiness activates it. Background buffers
 retain the previous loaded image during replacement. Rotation keeps its saved
 deadline when unrelated preferences or only colors change.
 
+Selection and theme adapters share one serial publisher helper. Colors uses a
+separate read-only preview stream only while open; stable request sequences reject
+late replies. Settings displays revisioned desired values over saved state, then
+confirms or rolls them back through the existing writer. Same-key pending writes
+coalesce without crossing preset/display barriers. See the
+[responsiveness audit](audits/desktop-responsiveness.md) for measurements and limits.
+
 Companion helpers prepare GTK/Qt, Kitty, icon overlays, branding, Hyprlock and SDDM
 appearance. Dolphin’s scoped native style adapter consumes generated KDE colors. Its palette
 watcher activates only inside Dolphin; native Qt/KDE libraries remain system-owned. Fonts are pinned official assets

@@ -18,9 +18,9 @@ Item {
     readonly property bool hasImage: displayedPath !== "" && current.requestPath === displayedPath
     readonly property var monitor: NacreHyprland.monitors.values.find(item => item.name === screenName)
     readonly property int workspaceId: monitor?.activeWorkspace?.id ?? NacreHyprland.activeWsId
-    readonly property bool pickerOpen: Object.values(NacrePanelState.screens).some(view => view.launcher && view.launcherMode === "wallpaper")
+    readonly property bool pickerOpen: Object.entries(NacrePanelState.screens).some(([name, view]) => name === screenName && view.launcher && view.launcherMode === "wallpaper")
     readonly property bool covered: NacreHyprland.clients.some(client => client.workspace?.id === workspaceId && (client.fullscreen || (WallpaperPlayback.pauseCovered && !client.floating)))
-    readonly property bool motionAllowed: !WallpaperPlayback.sleeping && !WallpaperPlayback.locked && !WallpaperPlayback.paused && !WallpaperPlayback.batteryPaused && !pickerOpen && !covered
+    readonly property bool motionAllowed: !WallpaperPlayback.sleeping && !WallpaperPlayback.locked && !WallpaperPlayback.paused && !WallpaperPlayback.batteryPaused && (pickerOpen || !covered)
     readonly property real pixelRatio: Window.window?.devicePixelRatio || 1
     function fileUrl(path) {
         return path ? "file://" + encodeURIComponent(path).replace(/%2F/g, "/") : "";
@@ -113,7 +113,7 @@ Item {
     Loader {
         z: 2
         anchors.fill: parent
-        active: NacreWallpapers.displayDynamic && !NacreWallpapers.displayAnimated && !WallpaperPlayback.batteryPaused && !root.pickerOpen
+        active: NacreWallpapers.displayDynamic && !NacreWallpapers.displayAnimated && !WallpaperPlayback.batteryPaused
         sourceComponent: NacreDesktopVideo {
             screenName: root.screenName
             path: NacreWallpapers.displayPath

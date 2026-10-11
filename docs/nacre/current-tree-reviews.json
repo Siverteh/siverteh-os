@@ -2499,12 +2499,13 @@
     },
     "nacre/shell/services/DesktopSettings.qml": {
       "disposition": "independent",
-      "sha256": "6c696c951e81c82bc38dd6ce5f5a4d82bc378f4c6a34e34d47bfa73b4d4ec84e",
+      "sha256": "dcaa6e9b2e0f3c76bc1dd7862cfa4fff9b2275b8916afea5d9bccfbe1e85ef5a",
       "evidence": [
         "docs/specs/services-source-audit.md",
         "docs/nacre/SERVICES-SOURCE-AUDIT.md",
         "Full current body reviewed; authoring/replacement a9a683d: Locally introduced desktop/workflow helper service; actual current body/caller schemas reviewed, meaningful owner integrations traced separately. Later changes: 5da1132, 548f0b4, 83b3531, 8bd5e65. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited.",
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained."
+        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ]
     },
     "nacre/shell/services/DeviceActions.qml": {
@@ -2776,12 +2777,13 @@
     },
     "nacre/shell/services/NacreWallpapers.qml": {
       "disposition": "independent",
-      "sha256": "f754687d3a176a0251cbb4106ebf16d914865c2a7f4e08149a74be76ce6ffc07",
+      "sha256": "fed15bb8138774dbdcbfbfc952e787a4119d4195c757b7bacc07fbd3a12722cc",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
         "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
-        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted."
+        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ]
     },
     "nacre/shell/services/NacreWeather.qml": {
@@ -3010,13 +3012,14 @@
     },
     "nacre/shell/modules/background/NacreWallpaperScene.qml": {
       "disposition": "independent",
-      "sha256": "7a7deb67fb7f93fcd6154ad64190ac2c4d27d13df148a4ba55beca94fc0cd01a",
+      "sha256": "abe9af1994d610c2c4d2995b484b2f3f6076a1ca9810f30ff207d5affd1b5113",
       "evidence": [
         "docs/specs/core-presentation-source-audit.md",
         "docs/nacre/CORE-PRESENTATION-SOURCE-AUDIT.md",
         "Full current body reviewed; replacement basis 216f23a: Independent native presentation/control/background replacement and adapters after old bodies removed, capability/focus/pause/finite motion contracts retained. Subsequent current-file history: 5da1132, d1d9a1e. Compatibility names/public preference values are contracts, not old algorithms. Earlier source exposure acknowledged; no old/upstream body consulted for current own API correction. Source code review does not certify all dependency/test/asset origin or hardware/auth paths.",
         "2026-10-11 Colors/Welcome/responsiveness review against docs/specs/colors-welcome-performance.md: earlier independently authored Orient Natural grouping restored from own9c9089f; previous subject/perceptual policy preserved as Pigment, with modern contrast/census and explicit time/body options. Shared captionless header, slim final-role values, gray/shadow census+Other, lazy Compare, themed collapsed controls and explicit Apply; native independent control/geometry tests reviewed. Five-page tour preserves existing startup/snapshot/optional/bind owners; credited diverse licensed scenes with verified lossless derivatives. Real Quickshell0.3.2 raw milliseconds diagnosed, finite banners retain history/actions; cache1024 addresses measured770ms raster churn in1083ms prepared commit, with triple poster prefetch and35ms debounce. No external implementation copied; fonts/logo pipeline regenerated by existing owner. Full/live verification required.",
-        "Initial native fullcheck caught first/current-slot late-presentation contract. Preserve current first slot until its first image activates, then use third-slot prefetch. Existing late matching/opaque/latest-ready assertions retained and passed. docs/specs/colors-welcome-performance.md."
+        "Initial native fullcheck caught first/current-slot late-presentation contract. Preserve current first slot until its first image activates, then use third-slot prefetch. Existing late matching/opaque/latest-ready assertions retained and passed. docs/specs/colors-welcome-performance.md.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ]
     },
     "nacre/shell/modules/background/Wallpaper.qml": {
@@ -3921,23 +3924,25 @@
     },
     "nacre/shell/modules/launcher/NacreWallpaperMotion.qml": {
       "disposition": "independent",
-      "sha256": "c7af560c0584ede098e9479225cf9cc86d77a4525a26186f27379b084350827e",
+      "sha256": "e36d8dfea3af8d85543254448793c4cf8e11e936192131a80d5bb512898d9d08",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
-        "Full current body individually reviewed. Basis bc7c7e2: fresh launcher/app/wallpaper presentation from behavior specification. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped."
+        "Full current body individually reviewed. Basis bc7c7e2: fresh launcher/app/wallpaper presentation from behavior specification. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ]
     },
     "nacre/shell/modules/launcher/NacreWallpaperPicker.qml": {
       "disposition": "independent",
-      "sha256": "9ed2f172b1a0455b3c325f27cbe0bf5a02a8fed66245e9b151b548f6d19b68f5",
+      "sha256": "e2e66c1dc952fb86392fa9ab1ed1cc9df5510e574048373e1903b6f411b9affd",
       "evidence": [
         "docs/specs/application-panels-source-audit.md",
         "docs/nacre/APPLICATION-PANELS-SOURCE-AUDIT.md",
         "Full current body individually reviewed. Basis bc7c7e2: fresh launcher/app/wallpaper presentation from behavior specification. Later current-file changes: 28707f7, 02b2bda. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
         "docs/specs/visual-cleanup.md",
         "docs/specs/panel-integration.md",
-        "docs/specs/wallpaper-picker-opening.md: reviewed initial/reopen/late-data snapshot selection versus smooth explicit browsing; native tests assert immediate travel and preserve intermediate navigation positions."
+        "docs/specs/wallpaper-picker-opening.md: reviewed initial/reopen/late-data snapshot selection versus smooth explicit browsing; native tests assert immediate travel and preserve intermediate navigation positions.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ],
       "notes": "Live compositor screenshot review requires an opaque full-viewport cached wallpaper backdrop to conceal underlying applications, without the former inset rectangle. Own existing double-buffered backdrop reused with full viewport geometry; no inherited source consulted. Native viewport/backdrop readiness and prior opaque fade tests retained."
     },
@@ -6009,7 +6014,7 @@
     },
     "nacre/shell-tools/tests/qml/tst_wallpaper_rotation.qml": {
       "disposition": "independent",
-      "sha256": "062ad6f1d1f6f5e17d06c5ee8c05fbdf1a9f0a44654370df62667d5f750359fd",
+      "sha256": "9444fdbd2bf9df46d343b9321145e0d0086ba662c622d05eed6281d90cb1a1bd",
       "evidence": [
         "docs/specs/native-fixture-source-audit.md",
         "docs/nacre/NATIVE-FIXTURE-SOURCE-AUDIT.md",
@@ -6020,7 +6025,8 @@
         "2026-10-11 Colors/Welcome/responsiveness review against docs/specs/colors-welcome-performance.md: earlier independently authored Orient Natural grouping restored from own9c9089f; previous subject/perceptual policy preserved as Pigment, with modern contrast/census and explicit time/body options. Shared captionless header, slim final-role values, gray/shadow census+Other, lazy Compare, themed collapsed controls and explicit Apply; native independent control/geometry tests reviewed. Five-page tour preserves existing startup/snapshot/optional/bind owners; credited diverse licensed scenes with verified lossless derivatives. Real Quickshell0.3.2 raw milliseconds diagnosed, finite banners retain history/actions; cache1024 addresses measured770ms raster churn in1083ms prepared commit, with triple poster prefetch and35ms debounce. No external implementation copied; fonts/logo pipeline regenerated by existing owner. Full/live verification required.",
         "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
-        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted."
+        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ]
     },
     "nacre/shell-tools/tests/state-qml/tst_state.qml": {
@@ -6062,14 +6068,15 @@
     },
     "nacre/shell-tools/tests/wrappers-qml/tst_wrappers.qml": {
       "disposition": "independent",
-      "sha256": "0636fdaffdb363c098ca8dc66f26cf150f259fb078934ac966f4a7914eaa9968",
+      "sha256": "c2130a5cfc1d177e316425fc7722060aea9888e020ee0efbaf16fdefb800b438",
       "evidence": [
         "docs/specs/native-fixture-source-audit.md",
         "docs/nacre/NATIVE-FIXTURE-SOURCE-AUDIT.md",
         "Complete current body/data reviewed. Local creation 216f23a nacre/shell-tools/tests/wrappers-qml/tst_wrappers.qml; subsequent 5da1132, d1d9a1e. Own native behavior fixture/minimal contract double or measured functional data; no inherited production implementation retained in fixture. External illustration metadata explicitly credited. Whole-upstream/dependency/licensing comparison remains open.",
         "docs/specs/visual-cleanup.md",
         "docs/specs/panel-integration.md",
-        "docs/specs/frame-control-center.md"
+        "docs/specs/frame-control-center.md",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ],
       "notes": "Own approved frame/control-center slice reviewed against current Nacre spec and public APIs, without inherited source consultation. Marked geometry and passive feedback remain shared-state owned; no writes on opening or idle polling. Current notification history clock observes actual visibility and reduced-motion feedback settles immediately. New native/ownership/routing/geometry regressions complement existing full checks and live acceptance."
     },
@@ -6208,7 +6215,7 @@
     },
     "nacre/shell-tools/tests/test_device_services.py": {
       "disposition": "independent",
-      "sha256": "62a4aeda29e14a2cb285892eeef931ac669091c221d28680d8f26b4067f1883a",
+      "sha256": "92fa48d7b380390aa291379b2998693c1bc633e886b4a9f02554b89a725ceb0c",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
         "docs/specs/pearl-dashboard.md",
@@ -6390,7 +6397,7 @@
     },
     "nacre/shell-tools/tests/test_wallpaper_picker_ui.py": {
       "disposition": "independent",
-      "sha256": "6ee5eb13fd7ce303a74eb75f695f1260d9b6a138c697ad897f0810183c652c52",
+      "sha256": "18089889d70a90deaf83a5ab32114b8ace9da12de66e266cddde04fc5ac66536",
       "evidence": [
         "docs/specs/python-fixture-source-audit.md",
         "docs/nacre/PYTHON-FIXTURE-SOURCE-AUDIT.md",
@@ -6515,14 +6522,15 @@
     },
     "docs/architecture.md": {
       "disposition": "non-implementation",
-      "sha256": "abbaefef4b48a0ac8bd9d6f94a2416b8d537796e48d3559fed0047c3c59cbcf1",
+      "sha256": "5631c309cca7fdf0d69feb46d26e66c359d0c0541c58db94aa0045536460af93",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
         "2026-10-11 command UX review against docs/specs/launcher.md: alphabetic favorite presentation preserves private IDs, idle grids unselected/Enter guarded, typed > visually activates/restores prior scope, two-column described product-branded commands and alias ranking. Curated21 actions preserve hidden legacy favorites and route to existing Nacre owners; existing advanced audio/network/lock buttons have explicit command routes. Independent bounded arithmetic grammar with no eval, finite14digit output, direct clipboard owner, empty/error handling. Native tests cover sorting, focus/Enter/selection, scopes/aliases, actual routing, old favorite IDs, math precedence/errors/injection-like input/copy. Only primary launcher documentation consulted; no external implementation copied.",
         "docs/specs/pearl-dashboard.md",
         "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
         "docs/specs/public-brand-cleanup.md: reviewed canonical naming, compatibility retirement and updated regression coverage; earlier evidence describes the original implementation.",
-        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
+        "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ]
     },
     "docs/features/appearance.md": {
@@ -6713,11 +6721,12 @@
     },
     "docs/features/wallpapers.md": {
       "disposition": "non-implementation",
-      "sha256": "edb5d880b0a854784329f45782c6f4098b4e3320948f927249f9c1d42c57b29f",
+      "sha256": "4295649cf8f7477516b64d92204d5dff7eb00ab0cb6563e416969c9d7d5e8a1a",
       "evidence": [
         "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
         "2026-10-11 review: ordinary compositor maximize and tiled Nacre app rules replace custom size state; private four-scene Welcome config with licensed fallback, cached video posters/all-mode preparation, larger adaptive preview and named roles, no Undo/final Maintenance, simplified searchable Colors rail/direct Export. Faster wheel/pixel input retains cancellation/edge guards. Native geometry/control tests and private fallback/permissions tests; existing palette ownership and color algorithms preserved. No external implementation copied.",
-        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied."
+        "2026-10-11 requested layout refinement: centered floating defaults retained alongside normal compositor SuperM; viewport-proportional Welcome hero, full-width adaptive preview and role swatches below, personal captions omitted with public credits retained, Colors footer no favorite. Native tests verify hero scaling and preview/role order plus existing responsive navigation/control checks. No external implementation copied.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ],
       "notes": "Live compositor screenshot review requires an opaque full-viewport cached wallpaper backdrop to conceal underlying applications, without the former inset rectangle. Own existing double-buffered backdrop reused with full viewport geometry; no inherited source consulted. Native viewport/backdrop readiness and prior opaque fade tests retained."
     },
@@ -9069,9 +9078,10 @@
     },
     "nacre/shell-tools/colors.py": {
       "disposition": "independent",
-      "sha256": "d264ea62fce0d627a2f0665e842f5246a90813c711c8e3c82fb6cd40475f81a4",
+      "sha256": "20385031ab7cbc68876fda868a89bbab06cbd7150d837995084d8c0123fa1c13",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ]
     },
     "nacre/shell-tools/gtk3-colors.css.in": {
@@ -9172,9 +9182,10 @@
     },
     "nacre/shell-tools/tests/test_colors_backend.py": {
       "disposition": "independent",
-      "sha256": "2c000052b270af133f61362fd24873a4aa97c0c435e48f315b723a48ba0b5f86",
+      "sha256": "24e1174742063d50d6e261b6a05dbadbe22963574361007f44dfa3405de59f9f",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ]
     },
     "nacre/shell-tools/tests/test_colors_ui.py": {
@@ -9294,13 +9305,14 @@
     },
     "nacre/shell/services/NacreColorsApp.qml": {
       "disposition": "independent",
-      "sha256": "a76c4483c13f3a6e30e443775af0bf91c82c7fc1b1bb32006dfff8df6bd0260c",
+      "sha256": "4ddd3fd7f5edc37ced25236b44800f28f8b872b9402782fd32c377cc1421078b",
       "evidence": [
         "docs/specs/orient-colors.md",
         "docs/features/orient.md",
         "Current full body/data reviewed: independent Orient 3 portable core, its desktop compatibility adapters, original read-only studio, source attribution/audits/export templates and explicit single-publisher integration. Existing audited own engine moved with module aliases; no Caelestia/ML4W source consulted. Scientific OKLab/CVD coefficients credited to their published definitions, not claimed novel. Gallery artwork generated locally and CC0; private artwork remains outside Git. Current mode/contrast/backend/native checks and visual gallery inspection recorded; full/live release gate still required.",
         "2026-10-10 Pop/background follow-up reviewed: original minority-family ranking requires 48-degree hue contrast and bounded 0.4-15% area; pins and neutral/single-family fallback preserved. Seven accent modes with independent remembered background policy replace Source; legacy read-only migration and boolean/cache/publication/CLI paths reviewed. Own gallery/synthetic fixtures, real jungle/underwater/canyon/Colorado comparisons and visible native mouse-switch test verified. No upstream shell code consulted. docs/specs/orient-colors.md",
-        "2026-10-11 Colors/Welcome/responsiveness review against docs/specs/colors-welcome-performance.md: earlier independently authored Orient Natural grouping restored from own9c9089f; previous subject/perceptual policy preserved as Pigment, with modern contrast/census and explicit time/body options. Shared captionless header, slim final-role values, gray/shadow census+Other, lazy Compare, themed collapsed controls and explicit Apply; native independent control/geometry tests reviewed. Five-page tour preserves existing startup/snapshot/optional/bind owners; credited diverse licensed scenes with verified lossless derivatives. Real Quickshell0.3.2 raw milliseconds diagnosed, finite banners retain history/actions; cache1024 addresses measured770ms raster churn in1083ms prepared commit, with triple poster prefetch and35ms debounce. No external implementation copied; fonts/logo pipeline regenerated by existing owner. Full/live verification required."
+        "2026-10-11 Colors/Welcome/responsiveness review against docs/specs/colors-welcome-performance.md: earlier independently authored Orient Natural grouping restored from own9c9089f; previous subject/perceptual policy preserved as Pigment, with modern contrast/census and explicit time/body options. Shared captionless header, slim final-role values, gray/shadow census+Other, lazy Compare, themed collapsed controls and explicit Apply; native independent control/geometry tests reviewed. Five-page tour preserves existing startup/snapshot/optional/bind owners; credited diverse licensed scenes with verified lossless derivatives. Real Quickshell0.3.2 raw milliseconds diagnosed, finite banners retain history/actions; cache1024 addresses measured770ms raster churn in1083ms prepared commit, with triple poster prefetch and35ms debounce. No external implementation copied; fonts/logo pipeline regenerated by existing owner. Full/live verification required.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ]
     },
     "nacre/shell-tools/tests/orient-gallery/images/warm-room.png": {
@@ -9563,9 +9575,10 @@
     "docs/specs/colors-welcome-performance.md": {
       "disposition": "non-implementation",
       "evidence": [
-        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ],
-      "sha256": "b8e38d63b8caaf4bb2311e211a12ee3c94e861c546d36f3c3b00ee7bd16da11d"
+      "sha256": "25ac8c1e2017b4bbcabba2b007d61a4409c8e7b640d5f69bccbf6b41a1c956ff"
     },
     "nacre/shell-cli/src/orient/classic.py": {
       "disposition": "independent",
@@ -9634,10 +9647,11 @@
       ]
     },
     "nacre/shell/services/NacrePaletteTask.qml": {
-      "sha256": "fdc0653bceddcd53439259d861fc4cf1fd6869f5b9d78c5ea7a51ce391963fb9",
+      "sha256": "5ba5ca966146ca0490bc2d27b346c5b7ee28ddfa8f1248e5c319b0821c6b923e",
       "disposition": "independent",
       "evidence": [
-        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API."
+        "2026-10-11 review against docs/specs/nacre-app-sizing.md: per-app reversible logical-workarea bounded SuperM, sole SuperS binding, scroll cancellation/modest wheel/direct pixels/stable edges, removal of colors-page app links and responsive stacked app rows. Independent blocking serial palette transports retain queue/publication lock/ready-image guard, recovery and CLI compatibility; module reuse and byte-identical batched SVG painting address measured startup/publication work. Tests cover changed binding contract, geometry/restoration, native transport readiness/stream/final/retry, scrolling/content and protocol recovery. No external implementation copied; use official Hyprland dispatcher API.",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ]
     },
     "nacre/shell/modules/launcher/calculator.js": {
@@ -9942,9 +9956,10 @@
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
         "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
         "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
-        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ],
-      "sha256": "c2915ce1529f970514bdaf5c4cd2303aaff5ec633d8fe6ccfef8bc1687eee8e5"
+      "sha256": "d5b79d71aec4de85a3f89ee579b017dafd7cbf3a89e4b4e18d4768f487f2c310"
     },
     "nacre/shell-tools/tests/test_menu_backend.py": {
       "disposition": "independent",
@@ -9989,9 +10004,10 @@
         "docs/specs/universal-launcher.md; independent refinement: frame attachment, compact aligned navigation, usage/fuzzy ranking, scoped search and existing-owner tool routes; focused production Qt checks passed",
         "docs/specs/universal-launcher.md; independent refinement: joined frame, aligned heading, usage/fuzzy search, native picker routes and source URL; explicit updated binding contract95",
         "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
-        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions",
+        "docs/audits/desktop-responsiveness.md; independently reviewed request/lifetime/cache/playback maintenance; measured helper and isolated decoder tests, production owner/native regressions"
       ],
-      "sha256": "17cf20d3a144573adbfc386d8834497c475529aa9f60ddc58c5d7ec12ae09a25"
+      "sha256": "ef4b0b7ce2d5d74ba76a275836c3119ef93d61a86043c77575071b28a816c563"
     },
     "nacre/shell-tools/launcher-menu.json": {
       "disposition": "independent",
@@ -10067,6 +10083,14 @@
         "2026-10-11: independently implemented universal-launcher changes reviewed against docs/specs/universal-launcher.md, retaining existing-owner and origin evidence."
       ],
       "sha256": "20771eb7de84c90dba95b11d6252ef635fcc66cb20e6c83b157f87dc21aa69f0"
+    },
+    "nacre/shell-tools/tests/test_responsive_services.py": {
+      "disposition": "independent",
+      "sha256": "f59c8f92fa8b0c989e6d285c8475a4ff317172864a70de2174695eee6afa92aa",
+      "evidence": [
+        "docs/audits/desktop-responsiveness.md",
+        "Independent production-service lifecycle/queue/protocol tests; only external I/O owners replaced by fixtures"
+      ]
     }
   }
 }

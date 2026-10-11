@@ -229,7 +229,19 @@ Singleton {
     function preference(value) {
         if (!value || typeof value !== "object" || Array.isArray(value) || !Object.keys(value).length)
             return;
-        preferenceQueue = [...preferenceQueue, JSON.parse(JSON.stringify(value))];
+        const next = JSON.parse(JSON.stringify(value));
+        if (next.paletteHarmony !== undefined && next.palettePersonality === undefined)
+            next.palettePersonality = next.paletteHarmony ? "harmony" : "natural";
+        if (next.palettePersonality !== undefined)
+            delete next.paletteHarmony;
+        const queue = preferenceQueue.slice();
+        const palette = Object.keys(next).some(key => key.startsWith("palette"));
+        const tail = queue[queue.length - 1];
+        if (tail && Object.keys(tail).some(key => key.startsWith("palette")) === palette)
+            queue[queue.length - 1] = Object.assign({}, tail, next);
+        else
+            queue.push(next);
+        preferenceQueue = queue;
         nextPreference();
     }
     function nextPreference() {
@@ -429,6 +441,7 @@ Singleton {
     }
     NacrePaletteTask {
         id: prefWorker
+        transport: commit
         objectName: "wallpaperPreferences"
         property var value: ({})
         command: ["python3", root.tool, Object.keys(value).some(key => key.startsWith("palette")) ? "theme" : "preferences", "--stream-presentation"]

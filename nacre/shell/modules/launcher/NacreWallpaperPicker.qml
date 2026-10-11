@@ -11,7 +11,7 @@ Item {
     readonly property string kind: NacreWallpapers.preferences.kind || "static"
     readonly property string layout: NacreWallpapers.preferences.layout || "carousel"
     readonly property bool fullScreen: layout !== "carousel"
-    readonly property bool motionEnabled: visibilities.launcher && kind === "dynamic" && !NacreWallpapers.preferences.paused
+    readonly property bool motionEnabled: visibilities.launcher && kind === "dynamic" && !NacreWallpapers.preferences.paused && !WallpaperPlayback.locked && !WallpaperPlayback.sleeping
     readonly property var entries: NacreWallpapers.list.filter(entry => entry.dynamic === (kind === "dynamic") && query.text.trim().toLowerCase().split(/\s+/).every(word => (entry.name + " " + entry.path).toLowerCase().includes(word)))
     readonly property int count: entries.length
     property int currentIndex: 0

@@ -187,7 +187,13 @@ TestCase {
                 launcherMode: "wallpaper"
             }
         };
+        verify(view.motionAllowed);
+        WallpaperPlayback.paused = true;
         verify(!view.motionAllowed);
+        WallpaperPlayback.paused = false;
+        WallpaperPlayback.batteryPaused = true;
+        verify(!view.motionAllowed);
+        WallpaperPlayback.batteryPaused = false;
         NacrePanelState.screens = ({});
         NacreHyprland.clients = [
             {

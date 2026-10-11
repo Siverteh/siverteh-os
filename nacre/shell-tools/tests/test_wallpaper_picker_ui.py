@@ -19,6 +19,13 @@ class WallpaperPickerUITests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder)
             shutil.copytree(ROOT / "tests/qml/fixtures", target / "fixtures")
+            (target / "fixtures/WallpaperPlayback.qml").write_text(
+                "pragma Singleton\nimport QtQuick\nQtObject{property bool locked:false;property bool sleeping:false;property bool batteryPaused:false}"
+            )
+            with (target / "fixtures/qmldir").open("a") as manifest:
+                manifest.write(
+                    "\nsingleton WallpaperPlayback 1.0 WallpaperPlayback.qml\n"
+                )
             Image.new("RGB", (32, 24), "blue").save(target / "poster.png")
             Image.new("RGB", (32, 24), "green").save(target / "second.png")
             (target / "NacreWallpaperBackdrop.qml").write_text(

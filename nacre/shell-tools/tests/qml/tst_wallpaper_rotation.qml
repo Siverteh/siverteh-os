@@ -16,6 +16,31 @@ TestCase {
         NacrePanelState.settingsPage = "appearance";
     }
 
+    function test_theme_queue_coalesces_latest_values_without_mixing_actions() {
+        const view = createTemporaryObject(walls, test);
+        view.prefWorker.running = true;
+        view.preference({
+            palettePersonality: "harmony"
+        });
+        view.preference({
+            palettePersonality: "pop"
+        });
+        view.preference({
+            paletteMode: "light"
+        });
+        compare(view.preferenceQueue.length, 1);
+        compare(view.preferenceQueue[0].palettePersonality, "pop");
+        compare(view.preferenceQueue[0].paletteMode, "light");
+        view.preference({
+            layout: "spotlight"
+        });
+        view.preference({
+            kind: "dynamic"
+        });
+        compare(view.preferenceQueue.length, 2);
+        compare(view.preferenceQueue[1].layout, "spotlight");
+        compare(view.preferenceQueue[1].kind, "dynamic");
+    }
     function test_shuffle_visits_each_scene_before_repeating() {
         const pool = ["a", "b", "c", "d"];
         let bag = [], current = "a", seen = [];

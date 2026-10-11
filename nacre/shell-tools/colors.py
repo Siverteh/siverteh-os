@@ -196,6 +196,25 @@ def stage(request):
     )
     if request.get("favoriteId") and not favorite:
         raise ValueError("That saved palette no longer exists")
+    identity = hashlib.sha256(
+        json.dumps([ENGINE_ID, stamp, request, favorite], sort_keys=True).encode()
+    ).hexdigest()
+    try:
+        cached = load(CACHE / (identity + ".json"), {})
+    except (OSError, ValueError):
+        cached = {}
+    if (
+        isinstance(cached, dict)
+        and cached.get("engine") == ENGINE_ID
+        and cached.get("signature") == stamp
+        and cached.get("request") == request
+        and "comparisons" in cached
+    ):
+        try:
+            validate(cached["palette"]["colours"])
+            return preview_result(identity, cached)
+        except (KeyError, TypeError, ValueError):
+            pass
     if favorite:
         data = dict(
             favorite["palette"],
@@ -235,9 +254,6 @@ def stage(request):
                     ],
                 }
             )
-    identity = hashlib.sha256(
-        json.dumps([ENGINE_ID, stamp, request], sort_keys=True).encode()
-    ).hexdigest()
     record = {
         "version": 1,
         "engine": ENGINE_ID,
@@ -246,27 +262,35 @@ def stage(request):
         "palette": data,
         "poster": item["poster"],
         "media": item,
+        "comparisons": comparisons,
+        "imageColors": image_colors(data),
+        "favorite": bool(favorite),
     }
+    if signature(request["image"]) != stamp:
+        raise ValueError("Wallpaper changed while previewing; try again")
     media.atomic(CACHE / (identity + ".json"), record)
     # Staging is private and bounded; never a recurring cleanup timer.
     for stale in sorted(
         CACHE.glob("*.json"), key=lambda p: p.stat().st_mtime, reverse=True
     )[64:]:
         stale.unlink(missing_ok=True)
+    return preview_result(identity, record)
+
+
+def preview_result(identity, record):
+    data, item = record["palette"], record["media"]
+    swatches = record["imageColors"]
     return {
         "id": identity,
-        "request": request,
+        "request": record["request"],
         "palette": data,
-        "comparisons": comparisons,
-        "imageColors": image_colors(data),
-        "otherCoverage": max(
-            0,
-            1 - sum(item["coverage"] for item in image_colors(data)),
-        ),
+        "comparisons": record["comparisons"],
+        "imageColors": swatches,
+        "otherCoverage": max(0, 1 - sum(color["coverage"] for color in swatches)),
         "thumbnail": item["preview"],
         "image": item["path"],
         "name": item["name"],
-        "favorite": bool(favorite),
+        "favorite": record["favorite"],
         "frames": data.get("source", {}).get("sample", {}).get("frames", 1),
     }
 
@@ -512,13 +536,50 @@ def card(identity):
     return {"directory": str(folder), "card": str(target)}
 
 
+def serve(input_stream=None, output_stream=None):
+    """Read-only previews, one request at a time; no publication or idle polling."""
+    input_stream = input_stream or sys.stdin
+    output_stream = output_stream or sys.stdout
+    print(json.dumps({"ready": True}), file=output_stream, flush=True)
+    while True:
+        line = input_stream.readline(65537)
+        if not line:
+            return 0
+        sequence = -1
+        try:
+            if len(line) > 65536:
+                raise ValueError("Preview request is too large")
+            request = json.loads(line)
+            sequence = request["sequence"]
+            if type(sequence) is not int or sequence < 0:
+                raise ValueError("Invalid preview sequence")
+            result = stage(request["request"])
+            response = {"sequence": sequence, "result": result}
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            response = {"sequence": sequence, "error": str(error)[:240]}
+        print(json.dumps(response), file=output_stream, flush=True)
+        if len(line) > 65536:
+            return 1
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "action",
-        choices=("catalog", "preview", "apply", "favorite", "export", "card", "delete"),
+        choices=(
+            "catalog",
+            "preview",
+            "serve",
+            "apply",
+            "favorite",
+            "export",
+            "card",
+            "delete",
+        ),
     )
     args = parser.parse_args()
+    if args.action == "serve":
+        return serve()
     try:
         request = (
             json.loads(sys.stdin.readline(65537)) if args.action != "catalog" else {}

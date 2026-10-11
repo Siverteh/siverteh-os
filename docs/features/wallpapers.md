@@ -18,7 +18,7 @@ stay private; assets are not part of public Git or software rollback. Static CLI
 palette operations remain compatible because the poster is the committed image.
 Qt Multimedia with its FFmpeg backend and the ffmpeg utility provide local video
 playback. Videos have no audio output and disable their audio track. Playback
-pauses on lock/sleep, can pause behind tiled apps, and is shown inside the selected tile while the
+pauses on lock/sleep, can pause behind tiled apps outside picker browsing, and is shown inside the selected tile while the
 picker is open for browsing. Switching to a static wallpaper destroys the player.
 
 Output geometry or pixel-density changes can leave stale Qt/Wayland render
@@ -170,3 +170,15 @@ The wallpaper rail uses the active main accent for selection. Colors opens cente
 search and Open image; the footer exports themes directly without a Share menu.
 
 Colors exports themes directly; the footer has no Favorite heart.
+
+
+## Responsive ownership
+
+Opening the picker keeps the current desktop movie moving on that output instead
+of destroying/recreating it. Another output's picker does not override local
+coverage. Selected previews use stable media identity and remain silent; lock and
+sleep unload them. Expanded decorative backdrops remain prepared still images,
+with the selected card providing motion. Catalogue refresh alone does not restart
+an unchanged preview. Selection and theme requests share one publisher process;
+pending preference values merge within their command class. See the
+[maintenance audit](../audits/desktop-responsiveness.md).

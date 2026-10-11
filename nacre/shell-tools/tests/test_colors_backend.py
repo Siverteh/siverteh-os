@@ -64,6 +64,35 @@ class ColorsBackendTests(unittest.TestCase):
     def preview(self, **extra):
         return colors.stage({"image": str(self.image), **extra})
 
+    def test_cached_stage_skips_generation_and_recovers_corrupt_record(self):
+        data = self.preview()
+        with patch.object(
+            colors, "from_image", side_effect=AssertionError("warm preview regenerated")
+        ):
+            self.assertEqual(self.preview(), data)
+        (colors.CACHE / (data["id"] + ".json")).write_text("broken json")
+        self.assertEqual(self.preview()["id"], data["id"])
+
+    def test_preview_stream_preserves_sequence_and_never_publishes(self):
+        import io
+
+        requests = [
+            dict(sequence=4, request={"image": str(self.image)}),
+            dict(sequence=9, request={"image": str(self.image), "personality": "pop"}),
+        ]
+        output = io.StringIO()
+        self.assertEqual(
+            colors.serve(
+                io.StringIO("\n".join(json.dumps(r) for r in requests) + "\n"), output
+            ),
+            0,
+        )
+        replies = [json.loads(line) for line in output.getvalue().splitlines()]
+        self.assertTrue(replies[0]["ready"])
+        self.assertEqual([r["sequence"] for r in replies[1:]], [4, 9])
+        self.assertFalse(colors.STORE.exists())
+        self.assertFalse((self.home / ".local/state/nacre/scheme.json").exists())
+
     def test_preview_is_read_only_and_staged_record_detects_changed_image(self):
         data = self.preview(personality="pop")
         self.assertFalse(colors.STORE.exists())

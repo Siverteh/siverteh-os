@@ -32,10 +32,16 @@ Singleton {
         })
     property int generation: 0
     property bool queued: false
+    property bool helperReady: false
+    property bool inFlight: false
+    property int flightSequence: -1
+    property string flightImage: ""
+    property int previewRequests: 0
+    property string helperFailure: ""
     property string error: ""
     property string status: ""
     property string exportDirectory: ""
-    readonly property bool previewBusy: queued || previewJob.running
+    readonly property bool previewBusy: queued || inFlight
     readonly property bool actionBusy: actionJob.running
     readonly property string python: Quickshell.env("HOME") + "/.local/share/nacre/palette-runtime/venv/bin/python"
     readonly property string tool: Quickshell.env("HOME") + "/.local/share/nacre/shell/tools/colors.py"
@@ -51,7 +57,7 @@ Singleton {
             catalogJob.running = true;
         if (image || !options.image)
             choose(image || NacreWallpapers.actualCurrent || NacreWallpapers.current);
-        else if (!preview.id && !previewJob.running)
+        else if (!preview.id && !inFlight)
             changed();
         focusAttempts = 0;
         focusTimer.restart();
@@ -67,7 +73,7 @@ Singleton {
         if (choice.personality === "source")
             choice.personality = "natural";
         options = Object.assign({
-            mode: NacreWallpapers.preferences.paletteMode || "dark",
+            mode: ["dark", "light"].includes(NacrePresentation.active.mode) ? NacrePresentation.active.mode : NacreColours.light ? "light" : "dark",
             personality: "natural",
             backgroundFromWallpaper: NacreWallpapers.appearancePreferences.paletteBackgroundFromWallpaper ?? false,
             overrides: {},
@@ -89,13 +95,19 @@ Singleton {
         focusTimer.stop();
         debounce.stop();
         queued = false;
+        generation++;
+        helperReady = false;
+        inFlight = false;
+        previewServer.running = false;
     }
     function change(values) {
         const next = Object.assign({}, options, values);
         if (Object.keys(values).some(key => ["personality", "backgroundFromWallpaper", "overrides", "brightness", "saturation", "accent", "pick"].includes(key)))
             delete next.favoriteId;
+        if (JSON.stringify(next) === JSON.stringify(options) && !error && (preview.id || previewBusy))
+            return;
         options = next;
-        changed();
+        changed(Object.keys(values).some(key => ["brightness", "saturation", "overrides", "pick"].includes(key)) ? 60 : 0);
     }
     function setRole(role, value) {
         const overrides = Object.assign({}, options.overrides || {});
@@ -116,24 +128,67 @@ Singleton {
         options = Object.assign({}, item.request);
         changed();
     }
-    function changed() {
+    function changed(delay = 0) {
         generation++;
-        if (previewJob.running)
-            previewJob.running = false;
+        if (inFlight && flightImage !== options.image) {
+            helperReady = false;
+            inFlight = false;
+            previewServer.running = false;
+        }
         queued = true;
         error = "";
+        helperFailure = "";
         status = "";
+        debounce.interval = delay;
         debounce.restart();
     }
     function startPreview() {
-        if (previewJob.running || !queued || !visible || !options.image)
+        if (inFlight || !queued || !visible || !options.image)
             return;
+        if (!helperReady) {
+            previewServer.running = true;
+            return;
+        }
         queued = false;
-        previewJob.sequence = generation;
-        previewJob.request = JSON.parse(JSON.stringify(options));
-        previewJob.output = "";
-        previewJob.failure = "";
-        previewJob.running = true;
+        inFlight = true;
+        flightSequence = generation;
+        flightImage = options.image;
+        previewRequests++;
+        previewServer.write(JSON.stringify({
+            sequence: flightSequence,
+            request: options
+        }) + "\n");
+    }
+    function acceptPreview(text) {
+        if (!visible)
+            return;
+        try {
+            const response = JSON.parse(text);
+            if (response.ready) {
+                helperReady = true;
+                startPreview();
+                return;
+            }
+            if (response.sequence !== flightSequence || !inFlight)
+                return;
+            inFlight = false;
+            if (response.sequence === generation) {
+                const data = response.result;
+                if (response.error)
+                    error = response.error;
+                else if (!data?.id || !data.palette?.colours)
+                    error = "Invalid preview response";
+                else {
+                    preview = data;
+                    options = data.request;
+                }
+            }
+        } catch (failure) {
+            inFlight = false;
+            error = "Could not read the preview result";
+        }
+        if (queued)
+            Qt.callLater(startPreview);
     }
     function action(name, extra = {}) {
         if (actionBusy || !ready)
@@ -187,37 +242,23 @@ Singleton {
         }
     }
     Process {
-        id: previewJob
-        property int sequence: 0
-        property var request: ({})
-        property string output: ""
-        property string failure: ""
-        command: ["nice", "-n", "10", root.python, root.tool, "preview"]
+        id: previewServer
+        command: ["nice", "-n", "10", root.python, root.tool, "serve"]
         stdinEnabled: true
-        onStarted: write(JSON.stringify(request) + "\n")
-        stdout: StdioCollector {
-            onStreamFinished: previewJob.output = text
+        stdout: SplitParser {
+            onRead: text => root.acceptPreview(text)
         }
-        stderr: StdioCollector {
-            onStreamFinished: previewJob.failure = text
+        stderr: SplitParser {
+            onRead: line => root.helperFailure = line.slice(0, 240)
         }
         onExited: code => {
-            if (sequence === root.generation) {
-                if (code === 0) {
-                    try {
-                        const data = JSON.parse(output);
-                        if (!data.id || !data.palette?.colours)
-                            throw new Error("Invalid preview response");
-                        root.preview = data;
-                        root.options = data.request;
-                    } catch (error) {
-                        root.error = String(error).slice(0, 240);
-                    }
-                } else
-                    root.error = (failure || "Preview failed; previous preview is preserved.").slice(0, 240);
-            }
-            if (root.queued)
-                debounce.restart();
+            root.helperReady = false;
+            const failed = root.inFlight;
+            root.inFlight = false;
+            if (root.visible && root.queued)
+                Qt.callLater(root.startPreview);
+            else if (root.visible && failed)
+                root.error = root.helperFailure || "Preview helper stopped; choose a style to retry.";
         }
     }
     Process {
@@ -246,9 +287,22 @@ Singleton {
         property string failure: ""
         command: [root.python, root.tool, action]
         stdinEnabled: true
+        environment: ({
+                NACRE_PRESENTATION_STREAM: action === "apply" ? "1" : "0"
+            })
         onStarted: write(JSON.stringify(request) + "\n")
-        stdout: StdioCollector {
-            onStreamFinished: actionJob.output = text
+        stdout: SplitParser {
+            onRead: line => {
+                try {
+                    const data = JSON.parse(line);
+                    if (data.presentation)
+                        NacrePresentation.accept(data.presentation);
+                    else
+                        actionJob.output = line;
+                } catch (failure) {
+                    actionJob.failure = "Could not read the action result";
+                }
+            }
         }
         stderr: StdioCollector {
             onStreamFinished: actionJob.failure = text
@@ -322,6 +376,9 @@ Singleton {
                 visible: root.visible,
                 active: root.active,
                 busy: root.previewBusy || root.actionBusy,
+                previewRequests: root.previewRequests,
+                options: root.options,
+                previewHelperRunning: previewServer.running,
                 image: root.options.image || "",
                 personality: root.options.personality,
                 backgroundFromWallpaper: root.options.backgroundFromWallpaper === true,

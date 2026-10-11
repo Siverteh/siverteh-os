@@ -53,7 +53,7 @@ class DeviceServiceTests(unittest.TestCase):
             )
             if name == "NacreWallpapers":
                 (fixtures / "NacrePaletteTask.qml").write_text(
-                    "import QtQuick\nProcess {stdout:SplitParser{}}"
+                    "import QtQuick\nProcess {property var transport:null;stdout:SplitParser{}}"
                 )
                 with (fixtures / "qmldir").open("a") as manifest:
                     manifest.write("NacrePaletteTask 1.0 NacrePaletteTask.qml\n")

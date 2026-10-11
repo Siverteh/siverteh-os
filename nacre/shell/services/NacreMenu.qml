@@ -138,6 +138,16 @@ Singleton {
         result.status = row.state === "updates" ? (Updates.count ? Updates.count + " available" : "Up to date") : typeof checked === "boolean" ? (["setting", "dnd", "night-light", "stay-awake", "mute", "mic-mute", "wifi", "bluetooth"].includes(row.state) ? (checked ? "On" : "Off") : checked ? "In use" : "") : "";
         result.disabled = !!row.capability && snapshot.capabilities[row.capability] !== true;
         result.reason = result.disabled ? "Optional tool is not installed" : "";
+        if (row.operation === "media") {
+            const player = NacrePlayers.active;
+            const capability = {
+                playPause: "canTogglePlaying",
+                next: "canGoNext",
+                previous: "canGoPrevious"
+            }[row.value];
+            result.disabled = !player || !player[capability];
+            result.reason = !player ? "No active media player" : result.disabled ? "This player does not support that action" : "";
+        }
         if (row.value === "record-stop") {
             result.disabled = !snapshot.recording;
             result.reason = result.disabled ? "No recording is running" : "";
