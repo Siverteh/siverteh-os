@@ -49,7 +49,7 @@ Singleton {
         if (!v || !p)
             return;
         const flags = {};
-        for (const key of ["previewOnly", "osd", "session", "launcher", "left", "leftPinned", "dashboard", "dashboardPinned", "dashboardTab", "launcherQuery", "launcherMode", "launcherRequest", "edgeMenu"])
+        for (const key of ["previewOnly", "osd", "session", "launcher", "left", "leftPinned", "dashboard", "dashboardPinned", "dashboardTab", "launcherQuery", "launcherMode", "launcherRoute", "launcherRequest", "edgeMenu"])
             flags[key] = v[key];
         saved = Object.assign({}, saved, {
             [name]: {

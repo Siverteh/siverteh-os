@@ -8,6 +8,7 @@ Singleton {
 
     property var favorites: []
     property var hidden: []
+    property var recent: []
     property string error: ""
     property bool ready: false
     property var pending: []
@@ -46,6 +47,8 @@ Singleton {
             if (JSON.stringify(hidden) !== JSON.stringify(data.hidden ?? []))
                 hidden = data.hidden ?? [];
 
+            if (JSON.stringify(recent) !== JSON.stringify(data.recent ?? []))
+                recent = data.recent ?? [];
             error = "";
         } catch (e) {
             error = "Could not read launcher preferences";

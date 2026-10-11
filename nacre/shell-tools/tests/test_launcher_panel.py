@@ -36,7 +36,7 @@ class LauncherPanelTests(unittest.TestCase):
                 )
                 (target / (name + ".qml")).write_text(source)
             (target / "extras").mkdir()
-            stub = "import QtQuick\nItem {required property var visibilities;property string kind:KIND;implicitWidth:800;implicitHeight:300}"
+            stub = "import QtQuick\nItem {required property var visibilities;property string kind:KIND;property real viewportWidth:0;property real viewportHeight:0;implicitWidth:800;implicitHeight:300}"
             for mode, name in [
                 ("apps", "NacreAppBrowser"),
                 ("legacy", "NacreSearchPanel"),

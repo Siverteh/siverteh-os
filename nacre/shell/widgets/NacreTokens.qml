@@ -6,7 +6,7 @@ import qs.services
 QtObject {
     id: root
 
-    property string textFamily: "IBM Plex Sans"
+    property string textFamily: DesktopSettings.data.interfaceFont || "IBM Plex Sans"
     property string monoFamily: "JetBrains Mono NF"
     property real textPointSize: 12
     property real cornerRadius: 12

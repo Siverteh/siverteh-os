@@ -220,9 +220,14 @@ def deploy(code_only=False):
         capture_output=True,
     )
     retire_unused_config()
+    menu_command = HOME / ".local/bin/nacre-menu"
+    menu_command.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(ROOT / "menu.sh", menu_command)
+    menu_command.chmod(0o755)
     if code_only:
         for src, dest in [
             ("control.sh", HOME / ".local/bin/nacre-shell"),
+            ("menu.sh", HOME / ".local/bin/nacre-menu"),
             ("cli-bridge.sh", DEST / "bin/nacre_shell"),
             ("launch.sh", DEST / "bin/qs"),
         ]:

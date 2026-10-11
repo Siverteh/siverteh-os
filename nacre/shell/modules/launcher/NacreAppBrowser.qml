@@ -4,119 +4,363 @@ import Quickshell
 import Quickshell.Io
 import qs.widgets
 import qs.services
-import "app-browser.js" as Catalog
+import "menu-model.js" as Menu
 import "calculator.js" as Calculator
 
 NacreSurface {
     id: root
-    required property PersistentProperties visibilities
-    property string category: "favorites"
-    property var contextEntry: null
+    required property var visibilities
+    property real viewportWidth: Quickshell.screens[0].width
+    property real viewportHeight: Quickshell.screens[0].height
+    property string route: "home"
+    property var history: []
     property bool keyboardSelection: false
-    readonly property string query: search.text
-    readonly property bool commands: query.trim().startsWith(">")
-    readonly property var categories: Catalog.available(NacreApps.list)
-    readonly property bool calculation: query.trim().startsWith("=")
-    readonly property string activeCategory: commands ? "actions" : category
-    readonly property bool actionLayout: !calculation && activeCategory === "actions"
-    readonly property string searchTerm: commands || calculation ? query.trim().slice(1).trim() : query.trim()
-    readonly property bool hasSelection: !!searchTerm || keyboardSelection
-    readonly property var calculationResult: calculation ? Calculator.evaluate(searchTerm) : ({
+    property int selection: -1
+    property var hoveredEntry: null
+    property var contextEntry: null
+    property var confirmation: null
+    property var form: null
+    property var activePrompt: null
+    readonly property string query: search?.text || ""
+    readonly property var scope: Menu.scope(query)
+    readonly property bool calculation: scope.kind === "calculator"
+    readonly property var calculationResult: calculation ? Calculator.evaluate(scope.text) : ({
             ok: false
         })
-    readonly property var allActions: Catalog.actions(DesktopActions.list)
-    readonly property var actions: allActions.filter(item => item.launcher !== false)
+    readonly property bool picker: !!activePrompt
+    readonly property bool inputPicker: picker && root.activePrompt.kind === "input"
+    readonly property bool appLayout: !picker && !scope.text && scope.kind === "all" && ["home", "apps", "hidden"].includes(route)
+    readonly property bool showDetails: width >= 940 && !picker
     readonly property var entries: {
+        if (picker && !inputPicker)
+            return Menu.ranked((root.activePrompt.choices || []).map((entry, index) => Object.assign({}, entry, {
+                    id: "choice-" + index,
+                    kind: "choice",
+                    name: entry.label,
+                    operation: "choice",
+                    icon: entry.icon || "chevron_right"
+                })), query);
         if (calculation)
             return calculationResult.ok ? [
                 {
+                    id: "calculation",
+                    kind: "calculation",
                     name: calculationResult.value,
+                    label: calculationResult.value,
                     description: "Enter to copy the result",
                     icon: "calculate",
-                    kind: "calculation",
+                    operation: "calculation",
                     value: calculationResult.value
                 }
             ] : [];
-        if (commands || category === "actions")
-            return Catalog.rankedActions(actions, searchTerm);
-        if (query.trim())
-            return NacreApps.fuzzyQuery(query.trim());
-        if (category === "hidden")
-            return NacreApps.all.filter(a => LauncherPreferences.hidden.includes(a.id));
-        if (category === "favorites")
-            return Catalog.alphabetical(LauncherPreferences.favorites.map(id => Catalog.favorite(id, NacreApps.list, allActions)).filter(Boolean));
-        return category === "all" ? NacreApps.list : NacreApps.list.filter(a => Catalog.belongs(a, category));
+        return NacreMenu.content(route, query);
     }
-    implicitWidth: Math.min(980, Quickshell.screens[0].width - 90)
-    implicitHeight: Math.min(5 * 119 + 106, Quickshell.screens[0].height - 170)
+    readonly property bool hasSelection: keyboardSelection || !!scope.text || picker
+    readonly property var selectedEntry: hasSelection && selection >= 0 ? entries[selection] || null : null
+    readonly property var previewEntry: selectedEntry || hoveredEntry
+    readonly property var breadcrumb: Menu.trail(route, NacreMenu.rows)
+    readonly property real contentX: picker ? 20 : 182
+    readonly property real contentWidth: width - contentX - (showDetails ? 270 : 20)
+    readonly property real bodyHeight: height - 184
+    implicitWidth: Math.min(1100, Math.max(540, viewportWidth - 80))
+    implicitHeight: Math.min(590, Math.max(340, viewportHeight - 150))
     radius: 22
     color: NacreColours.palette.m3surface
-    function select(name) {
-        category = name;
-        keyboardSelection = false;
+    border.width: 1
+    border.color: NacreColours.palette.m3outlineVariant
+
+    function navigate(value, remember = true) {
+        const resolved = value === "hidden" ? value : NacreMenu.resolve(value);
+        if (!resolved) {
+            NacreMenu.message = "That section is not available";
+            return;
+        }
+        const node = NacreMenu.node(resolved);
+        if (remember && route !== resolved)
+            history = [...history, route];
+        route = node?.kind === "action" ? Menu.parentOf(resolved) || "home" : resolved;
         search.text = "";
-        selectFirst();
-    }
-    function reset() {
-        category = "favorites";
         keyboardSelection = false;
-        search.text = visibilities.launcherQuery || "";
-        selectFirst();
+        selection = -1;
+        hoveredEntry = null;
+        NacreMenu.prepare(route, "", true);
+        if (node?.kind === "action") {
+            selection = entries.findIndex(entry => entry.id === resolved);
+            keyboardSelection = selection >= 0;
+        }
         search.forceActiveFocus();
     }
-    function activate(index) {
-        const entry = entries[index];
+    function select(name) {
+        navigate(({
+                favorites: "home",
+                all: "apps",
+                hidden: "hidden"
+            })[name] || (NacreMenu.resolve(name) ? name : "apps"));
+    }
+    function reset() {
+        activePrompt = NacreMenuPrompt.active && NacreMenuPrompt.ownerView === visibilities ? NacreMenuPrompt.request : null;
+        history = [];
+        route = visibilities.launcherRoute || "home";
+        if (NacreMenu.rows.length && !NacreMenu.resolve(route) && route !== "hidden")
+            route = "home";
+        form = null;
+        confirmation = null;
+        context.close();
+        hoveredEntry = null;
+        keyboardSelection = false;
+        search.text = visibilities.launcherQuery || "";
+        selection = picker ? Menu.firstEnabled(entries) : scope.text ? Menu.firstEnabled(entries) : -1;
+        NacreMenu.prepare(route, query, true);
+        if (inputPicker) {
+            form = {
+                kind: "input",
+                title: root.activePrompt.title,
+                fields: [
+                    {
+                        id: "value",
+                        label: "Value",
+                        initial: root.activePrompt.initial || ""
+                    }
+                ],
+                button: "Continue"
+            };
+        }
+        Qt.callLater(() => search.forceActiveFocus());
+    }
+    function back() {
+        if (form) {
+            cancelForm();
+            return;
+        }
+        if (query) {
+            search.text = "";
+            return;
+        }
+        const previous = history.length ? history[history.length - 1] : Menu.parentOf(route) || "home";
+        if (history.length)
+            history = history.slice(0, -1);
+        navigate(previous, false);
+    }
+    function favorite(entry) {
+        if (entry && !["calculation", "choice"].includes(entry.kind)) {
+            const ident = Menu.stable(entry);
+            LauncherPreferences.update("favorite", ident, !LauncherPreferences.favorites.includes(ident));
+        }
+    }
+    function run(entry, confirmed = false) {
         if (!entry)
             return;
-        if (category === "hidden" && !query.trim()) {
+        if (entry.kind === "choice") {
+            NacreMenuPrompt.finish(entry.value, false);
+            return;
+        }
+        if (entry.kind === "group") {
+            navigate(entry.id);
+            return;
+        }
+        if (entry.disabled) {
+            actionsFor(entry);
+            return;
+        }
+        if (entry.hidden && !query) {
             LauncherPreferences.update("hide", entry.id, false);
             return;
         }
-        visibilities.launcher = false;
-        if (entry.kind === "calculation")
-            AppLaunch.run(["wl-copy", "--", entry.value]);
-        else if (entry.kind === "action")
-            DesktopActions.execute(entry.action, entry.value);
-        else
-            NacreApps.launch(entry);
-    }
-    function favorite(entry) {
-        if (entry?.id && entry.kind !== "calculation")
-            LauncherPreferences.update("favorite", entry.id, !LauncherPreferences.favorites.includes(entry.id));
-    }
-    function type(event) {
-        if (event.key === Qt.Key_Backspace) {
-            search.text = search.text.slice(0, -1);
-        } else if (event.text && !(event.modifiers & (Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier))) {
-            search.text += event.text;
-        } else
-            return false;
-        search.forceActiveFocus();
-        return true;
-    }
-    function selectFirst() {
-        if (!grid)
+        if (entry.operation === "scope") {
+            search.text = entry.value;
+            search.forceActiveFocus();
             return;
-        grid.currentIndex = searchTerm && entries.length ? 0 : -1;
-        grid.positionViewAtBeginning();
+        }
+        if (entry.operation === "calculator") {
+            search.text = "= ";
+            search.forceActiveFocus();
+            return;
+        }
+        if (entry.operation === "route") {
+            if (entry.value === "wallpaper") {
+                NacrePanelState.openMode("wallpaper");
+                return;
+            }
+            navigate(entry.value);
+            return;
+        }
+        if (entry.operation === "form") {
+            form = entry.value === "webapp" ? {
+                kind: "webapp",
+                title: "Create a web app",
+                description: "Add a website to All apps.",
+                fields: [
+                    {
+                        id: "label",
+                        label: "App name",
+                        placeholder: "My website"
+                    },
+                    {
+                        id: "url",
+                        label: "Website",
+                        placeholder: "https://…"
+                    }
+                ],
+                button: "Create app"
+            } : {
+                kind: "reminder",
+                title: "Set a reminder",
+                fields: [
+                    {
+                        id: "minutes",
+                        label: "Minutes",
+                        initial: "25"
+                    },
+                    {
+                        id: "message",
+                        label: "Message",
+                        placeholder: "Time for a break"
+                    }
+                ],
+                button: "Set reminder"
+            };
+            return;
+        }
+        if (entry.operation === "info") {
+            hoveredEntry = entry;
+            keyboardSelection = true;
+            return;
+        }
+        if ((entry.confirm || entry.operation === "power" && entry.value !== "lock" || entry.operation === "maintenance" && entry.value === "restart") && !confirmed) {
+            confirmation = entry;
+            context.close();
+            Qt.callLater(() => cancelConfirmation.forceActiveFocus());
+            return;
+        }
+        if (entry.kind === "calculation") {
+            AppLaunch.run(["wl-copy", "--", entry.value]);
+            visibilities.launcher = false;
+            return;
+        }
+        if (!NacreMenu.keepOpen(entry))
+            visibilities.launcher = false;
+        NacreMenu.execute(entry, confirmed);
     }
-    function focusResults() {
+    function activate(index) {
+        if (hasSelection)
+            run(entries[index]);
+    }
+    function actionsFor(entry) {
+        if (!entry || ["calculation", "choice"].includes(entry.kind))
+            return;
+        contextEntry = entry;
+        NacreMenu.inspectApp(entry);
+        context.x = Math.max(8, width - context.width - 16);
+        context.y = Math.max(8, height - context.height - 86);
+        context.open();
+    }
+    function focusResults(delta = 1) {
         keyboardSelection = true;
-        if (grid.currentIndex < 0 && entries.length)
-            grid.currentIndex = 0;
-        grid.forceActiveFocus();
+        selection = Menu.step(entries, selection, delta);
+        if (appLayout) {
+            grid.forceActiveFocus();
+            grid.positionViewAtIndex(Math.max(0, selection), GridView.Contain);
+        } else {
+            results.forceActiveFocus();
+            results.positionViewAtIndex(Math.max(0, selection), ListView.Contain);
+        }
+    }
+    function keys(event) {
+        if (event.key === Qt.Key_D && event.modifiers & Qt.ControlModifier) {
+            favorite(selectedEntry);
+            event.accepted = true;
+            return;
+        }
+        if (event.key === Qt.Key_Tab) {
+            if (selectedEntry)
+                actionsFor(selectedEntry);
+            else
+                rail.forceActiveFocus();
+            event.accepted = true;
+            return;
+        }
+        if (event.key === Qt.Key_Escape) {
+            dismiss();
+            event.accepted = true;
+            return;
+        }
+        if (event.key === Qt.Key_Left && !appLayout && !query) {
+            back();
+            event.accepted = true;
+            return;
+        }
+        if (event.key === Qt.Key_Right && !appLayout && selectedEntry) {
+            selectedEntry.kind === "group" ? navigate(selectedEntry.id) : actionsFor(selectedEntry);
+            event.accepted = true;
+            return;
+        }
+        if (event.key === Qt.Key_Up || event.key === Qt.Key_Down || appLayout && [Qt.Key_Left, Qt.Key_Right].includes(event.key)) {
+            const columns = Math.max(1, Math.floor(grid.width / grid.cellWidth));
+            const direction = [Qt.Key_Up, Qt.Key_Left].includes(event.key) ? -1 : 1;
+            keyboardSelection = true;
+            if (selection < 0)
+                selection = direction > 0 ? Menu.firstEnabled(entries) : Menu.step(entries, -1, -1);
+            else if (appLayout && [Qt.Key_Up, Qt.Key_Down].includes(event.key))
+                selection = Math.max(0, Math.min(entries.length - 1, selection + direction * columns));
+            else
+                selection = Menu.step(entries, selection, direction);
+            if (appLayout)
+                grid.positionViewAtIndex(Math.max(0, selection), GridView.Contain);
+            else
+                results.positionViewAtIndex(Math.max(0, selection), ListView.Contain);
+            event.accepted = true;
+            return;
+        }
+        if (event.text && !(event.modifiers & (Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier))) {
+            search.text += event.text;
+            search.forceActiveFocus();
+            event.accepted = true;
+        } else if (event.key === Qt.Key_Backspace) {
+            query ? search.text = search.text.slice(0, -1) : back();
+            search.forceActiveFocus();
+            event.accepted = true;
+        }
+    }
+    function dismiss() {
+        if (context.opened) {
+            context.close();
+            search.forceActiveFocus();
+        } else if (confirmation)
+            confirmation = null;
+        else if (form)
+            cancelForm();
+        else if (picker)
+            NacreMenuPrompt.finish("", true);
+        else
+            visibilities.launcher = false;
+    }
+    function cancelForm() {
+        if (inputPicker)
+            NacreMenuPrompt.finish("", true);
+        form = null;
+        search.forceActiveFocus();
+    }
+    function submitForm(values) {
+        if (inputPicker)
+            NacreMenuPrompt.finish(values.value || "", false);
+        else
+            NacreMenu.work(form.kind === "webapp" ? "webapp-create" : "reminder", "", values);
+        form = null;
+        search.forceActiveFocus();
     }
     onQueryChanged: {
         keyboardSelection = false;
-        selectFirst();
+        hoveredEntry = null;
+        selection = scope.text || picker ? Menu.firstEnabled(entries) : -1;
+        queryDelay.restart();
     }
     onEntriesChanged: {
-        if (searchTerm)
-            selectFirst();
+        if (scope.text || picker)
+            selection = Menu.firstEnabled(entries);
         else if (!keyboardSelection)
-            grid.currentIndex = -1;
-        else if (grid.currentIndex >= entries.length)
-            grid.currentIndex = entries.length ? entries.length - 1 : -1;
+            selection = -1;
+        else if (selection >= entries.length)
+            selection = entries.length - 1;
     }
     Component.onCompleted: reset()
     Connections {
@@ -125,203 +369,249 @@ NacreSurface {
             if (root.visibilities.launcher)
                 root.reset();
         }
+        function onLauncherRequestChanged() {
+            if (root.visibilities.launcher)
+                Qt.callLater(root.reset);
+        }
     }
-    ListView {
-        id: rail
-        objectName: "launcherCategories"
+    Connections {
+        target: NacreMenuPrompt
+        function onRequestChanged() {
+            if (NacreMenuPrompt.request && NacreMenuPrompt.ownerView === root.visibilities)
+                root.reset();
+        }
+    }
+    Timer {
+        id: queryDelay
+        interval: 180
+        onTriggered: NacreMenu.prepare(root.route, root.query, false)
+    }
+
+    Item {
+        id: navigation
+        visible: !root.picker
         x: 12
-        y: 12
-        width: 174
-        height: parent.height - 94
-        model: root.categories
-        clip: true
-        currentIndex: Math.max(0, root.categories.findIndex(c => c.id === root.activeCategory))
-        delegate: NacreSurface {
-            required property var modelData
-            required property int index
-            width: rail.width
-            height: 42
-            radius: 12
-            color: root.activeCategory === modelData.id ? NacreColours.palette.m3primaryContainer : "transparent"
-            Row {
+        y: 16
+        width: 152
+        height: root.height - 98
+        Row {
+            spacing: 9
+            BrandLogo {
+                width: 28
+                height: 28
+            }
+            NacreText {
                 anchors.verticalCenter: parent.verticalCenter
-                x: 10
-                spacing: 10
-                NacreIcon {
-                    text: parent.parent.modelData.icon
-                    font.pointSize: 15
-                    color: root.activeCategory === parent.parent.modelData.id ? NacreColours.palette.m3onPrimaryContainer : NacreColours.palette.m3onSurface
+                text: "Nacre"
+                font.pointSize: 15
+            }
+        }
+        ListView {
+            id: rail
+            objectName: "launcherCategories"
+            y: 44
+            width: parent.width
+            height: parent.height - y - 38
+            clip: true
+            model: NacreMenu.navigation
+            spacing: 3
+            currentIndex: Math.max(0, NacreMenu.navigation.findIndex(entry => root.route.split(".")[0] === entry.id))
+            delegate: NacreSurface {
+                required property var modelData
+                required property int index
+                width: rail.width
+                height: Math.min(37, Math.max(28, (rail.height - (NacreMenu.navigation.length - 1) * 3) / Math.max(1, NacreMenu.navigation.length)))
+                radius: 9
+                color: root.route.split(".")[0] === modelData.id ? Qt.tint(NacreColours.palette.m3surface, Qt.alpha(NacreColours.palette.m3onSurface, .075)) : "transparent"
+                Rectangle {
+                    x: 0
+                    y: 8
+                    width: 3
+                    height: parent.height - 16
+                    radius: 1.5
+                    color: NacreColours.palette.m3primary
+                    visible: root.route.split(".")[0] === parent.modelData.id
+                }
+                Row {
+                    x: 11
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 10
+                    NacreIcon {
+                        text: parent.parent.modelData.icon
+                        font.pointSize: 15
+                    }
+                    NacreText {
+                        text: parent.parent.modelData.label
+                        font.pointSize: 10.5
+                        textFormat: Text.PlainText
+                    }
+                }
+                NacreInteraction {
+                    function onClicked() {
+                        root.navigate(parent.modelData.id);
+                    }
+                }
+            }
+            Keys.onReturnPressed: if (currentItem)
+                root.navigate(currentItem.modelData.id)
+            Keys.onRightPressed: root.focusResults()
+            Keys.onEscapePressed: root.dismiss()
+            Keys.onPressed: event => {
+                if (event.text)
+                    root.keys(event);
+            }
+            FastScroll {
+                view: rail
+                step: 160
+            }
+        }
+        NacreMenuButton {
+            anchors.bottom: parent.bottom
+            text: "Hidden apps"
+            compact: true
+            visible: LauncherPreferences.hidden.length > 0
+            onClicked: root.navigate("hidden")
+        }
+    }
+    Rectangle {
+        x: 172
+        y: 18
+        width: 1
+        height: parent.height - 110
+        color: NacreColours.palette.m3outlineVariant
+        visible: !root.picker
+    }
+    Row {
+        id: path
+        x: root.contentX
+        y: 17
+        spacing: 5
+        visible: !root.picker
+        NacreMenuButton {
+            compact: true
+            icon: "chevron_left"
+            visible: root.route !== "home" || !!root.query
+            onClicked: root.back()
+        }
+        Repeater {
+            model: root.breadcrumb
+            delegate: Row {
+                required property var modelData
+                required property int index
+                spacing: 5
+                NacreText {
+                    text: "›"
+                    visible: parent.index > 0
+                    color: NacreColours.palette.m3onSurfaceVariant
                 }
                 NacreText {
-                    text: parent.parent.modelData.label
-                    font.pointSize: 11
-                    color: root.activeCategory === parent.parent.modelData.id ? NacreColours.palette.m3onPrimaryContainer : NacreColours.palette.m3onSurface
+                    text: parent.modelData.label
+                    font.pointSize: 12
+                    textFormat: Text.PlainText
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: root.navigate(parent.parent.modelData.id)
+                    }
                 }
             }
-            NacreInteraction {
-                function onClicked() {
-                    root.select(parent.modelData.id);
-                }
-            }
-        }
-        Keys.onReturnPressed: if (currentItem)
-            root.select(currentItem.modelData.id)
-        Keys.onEscapePressed: root.visibilities.launcher = false
-        Keys.onRightPressed: root.focusResults()
-        Keys.onPressed: event => {
-            if (root.type(event))
-                event.accepted = true;
-        }
-        FastScroll {
-            view: rail
-            step: 180
         }
     }
     NacreText {
-        id: heading
-        x: 204
-        y: 15
-        text: root.calculation ? "Calculator" : root.actionLayout ? "Actions" : root.query.trim() ? "Search results" : root.category === "hidden" ? "Hidden applications" : root.categories.find(c => c.id === root.activeCategory)?.label || "Applications"
-        font.pointSize: 13
-    }
-    NacreText {
-        x: 380
-        y: 18
-        width: parent.width - x - 20
-        horizontalAlignment: Text.AlignRight
-        font.pointSize: 9
+        x: root.contentX
+        y: root.picker ? 16 : 55
+        text: root.picker ? root.activePrompt.title : root.calculation ? "Calculator" : root.scope.kind === "brain" ? "Nacre Brain" : root.scope.kind === "ai" ? "Nacre AI" : root.scope.kind === "help" ? "Search scopes" : root.scope.text ? "Search everything" : root.route === "home" ? "Favorites" : root.route === "hidden" ? "Hidden applications" : NacreMenu.node(root.route)?.description || ""
+        font.pointSize: root.picker ? 15 : 10
         color: NacreColours.palette.m3onSurfaceVariant
-        text: root.calculation ? "Enter to copy" : root.actionLayout ? "Enter to run · Ctrl+D to favorite" : "> for actions · = for calculator"
-    }
-    ActionButton {
-        x: 12
-        y: parent.height - 74
-        visible: LauncherPreferences.hidden.length > 0
-        text: "Hidden apps"
-        compact: true
-        onClicked: root.select("hidden")
+        textFormat: Text.PlainText
+        width: root.contentWidth
+        elide: Text.ElideRight
     }
     GridView {
         id: grid
         objectName: "launcherApps"
-        x: 200
-        y: 46
-        width: parent.width - 216
-        height: parent.height - 106
-        cellWidth: root.actionLayout ? width / (width >= 620 ? 2 : 1) : Math.max(116, width / Math.max(1, Math.floor(width / 140)))
+        visible: root.appLayout && !root.form
+        x: root.contentX
+        y: 84
+        width: root.contentWidth
+        height: root.bodyHeight
+        cellWidth: width / Math.max(1, Math.floor(width / 116))
         cellHeight: height / 5
-        clip: true
         model: root.entries
-        currentIndex: -1
+        currentIndex: root.selection
+        keyNavigationEnabled: false
+        clip: true
         boundsBehavior: Flickable.StopAtBounds
-        highlightMoveDuration: 0
         delegate: NacreSurface {
             id: tile
             required property var modelData
             required property int index
+            readonly property bool selected: root.hasSelection && root.selection === index
+            readonly property bool compactTile: grid.cellHeight < 72
             objectName: "launcherTile_" + index
-            readonly property bool actionEntry: modelData.kind === "action"
-            readonly property bool utilityEntry: actionEntry || modelData.kind === "calculation"
-            readonly property bool selected: grid.currentIndex === index && root.hasSelection
-            readonly property real iconSize: Math.min(root.actionLayout ? 40 : 52, Math.max(24, grid.cellHeight - 64))
-            readonly property bool aiApplication: !actionEntry && (modelData.id === "nacre-ai" || modelData.id === "nacre-ai.desktop") || (actionEntry && modelData.brand === "ai")
-            readonly property bool brainApplication: !actionEntry && (modelData.id === "nacre-brain" || modelData.id === "nacre-brain.desktop") || (actionEntry && modelData.brand === "brain")
-            readonly property bool colorsApplication: !actionEntry && (modelData.id === "nacre-colors" || modelData.id === "nacre-colors.desktop") || (actionEntry && modelData.brand === "colors")
-            readonly property bool settingsApplication: !actionEntry && (modelData.id === "nacre-settings" || modelData.id === "nacre-settings.desktop") || (actionEntry && modelData.brand === "settings")
-            readonly property bool welcomeApplication: (!actionEntry && (modelData.id === "nacre-welcome" || modelData.id === "nacre-welcome.desktop")) || (actionEntry && modelData.brand === "welcome")
-            width: grid.cellWidth - 8
-            height: grid.cellHeight - 8
-            radius: 15
-            color: tile.selected ? NacreColours.palette.m3primaryContainer : tileHover.hovered ? NacreColours.palette.m3surfaceContainerHigh : "transparent"
+            width: grid.cellWidth - 6
+            height: grid.cellHeight - 5
+            radius: 11
+            color: selected || tileHover.hovered ? Qt.tint(NacreColours.palette.m3surface, Qt.alpha(NacreColours.palette.m3onSurface, selected ? .09 : .04)) : "transparent"
+            border.width: selected ? 1 : 0
+            border.color: NacreColours.palette.m3outlineVariant
+            Rectangle {
+                x: 0
+                y: 10
+                width: 3
+                height: parent.height - 20
+                radius: 1.5
+                color: NacreColours.palette.m3primary
+                visible: tile.selected
+            }
             HoverHandler {
                 id: tileHover
+                onHoveredChanged: if (hovered)
+                    root.hoveredEntry = tile.modelData
             }
-            Image {
-                id: appIcon
-                x: root.actionLayout ? 16 : (parent.width - width) / 2
-                y: root.actionLayout ? (parent.height - height) / 2 : Math.min(12, grid.cellHeight * .1)
-                width: tile.iconSize
-                height: tile.iconSize
-                source: !tile.utilityEntry && !tile.aiApplication && !tile.brainApplication && !tile.settingsApplication && !tile.colorsApplication && !tile.welcomeApplication ? Quickshell.iconPath(tile.modelData.icon, true) : ""
-                asynchronous: true
-                visible: !tile.utilityEntry && !tile.aiApplication && !tile.brainApplication && !tile.settingsApplication && !tile.colorsApplication && !tile.welcomeApplication && status === Image.Ready
-                sourceSize.width: 52
-                sourceSize.height: 52
-            }
-            BrandLogo {
-                objectName: "nacreAiAppLogo"
-                x: root.actionLayout ? 16 : (parent.width - width) / 2
-                y: root.actionLayout ? (parent.height - height) / 2 : Math.min(12, grid.cellHeight * .1)
-                width: tile.iconSize
-                height: tile.iconSize
-                ai: tile.aiApplication
-                brain: tile.brainApplication
-                settings: tile.settingsApplication
-                colorsApp: tile.colorsApplication
-                visible: tile.aiApplication || tile.brainApplication || tile.settingsApplication || tile.colorsApplication || tile.welcomeApplication
-            }
-            NacreIcon {
-                x: root.actionLayout ? 16 : (parent.width - width) / 2
-                y: root.actionLayout ? (parent.height - height) / 2 : Math.min(15, grid.cellHeight * .12)
-                text: tile.utilityEntry ? tile.modelData.icon || "apps" : "apps"
-                visible: !tile.aiApplication && !tile.brainApplication && !tile.settingsApplication && !tile.colorsApplication && !tile.welcomeApplication && (tile.utilityEntry || appIcon.status === Image.Error || appIcon.status === Image.Null)
-                font.pointSize: tile.iconSize * .65
+            NacreMenuIcon {
+                entry: tile.modelData
+                size: Math.min(38, Math.max(24, grid.cellHeight - 48))
+                width: size
+                height: size
+                x: tile.compactTile ? 8 : (parent.width - width) / 2
+                y: tile.compactTile ? (parent.height - height) / 2 : 7
             }
             NacreText {
-                x: root.actionLayout ? 72 : 8
-                y: root.actionLayout ? 14 : Math.min(74, grid.cellHeight - 40)
-                width: parent.width - x - (root.actionLayout ? 38 : 8)
-                height: root.actionLayout ? 38 : Math.max(0, parent.height - y - 4)
-                wrapMode: Text.Wrap
-                maximumLineCount: 2
-                elide: Text.ElideRight
-                horizontalAlignment: root.actionLayout ? Text.AlignLeft : Text.AlignHCenter
+                x: tile.compactTile ? 42 : 7
+                y: tile.compactTile ? (parent.height - 20) / 2 : Math.min(49, grid.cellHeight - 32)
+                width: parent.width - x - 7
+                height: tile.compactTile ? 20 : parent.height - y - 4
                 text: tile.modelData.name
+                textFormat: Text.PlainText
                 font.pointSize: 10
-                color: tile.selected ? NacreColours.palette.m3onPrimaryContainer : NacreColours.palette.m3onSurface
-            }
-            NacreText {
-                x: 72
-                y: 54
-                width: parent.width - x - 16
-                height: parent.height - y - 8
-                visible: root.actionLayout
                 wrapMode: Text.Wrap
-                maximumLineCount: 2
+                maximumLineCount: tile.compactTile ? 1 : 2
                 elide: Text.ElideRight
-                text: tile.modelData.description || ""
-                font.pointSize: 9
-                color: tile.selected ? NacreColours.palette.m3onPrimaryContainer : NacreColours.palette.m3onSurfaceVariant
+                horizontalAlignment: tile.compactTile ? Text.AlignLeft : Text.AlignHCenter
             }
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: event => {
                     root.keyboardSelection = true;
-                    grid.currentIndex = tile.index;
-                    if (event.button === Qt.RightButton && tile.modelData.kind !== "calculation") {
-                        root.contextEntry = tile.modelData;
-                        const point = tile.mapToItem(root, event.x, event.y);
-                        context.x = Math.max(0, Math.min(root.width - context.width, point.x));
-                        context.y = Math.max(0, Math.min(root.height - context.height, point.y));
-                        context.open();
-                    } else if (event.button === Qt.LeftButton)
-                        root.activate(tile.index);
+                    root.selection = tile.index;
+                    event.button === Qt.RightButton ? root.actionsFor(tile.modelData) : root.run(tile.modelData);
                 }
             }
             NacreSurface {
-                x: parent.width - 27
-                y: 4
-                width: 24
-                height: 24
-                radius: 12
+                x: parent.width - 24
+                y: 3
+                width: 23
+                height: 23
+                radius: 7
                 color: "transparent"
-                visible: tile.modelData.kind !== "calculation" && root.category !== "hidden" && (tileHover.hovered || LauncherPreferences.favorites.includes(tile.modelData.id))
+                visible: !tile.compactTile && (tileHover.hovered || LauncherPreferences.favorites.includes(Menu.stable(tile.modelData)))
                 NacreIcon {
                     anchors.centerIn: parent
                     text: "favorite"
-                    fill: LauncherPreferences.favorites.includes(tile.modelData.id) ? 1 : 0
-                    font.pointSize: 13
+                    fill: LauncherPreferences.favorites.includes(Menu.stable(tile.modelData)) ? 1 : 0
+                    font.pointSize: 11
                     color: NacreColours.palette.m3primary
                 }
                 NacreInteraction {
@@ -331,111 +621,482 @@ NacreSurface {
                 }
             }
         }
-        Keys.onReturnPressed: if (root.hasSelection)
-            root.activate(currentIndex)
-        Keys.onEscapePressed: root.visibilities.launcher = false
-        Keys.onTabPressed: rail.forceActiveFocus()
-        Keys.onPressed: event => {
-            if (event.key === Qt.Key_D && event.modifiers & Qt.ControlModifier) {
-                if (root.hasSelection)
-                    root.favorite(root.entries[currentIndex]);
-                event.accepted = true;
-            } else if ([Qt.Key_Left, Qt.Key_Right, Qt.Key_Up, Qt.Key_Down, Qt.Key_Home, Qt.Key_End].includes(event.key)) {
-                root.keyboardSelection = true;
-                if (grid.currentIndex < 0 && root.entries.length) {
-                    grid.currentIndex = event.key === Qt.Key_End ? root.entries.length - 1 : 0;
-                    event.accepted = true;
-                }
-            } else if (root.type(event))
-                event.accepted = true;
-        }
+        Keys.onReturnPressed: root.activate(root.selection)
+        Keys.onPressed: event => root.keys(event)
         FastScroll {
             view: grid
+            step: 300
+        }
+    }
+    ListView {
+        id: results
+        objectName: "launcherResults"
+        visible: !root.appLayout && !root.form
+        x: root.contentX
+        y: root.picker ? 54 : 84
+        width: root.contentWidth
+        height: Math.floor(root.bodyHeight / 58) * 58 + (root.picker ? 30 : 0)
+        model: root.entries
+        currentIndex: root.selection
+        keyNavigationEnabled: false
+        spacing: 3
+        clip: true
+        boundsBehavior: Flickable.StopAtBounds
+        delegate: NacreSurface {
+            id: row
+            required property var modelData
+            required property int index
+            readonly property bool selected: root.hasSelection && root.selection === index
+            objectName: "launcherRow_" + index
+            width: results.width
+            height: 55
+            radius: 10
+            color: selected || rowHover.hovered ? Qt.tint(NacreColours.palette.m3surface, Qt.alpha(NacreColours.palette.m3onSurface, selected ? .085 : .04)) : "transparent"
+            opacity: modelData.disabled ? .58 : 1
+            Rectangle {
+                x: 0
+                y: 9
+                width: 3
+                height: parent.height - 18
+                radius: 1.5
+                color: NacreColours.palette.m3primary
+                visible: row.selected
+            }
+            HoverHandler {
+                id: rowHover
+                onHoveredChanged: if (hovered)
+                    root.hoveredEntry = row.modelData
+            }
+            NacreMenuIcon {
+                entry: row.modelData
+                size: 30
+                width: 30
+                height: 30
+                x: 12
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            NacreText {
+                x: 53
+                y: 8
+                width: parent.width - x - 100
+                text: row.modelData.name
+                font.pointSize: 11
+                textFormat: Text.PlainText
+                elide: Text.ElideRight
+            }
+            NacreText {
+                x: 53
+                y: 31
+                width: parent.width - x - 32
+                text: row.modelData.breadcrumb || row.modelData.description || ""
+                font.pointSize: 9
+                textFormat: Text.PlainText
+                elide: Text.ElideRight
+                color: NacreColours.palette.m3onSurfaceVariant
+            }
+            NacreText {
+                anchors.right: parent.right
+                anchors.rightMargin: 11
+                y: 10
+                text: row.modelData.kind === "group" ? "›" : row.modelData.checked ? "✓ " + (row.modelData.status || "") : row.modelData.status || ""
+                font.pointSize: 9
+                color: NacreColours.palette.m3onSurfaceVariant
+                textFormat: Text.PlainText
+            }
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: event => {
+                    root.keyboardSelection = true;
+                    root.selection = row.index;
+                    event.button === Qt.RightButton ? root.actionsFor(row.modelData) : root.run(row.modelData);
+                }
+            }
+        }
+        Keys.onReturnPressed: root.activate(root.selection)
+        Keys.onPressed: event => root.keys(event)
+        FastScroll {
+            view: results
+            step: 300
         }
     }
     NacreText {
-        x: 214
-        y: 78
-        visible: !root.entries.length
-        width: parent.width - x - 20
+        x: root.contentX + 14
+        y: root.picker ? 80 : 120
+        width: root.contentWidth - 28
+        visible: !root.entries.length && !root.form
+        text: root.calculation ? root.calculationResult.error || "Type an expression after =" : root.scope.kind === "brain" ? (root.scope.text ? "Looking in your private notes…" : "Type # and a few words to search Nacre Brain") : root.scope.kind === "ai" ? "Type ? and your question" : root.route === "home" && !root.query ? "Add apps and menu items to Favorites with Ctrl+D or their item actions." : root.route === "software.packages" ? NacreMenu.packageMessage || "Type two or more characters to search packages" : "No matches. Try a different word, > for actions, or / for search scopes."
         wrapMode: Text.Wrap
-        text: root.calculation ? root.calculationResult.error || "" : root.category === "favorites" && !root.query ? "Add apps or actions with their heart button" : "No matches"
+        textFormat: Text.PlainText
         color: NacreColours.palette.m3onSurfaceVariant
         font.pointSize: 11
+    }
+    NacreSurface {
+        id: details
+        visible: root.showDetails && !root.form
+        x: parent.width - 252
+        y: 84
+        width: 234
+        height: root.bodyHeight
+        radius: 13
+        color: Qt.tint(NacreColours.palette.m3surface, Qt.alpha(NacreColours.palette.m3onSurface, .025))
+        Flickable {
+            id: detailScroll
+            anchors.fill: parent
+            anchors.margins: 13
+            clip: true
+            contentHeight: detailColumn.implicitHeight
+            boundsBehavior: Flickable.StopAtBounds
+            Column {
+                id: detailColumn
+                width: parent.width
+                spacing: 12
+                NacreMenuIcon {
+                    entry: root.previewEntry || {
+                        brand: "welcome"
+                    }
+                    size: 48
+                    width: 48
+                    height: 48
+                }
+                NacreText {
+                    width: parent.width
+                    text: root.previewEntry?.name || "Your desktop"
+                    textFormat: Text.PlainText
+                    font.pointSize: 14
+                    wrapMode: Text.Wrap
+                    maximumLineCount: 3
+                    elide: Text.ElideRight
+                }
+                Image {
+                    width: parent.width
+                    height: width * 9 / 16
+                    visible: !!root.previewEntry?.preview && root.previewEntry?.operation === "wallpaper"
+                    source: visible ? root.previewEntry.preview : ""
+                    sourceSize.width: 512
+                    sourceSize.height: 288
+                    asynchronous: true
+                    fillMode: Image.PreserveAspectCrop
+                }
+                NacreText {
+                    width: parent.width
+                    text: root.previewEntry?.reason || root.previewEntry?.description || "Search apps and desktop controls, or choose a section."
+                    textFormat: Text.PlainText
+                    font.pointSize: 10.5
+                    color: NacreColours.palette.m3onSurfaceVariant
+                    wrapMode: Text.Wrap
+                    maximumLineCount: 7
+                    elide: Text.ElideRight
+                }
+                NacreText {
+                    width: parent.width
+                    visible: !!root.previewEntry?.previewFont
+                    text: "Nacre\nColors shaped by your wallpaper."
+                    textFormat: Text.PlainText
+                    font.family: root.previewEntry?.previewFont || NacreTokens.textFamily
+                    font.pointSize: 16
+                    wrapMode: Text.Wrap
+                }
+                NacreText {
+                    width: parent.width
+                    visible: root.previewEntry?.operation === "info"
+                    text: root.previewEntry?.value === "health" ? "Services\n" + Object.keys(Maintenance.data.services || {}).map(key => key + ": " + Maintenance.data.services[key]).join("\n") : root.previewEntry?.value === "guide" ? "Super+A opens this menu. Search finds apps and controls at any depth.\n\nUse > for commands, = for arithmetic, # for private notes and ? for an explicit AI question.\n\nEnter opens the selected item. Right enters a section; Tab opens item actions. Backspace with an empty query goes back. Escape closes.\n\nCtrl+D adds or removes a favorite." : root.previewEntry?.description || ""
+                    textFormat: Text.PlainText
+                    font.pointSize: 10
+                    wrapMode: Text.Wrap
+                }
+                NacreMenuButton {
+                    width: parent.width
+                    visible: !!root.previewEntry && root.previewEntry.kind !== "group" && !root.previewEntry.disabled && root.previewEntry.operation !== "info"
+                    text: root.previewEntry?.operation === "wallpaper" ? "Use wallpaper" : root.previewEntry?.operation === "font" ? "Use font" : root.previewEntry?.operation === "install-package" ? "Install" : root.previewEntry?.kind === "app" ? "Open app" : "Run"
+                    onClicked: root.run(root.previewEntry)
+                }
+                NacreMenuButton {
+                    width: parent.width
+                    visible: !!root.previewEntry
+                    text: root.previewEntry?.kind === "group" ? "Open section" : "Item actions"
+                    onClicked: root.previewEntry.kind === "group" ? root.navigate(root.previewEntry.id) : root.actionsFor(root.previewEntry)
+                }
+                NacreText {
+                    text: "Recent"
+                    font.pointSize: 10
+                    visible: !root.previewEntry && NacreMenu.recent().length > 0
+                }
+                Repeater {
+                    model: root.previewEntry ? [] : NacreMenu.recent()
+                    delegate: NacreMenuButton {
+                        required property var modelData
+                        width: detailColumn.width
+                        compact: true
+                        text: modelData.name
+                        onClicked: root.run(modelData)
+                    }
+                }
+                NacreText {
+                    text: "Quick controls"
+                    font.pointSize: 10
+                    visible: !root.previewEntry
+                }
+                NacreMenuButton {
+                    width: parent.width
+                    visible: !root.previewEntry
+                    compact: true
+                    text: "Do not disturb: " + (DesktopSettings.data.dnd ? "On" : "Off")
+                    onClicked: NacreMenu.execute(NacreMenu.node("actions.controls.dnd"))
+                }
+                NacreMenuButton {
+                    width: parent.width
+                    visible: !root.previewEntry
+                    compact: true
+                    text: Updates.count ? Updates.count + " updates available" : "System updates"
+                    onClicked: root.run(NacreMenu.node("health.updates"))
+                }
+            }
+            FastScroll {
+                view: detailScroll
+                step: 220
+            }
+        }
+    }
+    NacreText {
+        x: 20
+        y: parent.height - 88
+        width: parent.width - 40
+        text: NacreMenu.catalog.error || NacreMenu.message || (root.calculation ? "Enter copies the result" : root.picker ? "Enter chooses · Escape cancels" : "Enter opens · Tab item actions · Ctrl+D favorite")
+        textFormat: Text.PlainText
+        font.pointSize: 9
+        color: NacreColours.palette.m3onSurfaceVariant
+        elide: Text.ElideRight
+        visible: !root.form && !root.confirmation
     }
     NacreTextField {
         id: search
         objectName: "launcherSearch"
         x: 16
-        y: parent.height - 62
+        y: parent.height - 67
         width: parent.width - 32
-        height: 46
-        padding: 14
-        placeholderText: root.calculation ? "= (12 + 8) / 5" : root.actionLayout ? "Search actions" : "Search apps · > actions · = calculator"
+        height: 49
+        padding: 15
+        visible: !root.form && !root.confirmation
+        placeholderText: root.picker ? "Filter choices" : root.calculation ? "= (12 + 8) / 5" : parent.width < 900 ? "Search apps and controls…" : "Search everything…    > actions    = calculator    # Brain    ? AI"
+        onAccepted: root.activate(root.selection)
         Keys.onDownPressed: root.focusResults()
-        Keys.onTabPressed: rail.forceActiveFocus()
-        onAccepted: if (root.hasSelection)
-            root.activate(grid.currentIndex)
+        Keys.onEscapePressed: root.dismiss()
         Keys.onPressed: event => {
             if (event.key === Qt.Key_D && event.modifiers & Qt.ControlModifier) {
-                if (root.hasSelection)
-                    root.favorite(root.entries[grid.currentIndex]);
+                root.favorite(root.selectedEntry);
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Tab) {
+                root.selectedEntry ? root.actionsFor(root.selectedEntry) : rail.forceActiveFocus();
+                event.accepted = true;
+            } else if (event.key === Qt.Key_Backspace && !text) {
+                root.back();
                 event.accepted = true;
             }
         }
-        Keys.onEscapePressed: root.visibilities.launcher = false
+    }
+    Loader {
+        anchors.fill: parent
+        anchors.leftMargin: root.picker ? 16 : 182
+        anchors.rightMargin: 16
+        anchors.topMargin: 65
+        anchors.bottomMargin: 30
+        active: !!root.form
+        sourceComponent: NacreMenuForm {
+            form: root.form || {}
+            onSubmitted: values => root.submitForm(values)
+            onCancelled: root.cancelForm()
+        }
+    }
+    NacreSurface {
+        anchors.fill: parent
+        visible: !!root.confirmation
+        color: NacreColours.palette.m3surface
+        radius: 22
+        MouseArea {
+            anchors.fill: parent
+        }
+        Column {
+            anchors.centerIn: parent
+            width: Math.min(parent.width - 60, 500)
+            spacing: 18
+            NacreIcon {
+                text: root.confirmation?.icon || "help"
+                font.pointSize: 32
+                color: NacreColours.palette.m3error
+            }
+            NacreText {
+                width: parent.width
+                text: root.confirmation?.confirm || root.confirmation?.name + "?"
+                textFormat: Text.PlainText
+                font.pointSize: 20
+                wrapMode: Text.Wrap
+            }
+            NacreText {
+                width: parent.width
+                text: root.confirmation?.operation === "power" ? (root.confirmation?.value === "suspend" ? "Your applications stay open while the laptop sleeps." : "This will close your running apps and tasks. Save your work before continuing.") : "The desktop shell will reload. Your applications stay running."
+                textFormat: Text.PlainText
+                wrapMode: Text.Wrap
+                color: NacreColours.palette.m3onSurfaceVariant
+            }
+            Row {
+                spacing: 12
+                NacreMenuButton {
+                    id: cancelConfirmation
+                    text: "Cancel"
+                    onClicked: {
+                        root.confirmation = null;
+                        search.forceActiveFocus();
+                    }
+                }
+                NacreMenuButton {
+                    text: root.confirmation?.name || "Continue"
+                    onClicked: {
+                        const entry = root.confirmation;
+                        root.confirmation = null;
+                        root.run(entry, true);
+                    }
+                }
+            }
+        }
+        Keys.onEscapePressed: root.confirmation = null
     }
     Popup {
         id: context
-        width: 190
-        padding: 10
+        width: 240
+        padding: 12
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
         background: NacreSurface {
             color: NacreColours.palette.m3surfaceContainerHigh
-            radius: 14
+            radius: 13
             border.width: 1
-            border.color: NacreColours.palette.m3outline
+            border.color: NacreColours.palette.m3outlineVariant
         }
         contentItem: Column {
-            spacing: 6
-            ActionButton {
-                text: root.contextEntry && LauncherPreferences.favorites.includes(root.contextEntry.id) ? "Remove favorite" : "Add favorite"
+            spacing: 7
+            NacreText {
+                width: parent.width
+                text: root.contextEntry?.name || "Item actions"
+                font.pointSize: 11
+                wrapMode: Text.Wrap
+                maximumLineCount: 2
+                elide: Text.ElideRight
+                textFormat: Text.PlainText
+            }
+            NacreMenuButton {
+                width: parent.width
                 compact: true
+                text: "Open"
+                visible: !!root.contextEntry && !root.contextEntry.disabled
+                onClicked: {
+                    const entry = root.contextEntry;
+                    context.close();
+                    root.run(entry);
+                }
+            }
+            NacreMenuButton {
+                width: parent.width
+                compact: true
+                text: root.contextEntry && LauncherPreferences.favorites.includes(Menu.stable(root.contextEntry)) ? "Remove favorite" : "Add favorite"
                 onClicked: {
                     root.favorite(root.contextEntry);
                     context.close();
                 }
             }
-            ActionButton {
-                visible: root.contextEntry?.kind !== "action"
-                text: root.category === "hidden" ? "Show application" : "Hide application"
+            NacreMenuButton {
+                width: parent.width
                 compact: true
+                visible: root.contextEntry?.kind === "app"
+                text: root.contextEntry?.hidden ? "Show application" : "Hide application"
                 onClicked: {
-                    if (root.contextEntry)
-                        LauncherPreferences.update("hide", root.contextEntry.id, root.category !== "hidden");
+                    LauncherPreferences.update("hide", root.contextEntry.id, !root.contextEntry.hidden);
                     context.close();
                 }
             }
+            NacreMenuButton {
+                width: parent.width
+                compact: true
+                visible: (!!root.contextEntry?.package && root.contextEntry?.checked) || (!!root.contextEntry && !!NacreMenu.ownership[root.contextEntry.id])
+                text: "Remove package"
+                onClicked: {
+                    const entry = Object.assign({}, root.contextEntry, {
+                        disabled: false,
+                        operation: "remove-package",
+                        value: root.contextEntry.package || NacreMenu.ownership[root.contextEntry.id]
+                    });
+                    context.close();
+                    root.run(entry);
+                }
+            }
+            NacreMenuButton {
+                width: parent.width
+                compact: true
+                visible: root.contextEntry?.webapp === true
+                text: "Remove web app"
+                onClicked: {
+                    NacreMenu.execute(Object.assign({}, root.contextEntry, {
+                        operation: "webapp-remove"
+                    }));
+                    context.close();
+                }
+            }
+            NacreMenuButton {
+                width: parent.width
+                compact: true
+                visible: !!NacreMenu.supportPackage(root.contextEntry) && !!root.contextEntry?.disabled
+                text: "Install support"
+                onClicked: {
+                    const pkg = NacreMenu.supportPackage(root.contextEntry);
+                    context.close();
+                    root.run({
+                        id: "software.support",
+                        kind: "action",
+                        name: pkg,
+                        operation: "install-package",
+                        value: pkg
+                    });
+                }
+            }
+            NacreText {
+                width: parent.width
+                text: root.contextEntry?.reason || ""
+                textFormat: Text.PlainText
+                visible: !!text
+                wrapMode: Text.Wrap
+                color: NacreColours.palette.m3onSurfaceVariant
+                font.pointSize: 9
+            }
         }
+        onClosed: search.forceActiveFocus()
     }
     IpcHandler {
         target: "appBrowser"
         function selectCategory(id: string): void {
             root.select(id);
         }
+        function openRoute(id: string): void {
+            root.navigate(id);
+        }
         function state(): string {
             return JSON.stringify({
-                category: root.activeCategory,
-                baseCategory: root.category,
+                route: root.route,
+                category: ({
+                        home: "favorites",
+                        apps: "all"
+                    })[root.route] || root.route,
+                baseCategory: root.route,
+                scope: root.scope.kind,
                 calculation: root.calculation,
                 count: root.entries.length,
-                query: root.query,
-                columns: Math.max(1, Math.floor(grid.width / grid.cellWidth)),
+                query: ["ai", "brain"].includes(root.scope.kind) ? root.scope.prefix : root.query,
+                columns: root.appLayout ? Math.max(1, Math.floor(grid.width / grid.cellWidth)) : 1,
                 height: root.height,
-                visibleRows: 5,
-                currentIndex: root.hasSelection ? grid.currentIndex : -1,
-                selectedId: root.hasSelection ? root.entries[grid.currentIndex]?.id || "" : "",
-                names: root.entries.map(item => item.name),
-                selectedName: root.hasSelection ? root.entries[grid.currentIndex]?.name || "" : ""
+                visibleRows: root.appLayout ? 5 : Math.floor(results.height / 58),
+                currentIndex: root.hasSelection ? root.selection : -1,
+                selectedId: root.selectedEntry?.id || "",
+                selectedName: root.selectedEntry?.name || "",
+                picker: root.picker,
+                confirming: !!root.confirmation
             });
         }
     }

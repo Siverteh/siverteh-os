@@ -27,6 +27,7 @@ Scope {
             leftPinned: view?.leftPinned ?? false,
             query: view?.launcherQuery || "",
             launcherMode: view?.launcherMode || "apps",
+            launcherRoute: view?.launcherRoute || "home",
             reveal: NacrePanelState.reveal,
             notificationsSuppressed: Object.values(NacrePanelState.panels).some(panel => panel.notifications?.suppressed === true)
         };
@@ -158,6 +159,9 @@ Scope {
         }
         function mode(name: string): void {
             NacrePanelState.openMode(name, "", false);
+        }
+        function menu(route: string, query: string): void {
+            NacrePanelState.openMenu(route || "home", query || "", false);
         }
         function settings(): void {
             NacrePanelState.openSettings();

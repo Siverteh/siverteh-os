@@ -20,7 +20,8 @@ class LauncherPreferencesTests(unittest.TestCase):
             prefs.change("hide", {"id": "two.desktop", "enabled": True})
             prefs.change("favorite", {"id": "one.desktop", "enabled": True})
             self.assertEqual(
-                prefs.load(), {"favorites": ["one.desktop"], "hidden": ["two.desktop"]}
+                prefs.load(),
+                {"favorites": ["one.desktop"], "hidden": ["two.desktop"], "recent": []},
             )
             self.assertEqual(os.stat(prefs.PATH).st_mode & 0o777, 0o600)
             prefs.change("hide", {"id": "two.desktop", "enabled": False})
@@ -61,3 +62,23 @@ class LauncherPreferencesTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 prefs.change("favorite", {"id": "one", "enabled": True})
             self.assertEqual(prefs.PATH.read_text(), original)
+
+    def test_recent_ids_are_bounded_without_reordering_favorites(self):
+        with (
+            tempfile.TemporaryDirectory() as folder,
+            patch.object(prefs, "PATH", Path(folder) / "launcher.json"),
+        ):
+            prefs.change("favorite", {"id": "kept.desktop", "enabled": True})
+            for index in range(15):
+                prefs.change(
+                    "record",
+                    {"id": "nacre-menu:actions.item-" + str(index), "enabled": True},
+                )
+            prefs.change(
+                "record", {"id": "nacre-menu:actions.item-10", "enabled": True}
+            )
+            data = prefs.load()
+            self.assertEqual(data["favorites"], ["kept.desktop"])
+            self.assertEqual(len(data["recent"]), 12)
+            self.assertEqual(data["recent"][0], "nacre-menu:actions.item-10")
+            self.assertEqual(len(set(data["recent"])), 12)

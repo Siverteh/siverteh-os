@@ -34,6 +34,7 @@ NacreWindow {
         property int dashboardTab: 0
         property string launcherQuery: ""
         property string launcherMode: "apps"
+        property string launcherRoute: "home"
         property int launcherRequest: 0
         property string edgeMenu: ""
         property string controlSection: "home"

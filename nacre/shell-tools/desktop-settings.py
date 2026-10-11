@@ -42,8 +42,11 @@ DEFAULTS = dict(
     lockNotificationContents=False,
     weatherLocation="",
     weatherFahrenheit=False,
+    interfaceFont="",
 )
-PRESET_KEYS = [key for key in DEFAULTS if not key.startswith(("lock", "weather"))]
+PRESET_KEYS = [
+    key for key in DEFAULTS if not key.startswith(("lock", "weather", "interface"))
+]
 OPTIONS = {
     "animations": "animations.enabled",
     "blur": "decoration.blur.enabled",
@@ -135,13 +138,13 @@ def validate(key, value):
         low, high = RANGES[key]
         if type(value) is not int or not low <= value <= high:
             raise ValueError(f"{key} must be an integer from {low} to {high}")
-    elif key == "weatherLocation":
+    elif key in ("weatherLocation", "interfaceFont"):
         if (
             not isinstance(value, str)
             or len(value) > 80
             or any(ord(c) < 32 for c in value)
         ):
-            raise ValueError("Weather location must be a city name up to80characters")
+            raise ValueError("Use text up to80characters without control characters")
     elif type(value) is not bool:
         raise ValueError(f"{key} must be true or false")
     return value

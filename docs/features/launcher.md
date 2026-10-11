@@ -1,85 +1,110 @@
-# Launcher
+# Universal launcher
 
-[System overview](../overview.md) · [Deployment and recovery](../maintenance.md)
+Super+A opens Nacre's main desktop menu. Home keeps alphabetical favorites and
+recent destinations; All apps is a five-row icon grid. Application categories are
+replaced by Actions, Style, Setup, Software, Health, Learn and Power.
 
-## Categorized bottom launcher
+Search from Home or All apps finds installed apps and commands at any depth.
+Inside a section, search filters that section. Results show a breadcrumb and live
+state. The detail pane explains the selected item, previews wallpapers/fonts and
+provides secondary actions. Smaller outputs collapse the pane and adapt the grid
+without losing its five rows.
 
-Super+A toggles Apps. Super by itself has no launcher binding, avoiding
-accidental opens. Super+W opens Wallpaper directly. The bottom drawer has no
-hover trigger.
+Typing selects the best available result; blank browsing selects nothing until
+arrow navigation. Enter opens or runs the selected item. Right enters a group or
+opens its actions; Tab opens item actions when selected. Backspace with an empty
+query goes back. Escape closes actions/confirmation first, then the launcher.
+Ctrl+D and the favorite marker toggle favorites. Right-click offers app hiding,
+known package removal and item actions. Saved older `nacre-action:` favorites
+remain compatible. Recent history stores destination IDs, not questions or searches.
 
-The app browser always has five rows, whether in Favorites, All apps, a category,
-Actions or search. Smaller outputs scale row/icon height to keep the same five
-slots within the viewport; the bottom search field stays anchored. Categories
-come from desktop-entry metadata and empty app categories are omitted.
+## Search scopes
 
-Favorites are displayed alphabetically by their current name, without rewriting
-the private stored IDs. Opening/browsing has no selected app; arrow navigation
-selects one deliberately. Typing searches visible apps and highlights the top-ranked result while the
-search field keeps keyboard focus. Enter launches that selection; arrows let
-you choose another. Actions sits directly below Favorites. Typing `>` visibly switches to Actions;
-clearing the prefix returns to the prior category. Its two-column descriptive
-rows expose 21 curated commands, including wallpaper, calculator, Nacre apps,
-files/terminal, clipboard, overview, shortcuts, AI chat/note tools and device settings.
-Search matches names, aliases and operation words; exact shortcuts like `>ai`,
-`>brain` and `>wifi` favor the relevant destination. AI/note commands name their
-Nacre product explicitly and use its live logo. Visual-effect toggles, palettes
-and workflow presets live in Settings rather than crowding this list. Saved
-favorites for those older operations still resolve and run.
+| Prefix | Purpose |
+| --- | --- |
+| `>` | Desktop commands |
+| `=` | Bounded arithmetic; Enter copies the result |
+| `#` | Private Nacre Brain search |
+| `?` | Explicit Nacre AI question |
+| `/` | Show scope help |
 
-Apps and actions share the heart, right-click favorite menu and Ctrl+D toggle
-(including while typing). Favorites mix apps and actions alphabetically. Action IDs
-are based on the operation and argument, so an Enable/Disable label change keeps
-the favorite. Unavailable saved IDs are skipped; saved data never becomes an
-arbitrary command. Application hiding/restoration remains app-only.
-Tab moves into the category rail; Escape closes. Clicking outside dismisses the
-panel without activating the app behind it. Power controls remain in their
-existing menu.
+Unmatched normal text never silently becomes an AI request. The assistant action
+protects active work and unsent drafts. Arithmetic accepts the existing operators,
+parentheses, constants and whitelisted functions; it never evaluates JavaScript or
+shell source. Ordinary blank search does not activate an invisible first item.
 
-Preferences are private atomic JSON in `~/.config/nacre/launcher.json`,
-with mode 0600 and locked read/modify/write operations. They are outside source
-and desktop rollback, and malformed data is preserved rather than overwritten.
-The browser loads only while open/closing and uses the shared fast scrolling.
+## What lives here
 
+Actions contains capture, clipboard, emoji, windows, reminders, assistant/knowledge
+destinations and live toggles. Optional OCR, QR and recording tools show their
+availability and a package setup action. Captures use existing grim/slurp tools;
+recordings and reminders use explicitly owned user units. Canceling a region
+selection leaves the clipboard intact. Stay awake inhibits automatic idle behavior
+until disabled or logout; it does not replace session power management.
 
-## Independent mode assembly
+Style reuses wallpaper caches and Orient's publisher for wallpaper, personality,
+background tint, brightness mode and accent selection. Interface fonts use the
+existing validated desktop preference owner; other applications retain their own
+font settings. Setup links to current Settings pages and private configuration.
+Software has 28 curated choices, official/community package search, installed
+packages and web-app creation. Package managers retain interactive confirmation
+and authentication; paru uses the existing `--skipreview` preference. Nothing is
+installed merely by browsing. Generated web apps contain a fixed launcher and a
+random identifier rather than the entered URL in their Exec command.
 
-NacreLauncherPanel owns mode selection and lazy loading. It keeps loaded content
-at a fixed internal height while the visible panel closes, clips that content,
-and unloads it once the close transition settles. Reopening during a close targets
-the latest state. Full-screen wallpaper modes use the existing viewport/backdrop
-contract; gallery index/count/step and output recovery remain compatible.
+Health uses the existing update/check/recovery owners. Rollback opens the review
+page rather than blindly applying a release. Learn shows current keybindings,
+Welcome and documentation. Power keeps lock/session ownership and requires an
+explicit confirmation for session-closing operations. CLI routes only navigate;
+opening a power leaf never executes it.
 
-The inherited reference-era content/list/action/item stack is removed. Its
-compatibility `legacy` mode now uses the independently authored NacreSearchPanel:
-app search or `>` known desktop actions, keyboard selection/Enter/Escape and
-readable palette-aware rows. It does not execute arbitrary command text or add
-power controls. The category browser now uses NacreAppBrowser and app-browser.js; these are fresh
-implementations from the behavior spec and actual consumer/tests, not renamed
-view bodies. Wallpaper presentation is independently replaced as well.
+## Routes and customization
 
-## Calculator
+```sh
+nacre-menu
+nacre-menu actions.capture
+nacre-menu style.personality
+nacre-menu setup.displays
+nacre-shell menu software.packages
+```
 
-Choose Calculator in Actions, or type `= (12 + 8) / 5`. The result is selected
-and Enter copies it to the clipboard. An empty calculator shows a usage hint;
-incomplete or invalid expressions stay open with an explanation. Supported:
-`+ - * / % ^ **`, parentheses, scientific notation, `pi`, `e`, `sqrt`, `abs`,
-`sin`, `cos`, `tan`, `log` (natural log), `log10`, `floor`, `ceil`, `round`.
-Trigonometry uses radians; `%` is remainder. Results use ordinary double precision,
-formatted to 14 significant digits. No currency/unit conversion or history.
+The independent catalog is `nacre/shell-tools/launcher-menu.json`. Override fields
+or add groups/actions in `~/.config/nacre/launcher-menu.json`:
 
-The independently authored bounded arithmetic grammar in `calculator.js` accepts
-no JavaScript/shell evaluation. It runs only on query changes and shares the
-existing launcher and clipboard launch owner; no new daemon or package is needed.
-Normal blank search/`>` does not launch a hidden first item on Enter.
+```json
+{"version":1,"entries":[
+  {"id":"actions.terminal","label":"My terminal"},
+  {"id":"actions.my-tool","kind":"action","label":"My tool",
+   "icon":"terminal","operation":"command","arguments":["my-tool","--option"]}
+]}
+```
 
-Design research: [Noctalia's provider documentation](https://github.com/noctalia-dev/noctalia/blob/main/docs/user/launcher/index.mdx)
-explains explicit prefix scopes and descriptive rows for mixed results;
-[Raycast's action panel](https://manual.raycast.com/action-panel) keeps contextual
-options attached to results. Nacre keeps its five-row frame, app grid and stable
-favorite IDs, with descriptive command rows and an explicit `=` calculator.
-Only documentation was consulted; no external implementation was copied.
+A matching ID overrides its declared fields. Hidden groups hide their descendants.
+Invalid extensions preserve built-ins and show an error. Commands are explicit
+argument arrays from this trusted local file; typed searches are never commands.
+Apps cannot capture menu routes through keywords. Existing favorites/all/hidden/
+actions category aliases remain; removed app categories lead to All apps.
 
-Command ordering is explicit: blank Actions retains the curated catalog order;
-search ties retain that order through an index tie-breaker rather than relying
-on the Qt JavaScript engine to implement stable sort.
+Package/font/capability discovery is cached and refreshed on opening; native device
+and preference state remains reactive. Normal search is in-memory. Package and
+Brain searches are scoped, coalesced and reject obsolete results.
+
+## Shared selectors
+
+```sh
+printf 'First\tone\nSecond\ttwo\n' | nacre-menu pick --title 'Choose a value'
+nacre-menu input --title 'Name' --initial 'Example'
+```
+
+Plain selector rows are `label`, `label<TAB>value` or
+`label<TAB>value<TAB>description`. `--json` accepts an array of objects with label,
+value, description, icon and disabled fields. Selection returns only the value;
+Escape/cancel exits nonzero. Input returns the entered text. Private generated
+sessions use bounded files and a single-client lock; callers cannot select arbitrary
+output paths. A request refuses to replace an open user drawer. There is no secret
+input mode; native authentication remains with the existing OS/application owners.
+
+Research informed capability/routing choices through
+[Omarchy's official menu documentation](https://github.com/basecamp/omarchy/blob/quattro/docs/menu.md)
+and public menu data. Its implementation bodies/catalog were not transplanted.
+Nacre keeps its own QML, operations, palette language and brand assets.

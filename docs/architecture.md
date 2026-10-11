@@ -294,3 +294,14 @@ The existing NacreWeather owner consumes the extended Open-Meteo snapshot. Album
 palettes are page-local and never enter global palette publication. Focus DND
 changes relinquish ownership on manual changes. See [dashboard](features/dashboard.md)
 for controls, external data, privacy, cache limits and performance.
+
+## Universal menu ownership
+
+NacreAppBrowser is the Super+A view; NacreMenu and menu-model.js combine the typed
+catalog, private extensions and existing runtime providers. Menu discovery is
+cached; normal filtering starts no process. Existing services own palette,
+settings, device, clipboard, Brain and assistant operations. menu-backend.py adds
+explicit software/tools and owned reminder/recording units, with no idle daemon.
+NacreMenuPrompt and menu-cli.py reuse this same window for private pick/input
+sessions. Routes navigate only; they cannot execute leaf actions automatically.
+LauncherPreferences remains the sole favorites/hidden/recent store.
