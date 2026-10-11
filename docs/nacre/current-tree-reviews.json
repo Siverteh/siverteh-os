@@ -10091,6 +10091,13 @@
         "docs/audits/desktop-responsiveness.md",
         "Independent production-service lifecycle/queue/protocol tests; only external I/O owners replaced by fixtures"
       ]
+    },
+    "docs/audits/desktop-responsiveness.md": {
+      "disposition": "non-implementation",
+      "sha256": "bb67e4b59ff16679d1400584aff61f87553225d07b08e7e7e028b3d909a54fa3",
+      "evidence": [
+        "Original audit documentation of measured desktop cleanup; linked primary Qt/glibc documentation and private test measurements, no implementation copied"
+      ]
     }
   }
 }
