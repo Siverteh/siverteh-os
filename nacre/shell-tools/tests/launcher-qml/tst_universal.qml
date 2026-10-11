@@ -292,4 +292,17 @@ TestCase {
         NacreMenuPrompt.active = false;
         NacreMenuPrompt.request = null;
     }
+    function test_initial_cli_leaf_route_selects_parent_without_execution() {
+        const value = view();
+        value.visibilities.launcherRoute = "setup.displays";
+        value.reset();
+        compare(value.route, "setup");
+        compare(value.selectedEntry.id, "setup.displays");
+        compare(NacrePanelState.calls.length, 0);
+        value.visibilities.launcherRoute = "power.poweroff";
+        value.reset();
+        compare(value.route, "power");
+        compare(value.selectedEntry.id, "power.poweroff");
+        compare(AppLaunch.commands.length, 0);
+    }
 }
