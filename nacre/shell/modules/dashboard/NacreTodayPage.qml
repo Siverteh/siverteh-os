@@ -156,26 +156,17 @@ Flickable {
                 anchors.rightMargin: 18
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 12
-                width: actions.implicitWidth
+                width: options.implicitWidth
                 spacing: 6
-                ActionButton {
-                    objectName: "dashboardWallpapers"
-                    width: parent.width
-                    text: "Wallpapers"
-                    icon: "wallpaper"
-                    compact: true
-                    onClicked: NacrePanelState.openMode("wallpaper")
-                }
                 Row {
-                    id: actions
+                    id: options
                     spacing: 6
                     ActionButton {
-                        objectName: "dashboardNextWallpaper"
-                        text: "Next"
-                        icon: "skip_next"
+                        objectName: "dashboardWallpapers"
+                        text: "Wallpapers"
+                        icon: "wallpaper"
                         compact: true
-                        enabled: NacreWallpapers.rotationReady
-                        onClicked: NacreWallpapers.advanceRotation(true)
+                        onClicked: NacrePanelState.openMode("wallpaper")
                     }
                     ActionButton {
                         objectName: "dashboardColors"
@@ -183,6 +174,41 @@ Flickable {
                         icon: "palette"
                         compact: true
                         onClicked: NacreColorsApp.open()
+                    }
+                }
+                NacreSurface {
+                    objectName: "dashboardWallpaperTransport"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: 132
+                    height: 34
+                    radius: 17
+                    color: NacreTokens.raised
+                    Item {
+                        anchors.fill: parent
+                        WallpaperControl {
+                            objectName: "dashboardPreviousWallpaper"
+                            icon: "chevron_left"
+                            label: "Previous wallpaper"
+                            available: NacreWallpapers.rotationReady
+                            onActivated: NacreWallpapers.previousWallpaper()
+                        }
+                        WallpaperControl {
+                            x: 44
+                            objectName: "dashboardPauseWallpaper"
+                            icon: WallpaperPlayback.paused ? "play_arrow" : "pause"
+                            label: WallpaperPlayback.paused ? "Resume wallpaper" : "Pause wallpaper"
+                            visible: NacreWallpapers.displayDynamic
+                            available: visible && !NacreWallpapers.themeBusy && !WallpaperPlayback.sleeping && !WallpaperPlayback.locked
+                            onActivated: NacreWallpapers.toggleMotion()
+                        }
+                        WallpaperControl {
+                            x: 88
+                            objectName: "dashboardNextWallpaper"
+                            icon: "chevron_right"
+                            label: "Next wallpaper"
+                            available: NacreWallpapers.rotationReady
+                            onActivated: NacreWallpapers.advanceRotation(true)
+                        }
                     }
                 }
             }
@@ -193,6 +219,45 @@ Flickable {
             height: root.narrow ? implicitHeight : Math.max(288, root.height - hero.height - sections.spacing)
             active: root.shouldUpdate
             onSystemRequested: root.visibilities.dashboardTab = 3
+        }
+    }
+    component WallpaperControl: Item {
+        required property string icon
+        required property string label
+        property bool available: false
+        signal activated
+        width: 44
+        height: 34
+        NacreIcon {
+            anchors.centerIn: parent
+            text: parent.icon
+            font.pointSize: 16
+            opacity: parent.available ? 1 : .4
+        }
+        NacreInteraction {
+            id: interaction
+            radius: 17
+            disabled: !parent.available
+            accessibleName: parent.label
+            function onClicked(event) {
+                if (event)
+                    focus = false;
+                parent.activated();
+            }
+        }
+        ToolTip {
+            id: tooltip
+            visible: interaction.hovered && interaction.enabled
+            delay: 500
+            text: parent.label
+            contentItem: NacreText {
+                text: tooltip.text
+                font.pointSize: 10
+            }
+            background: NacreSurface {
+                color: NacreTokens.raised
+                radius: 8
+            }
         }
     }
 }
