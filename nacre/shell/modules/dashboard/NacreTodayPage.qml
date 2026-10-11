@@ -152,23 +152,25 @@ Flickable {
                 }
             }
             Column {
+                id: wallpaperActions
                 anchors.right: parent.right
                 anchors.rightMargin: 18
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 12
-                width: options.implicitWidth
+                width: 228
                 spacing: 6
                 Row {
                     id: options
+                    width: parent.width
                     spacing: 6
-                    ActionButton {
+                    WallpaperAction {
                         objectName: "dashboardWallpapers"
                         text: "Wallpapers"
                         icon: "wallpaper"
                         compact: true
                         onClicked: NacrePanelState.openMode("wallpaper")
                     }
-                    ActionButton {
+                    WallpaperAction {
                         objectName: "dashboardColors"
                         text: "Colors"
                         icon: "palette"
@@ -180,11 +182,12 @@ Flickable {
                     objectName: "dashboardWallpaperTransport"
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: parent.width
-                    height: 34
-                    radius: 17
-                    color: NacreTokens.raised
+                    height: 38
+                    radius: 12
+                    color: Qt.tint(NacreTokens.body, Qt.alpha(NacreTokens.orientSecondary, .1))
                     Item {
                         anchors.fill: parent
+                        anchors.margins: 3
                         WallpaperControl {
                             objectName: "dashboardPreviousWallpaper"
                             icon: "chevron_left"
@@ -195,10 +198,11 @@ Flickable {
                         WallpaperControl {
                             x: parent.width / 3
                             objectName: "dashboardPauseWallpaper"
-                            icon: WallpaperPlayback.paused ? "play_arrow" : "pause"
-                            label: WallpaperPlayback.paused ? "Resume wallpaper" : "Pause wallpaper"
-                            visible: NacreWallpapers.displayDynamic
-                            available: visible && !NacreWallpapers.themeBusy && !WallpaperPlayback.sleeping && !WallpaperPlayback.locked
+                            icon: !NacreWallpapers.displayDynamic ? "image" : WallpaperPlayback.paused ? "play_arrow" : "pause"
+                            label: !NacreWallpapers.displayDynamic ? "Static wallpaper" : WallpaperPlayback.paused ? "Resume wallpaper" : "Pause wallpaper"
+                            emphasized: true
+                            informational: !NacreWallpapers.displayDynamic
+                            available: NacreWallpapers.displayDynamic && !NacreWallpapers.themeBusy && !WallpaperPlayback.sleeping && !WallpaperPlayback.locked
                             onActivated: NacreWallpapers.toggleMotion()
                         }
                         WallpaperControl {
@@ -221,22 +225,48 @@ Flickable {
             onSystemRequested: root.visibilities.dashboardTab = 3
         }
     }
+    component WallpaperAction: ActionButton {
+        width: (parent.width - parent.spacing) / 2
+        height: 36
+        radius: 10
+        color: Qt.tint(NacreTokens.body, Qt.alpha(NacreTokens.accent, .12))
+    }
     component WallpaperControl: Item {
+        id: control
         required property string icon
         required property string label
         property bool available: false
+        property bool informational: false
+        property bool emphasized: false
         signal activated
         width: parent.width / 3
-        height: 34
+        height: parent.height
+        Accessible.role: Accessible.Indicator
+        Accessible.name: informational ? label : ""
+        Accessible.ignored: !informational
+        NacreSurface {
+            anchors.centerIn: parent
+            width: 38
+            height: parent.height
+            radius: 9
+            color: Qt.tint(NacreTokens.body, Qt.alpha(NacreTokens.accent, .18))
+            visible: control.emphasized
+        }
+        HoverHandler {
+            id: infoHover
+            enabled: control.informational
+        }
         NacreIcon {
             anchors.centerIn: parent
             text: parent.icon
             font.pointSize: 16
-            opacity: parent.available ? 1 : .4
+            color: control.emphasized ? NacreTokens.accent : NacreTokens.ink
+            opacity: control.informational || control.available ? 1 : .4
         }
         NacreInteraction {
             id: interaction
-            radius: 17
+            radius: 9
+            visible: !control.informational
             disabled: !parent.available
             accessibleName: parent.label
             function onClicked(event) {
@@ -247,7 +277,7 @@ Flickable {
         }
         ToolTip {
             id: tooltip
-            visible: interaction.hovered && interaction.enabled
+            visible: control.informational ? infoHover.hovered : interaction.hovered && interaction.enabled
             delay: 500
             text: parent.label
             contentItem: NacreText {

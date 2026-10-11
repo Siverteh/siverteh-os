@@ -102,14 +102,17 @@ TestCase {
   verify(picker.width>next.width);verify(picker.mapToItem(view,0,0).y+picker.height<next.mapToItem(view,0,0).y);
   findChild(view,"dashboardSummary").systemRequested();compare(view.visibilities.dashboardTab,3);
  }
- function test_transport_keeps_positions_and_hides_static_pause(){
+ function test_transport_keeps_positions_and_shows_static_indicator(){
   const view=createTemporaryObject(page,this);wait(40);
   const previous=findChild(view,"dashboardPreviousWallpaper"),next=findChild(view,"dashboardNextWallpaper"),pause=findChild(view,"dashboardPauseWallpaper"),pill=findChild(view,"dashboardWallpaperTransport");
   const point=next.mapToItem(view,0,0);compare(pill.width,findChild(view,"dashboardWallpapers").parent.width);
-  NacreWallpapers.displayDynamic=false;verify(!pause.visible);
+  NacreWallpapers.displayDynamic=false;verify(pause.visible);verify(pause.informational);compare(pause.icon,"image");compare(pause.label,"Static wallpaper");
+  const pauseCount=NacreWallpapers.pauseCalls;mouseClick(pause,22,17);compare(NacreWallpapers.pauseCalls,pauseCount);
+  const picker=findChild(view,"dashboardWallpapers"),colors=findChild(view,"dashboardColors");
+  compare(picker.width,colors.width);
   const count=NacreWallpapers.previousCalls;mouseClick(previous,22,17);compare(NacreWallpapers.previousCalls,count+1);
   NacreWallpapers.displayPath="";view.shouldUpdate=false;NacreWallpapers.displayDynamic=true;wait(20);
-  verify(pause.visible);compare(next.mapToItem(view,0,0).x,point.x);compare(pill.width,findChild(view,"dashboardWallpapers").parent.width);
+  verify(pause.visible);verify(!pause.informational);compare(next.mapToItem(view,0,0).x,point.x);compare(pill.width,findChild(view,"dashboardWallpapers").parent.width);
   WallpaperPlayback.paused=false;mouseClick(pause,22,17);verify(WallpaperPlayback.paused);compare(pause.icon,"play_arrow");
   mouseClick(pause,22,17);verify(!WallpaperPlayback.paused);compare(pause.icon,"pause");
   NacreWallpapers.displayDynamic=false;

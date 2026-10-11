@@ -19,10 +19,13 @@ original_socket_probe = tools.unmanaged_socket
 
 class ControlToolsTests(unittest.TestCase):
     def setUp(self):
-        # Host display sockets are an external dependency, not fixture state.
-        guard = patch.object(tools, "unmanaged_socket", return_value=False)
-        guard.start()
-        self.addCleanup(guard.stop)
+        # Fixtures never discover sockets in the user's real display namespace.
+        self.enterContext(
+            patch.dict(
+                tools.os.environ,
+                {"HYPRLAND_INSTANCE_SIGNATURE": "", "XDG_RUNTIME_DIR": ""},
+            )
+        )
 
     def test_dead_socket_does_not_lock_out_control_but_live_listener_does(self):
         import socket

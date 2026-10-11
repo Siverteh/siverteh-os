@@ -3613,7 +3613,6 @@
         "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
         "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ],
       "notes": "Own post-rewrite visual cleanup changes re-reviewed against user requirements/current Nacre source: title/grid geometry, continuous measured picker travel and opaque image buffering, compact device/history presentation, finite motion, faster bounded axis-aware scrolling and cancel-before-settings-reset. Updated native fixtures keep real token/viewport contracts and assert new speed/timing, not retired values. No inherited implementation copied; actual synthetic RHI captures and native input/geometry tests inspected, device/provider/private state untouched. Full deployment/CI gates remain separate."
@@ -3734,7 +3733,6 @@
         "Full current body individually reviewed. Basis 0a2b8a2: fresh civil calendar, responsive overview and card bodies. Later current-file changes: unchanged. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
         "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for user-directed shared system surface, kernel and uptime actions, iridescent media ring, video source restart and busy-button hover/focus lifecycle. Authored from own behavior spec; Qt MediaPlayer public API documentation consulted. Native video-to-video and keyboard/pointer regression tests retained; no inherited implementation consulted."
       ]
     },
@@ -3747,9 +3745,7 @@
         "Full current body individually reviewed. Basis 0a2b8a2: fresh civil calendar, responsive overview and card bodies. Later current-file changes: 02b2bda, 13701fc. Own application source/producer contracts and completed replacement specs examined; local extras/preview first-source peer comparison supplements history, not sole origin proof. Public native API scaffolding is retained. Prior exposure and visual references acknowledged; no legal clean-room or final-license claim. Referenced helper/test/asset origins remain separately scoped.",
         "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for user-directed shared system surface, kernel and uptime actions, iridescent media ring, video source restart and busy-button hover/focus lifecycle. Authored from own behavior spec; Qt MediaPlayer public API documentation consulted. Native video-to-video and keyboard/pointer regression tests retained; no inherited implementation consulted."
       ]
     },
@@ -6335,7 +6331,6 @@
         "Full current Python/embedded fixture body and local history reviewed. Creation 0a2b8a2:nacre/shell-tools/tests/test_overview_ui.py; subsequent 28707f7, a492dc6, 18d8aab. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open.",
         "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for user-directed shared system surface, kernel and uptime actions, iridescent media ring, video source restart and busy-button hover/focus lifecycle. Authored from own behavior spec; Qt MediaPlayer public API documentation consulted. Native video-to-video and keyboard/pointer regression tests retained; no inherited implementation consulted."
       ]
     },
@@ -6380,7 +6375,6 @@
         "Current body reviewed: user-approved visible lip depth5px sides/6px top, unchanged lengths. Side cubic controls now reach the full declared depth; top retains1px join overlap. Primary gradient and masks match actual geometry. Native rendered outer-tip pixels distinguish the deeper shape and base/input/moving-edge fixtures pass. Independent local correction without inherited upstream implementation.",
         "docs/specs/iridescent-frame.md",
         "Current full body reviewed: independently authored rectangle-union exposed contour, native Qt6.12 gradient rim and flat primary/secondary enamel with finite reduced-motion-aware sweep. Behavior follows own spec; existing logical input/provider ownership retained. Actual QML JS union/overlap/closing tests and native quiet/dark/light/moving-mask/render tests validate it. Visual research used first-party screenshots/README, not upstream implementation bodies; prior exposure acknowledged, no legal clean-room claim.",
-        "docs/specs/iridescent-frame.md",
         "Current full body reviewed: handle visibility independent of passive hover eligibility during modal/galleries; actual disabled/master-hide options retained. Old painted panel subtrees disable input on logical closing, avoiding interception during explicit handle switches. Native actual-lip and actual-host fixtures cover persistent landmarks, no passive replacement, deliberate switch and stale-control press exclusion. Own local correction, no upstream implementation used.",
         "Current full body reviewed for moving-handle dismissal: stationary pointer gates cover open and resting trigger regions, and exit only rearms after observing departure. Actual native fixture reproduces return-under-pointer and checks release after departure. Own correction to independently authored hover service; no upstream implementation consulted."
       ]
@@ -6573,7 +6567,6 @@
         "Current body reviewed: user-approved visible lip depth5px sides/6px top, unchanged lengths. Side cubic controls now reach the full declared depth; top retains1px join overlap. Primary gradient and masks match actual geometry. Native rendered outer-tip pixels distinguish the deeper shape and base/input/moving-edge fixtures pass. Independent local correction without inherited upstream implementation.",
         "docs/specs/iridescent-frame.md",
         "Current full body reviewed: independently authored rectangle-union exposed contour, native Qt6.12 gradient rim and flat primary/secondary enamel with finite reduced-motion-aware sweep. Behavior follows own spec; existing logical input/provider ownership retained. Actual QML JS union/overlap/closing tests and native quiet/dark/light/moving-mask/render tests validate it. Visual research used first-party screenshots/README, not upstream implementation bodies; prior exposure acknowledged, no legal clean-room claim.",
-        "docs/specs/iridescent-frame.md",
         "Current full body reviewed: handle visibility independent of passive hover eligibility during modal/galleries; actual disabled/master-hide options retained. Old painted panel subtrees disable input on logical closing, avoiding interception during explicit handle switches. Native actual-lip and actual-host fixtures cover persistent landmarks, no passive replacement, deliberate switch and stale-control press exclusion. Own local correction, no upstream implementation used.",
         "Current full body reviewed for moving-handle dismissal: stationary pointer gates cover open and resting trigger regions, and exit only rearms after observing departure. Actual native fixture reproduces return-under-pointer and checks release after departure. Own correction to independently authored hover service; no upstream implementation consulted."
       ]
@@ -6599,7 +6592,6 @@
         "Current guide reviewed and reconciled with single-surface header ownership and consuming modal click dismissal; documentation only, verified against implemented owners and native tests.",
         "docs/specs/iridescent-frame.md",
         "Current full body reviewed: independently authored rectangle-union exposed contour, native Qt6.12 gradient rim and flat primary/secondary enamel with finite reduced-motion-aware sweep. Behavior follows own spec; existing logical input/provider ownership retained. Actual QML JS union/overlap/closing tests and native quiet/dark/light/moving-mask/render tests validate it. Visual research used first-party screenshots/README, not upstream implementation bodies; prior exposure acknowledged, no legal clean-room claim.",
-        "docs/specs/iridescent-frame.md",
         "Current full body reviewed: handle visibility independent of passive hover eligibility during modal/galleries; actual disabled/master-hide options retained. Old painted panel subtrees disable input on logical closing, avoiding interception during explicit handle switches. Native actual-lip and actual-host fixtures cover persistent landmarks, no passive replacement, deliberate switch and stale-control press exclusion. Own local correction, no upstream implementation used."
       ]
     },
@@ -8092,9 +8084,10 @@
       "evidence": [
         "docs/specs/frame-control-center.md",
         "docs/features/launcher.md; independent stateful controls and preview return, live owned night-light on/off and socket/startup tests, notification identity, package-cache invalidation",
-        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions"
+        "docs/features/launcher.md; independently reviewed quick-control lifecycle, named notifications, package commit refresh and production/night-light/notification regressions",
+        "Unit night-light fixtures isolate session runtime environment; external ownership assertions remain intact. Current wallpaper spec now explicitly describes the static picture indicator, superseding empty-center design. No runtime night-light behavior altered."
       ],
-      "sha256": "a4d391d81b585c4f835204dc32504912ef3c3295ce9627534ffd4a11fe3e168e",
+      "sha256": "3868252757b05e345193911c45b59a86b8e8290947bad337b6c8b2f96c966f59",
       "notes": "Own approved frame/control-center slice reviewed against current Nacre spec and public APIs, without inherited source consultation. Marked geometry and passive feedback remain shared-state owned; no writes on opening or idle polling. Current notification history clock observes actual visibility and reduced-motion feedback settles immediately. New native/ownership/routing/geometry regressions complement existing full checks and live acceptance."
     },
     "nacre/shell/modules/controlcenter/NacreControlCenter.qml": {
@@ -8130,7 +8123,6 @@
         "Current body reviewed: user-approved visible lip depth5px sides/6px top, unchanged lengths. Side cubic controls now reach the full declared depth; top retains1px join overlap. Primary gradient and masks match actual geometry. Native rendered outer-tip pixels distinguish the deeper shape and base/input/moving-edge fixtures pass. Independent local correction without inherited upstream implementation.",
         "docs/specs/iridescent-frame.md",
         "Current full body reviewed: independently authored rectangle-union exposed contour, native Qt6.12 gradient rim and flat primary/secondary enamel with finite reduced-motion-aware sweep. Behavior follows own spec; existing logical input/provider ownership retained. Actual QML JS union/overlap/closing tests and native quiet/dark/light/moving-mask/render tests validate it. Visual research used first-party screenshots/README, not upstream implementation bodies; prior exposure acknowledged, no legal clean-room claim.",
-        "docs/specs/iridescent-frame.md",
         "Current full body reviewed: handle visibility independent of passive hover eligibility during modal/galleries; actual disabled/master-hide options retained. Old painted panel subtrees disable input on logical closing, avoiding interception during explicit handle switches. Native actual-lip and actual-host fixtures cover persistent landmarks, no passive replacement, deliberate switch and stale-control press exclusion. Own local correction, no upstream implementation used.",
         "Current full body reviewed for moving-handle dismissal: stationary pointer gates cover open and resting trigger regions, and exit only rearms after observing departure. Actual native fixture reproduces return-under-pointer and checks release after departure. Own correction to independently authored hover service; no upstream implementation consulted.",
         "docs/specs/pearl-dashboard.md",
@@ -8436,7 +8428,6 @@
       "evidence": [
         "docs/specs/iridescent-frame.md",
         "Current full body reviewed: independently authored rectangle-union exposed contour, native Qt6.12 gradient rim and flat primary/secondary enamel with finite reduced-motion-aware sweep. Behavior follows own spec; existing logical input/provider ownership retained. Actual QML JS union/overlap/closing tests and native quiet/dark/light/moving-mask/render tests validate it. Visual research used first-party screenshots/README, not upstream implementation bodies; prior exposure acknowledged, no legal clean-room claim.",
-        "docs/specs/iridescent-frame.md",
         "Current full body reviewed: handle visibility independent of passive hover eligibility during modal/galleries; actual disabled/master-hide options retained. Old painted panel subtrees disable input on logical closing, avoiding interception during explicit handle switches. Native actual-lip and actual-host fixtures cover persistent landmarks, no passive replacement, deliberate switch and stale-control press exclusion. Own local correction, no upstream implementation used."
       ]
     },
@@ -9663,16 +9654,14 @@
         "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
         "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for user-directed shared system surface, kernel and uptime actions, iridescent media ring, video source restart and busy-button hover/focus lifecycle. Authored from own behavior spec; Qt MediaPlayer public API documentation consulted. Native video-to-video and keyboard/pointer regression tests retained; no inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
         "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
-        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted."
+        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted.",
+        "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted."
       ],
-      "sha256": "c2089be969f6c0014d4828e954ff0c9c12f354013e2c2d1fc5332dd948ebabd1"
+      "sha256": "4437c108be2c801c7fc7e0a4acc61e91814a30e58a330374e94bd5aa88f31f40"
     },
     "docs/specs/pearl-dashboard.md": {
       "disposition": "independent",
@@ -9763,15 +9752,13 @@
         "Whole current body reviewed for own pearl-dashboard spec: original five-page layout/provider integration, native finite motion, existing ownership/capability guards. New helper/provider/UI/test authored locally; no inherited shell implementation consulted. Public Qt/Quickshell/Cava/Open-Meteo/LRCLIB API dependencies remain external; private content excluded. Existing own service behavior retained where reused. Behavioral and native validation recorded in dashboard feature guide; no independent legal certification claimed.",
         "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for user-directed shared system surface, kernel and uptime actions, iridescent media ring, video source restart and busy-button hover/focus lifecycle. Authored from own behavior spec; Qt MediaPlayer public API documentation consulted. Native video-to-video and keyboard/pointer regression tests retained; no inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
-        "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted."
+        "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
+        "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted."
       ],
-      "sha256": "29e82637d68c27c8c74a0cfa3f1f50d0d32f2bfa4144e7c4571f682acc2c3e78"
+      "sha256": "c7967770f475c5ee64cc53b52f5c4c789ebd0896a10c719b004f566c3b27643b"
     },
     "nacre/shell/modules/dashboard/NacreWeatherPage.qml": {
       "disposition": "independent",
@@ -9844,25 +9831,22 @@
       "evidence": [
         "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for user-directed shared system surface, kernel and uptime actions, iridescent media ring, video source restart and busy-button hover/focus lifecycle. Authored from own behavior spec; Qt MediaPlayer public API documentation consulted. Native video-to-video and keyboard/pointer regression tests retained; no inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
         "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
-        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted."
+        "Own wallpaper transaction history fix: snapshot outgoing path before poster FileView update; native reproduction covers completion-order race. Existing commit ownership and failure behavior retained; no inherited implementation consulted.",
+        "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted.",
+        "Unit night-light fixtures isolate session runtime environment; external ownership assertions remain intact. Current wallpaper spec now explicitly describes the static picture indicator, superseding empty-center design. No runtime night-light behavior altered."
       ],
-      "sha256": "fc01b27f16363a9fb64554bd3f1552750c382ec9025723ecb28d2130fc608376"
+      "sha256": "f9f3c84404b9121f98e25efcdb96dd0cfde30cc0443efec783a17b374b9ed621"
     },
     "nacre/shell/modules/dashboard/NacreDashboardSummary.qml": {
       "disposition": "independent",
       "evidence": [
         "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for user-directed shared system surface, kernel and uptime actions, iridescent media ring, video source restart and busy-button hover/focus lifecycle. Authored from own behavior spec; Qt MediaPlayer public API documentation consulted. Native video-to-video and keyboard/pointer regression tests retained; no inherited implementation consulted."
       ],
       "sha256": "a0e468830b78b1d1ff5f8d3fc08caa4cc48022abe09e724084e6eb133dcd030d"
@@ -9872,9 +9856,7 @@
       "evidence": [
         "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for user-directed shared system surface, kernel and uptime actions, iridescent media ring, video source restart and busy-button hover/focus lifecycle. Authored from own behavior spec; Qt MediaPlayer public API documentation consulted. Native video-to-video and keyboard/pointer regression tests retained; no inherited implementation consulted."
       ],
       "sha256": "722639ce5786dbfa2ffb98f4f98c443e67045cbd6200e25872736f30a6e6fde3"
@@ -9884,7 +9866,6 @@
       "evidence": [
         "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-requested first-page layout: common lower baseline, restored existing own host card, compact guarded media, three circles and shared real spectrum with upward Orient gradient. Visible Dashboard label preserves private tab-id compatibility. Hidden-tab flags synchronize with rendered page to preserve provider visibility gating. Native layout/spectrum/capability tests and live source/render validation apply. No inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply."
       ],
       "sha256": "89ca7356aaf0ef76dd25d31ff4fb0dc9a5b5e38595669db9ae6eed748aa3c996"
@@ -9894,13 +9875,12 @@
       "evidence": [
         "docs/specs/dashboard-home-layout.md",
         "Whole body reviewed for user-directed compact Dashboard follow-up. Owned radial-gradient audio halo uses real shared samples and hides when silent/inactive; compact blocks share bottom bounds. Correct current wallpaper action interface and picker buttons have native contract coverage. Existing capability/visibility guards retained. No inherited implementation consulted; current native/full checks and live gate validation apply.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for user-directed shared system surface, kernel and uptime actions, iridescent media ring, video source restart and busy-button hover/focus lifecycle. Authored from own behavior spec; Qt MediaPlayer public API documentation consulted. Native video-to-video and keyboard/pointer regression tests retained; no inherited implementation consulted.",
-        "docs/specs/dashboard-home-layout.md",
         "Current body reviewed for own fixed-position wallpaper transport, bounded successful-visit history, guarded pause preference and native regressions. Reuses existing wallpaper commit/preferences owner; no inherited implementation consulted.",
-        "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted."
+        "User-directed alignment refinement: equal outer edges for wallpaper text row and transport, three equal stable slots; static pause leaves reserved space. Native geometry checks retained; no inherited implementation consulted.",
+        "Own user-directed wallpaper control polish: constant static picture indicator/tooltip with no playback action, equal text actions, stable transport slots and quiet palette tint. Native interaction/geometry regression retained; no inherited implementation consulted."
       ],
-      "sha256": "e87e24f358fa569f6faaa7e5a7ae23bd1d300f26b7dcc4b91d40995bf07f10e5"
+      "sha256": "de92a22f9d29a237d2c1e1cb2cdfb75e2258b299bac72367fb3cd898827ad142"
     },
     "nacre/shell/modules/dashboard/NacreAlbumHalo.qml": {
       "disposition": "independent",
