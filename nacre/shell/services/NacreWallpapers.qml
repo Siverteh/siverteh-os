@@ -62,7 +62,7 @@ Singleton {
     readonly property string preview: currentEntry?.preview || poster
     readonly property string thumbnail: currentEntry?.thumbnail || poster
     readonly property string pendingPoster: NacrePresentation.pending.poster || poster
-    readonly property var displayEntry: (media.poster === NacrePresentation.active.poster ? media : list.find(entry => entry.poster === NacrePresentation.active.poster)) || null
+    readonly property var displayEntry: (media.poster === NacrePresentation.active.poster ? media : (list.concat(NacreWelcomeApp.demoEntries || [])).find(entry => entry.poster === NacrePresentation.active.poster)) || null
     readonly property string displayPath: displayEntry?.path || actualCurrent
     readonly property string displayPreview: displayEntry?.preview || NacrePresentation.active.poster || preview
     readonly property bool displayDynamic: displayEntry?.dynamic === true
@@ -185,6 +185,17 @@ Singleton {
         commitReceived = false;
         actionError = "";
         commit.running = true;
+    }
+    function receivePresentation(text) {
+        try {
+            const data = JSON.parse(text);
+            if (!data.presentation)
+                return false;
+            NacrePresentation.accept(data.presentation);
+            return true;
+        } catch (failure) {
+            return false;
+        }
     }
     function publishSelection(text) {
         try {
@@ -363,9 +374,12 @@ Singleton {
         id: commit
         objectName: "wallpaperCommit"
         property string requestPath: ""
-        command: ["python3", root.tool, "select", requestPath]
-        stdout: StdioCollector {
-            onStreamFinished: root.commitReceived = root.publishSelection(text)
+        command: ["python3", root.tool, "select", requestPath, "--stream-presentation"]
+        stdout: SplitParser {
+            onRead: data => {
+                if (!root.receivePresentation(data))
+                    root.commitReceived = root.publishSelection(data);
+            }
         }
         onExited: (code, status) => {
             if (code !== 0 || !root.commitReceived) {
@@ -382,11 +396,14 @@ Singleton {
         id: prefWorker
         objectName: "wallpaperPreferences"
         property var value: ({})
-        command: ["python3", root.tool, Object.keys(value).some(key => key.startsWith("palette")) ? "theme" : "preferences"]
+        command: ["python3", root.tool, Object.keys(value).some(key => key.startsWith("palette")) ? "theme" : "preferences", "--stream-presentation"]
         stdinEnabled: true
         onStarted: write(JSON.stringify(value) + "\n")
-        stdout: StdioCollector {
-            onStreamFinished: root.preferenceReceived = root.publishPreference(text)
+        stdout: SplitParser {
+            onRead: data => {
+                if (!root.receivePresentation(data))
+                    root.preferenceReceived = root.publishPreference(data);
+            }
         }
         onExited: (code, status) => {
             if ((code !== 0 || !root.preferenceReceived) && !root.error)

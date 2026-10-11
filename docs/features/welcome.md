@@ -47,3 +47,10 @@ fits its own contents rather than cropping a larger desktop. The read-only cache
 prepares every bundled scene in both modes and all styles once, skips current
 entries, and verifies unchanged immutable image copies by file identity after
 full checksum validation. Changed/missing files still require validation/repair.
+
+The same publisher streams each validated presentation after its atomic file
+write, so the shell need not wait for filesystem delivery or companion generation.
+Publication sequence numbers reject delayed older reads; matching image readiness
+still gates new wallpapers. Welcome holds only four full-size still previews while
+active, then releases them. Warm-up also prepares demo login backgrounds, avoiding
+first-click image conversion. No idle animation, polling or second publisher.

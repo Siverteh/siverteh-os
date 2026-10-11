@@ -5,7 +5,7 @@ import "../colors"
 
 Column {
     id: root
-    spacing: 12
+    spacing: 10
     readonly property var entries: NacreWelcomeApp.demoEntries
     Row {
         id: scenes
@@ -24,7 +24,7 @@ Column {
                     id: card
                     objectName: "welcomeScene_" + tile.index
                     width: parent.width
-                    height: Math.min(120, width * .56)
+                    height: Math.min(100, width * .56)
                     radius: 12
                     color: NacreTokens.raised
                     border.width: selected ? 2 : 1

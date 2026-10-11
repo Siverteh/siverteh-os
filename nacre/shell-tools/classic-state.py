@@ -82,6 +82,12 @@ def atomic_write(path, text):
         if os.path.exists(temp):
             os.unlink(temp)
 
+    if (
+        path.name == "presentation.json"
+        and os.environ.get("NACRE_PRESENTATION_STREAM") == "1"
+    ):
+        print(json.dumps({"presentation": json.loads(text)}), flush=True)
+
 
 def atomic_symlink(path, target):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -364,6 +370,9 @@ def _apply_palette(home, wallpaper=None, live=True):
                 {
                     "version": 1,
                     "changedAtMs": changed_at,
+                    "publishedAtMs": max(
+                        int(time.time() * 1000), previous.get("publishedAtMs", 0) + 1
+                    ),
                     "mode": data["mode"],
                     "colours": colors,
                     "poster": selected,

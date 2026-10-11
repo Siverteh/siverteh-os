@@ -502,6 +502,7 @@ def warm(include_demo=True):
             poster = scene.get("poster")
             if not poster or not cli.exists() or not Path(poster).is_file():
                 continue
+            login.prepare(poster)
             for mode in ("dark", "light"):
                 for personality in (
                     "natural",
@@ -783,7 +784,10 @@ def main():
         ],
     )
     p.add_argument("path", nargs="?")
+    p.add_argument("--stream-presentation", action="store_true")
     a = p.parse_args()
+    if a.stream_presentation:
+        os.environ["NACRE_PRESENTATION_STREAM"] = "1"
     try:
         if a.action == "session":
             display = subprocess.check_output(

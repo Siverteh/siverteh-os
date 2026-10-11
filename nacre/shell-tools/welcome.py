@@ -162,10 +162,26 @@ def shortcut_group(action):
 
 
 def friendly_key(key):
-    if key == "XF86PowerOff":
-        return "Power button"
+    device_keys = {
+        "XF86PowerOff": "Power button",
+        "XF86AudioMute": "Mute key",
+        "XF86AudioMicMute": "Microphone mute",
+        "XF86AudioRaiseVolume": "Volume up",
+        "XF86AudioLowerVolume": "Volume down",
+        "XF86MonBrightnessUp": "Brightness up",
+        "XF86MonBrightnessDown": "Brightness down",
+        "XF86KbdBrightnessUp": "Keyboard light up",
+        "XF86KbdBrightnessDown": "Keyboard light down",
+        "Print": "Print Screen",
+        "period": ".",
+        "grave": "`",
+        "bracketleft": "[",
+        "bracketright": "]",
+    }
+    if key in device_keys:
+        return device_keys[key]
     if key.lower() in ("return", "escape", "space", "left", "right", "up", "down"):
-        return key[:1].upper() + key[1:]
+        return key.lower().capitalize()
     return key
 
 

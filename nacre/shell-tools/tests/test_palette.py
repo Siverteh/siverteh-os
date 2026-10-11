@@ -1,5 +1,7 @@
 from unittest.mock import patch
 import importlib.util
+import contextlib
+import io
 import json
 import fcntl
 import os
@@ -20,6 +22,27 @@ spec.loader.exec_module(palette)
 
 
 class PaletteCommitTest(unittest.TestCase):
+    def test_stream_is_opt_in_and_only_follows_an_atomic_publication(self):
+        with tempfile.TemporaryDirectory() as folder:
+            home = Path(folder)
+            path = home / "presentation.json"
+            payload = {
+                "poster": "/fixture/image",
+                "publishedAtMs": 1001,
+                "colours": {"primary": "aabbcc"},
+            }
+            with contextlib.redirect_stdout(io.StringIO()) as output:
+                palette.atomic_write(path, json.dumps(payload))
+            self.assertEqual(output.getvalue(), "")
+            with (
+                patch.dict(os.environ, {"NACRE_PRESENTATION_STREAM": "1"}),
+                contextlib.redirect_stdout(io.StringIO()) as output,
+            ):
+                palette.atomic_write(path, json.dumps(payload))
+            event = json.loads(output.getvalue())
+            self.assertEqual(event["presentation"], json.loads(path.read_text()))
+            self.assertFalse(list(home.glob(".presentation*")))
+
     def test_wallpaper_commit_updates_consumers_and_preserves_terminal(self):
         with tempfile.TemporaryDirectory() as folder:
             home = Path(folder)

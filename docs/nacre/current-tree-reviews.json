@@ -1716,28 +1716,16 @@
     },
     "nacre/shell-tools/classic-state.py": {
       "disposition": "independent",
-      "sha256": "4ecc97c8146fa0823f15a50d3edc6aa725292323d1e8aea0ab406e4a593f1cd2",
+      "sha256": "2263943ec206975b9d85ee16d90246a429f53fbc501635cd017cf462985a658c",
       "evidence": [
-        "docs/specs/palette-publication.md",
-        "docs/nacre/PROVENANCE.md#palette-publication-source-and-boundary-review",
-        "Local synchronization script introduced 4874385; structured atomic publication 8afd305, prepared validation 81827c1, contrast 2b16add and later local toolkit/rotation/branding/Orient integrations traced. Formatting 83b3531/rename 548f0b4 distinguished from authoring. Original+current bodies compared mechanically to original peers/predecessors: no five-line contiguous copies. Current own body reviewed; valid output manifests match baseline in dark/light/fixed fixtures. New independently authored shared lock/complete-validation corrections tested against real owners. Called templates/icons/branding/KDE/lock/login dependencies remain separate reviews, not certified by association.",
-        "docs/specs/terminal-polish.md",
-        "docs/specs/settings-app.md: full changed body reviewed. Own shared app-glyph geometry, explicit active-palette UI, bounded read-only artwork caching and current-wallpaper treatment preparation; no upstream implementation used. Focused native Settings, branding and media tests passed.",
-        "docs/specs/orient-colors.md",
-        "docs/features/orient.md",
-        "Current full body/data reviewed: independent Orient 3 portable core, its desktop compatibility adapters, original read-only studio, source attribution/audits/export templates and explicit single-publisher integration. Existing audited own engine moved with module aliases; no Caelestia/ML4W source consulted. Scientific OKLab/CVD coefficients credited to their published definitions, not claimed novel. Gallery artwork generated locally and CC0; private artwork remains outside Git. Current mode/contrast/backend/native checks and visual gallery inspection recorded; full/live release gate still required.",
-        "2026-10-10 Pop/background follow-up reviewed: original minority-family ranking requires 48-degree hue contrast and bounded 0.4-15% area; pins and neutral/single-family fallback preserved. Seven accent modes with independent remembered background policy replace Source; legacy read-only migration and boolean/cache/publication/CLI paths reviewed. Own gallery/synthetic fixtures, real jungle/underwater/canyon/Colorado comparisons and visible native mouse-switch test verified. No upstream shell code consulted. docs/specs/orient-colors.md",
-        "2026-10-10 Welcome bundled-demo and restoration review: original analytic light field/curved layered artwork with explicit CC0 generated-image dedication; no external/AI artwork. Four generator-hashed cached 4K scenes produce >70-degree Natural/Pop main-hue differences and validated light/dark/pearl roles. Installer cache preparation never publishes/overwrites personal library. Opening captures a bounded 0600 private baseline before controls, and restore uses the existing classic-state publication lock, validates sources before writes, preserves unrelated preferences and rolls back metadata/pointers after publication failure. QML capture generations, existing queue coordination, busy/confirmation states and restore IPC reviewed; own native/no-change/empty-install/animated-source/missing-file/cache and rollback tests. docs/specs/welcome-live-demo.md; docs/features/welcome.md. No other desktop implementation consulted; live/full deployment still required."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ]
     },
     "nacre/shell-tools/tests/test_palette.py": {
       "disposition": "independent",
-      "sha256": "cb187c82b727eda65ac7061fac7c36cc156ee7023f7cf009b818240fcab152e6",
+      "sha256": "7f4a48f7cfd82bb5ecfd33b4738c6054e28a3ee020be13f562e716e76cf1ec81",
       "evidence": [
-        "docs/specs/palette-publication.md",
-        "docs/nacre/PROVENANCE.md#palette-publication-source-and-boundary-review",
-        "Local fixtures introduced 8afd305 and extended with own sync/rotation/GTK/fixed-palette/prepared/contrast changes. Current fixture uses separately replaced own Orient reference/preset data rather than old Caelestia output. New actual process/flock/missing-role/prepared-reentry tests authored from current publication spec, two failures observed on baseline then pass. No private source/wallpaper or upstream implementation body in fixture.",
-        "docs/specs/terminal-polish.md"
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ],
       "notes": "Own wallpaper-matched terminal refinement: independent existing publisher maps supporting accent to magenta, uses low raised dark background and subtle opacity; own Fastfetch config chooses the published primary ANSI slot. Real native program color output and distinct dark/light palette tests reviewed; existing prompt/third-party tools are used unchanged, not copied or reimplemented. No inherited Caelestia/ML4W source consulted."
     },
@@ -2810,11 +2798,9 @@
     },
     "nacre/shell/services/NacrePresentation.qml": {
       "disposition": "independent",
-      "sha256": "8352ad8608dcd3c3750ad81e43c2bf70b2c57ffe98fa45246fc9b9074c7cf42e",
+      "sha256": "9129b33865fef4cf889ab1c69cd09742d32abf4a0043a8a3a0c4b0e0e9659d72",
       "evidence": [
-        "docs/specs/services-source-audit.md",
-        "docs/nacre/SERVICES-SOURCE-AUDIT.md",
-        "Full current body reviewed; authoring/replacement eea01b9: Independent native owner/replacement and own compatibility adapter; completed matching provider spec/behavior boundary retained. Later changes: 08641a8. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ]
     },
     "nacre/shell/services/NacreSystemUsage.qml": {
@@ -2837,21 +2823,9 @@
     },
     "nacre/shell/services/NacreWallpapers.qml": {
       "disposition": "independent",
-      "sha256": "99d1c0db3224dfc6d2bf6257b0994a5b7905b9bd6f7a4d1f17c1eba918d7b73f",
+      "sha256": "ab56b57f75dcfe2711845e880df245e3df964fcfbffd6bb98c7333e42452dcf3",
       "evidence": [
-        "docs/specs/services-source-audit.md",
-        "docs/nacre/SERVICES-SOURCE-AUDIT.md",
-        "Full current body reviewed; authoring/replacement 28707f7: Independent native owner/replacement and own compatibility adapter; completed matching provider spec/behavior boundary retained. Later changes: 5da1132. Local mechanical first-source comparisons show only import/singleton/root-id setup overlap, not substantive matched implementation blocks; source/history evidence is primary, not a low match score. Prior source exposure acknowledged; no upstream body consulted for current local corrections. Public Qt/Quickshell libraries and verified fonts remain dependencies, referenced Python helper/asset/tests remain separately audited.",
-        "docs/specs/panel-integration.md",
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
-        "docs/specs/settings-app.md: full changed body reviewed. Own shared app-glyph geometry, explicit active-palette UI, bounded read-only artwork caching and current-wallpaper treatment preparation; no upstream implementation used. Focused native Settings, branding and media tests passed.",
-        "docs/specs/orient-colors.md",
-        "docs/features/orient.md",
-        "Current full body/data reviewed: independent Orient 3 portable core, its desktop compatibility adapters, original read-only studio, source attribution/audits/export templates and explicit single-publisher integration. Existing audited own engine moved with module aliases; no Caelestia/ML4W source consulted. Scientific OKLab/CVD coefficients credited to their published definitions, not claimed novel. Gallery artwork generated locally and CC0; private artwork remains outside Git. Current mode/contrast/backend/native checks and visual gallery inspection recorded; full/live release gate still required.",
-        "2026-10-10 Pop/background follow-up reviewed: original minority-family ranking requires 48-degree hue contrast and bounded 0.4-15% area; pins and neutral/single-family fallback preserved. Seven accent modes with independent remembered background policy replace Source; legacy read-only migration and boolean/cache/publication/CLI paths reviewed. Own gallery/synthetic fixtures, real jungle/underwater/canyon/Colorado comparisons and visible native mouse-switch test verified. No upstream shell code consulted. docs/specs/orient-colors.md",
-        "2026-10-10 Welcome live-demo refinements reviewed: independent cached four-scene component, existing NacreWallpapers publication/queue and rotation pause integration, active binding descriptions/introspection without static keys or raw commands, missing optional-component guide and distinct fallback readiness, compact plain-language intro. No other shell implementation consulted/copied. Own actual-logo/light-dark/native controls fixtures and live-remap/Lua-registration tests reviewed; normal full/live deployment still required. No new palette algorithm/account/installation owner or idle polling. docs/specs/welcome-live-demo.md; docs/features/welcome.md.",
-        "2026-10-10 Welcome bundled-demo and restoration review: original analytic light field/curved layered artwork with explicit CC0 generated-image dedication; no external/AI artwork. Four generator-hashed cached 4K scenes produce >70-degree Natural/Pop main-hue differences and validated light/dark/pearl roles. Installer cache preparation never publishes/overwrites personal library. Opening captures a bounded 0600 private baseline before controls, and restore uses the existing classic-state publication lock, validates sources before writes, preserves unrelated preferences and rolls back metadata/pointers after publication failure. QML capture generations, existing queue coordination, busy/confirmation states and restore IPC reviewed; own native/no-change/empty-install/animated-source/missing-file/cache and rollback tests. docs/specs/welcome-live-demo.md; docs/features/welcome.md. No other desktop implementation consulted; live/full deployment still required.",
-        "2026-10-11 Colors/Welcome/responsiveness review against docs/specs/colors-welcome-performance.md: earlier independently authored Orient Natural grouping restored from own9c9089f; previous subject/perceptual policy preserved as Pigment, with modern contrast/census and explicit time/body options. Shared captionless header, slim final-role values, gray/shadow census+Other, lazy Compare, themed collapsed controls and explicit Apply; native independent control/geometry tests reviewed. Five-page tour preserves existing startup/snapshot/optional/bind owners; credited diverse licensed scenes with verified lossless derivatives. Real Quickshell0.3.2 raw milliseconds diagnosed, finite banners retain history/actions; cache1024 addresses measured770ms raster churn in1083ms prepared commit, with triple poster prefetch and35ms debounce. No external implementation copied; fonts/logo pipeline regenerated by existing owner. Full/live verification required."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ]
     },
     "nacre/shell/services/NacreWeather.qml": {
@@ -4660,9 +4634,9 @@
     },
     "nacre/shell-tools/wallpaper-media.py": {
       "disposition": "independent",
-      "sha256": "bd0da069d017b57c97277055087fe88b54e8f194ba1efd45e8bf88ea2674edbf",
+      "sha256": "55d4c9a360e3e038e595d62cba8f92b7a14dd0576cb747c5c4936f3db186013c",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ]
     },
     "nacre/shell-tools/wallpaper-watch.py": {
@@ -5808,11 +5782,9 @@
     },
     "nacre/shell-tools/tests/device-qml/tst_NacrePresentation.qml": {
       "disposition": "independent",
-      "sha256": "b32352228d4821e83f3d61ffefe61bff8cd9895bee0e428b452c054a51e2811a",
+      "sha256": "5eafdfd5a9c3fdf6d04ff43f5bfdb9a6c45056e3ccd3cff7b7bebcc3653d5e82",
       "evidence": [
-        "docs/specs/native-fixture-source-audit.md",
-        "docs/nacre/NATIVE-FIXTURE-SOURCE-AUDIT.md",
-        "Complete current body/data reviewed. Local creation eea01b9 nacre/shell-tools/tests/device-qml/tst_NacrePresentation.qml; subsequent 08641a8. Own native behavior fixture/minimal contract double or measured functional data; no inherited production implementation retained in fixture. External illustration metadata explicitly credited. Whole-upstream/dependency/licensing comparison remains open."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ]
     },
     "nacre/shell-tools/tests/device-qml/tst_NacreSystemUsage.qml": {
@@ -5835,12 +5807,9 @@
     },
     "nacre/shell-tools/tests/device-qml/tst_NacreWallpapers.qml": {
       "disposition": "independent",
-      "sha256": "725935da09e352174950afa0039630dd87a8029bc20c6bfa0d953519cf2c6db2",
+      "sha256": "6df33ac51a6e127d71cd12d5c0f32096ab3e4e414fb6b1658a2c95095af5d5de",
       "evidence": [
-        "docs/specs/native-fixture-source-audit.md",
-        "docs/nacre/NATIVE-FIXTURE-SOURCE-AUDIT.md",
-        "Complete current body/data reviewed. Local creation 28707f7 nacre/shell-tools/tests/device-qml/tst_NacreWallpapers.qml; subsequent 5da1132. Own native behavior fixture/minimal contract double or measured functional data; no inherited production implementation retained in fixture. External illustration metadata explicitly credited. Whole-upstream/dependency/licensing comparison remains open.",
-        "docs/specs/panel-integration.md"
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ],
       "notes": "Own Nacre integration repair reviewed against user requirements: attached notification chrome with immediate suppression and finite reveal, full-viewport gallery over real desktop, semantic toolbar groups, compact sliders, and serialized live browsing. Native tests cover provider publication before close, latest queue selection, joined/transparent pixels, contained control gaps, and suppression release. No inherited implementation consulted or copied."
     },
@@ -6272,14 +6241,9 @@
     },
     "nacre/shell-tools/tests/test_device_services.py": {
       "disposition": "independent",
-      "sha256": "b338e40d938c25c1129d39bca72c62c229fc9993ad58bb04f6be60c78e5c3a20",
+      "sha256": "ed93e00f675053a338988f9c372153f546c097d7fded3a26b55e54593bd21563",
       "evidence": [
-        "docs/specs/python-fixture-source-audit.md",
-        "docs/nacre/PYTHON-FIXTURE-SOURCE-AUDIT.md",
-        "Full current Python/embedded fixture body and local history reviewed. Creation 2f9300f:nacre/shell-tools/tests/test_device_services.py; subsequent 5da1132, 28707f7, eea01b9, 02b2bda, ea5653e, a492dc6, 3d93b32, 22a4ad1, e4d2474, 18d8aab, 13701fc, 977f628, d4a82bb. Own behavior/isolation/native staging contracts, external frameworks licensed separately; workflow isolation regression corrected in this area. Final whole-source/dependency/licensing comparison remains open.",
-        "docs/specs/frame-control-center.md",
-        "docs/specs/settings-app.md: independently authored standalone Settings host/controller/window/activation and own radial-cog app mark; existing independently audited page code moved intact with explicit import/routing/visibility edits. Architecture research from official behavior/API docs only, no upstream implementation copied. Native page/lifecycle/focus/launcher/targeted hide tests and live real-font/palette/cached-wallpaper preview reviewed. User master artwork provenance remains qualified; notices retained.",
-        "Final cold-start and rotation integration review: demo fills on catalogue/window-ready events after media metadata assignment, without polling; no stable samples replaced during interactions. Native wallpaper/provider fixtures add explicit inactive Welcome dependency and a real deadline-preserving pause/resume case. Existing assertions keep warnings/errors fatal. docs/specs/welcome-live-demo.md."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ],
       "notes": "Own approved frame/control-center slice reviewed against current Nacre spec and public APIs, without inherited source consultation. Marked geometry and passive feedback remain shared-state owned; no writes on opening or idle polling. Current notification history clock observes actual visibility and reduced-motion feedback settles immediately. New native/ownership/routing/geometry regressions complement existing full checks and live acceptance."
     },
@@ -9337,9 +9301,9 @@
     },
     "nacre/shell/modules/colors/NacreColorsView.qml": {
       "disposition": "independent",
-      "sha256": "99e04cc308c29e59395edd4352087cde7e79579f5301cf278d0cc1ed720847f0",
+      "sha256": "f36d7aafbbbcbf6e017531fac3b92de42545178c01ca41c23fbc7ce5800a08f9",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ]
     },
     "nacre/shell/modules/colors/NacreColorsWindow.qml": {
@@ -9447,9 +9411,9 @@
     "docs/features/welcome.md": {
       "disposition": "non-implementation",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ],
-      "sha256": "770d6884c1da449c24249121fe89b76650087705f2777bb7d3e9fec9859352b7"
+      "sha256": "d8130b8556d12ed32ee8ac90b175d265982229fd53f94a313cf6ef0f8a1f891f"
     },
     "docs/specs/welcome.md": {
       "disposition": "non-implementation",
@@ -9482,9 +9446,9 @@
     "nacre/shell-tools/welcome.py": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ],
-      "sha256": "3ea30a5e8c29f7e3cbb3df65c1504d0dd9eea444eeb41691d6c93ddeb1eaa3d7"
+      "sha256": "d2d8d0ca966237b23ff76e98b547e455c186d8d5d5eafa235bfaf1ef9600d05f"
     },
     "nacre/shell/modules/welcome/NacreWelcomeHost.qml": {
       "disposition": "independent",
@@ -9511,9 +9475,9 @@
     "nacre/shell/modules/welcome/NacreWelcomeWindow.qml": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ],
-      "sha256": "5371e77e29ae74db7442d63c5a6c09820bae919655c0f579357d2644549887a8"
+      "sha256": "5cf84a056d6c4b567c6989cfa8fa0ea632dc86a7b560c65900f66ed68f15a251"
     },
     "nacre/shell/modules/welcome/welcome-catalog.js": {
       "disposition": "independent",
@@ -9542,9 +9506,9 @@
     "nacre/shell/modules/welcome/NacreWelcomeDemo.qml": {
       "disposition": "independent",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ],
-      "sha256": "86bf29ca9caaa46f2e08014e8d97da8271d771a46d3eb508844418dd71abfb0d"
+      "sha256": "8845e527cc77fd760b4474a4a955611c53600fa4792af2d826b8d7d1e71d411f"
     },
     "nacre/shell-tools/demo-wallpapers.py": {
       "disposition": "independent",
@@ -9609,9 +9573,9 @@
     "docs/specs/colors-welcome-performance.md": {
       "disposition": "non-implementation",
       "evidence": [
-        "2026-10-11 review against docs/specs/colors-welcome-performance.md: normal tiled Colors sizing and active-primary selection, distinct disjoint observed families plus neutrals with honest area; palette generation unchanged. Smaller Welcome, responsive compact preview, eight styles, grouped flexible live-bind rows without raw command disclosure, first-run claim/ack with failure retry and preserved opt-out/manual launch. Finite read-only warm includes immutable licensed demo scenes, styles/modes and thumbnails, existing cache skips and stat-revalidated checksum receipts; one publisher unchanged. Independently authored local implementation and tests; no external implementation copied."
+        "2026-10-11 live follow-up to docs/specs/colors-welcome-performance.md: native delivery measured250ms behind atomic file publication, cold demo login conversion adds latency. Independently authored opt-in newline streaming from existing atomic publisher, monotonic publication token rejects stale filesystem reads and deduplicates events; final result/ready-image gates retained. Four finite active-only still decodes and demo login prewarm, normal preview geometry/compact tour fit and readable key names. Behavioral tests cover early-event/final-result distinction, delayed-read ordering and atomic opt-in output; no external implementation copied."
       ],
-      "sha256": "54e53639c24261949a368d6723acef4f70311204b0cff398c4feed15a13302a6"
+      "sha256": "b8e38d63b8caaf4bb2311e211a12ee3c94e861c546d36f3c3b00ee7bd16da11d"
     },
     "nacre/shell-cli/src/orient/classic.py": {
       "disposition": "independent",

@@ -46,10 +46,31 @@ TestCase {
         return view;
     }
     function finish(process, text, code) {
-        process.stdout.text = text;
-        process.stdout.streamFinished();
+        if (typeof process.stdout.read === "function")
+            process.stdout.read(text);
+        else {
+            process.stdout.text = text;
+            process.stdout.streamFinished();
+        }
         process.running = false;
         process.exited(code || 0, 0);
+    }
+    function test_stream_does_not_complete_the_transaction_before_the_result() {
+        const view = setup(), commit = findChild(view, "wallpaperCommit");
+        view.setWallpaper("/fixture/two");
+        view.commitSelection();
+        commit.stdout.read(JSON.stringify({
+            presentation: {
+                poster: "/fixture/two.png",
+                publishedAtMs: 2000
+            }
+        }));
+        compare(NacrePresentation.pending.poster, "/fixture/two.png");
+        verify(!view.commitReceived);
+        compare(view.selectedPath, "/fixture/two");
+        finish(commit, JSON.stringify(entry("/fixture/two", true)));
+        compare(view.media.path, "/fixture/two");
+        verify(view.commitReceived);
     }
     function test_catalogue_validation_retention_and_search() {
         const view = setup();

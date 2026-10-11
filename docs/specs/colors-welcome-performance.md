@@ -48,3 +48,12 @@ background decoder creation while picker is active; selected preview remains
 available. Measure native cached commit and presentation, not just process exit.
 Full checks, real expiry, matched-frame/media/theme, active-source/Escape checks
 and exact user baseline restoration before normal main publication.
+
+Live follow-up: the measured file-to-shell delivery delay is about250ms, and
+uncached demo login-background conversion stretches first selection. Opt-in
+newline-delimited presentation events follow the existing atomic publication,
+consume before final helper results, retain match-ready activation and use a
+monotonic publication millisecond token to reject delayed file reads. Keep the
+filesystem fallback, final transaction success/error checks and current CLI output
+when not opted in. Prewarm demo login posters too. Hold at most four full-screen
+static decodes while Welcome is active; destroy these items when closed.

@@ -49,6 +49,20 @@ FloatingWindow {
         width: parent.width - 48
         height: parent.height - 96
     }
+    Repeater {
+        // Four bounded full-size stills, only while the tour is active. These use
+        // the same decode dimensions as the background, so clicks reuse the pixels.
+        model: NacreWelcomeApp.active ? NacreWelcomeApp.demoEntries : []
+        Image {
+            required property var modelData
+            visible: false
+            source: "file://" + encodeURIComponent(modelData.path).replace(/%2F/g, "/")
+            asynchronous: true
+            fillMode: Image.PreserveAspectCrop
+            cache: true
+            sourceSize: Qt.size(Math.ceil((root.screen?.width || 1920) * (root.contentItem.Window.window?.devicePixelRatio || 1)), Math.ceil((root.screen?.height || 1200) * (root.contentItem.Window.window?.devicePixelRatio || 1)))
+        }
+    }
     Shortcut {
         sequence: "Ctrl+W"
         context: Qt.WindowShortcut

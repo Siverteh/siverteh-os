@@ -44,6 +44,8 @@ Singleton {
             return false;
         if (data.changedAtMs !== undefined && (!Number.isFinite(data.changedAtMs) || data.changedAtMs < 0))
             return false;
+        if (data.publishedAtMs !== undefined && (!Number.isFinite(data.publishedAtMs) || data.publishedAtMs < 0))
+            return false;
         return true;
     }
     function accept(data) {
@@ -51,8 +53,13 @@ Singleton {
             error = "Wallpaper presentation data is invalid; the previous pair is preserved.";
             return false;
         }
+        // A delayed filesystem read must not undo a newer streamed publication.
+        if ((data.publishedAtMs || 0) < (pending.publishedAtMs || 0))
+            return false;
         const record = JSON.parse(JSON.stringify(data));
         record.poster = canonicalPoster(record.poster);
+        if (JSON.stringify(record) === JSON.stringify(pending))
+            return true;
         const commit = !active.colours || active.poster === record.poster;
         state = {
             pending: record,

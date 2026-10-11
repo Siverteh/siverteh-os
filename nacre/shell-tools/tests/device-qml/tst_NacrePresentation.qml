@@ -40,6 +40,25 @@ TestCase {
         compare(state.active.poster, "/fixture/second");
         verify(state.activate("/fixture/fourth"));
     }
+    function test_delayed_file_read_cannot_undo_a_newer_streamed_palette() {
+        const state = createTemporaryObject(service, test);
+        const earlier = Object.assign(record("/fixture/first"), {
+            publishedAtMs: 1000
+        });
+        const newer = Object.assign(record("/fixture/second"), {
+            publishedAtMs: 1001
+        });
+        verify(state.accept(earlier));
+        verify(state.accept(newer));
+        const revision = state.revision;
+        verify(state.accept(newer));
+        compare(state.revision, revision);
+        verify(!state.accept(earlier));
+        compare(state.pending.poster, "/fixture/second");
+        compare(state.active.poster, "/fixture/first");
+        verify(state.activate("/fixture/second"));
+        compare(state.active.poster, "/fixture/second");
+    }
     function test_reject_partial_malformed_and_caller_mutation() {
         const state = createTemporaryObject(service, test);
         const input = record("/fixture/path with space%");

@@ -300,7 +300,7 @@ Item {
                     Item {
                         id: photo
                         width: parent.width
-                        height: Math.min(280, width * .56)
+                        height: Math.min(460, width * .56)
                         Image {
                             id: wallpaper
                             anchors.fill: parent
@@ -353,7 +353,7 @@ Item {
                             NacreColorSample {
                                 required property var modelData
                                 entry: modelData
-                                width: Math.max(44, (parent.width - 49) / 8)
+                                width: Math.max(44, Math.floor((parent.width - 49) / 8))
                                 height: 60
                                 onPicked: value => NacreColorsApp.change({
                                         accent: value
