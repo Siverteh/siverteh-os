@@ -6,6 +6,7 @@ Rectangle {
     objectName: "desktopThemePreview"
     required property var palette
     property string wallpaper: ""
+    property bool active: true
     property bool workspaceColors: false
     property bool compact: false
     width: 400
@@ -19,16 +20,17 @@ Rectangle {
     function c(role) {
         return "#" + (palette?.[role] || palette?.onSurface || "e8e8e8");
     }
-    Image {
+    NacreImage {
         x: 5
         y: root.condensed ? 30 : 35
         width: parent.width - 10
         height: parent.height - (root.condensed ? 35 : 40)
-        source: root.wallpaper ? "file://" + root.wallpaper : ""
+        path: root.wallpaper
+        active: root.active && root.visible
         fillMode: Image.PreserveAspectCrop
         asynchronous: true
         retainWhileLoading: true
-        sourceSize: Qt.size(640, 360)
+        requestedSize: Qt.size(640, 360)
     }
     BrandLogo {
         x: 10

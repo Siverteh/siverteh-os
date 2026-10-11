@@ -171,6 +171,19 @@ TestCase {
         compare(view.current.opacity, 1);
         compare(NacrePresentation.active.poster, third);
         compare(NacrePresentation.activations.length, 3);
+        const slots = view.children.filter(child => typeof child.requestPath === "string");
+        compare(slots.filter(slot => slot.source.toString().length > 0).length, 2);
+        verify(slots.some(slot => slot.requestPath === second && slot.status === Image.Ready));
+        verify(!slots.some(slot => slot.requestPath === first));
+        record(view, "second.png");
+        tryCompare(view, "displayedPath", second, 1000);
+        wait(350);
+        compare(view.current.opacity, 1);
+        DesktopSettings.data = {
+            animations: false
+        };
+        wait(10);
+        compare(slots.filter(slot => slot.source.toString().length > 0).length, 2);
     }
     function test_motion_policy_changes_do_not_publish_or_write() {
         const view = createTemporaryObject(scene, test);

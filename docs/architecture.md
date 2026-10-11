@@ -85,7 +85,13 @@ The bridge/publisher share one reentrant commit guard. Complete role/mode
 validation precedes toolkit writes. Files are individually replaced; this is not
 a crash-atomic transaction covering every toolkit. `NacrePresentation` stages one
 poster/palette record; matching image readiness activates it. Background buffers
-retain the previous loaded image during replacement. Rotation keeps its saved
+retain the previous loaded image during replacement. Settled transitions retain
+only the current and immediately previous full-size posters, plus any newest
+request still loading. Closed Colors/Welcome preview images release decoded
+pixels after a five-second reopening grace period, preserving their UI state.
+The renderer launcher also returns unused jemalloc pages in background with
+two-second decay, preserving caller allocator overrides and live resources.
+See [image memory contracts](specs/shell-memory.md). Rotation keeps its saved
 deadline when unrelated preferences or only colors change.
 
 Selection and theme adapters share one serial publisher helper. Colors uses a

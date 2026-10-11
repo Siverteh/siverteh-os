@@ -32,6 +32,7 @@ class ColorsUITests(unittest.TestCase):
                 "NacreTextField",
                 "NacreAdjustSlider",
                 "NacreScrollBar",
+                "NacreImage",
             ):
                 s = (
                     (SHELL / "widgets" / f"{name}.qml")
@@ -56,7 +57,7 @@ class ColorsUITests(unittest.TestCase):
             colors = json.loads(
                 (ROOT / "tests/orient-gallery/palettes.json").read_text()
             )["night-city"]["dark-natural"]["colours"]
-            body = """property var options:({mode:"dark",personality:"natural",backgroundFromWallpaper:false,overrides:{},brightness:0,saturation:1,hour:12,workspaceColors:false});property var preview:({id:"preview",name:"Night city",thumbnail:"",palette:{colours:COLORS,source:{candidates:[]},roleSources:{},accessibility:{textPasses:true,minimumTextContrast:4.52,warnings:[],text:[]}},comparisons:[]});property var library:[];property var favorites:[];property var history:[];property bool ready:true;property bool previewBusy:false;property bool actionBusy:false;property bool applied:false;property string error:"";property string status:"";property string exportDirectory:"";property var actions:[];function change(v){options=Object.assign({},options,v)}function choose(path){}function useFavorite(id){}function useHistory(item){}function setRole(role,value){let n=Object.assign({},options.overrides);if(value)n[role]=value;else delete n[role];change({overrides:n})}function action(name){if(ready && !previewBusy && !actionBusy)actions=[...actions,name]}function close(){actions=[...actions,"close"]}""".replace(
+            body = """property bool visible:true;property var options:({mode:"dark",personality:"natural",backgroundFromWallpaper:false,overrides:{},brightness:0,saturation:1,hour:12,workspaceColors:false});property var preview:({id:"preview",name:"Night city",thumbnail:"",palette:{colours:COLORS,source:{candidates:[]},roleSources:{},accessibility:{textPasses:true,minimumTextContrast:4.52,warnings:[],text:[]}},comparisons:[]});property var library:[];property var favorites:[];property var history:[];property bool ready:true;property bool previewBusy:false;property bool actionBusy:false;property bool applied:false;property string error:"";property string status:"";property string exportDirectory:"";property var actions:[];function change(v){options=Object.assign({},options,v)}function choose(path){}function useFavorite(id){}function useHistory(item){}function setRole(role,value){let n=Object.assign({},options.overrides);if(value)n[role]=value;else delete n[role];change({overrides:n})}function action(name){if(ready && !previewBusy && !actionBusy)actions=[...actions,name]}function close(){actions=[...actions,"close"]}""".replace(
                 "COLORS", json.dumps(colors)
             )
             (fixtures / "NacreColorsApp.qml").write_text(
@@ -64,7 +65,7 @@ class ColorsUITests(unittest.TestCase):
             )
             with (fixtures / "qmldir").open("a") as stream:
                 stream.write(
-                    "\nsingleton NacreColorsApp 1.0 NacreColorsApp.qml\nNacreIcon 1.0 NacreIcon.qml\nNacreAdjustSlider 1.0 NacreAdjustSlider.qml\nNacreScrollBar 1.0 NacreScrollBar.qml\n"
+                    "\nsingleton NacreColorsApp 1.0 NacreColorsApp.qml\nNacreIcon 1.0 NacreIcon.qml\nNacreAdjustSlider 1.0 NacreAdjustSlider.qml\nNacreScrollBar 1.0 NacreScrollBar.qml\nNacreImage 1.0 NacreImage.qml\n"
                 )
             (fixtures / "BrandLogo.qml").write_text(
                 "import QtQuick\nItem{property color primary;property color secondary;property color tertiary;property color highlight;property color background;property color foreground;property bool motionEnabled:false}"

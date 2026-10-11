@@ -12,6 +12,7 @@ Item {
     readonly property string requestedPath: NacrePresentation.canonicalPoster(String(source))
     property Image current: first
     property Image previous: null
+    property Image standby: null
     property bool transitioning: false
     property string failure: ""
     property string displayedPath: ""
@@ -70,6 +71,7 @@ Item {
     function finish() {
         settle.stop();
         if (previous) {
+            standby = previous;
             previous.animateOpacity = false;
             previous.opacity = 0;
         }
@@ -78,6 +80,14 @@ Item {
             current.opacity = 1;
         previous = null;
         transitioning = false;
+        // Keep the immediately previous image warm for reverse navigation. Other
+        // full-size slots are only needed while loading or fading a new request.
+        for (const slot of [first, second, third]) {
+            if (slot !== current && slot !== standby && slot.requestPath !== requestedPath) {
+                slot.requestPath = "";
+                slot.source = "";
+            }
+        }
         if (current.requestPath !== requestedPath)
             request();
     }
@@ -181,7 +191,13 @@ Item {
                 batteryPaused: WallpaperPlayback.batteryPaused,
                 expected: NacrePresentation.active.poster || "",
                 error: root.failure,
-                transitioning: root.transitioning
+                transitioning: root.transitioning,
+                posterSlots: [first, second, third].map(slot => ({
+                            path: slot.requestPath,
+                            ready: slot.status === Image.Ready,
+                            width: slot.sourceSize.width,
+                            height: slot.sourceSize.height
+                        }))
             });
         }
     }

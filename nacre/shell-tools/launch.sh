@@ -24,4 +24,7 @@ if ! qt_match_check; then
     hyprctl notify 3 0 0 "Desktop shell not started: Quickshell/Qt mismatch. See docs/features/runtime.md" || true
     exit 1
 fi
+# Return unused jemalloc pages asynchronously; live decoder/image caches stay put.
+# Later user options keep precedence over these renderer defaults.
+export MALLOC_CONF="background_thread:true,dirty_decay_ms:2000,muzzy_decay_ms:2000${MALLOC_CONF:+,$MALLOC_CONF}"
 exec /usr/bin/quickshell "$@"

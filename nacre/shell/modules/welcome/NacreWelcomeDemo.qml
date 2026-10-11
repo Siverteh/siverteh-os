@@ -165,6 +165,7 @@ Column {
         color: NacreTokens.mutedInk
     }
     NacreThemePreview {
+        active: NacreWelcomeApp.visible && root.visible
         objectName: "welcomeDesktopPreview"
         width: parent.width
         height: Math.max(210, Math.min(420, root.availableHeight - scenes.implicitHeight - styleControls.height - styleDescription.implicitHeight - paletteRoles.height - root.spacing * 4))

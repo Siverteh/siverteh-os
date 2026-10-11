@@ -18,6 +18,7 @@ Item {
     readonly property var audit: candidate.palette?.accessibility || {}
     readonly property int railWidth: width < 980 ? 180 : 210
     readonly property bool ready: NacreColorsApp.ready
+    readonly property bool active: NacreColorsApp.visible
     function search() {
         searchField.forceActiveFocus();
         searchField.selectAll();
@@ -97,12 +98,13 @@ Item {
                 color: selected ? Qt.alpha(NacreTokens.accent, .14) : "transparent"
                 border.width: selected ? 1 : 0
                 border.color: Qt.alpha(NacreTokens.accent, .65)
-                Image {
+                NacreImage {
                     x: 8
                     y: 8
                     width: 60
                     height: 42
-                    source: "file://" + entry.modelData.thumbnail
+                    path: entry.modelData.thumbnail
+                    active: root.active
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true
                     retainWhileLoading: true
@@ -189,15 +191,16 @@ Item {
                         id: photo
                         width: parent.width
                         height: Math.min(460, width * .56)
-                        Image {
+                        NacreImage {
                             id: wallpaper
                             anchors.fill: parent
-                            source: root.candidate.thumbnail ? "file://" + root.candidate.thumbnail : ""
+                            path: root.candidate.thumbnail || ""
+                            active: root.active && studio.visible
                             fillMode: Image.PreserveAspectFit
                             asynchronous: true
                             cache: true
                             retainWhileLoading: true
-                            sourceSize: Qt.size(960, 600)
+                            requestedSize: Qt.size(960, 600)
                         }
                         Repeater {
                             model: !root.candidate.favorite && root.inspected?.regions ? root.inspected.regions.cells : []
@@ -311,6 +314,7 @@ Item {
                         font.pointSize: 12
                     }
                     NacreThemePreview {
+                        active: root.active && studio.visible
                         width: parent.width
                         height: Math.min(280, width * .75)
                         palette: root.palette
@@ -459,6 +463,7 @@ Item {
                                 font.pointSize: 11
                             }
                             NacreThemePreview {
+                                active: root.active && root.page === "compare"
                                 width: parent.width
                                 height: Math.min(260, width * .60)
                                 palette: modelData.colours
@@ -498,6 +503,7 @@ Item {
                     }
                 }
                 NacreThemePreview {
+                    active: root.active && root.page === "accessibility"
                     width: Math.min(parent.width, 620)
                     height: 300
                     palette: root.vision === "normal" ? root.palette : root.audit.simulated?.[root.vision] || root.palette

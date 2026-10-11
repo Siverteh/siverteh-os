@@ -31,6 +31,7 @@ class WelcomeUITests(unittest.TestCase):
                 "FastScroll",
                 "NacreScrollBar",
                 "NacreSwitch",
+                "NacreImage",
             ):
                 text = (
                     (SHELL / "widgets" / (name + ".qml"))
@@ -38,7 +39,7 @@ class WelcomeUITests(unittest.TestCase):
                     .replace("import qs.services", 'import "."')
                 )
                 (fixtures / (name + ".qml")).write_text(text)
-                if name in ("NacreIcon", "NacreScrollBar", "NacreSwitch"):
+                if name in ("NacreIcon", "NacreScrollBar", "NacreSwitch", "NacreImage"):
                     with (fixtures / "qmldir").open("a") as stream:
                         stream.write(f"\n{name} 1.0 {name}.qml\n")
             clip = (
@@ -108,7 +109,7 @@ class WelcomeUITests(unittest.TestCase):
             )
             (fixtures / "NacreWelcomeApp.qml").write_text("""pragma Singleton
 import QtQuick
-QtObject { property string page:"welcome";property var steps:["welcome","colors","shortcuts","apps","ready"];readonly property int step:Math.max(0,steps.indexOf(page));property string error:"";property bool busy:false;
+QtObject { property bool visible:true;property string page:"welcome";property var steps:["welcome","colors","shortcuts","apps","ready"];readonly property int step:Math.max(0,steps.indexOf(page));property string error:"";property bool busy:false;
  property var data:({preferences:{showAtLogin:true},available:{ai:false,brain:false},shortcuts:SHORTCUTS});
  property string requestedMode:"";property string requestedPersonality:"";property var actions:[];property string optionalApp:"";property var demoEntries:SAMPLES;property bool demoBusy:false;property string demoError:"";property bool demoStarting:false;property bool demoChanged:false;property bool demoRestored:false;
  property var appearance:({palettePreset:"wallpaper",paletteMode:"CURRENT_MODE",palettePersonality:"natural"});
