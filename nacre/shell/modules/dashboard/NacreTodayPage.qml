@@ -179,7 +179,7 @@ Flickable {
                 NacreSurface {
                     objectName: "dashboardWallpaperTransport"
                     anchors.horizontalCenter: parent.horizontalCenter
-                    width: 132
+                    width: parent.width
                     height: 34
                     radius: 17
                     color: NacreTokens.raised
@@ -193,7 +193,7 @@ Flickable {
                             onActivated: NacreWallpapers.previousWallpaper()
                         }
                         WallpaperControl {
-                            x: 44
+                            x: parent.width / 3
                             objectName: "dashboardPauseWallpaper"
                             icon: WallpaperPlayback.paused ? "play_arrow" : "pause"
                             label: WallpaperPlayback.paused ? "Resume wallpaper" : "Pause wallpaper"
@@ -202,7 +202,7 @@ Flickable {
                             onActivated: NacreWallpapers.toggleMotion()
                         }
                         WallpaperControl {
-                            x: 88
+                            x: parent.width * 2 / 3
                             objectName: "dashboardNextWallpaper"
                             icon: "chevron_right"
                             label: "Next wallpaper"
@@ -226,7 +226,7 @@ Flickable {
         required property string label
         property bool available: false
         signal activated
-        width: 44
+        width: parent.width / 3
         height: 34
         NacreIcon {
             anchors.centerIn: parent

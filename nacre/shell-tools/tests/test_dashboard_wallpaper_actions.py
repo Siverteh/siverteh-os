@@ -105,11 +105,11 @@ TestCase {
  function test_transport_keeps_positions_and_hides_static_pause(){
   const view=createTemporaryObject(page,this);wait(40);
   const previous=findChild(view,"dashboardPreviousWallpaper"),next=findChild(view,"dashboardNextWallpaper"),pause=findChild(view,"dashboardPauseWallpaper"),pill=findChild(view,"dashboardWallpaperTransport");
-  const point=next.mapToItem(view,0,0);compare(pill.width,132);
+  const point=next.mapToItem(view,0,0);compare(pill.width,findChild(view,"dashboardWallpapers").parent.width);
   NacreWallpapers.displayDynamic=false;verify(!pause.visible);
   const count=NacreWallpapers.previousCalls;mouseClick(previous,22,17);compare(NacreWallpapers.previousCalls,count+1);
   NacreWallpapers.displayPath="";view.shouldUpdate=false;NacreWallpapers.displayDynamic=true;wait(20);
-  verify(pause.visible);compare(next.mapToItem(view,0,0).x,point.x);compare(pill.width,132);
+  verify(pause.visible);compare(next.mapToItem(view,0,0).x,point.x);compare(pill.width,findChild(view,"dashboardWallpapers").parent.width);
   WallpaperPlayback.paused=false;mouseClick(pause,22,17);verify(WallpaperPlayback.paused);compare(pause.icon,"play_arrow");
   mouseClick(pause,22,17);verify(!WallpaperPlayback.paused);compare(pause.icon,"pause");
   NacreWallpapers.displayDynamic=false;
