@@ -2,7 +2,7 @@
   "version": 1,
   "nacre": {
     "repository": "https://github.com/nacre-desktop/nacre.git",
-    "revision": "cde13e4f770adeba306b1ae375f13fce04df544d",
+    "revision": "c0f9cbd7fcd3e2d76d851d7969e9239dca6c4138",
     "reference": "main",
     "version": "0.1.0-dev.2"
   }
