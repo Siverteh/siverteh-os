@@ -6,6 +6,7 @@ import json
 import os
 import re
 import subprocess
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,6 +55,18 @@ def checkout(data):
     return cache
 
 
+def general_profile(source):
+    """Follow upstream desktop defaults, retaining only selected optional apps."""
+    profile = json.loads((source / "profiles/default.json").read_text())
+    overrides = json.loads((ROOT / "profiles/general-overrides.json").read_text())
+    if not isinstance(overrides, dict) or set(overrides) - {
+        "components",
+        "aiFullAccess",
+    }:
+        raise ValueError("General overrides may only select apps and AI permissions")
+    return {**profile, **overrides}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -66,7 +79,7 @@ def main():
     install.add_argument("--apply", action="store_true")
     install.add_argument("--prepare", type=Path)
     install.add_argument(
-        "--profile", default="siverteh", choices=("siverteh", "default")
+        "--profile", default="general", choices=("general", "siverteh", "default")
     )
     install.add_argument(
         "--component",
@@ -129,7 +142,15 @@ def main():
         command.append("--migrate-owned")
     for component in args.component or []:
         command += ["--component", component]
-    subprocess.run(command, check=True)
+    if args.profile == "general":
+        with tempfile.TemporaryDirectory(prefix="nacre-general-profile-") as folder:
+            selected = Path(folder) / "profile.json"
+            selected.write_text(json.dumps(general_profile(source), indent=2) + "\n")
+            selected.chmod(0o600)
+            command[2] = str(selected)
+            subprocess.run(command, check=True)
+    else:
+        subprocess.run(command, check=True)
 
 
 if __name__ == "__main__":

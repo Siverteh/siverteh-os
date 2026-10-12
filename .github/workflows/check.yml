@@ -7,9 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-      - name: Validate personal profile and pin
+      - name: Validate general defaults, optional apps and pin
         run: python3 tools/check.py
-      - name: Verify pinned core and both prepared profiles
+      - name: Prepare general, public core and previous personal profiles
         run: |
-          ./install.sh --prepare /tmp/personal-preview
-          ./install.sh --profile default --prepare /tmp/general-preview
+          ./install.sh --prepare /tmp/general-preview
+          ./install.sh --profile default --prepare /tmp/core-preview
+          ./install.sh --profile siverteh --prepare /tmp/previous-personal-preview

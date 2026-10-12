@@ -3,17 +3,21 @@
 My personal edition of [Nacre](https://github.com/nacre-desktop/nacre), using the
 independent [Orient](https://github.com/nacre-desktop/orient) color engine.
 
-This repository contains my workspace labels/icons, app routing, startup choices,
-explicit AI permission preference and a tested upstream revision. Desktop/app code
+My daily desktop follows Nacre's general defaults, with AI and Brain installed and
+my existing AI permission preference retained. `profiles/general-overrides.json`
+only selects optional apps and permissions; workspace appearance, routing and
+startup choices come directly from the pinned upstream default. My previous
+workspace setup remains available with `--profile siverteh`. Desktop/app code
 lives in Nacre; palette code lives in Orient. There is one implementation of each.
 My accounts, conversations, memory vault, wallpaper collection and host overrides
 stay on my devices, outside Git. The repository does not distribute my memories.
 
 ```sh
-./install.sh                         # inspect the personal deployment plan
-./install.sh --prepare /tmp/personal # prepare an empty-home installation
-./install.sh --apply                 # managed personal deployment
-./install.sh --profile default --prepare /tmp/general
+./install.sh                         # inspect the general desktop plan with AI/Brain
+./install.sh --prepare /tmp/general  # prepare an empty-home installation
+./install.sh --component shell --apply # update desktop/profile, preserve AI workers
+./install.sh --profile default --prepare /tmp/core # unmodified public core profile
+./install.sh --profile siverteh       # inspect the previous personal workspace setup
 python3 tools/upstream.py status
 ```
 

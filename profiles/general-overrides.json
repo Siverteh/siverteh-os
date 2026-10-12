@@ -1,0 +1,4 @@
+{
+  "components": ["configs", "shell", "ai", "brain"],
+  "aiFullAccess": true
+}
