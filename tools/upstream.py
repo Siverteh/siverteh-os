@@ -102,6 +102,11 @@ def main():
         if not re.fullmatch(r"[0-9a-f]{40}", revision):
             raise ValueError("Invalid resolved commit")
         data["nacre"].update(revision=revision, reference=args.reference)
+        resolved = checkout(data)
+        version = (resolved / "VERSION").read_text().strip()
+        if not re.fullmatch(r"0[.][0-9]+[.][0-9]+-dev[.][0-9]+", version):
+            raise ValueError("Unsupported upstream preview version")
+        data["nacre"]["version"] = version
         pending = LOCK.with_suffix(".next")
         pending.write_text(json.dumps(data, indent=2) + "\n")
         os.replace(pending, LOCK)
