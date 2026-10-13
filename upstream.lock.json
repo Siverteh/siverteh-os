@@ -2,8 +2,8 @@
   "version": 1,
   "nacre": {
     "repository": "https://github.com/nacre-desktop/nacre.git",
-    "revision": "4ee534675bd5b5428d015f76f2792d1c7cec543e",
-    "reference": "main",
+    "revision": "6a91eb5582c294d915df8dc431fbc34cf1121de4",
+    "reference": "fix/wifi-discovery",
     "version": "0.1.0-dev.2"
   }
 }
