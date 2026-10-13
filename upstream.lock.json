@@ -2,8 +2,8 @@
   "version": 1,
   "nacre": {
     "repository": "https://github.com/nacre-desktop/nacre.git",
-    "revision": "9f31ca5cb2e95b3260c08c7d75159793487c7ef3",
-    "reference": "release/magnetic-live-baseline",
+    "revision": "b93d2e19fef0da77125286a41d33712495ed4593",
+    "reference": "release/login-wallpaper-isolation",
     "version": "0.1.0-dev.2"
   }
 }
