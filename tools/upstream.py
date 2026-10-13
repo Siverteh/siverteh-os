@@ -56,14 +56,15 @@ def checkout(data):
 
 
 def general_profile(source):
-    """Follow upstream desktop defaults, retaining only selected optional apps."""
+    """Follow upstream defaults with explicit personal preferences."""
     profile = json.loads((source / "profiles/default.json").read_text())
     overrides = json.loads((ROOT / "profiles/general-overrides.json").read_text())
     if not isinstance(overrides, dict) or set(overrides) - {
         "components",
         "aiFullAccess",
+        "windowTrashBindings",
     }:
-        raise ValueError("General overrides may only select apps and AI permissions")
+        raise ValueError("Unsupported personal override")
     return {**profile, **overrides}
 
 

@@ -2,6 +2,7 @@
 """Consumer integrity; upstream owns desktop/engine regression suites."""
 
 import ast
+import importlib.util
 import json
 import subprocess
 import sys
@@ -24,10 +25,24 @@ def main():
     source = checkout(data)
     general = general_profile(source)
     default = json.loads((source / "profiles/default.json").read_text())
-    for key in set(default) - {"components", "aiFullAccess"}:
+    for key in set(default) - {"components", "aiFullAccess", "windowTrashBindings"}:
         assert general[key] == default[key]
     assert set(general["components"]) == {"configs", "shell", "ai", "brain"}
     assert general["aiFullAccess"] is True
+    assert general["windowTrashBindings"] is True
+    assert profile["windowTrashBindings"] is True
+    sys.path.insert(0, str(source / "nacre/shell-tools"))
+    spec = importlib.util.spec_from_file_location(
+        "consumer_profile", source / "nacre/shell-tools/profile-policy.py"
+    )
+    policy = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(policy)
+    for selected in (general, profile):
+        rendered = policy.lua(policy.validate(selected))
+        assert '"SUPER + CTRL + Q"' in rendered
+        assert '"SUPER + Q"' not in rendered
+        for action in ("put-away", "restore", "restore-all", "force-close"):
+            assert "Nacre:" + action in rendered
     subprocess.run(
         [sys.executable, str(ROOT / "tools/upstream.py"), "status"],
         check=True,

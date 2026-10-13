@@ -1,4 +1,5 @@
 {
   "components": ["configs", "shell", "ai", "brain"],
-  "aiFullAccess": true
+  "aiFullAccess": true,
+  "windowTrashBindings": true
 }

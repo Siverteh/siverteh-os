@@ -5,12 +5,17 @@ independent [Orient](https://github.com/nacre-desktop/orient) color engine.
 
 My daily desktop follows Nacre's general defaults, with AI and Brain installed and
 my existing AI permission preference retained. `profiles/general-overrides.json`
-only selects optional apps and permissions; workspace appearance, routing and
+selects optional apps, permissions and personal trash/undo bindings; workspace appearance, routing and
 startup choices come directly from the pinned upstream default. My previous
 workspace setup remains available with `--profile siverteh`. Desktop/app code
 lives in Nacre; palette code lives in Orient. There is one implementation of each.
 My accounts, conversations, memory vault, wallpaper collection and host overrides
 stay on my devices, outside Git. The repository does not distribute my memories.
+
+Super+Q closes normally on both compositors. On Hyprland, my personal profile adds
+Super+Ctrl+Q to put away a window for 30 seconds, Super+Shift+Q to restore the last
+one, Super+Alt+Q to restore all, and Super+Ctrl+Shift+Q to force close. These
+shortcuts are absent from the upstream default profile and unavailable on niri.
 
 ```sh
 ./install.sh                         # inspect the general desktop plan with AI/Brain

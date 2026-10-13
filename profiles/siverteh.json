@@ -152,5 +152,6 @@
       "workspace": 7
     }
   ],
-  "aiFullAccess": true
+  "aiFullAccess": true,
+  "windowTrashBindings": true
 }
