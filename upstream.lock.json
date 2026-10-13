@@ -2,8 +2,8 @@
   "version": 1,
   "nacre": {
     "repository": "https://github.com/nacre-desktop/nacre.git",
-    "revision": "6a91eb5582c294d915df8dc431fbc34cf1121de4",
-    "reference": "fix/wifi-discovery",
+    "revision": "9f31ca5cb2e95b3260c08c7d75159793487c7ef3",
+    "reference": "release/magnetic-live-baseline",
     "version": "0.1.0-dev.2"
   }
 }
