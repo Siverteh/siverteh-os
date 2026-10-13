@@ -2,8 +2,8 @@
   "version": 1,
   "nacre": {
     "repository": "https://github.com/nacre-desktop/nacre.git",
-    "revision": "9f31ca5cb2e95b3260c08c7d75159793487c7ef3",
-    "reference": "release/magnetic-live-baseline",
+    "revision": "82ee55d0441103ab04112c0d36220a994dc4cb44",
+    "reference": "main",
     "version": "0.1.0-dev.2"
   }
 }
