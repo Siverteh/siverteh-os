@@ -7,6 +7,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Install native helper build prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake nasm pkg-config liblcms2-dev libwayland-dev
+      - name: Build the pinned native profile compiler
+        env:
+          CARGO_BUILD_JOBS: 2
+        run: |
+          python3 - <<'PY'
+          import sys, subprocess
+          sys.path.insert(0, "tools")
+          from upstream import checkout, read_lock
+          source = checkout(read_lock())
+          subprocess.run(["bash", str(source / "tools/build-helper.sh")], check=True)
+          PY
       - name: Validate general defaults, optional apps and pin
         run: python3 tools/check.py
       - name: Prepare general, public core and previous personal profiles
