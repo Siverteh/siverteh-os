@@ -25,9 +25,15 @@ def main():
     source = checkout(data)
     general = general_profile(source)
     default = json.loads((source / "profiles/default.json").read_text())
-    for key in set(default) - {"components", "aiFullAccess", "windowTrashBindings"}:
+    for key in set(default) - {
+        "components",
+        "aiFullAccess",
+        "windowTrashBindings",
+        "workspaceCount",
+    }:
         assert general[key] == default[key]
     assert set(general["components"]) == {"configs", "shell", "ai", "brain"}
+    assert general["workspaceCount"] == 6
     assert general["aiFullAccess"] is True
     assert general["windowTrashBindings"] is True
     assert profile["windowTrashBindings"] is True

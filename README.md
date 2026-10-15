@@ -5,8 +5,9 @@ independent [Orient](https://github.com/nacre-desktop/orient) color engine.
 
 My daily desktop follows Nacre's general defaults, with AI and Brain installed and
 my existing AI permission preference retained. `profiles/general-overrides.json`
-selects optional apps, permissions and personal trash/undo bindings; workspace appearance, routing and
-startup choices come directly from the pinned upstream default. My previous
+selects optional apps, permissions, personal trash/undo bindings and six workspace
+slots per configured monitor. Other appearance, routing and startup choices come
+from the pinned upstream default. My previous
 workspace setup remains available with `--profile siverteh`. Desktop/app code
 lives in Nacre; palette code lives in Orient. There is one implementation of each.
 My accounts, conversations, memory vault, wallpaper collection and host overrides

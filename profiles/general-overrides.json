@@ -1,5 +1,11 @@
 {
-  "components": ["configs", "shell", "ai", "brain"],
+  "components": [
+    "configs",
+    "shell",
+    "ai",
+    "brain"
+  ],
   "aiFullAccess": true,
-  "windowTrashBindings": true
+  "windowTrashBindings": true,
+  "workspaceCount": 6
 }

@@ -63,6 +63,7 @@ def general_profile(source):
         "components",
         "aiFullAccess",
         "windowTrashBindings",
+        "workspaceCount",
     }:
         raise ValueError("Unsupported personal override")
     return {**profile, **overrides}
