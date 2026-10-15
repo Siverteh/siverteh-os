@@ -10,7 +10,7 @@ jobs:
       - name: Install native helper build prerequisites
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake nasm pkg-config liblcms2-dev libwayland-dev
+          sudo apt-get install -y cmake nasm pkg-config liblcms2-dev libwayland-dev libfontconfig1-dev libfreetype6-dev
       - name: Build the pinned native profile compiler
         env:
           CARGO_BUILD_JOBS: 2
