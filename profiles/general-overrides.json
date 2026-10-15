@@ -7,5 +7,6 @@
   ],
   "aiFullAccess": true,
   "windowTrashBindings": true,
-  "workspaceCount": 6
+  "workspaceCount": 6,
+  "aurReview": "native"
 }

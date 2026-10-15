@@ -2,6 +2,12 @@ name: Personal consumer checks
 on: [push, pull_request]
 permissions:
   contents: read
+defaults:
+  run:
+    shell: nice -n 10 bash --noprofile --norc -e -o pipefail {0}
+env:
+  CARGO_BUILD_JOBS: 2
+  MAKEFLAGS: -j2
 jobs:
   consumer:
     runs-on: ubuntu-latest

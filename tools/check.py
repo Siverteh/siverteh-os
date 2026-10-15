@@ -19,6 +19,7 @@ def main():
     data = read_lock()
     profile = json.loads((ROOT / "profiles/siverteh.json").read_text())
     assert profile["id"] == "siverteh" and profile["version"] == 1
+    assert profile["aurReview"] == "native"
     assert profile["aiFullAccess"] is True
     assert profile["workspaceCount"] == len(profile["workspaceIcons"])
     assert set(profile["components"]) == {"configs", "shell", "ai", "brain"}
@@ -34,6 +35,7 @@ def main():
         assert general[key] == default[key]
     assert set(general["components"]) == {"configs", "shell", "ai", "brain"}
     assert general["workspaceCount"] == 6
+    assert general["aurReview"] == "native"
     assert general["aiFullAccess"] is True
     assert general["windowTrashBindings"] is True
     assert profile["windowTrashBindings"] is True
